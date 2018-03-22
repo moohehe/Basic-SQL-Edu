@@ -13,7 +13,13 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 <h1>공유합니다. 잘 되나?</h1>
+<<<<<<< HEAD
 수정을 해봅니다.
+=======
+<h2>변경해봤습니다. 잘되나?</h2>
+<h3>또 바꿔 봤습니다. 이번엔 푸쉬</h3>
+>>>>>>> branch 'master' of https://github.com/moohehe/GMSC.git
 
+한번 또 수정해봅니다.
 </body>
 </html>
