@@ -21,5 +21,8 @@
 >>>>>>> branch 'master' of https://github.com/moohehe/GMSC.git
 
 한번 또 수정해봅니다.
+
+또 바꿔봅니다.yj
+
 </body>
 </html>
