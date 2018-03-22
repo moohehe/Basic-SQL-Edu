@@ -13,6 +13,7 @@
 <P>  The time on the server is ${serverTime}. </P>
 
 <h1>공유합니다. 잘 되나?</h1>
+<h2>변경해봤습니다. 잘되나?</h2>
 
 </body>
 </html>
