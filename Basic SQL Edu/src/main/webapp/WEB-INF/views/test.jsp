@@ -33,5 +33,6 @@
 </textarea>
 </div>
 <button value="SQL 확인" id="sqltest" onclick="javascript:sqlrun();" />
+test
 </body>
 </html>
