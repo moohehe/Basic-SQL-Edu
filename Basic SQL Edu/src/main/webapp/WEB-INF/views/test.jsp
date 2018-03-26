@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
-<script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 <script type="text/javascript">
 	function sqlrun() {
 		var str = document.getElementById('sql').value;
@@ -29,9 +29,9 @@
 </head>
 <body>
 <div>
-<textarea cols="20" rows="20" id="sql">
+<textarea cols="4" rows="4" id="sql">
 </textarea>
 </div>
-<button id="sqltest" onclick="javascript:sqlrun();">SQL 입력</button>
+<button value="SQL 확인" id="sqltest" onclick="javascript:sqlrun();" />
 </body>
 </html>
