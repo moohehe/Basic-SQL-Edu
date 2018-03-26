@@ -9,8 +9,21 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery.min.js"></script>
 <script type="text/javascript">
 	function sqlrun() {
-		var text = document.getElementById('sql').value;
-		console.log(text);
+		var str = document.getElementById('sql').value;
+		console.log(str);
+		$.ajax({
+			type:"POST"
+			, url:"sqlCompiler"
+			, data:{
+				sql:str
+			}
+			, success: function(e) {
+				console.log(e);
+			}
+			, error : function(e) {
+				console.log('error:'+e);	
+			}
+		});
 	}
 </script>
 </head>
