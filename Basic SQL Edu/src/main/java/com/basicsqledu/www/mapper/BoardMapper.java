@@ -1,8 +1,8 @@
-package com.basicsqledu.mapper;
+package com.basicsqledu.www.mapper;
 
 import java.util.List;
 
-import com.basicsqledu.vo.Board;
+import com.basicsqledu.www.vo.Board;
 
 
 public interface BoardMapper

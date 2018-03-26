@@ -1,4 +1,4 @@
-package com.basicsqledu.vo;
+package com.basicsqledu.www.vo;
 
 public class Board
 {

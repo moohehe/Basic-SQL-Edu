@@ -6,15 +6,14 @@
 	
 	<typeAliases>
 		<!-- <typeAlias type="com.scmaster.web5.customer.vo.Customer" alias="customer"/>
-		<typeAlias type="com.scmaster.web5.board.vo.Board" alias="board"/>
 		<typeAlias type="com.scmaster.web5.reply.vo.Reply" alias="reply"/> -->
+		<typeAlias type="com.basicsqledu.www.vo.Board" alias="board"/>
 	</typeAliases>
 	
 	<mappers>
 	<!-- 
-		<mapper resource="mapper/customerMapper.xml" />
-		<mapper resource="mapper/boardMapper.xml"/>
-	 -->
+		<mapper resource="mapper/customerMapper.xml" />	 -->
+		<mapper resource="mapper/BoardMapper.xml" />
 	 </mappers>
 	
 </configuration>

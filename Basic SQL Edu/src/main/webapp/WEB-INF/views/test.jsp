@@ -25,6 +25,19 @@
 			}
 		});
 	}
+	function dbtest() {
+		console.log('뾰로롱');
+		$.ajax({
+			type:"GET"
+			, url:"dbtest"
+			, success: function(e) {
+				console.log(e);
+			}
+			, error : function(e) {
+				console.log(e);	
+			}
+		});
+	}
 </script>
 </head>
 <body>
@@ -32,7 +45,7 @@
 <textarea cols="4" rows="4" id="sql">
 </textarea>
 </div>
-<button value="SQL 확인" id="sqltest" onclick="javascript:sqlrun();" />
-test
+<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
+<button id="db" onclick="javascript:dbtest()">dbTest</button>
 </body>
 </html>
