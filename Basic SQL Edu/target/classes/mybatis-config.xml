@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<typeAliases>
+		<typeAlias type="com.scmaster.web5.customer.vo.Customer" alias="customer"/>
+		<typeAlias type="com.scmaster.web5.board.vo.Board" alias="board"/>
+		<typeAlias type="com.scmaster.web5.reply.vo.Reply" alias="reply"/>
+	</typeAliases>
+	
+	<mappers>
+		<mapper resource="mapper/customerMapper.xml" />
+		<mapper resource="mapper/boardMapper.xml"/>
+	</mappers>
+	
+</configuration>
