@@ -1,4 +1,4 @@
-package com.scmaster.gmsc;
+package com.basicsqledu.www;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -34,10 +34,6 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
-	}
-	@RequestMapping(value = "test", method = RequestMethod.GET)
-	public String test() {
-		return "SQLCompiler";
 	}
 	
 }
