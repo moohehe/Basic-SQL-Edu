@@ -1,6 +1,11 @@
 package com.basicsqledu.www;
 
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,7 +34,21 @@ public class TestController
 		for ( Board b : list ) {
 			System.out.println(b);
 		}
+		System.out.println("end of dbtest");
+		return "test";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "getTime", method= RequestMethod.GET
+			, produces = "application/text; charset=utf8")
+	public String getTime(Locale locale, HttpServletResponse response) {
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		response.setContentType("text/html;charset=UTF-8");
+		String result = dateFormat.format(date);
 		
-		return "";
+		System.out.println(result);
+		
+		return result;
 	}
 }
