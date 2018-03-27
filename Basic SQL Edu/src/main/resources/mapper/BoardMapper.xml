@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 게시판 처리 SQL -->
+<mapper namespace="com.basicsqledu.www.mapper.BoardMapper">
+
+	<!-- 게시판 글쓰기 -->
+	<insert id="write" parameterType="board">
+	INSERT INTO sek_board
+	(bnumber, id, content)
+	VALUES
+	(boardNumber_seq.nextval, #{id}, #{content})
+	</insert>
+	
+	<!-- 글 읽어오기 -->
+	<select id="list" resultType="board">
+	SELECT *
+	FROM sek_board
+	ORDER BY
+		bnumber desc
+	</select>
+	
+	<!-- 게시판 삭제하기 -->
+	<delete id="delete" parameterType="board">
+	DELETE sek_board
+	WHERE
+		bnumber = #{bnumber} and  id = #{id}
+	</delete>
+	
+	
+	
+</mapper>
