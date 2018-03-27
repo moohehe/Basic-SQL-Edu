@@ -1,9 +1,17 @@
 package com.basicsqledu.www.vo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SQLCompiler
 {
+	// data 관련 변수
+	private String[][] table;
+	private String table_name; // table name
+	private HashMap<String, Integer> columns; // String : columns_name / Integer : realdata_index
+	
+	
+	
 	private boolean grammer_error=false;
 	private String text;
 	private String texts[];
@@ -45,6 +53,16 @@ public class SQLCompiler
 			System.out.println("["+s+"]");
 		}
 	}
+	
+	public void getTable() {
+		// Mybatis로 arrayList를 꺼내온다.
+		// table_name 은 구별자(gp_name)에서 
+		// column_name 은 ver_name에서 갖고 온다. -> HashMap에 입력
+		// table의 데이터는 ver_name을 맞춰서 hashmap에 ver_data를 입력
+		
+		
+	}
+	
 	
 	
 	public void getResult() {
