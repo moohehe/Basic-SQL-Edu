@@ -26,11 +26,11 @@
 	</script>
 </head>
 <body>
-<h1>
-	Basic SQL Edu
-</h1>
+	<h1>
+		Basic SQL Edu
+	</h1>
 
-<P>  The time on the server is <span id="serverTime">${serverTime}.</span> </P>
-<a href="test">MOVE TO COMPILER</a>
+	<P>  The time on the server is <span id="serverTime">${serverTime}.</span> </P>
+	<a href="test">MOVE TO COMPILER</a>
 </body>
 </html>
