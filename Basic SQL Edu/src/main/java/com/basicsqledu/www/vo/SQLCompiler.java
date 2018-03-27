@@ -1,11 +1,21 @@
 package com.basicsqledu.www.vo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SQLCompiler
 {
+	// data 관련 변수
+	private String[][] table;
+	private String table_name; // table name
+	private HashMap<String, Integer> columns; // String : columns_name / Integer : realdata_index
+	
+	
+	
+	private boolean grammer_error=false;
 	private String text;
 	private String texts[];
+	private String[] COMMAND = {"CREATE", "DROP", "ALTER", "SELECT", "INSERT", "DELETE", "UPDATE"};
 	private String[] keywords = 
 		{
 			"create", "drop", "alter", "select", "insert", "update", "delete"
@@ -35,6 +45,53 @@ public class SQLCompiler
 	public void setText(String text)
 	{
 		this.text = text;
+		// 구문 분석기에 넣어서 입력
+		texts = text.split("\\s|\r|\t");
+		System.out.println("length="+texts.length);
+		for (String s : texts) {
+			if (s.equals("")) continue;
+			System.out.println("["+s+"]");
+		}
+	}
+	
+	public void getTable() {
+		// Mybatis로 arrayList를 꺼내온다.
+		// table_name 은 구별자(gp_name)에서 
+		// column_name 은 ver_name에서 갖고 온다. -> HashMap에 입력
+		// table의 데이터는 ver_name을 맞춰서 hashmap에 ver_data를 입력
+		
+		
+	}
+	
+	
+	
+	public void getResult() {
+		for (int i = 0 ; i < texts.length; i++) {
+			// 공백이면 무시하기
+			if (texts[i].equals("")) {
+				continue;
+			}
+			// select 인지 검사하기
+			switch (texts[i].toLowerCase()) {
+			case "create":
+				break;
+			case "drop":
+				break;
+			case "alter":
+				break;
+			case "insert":
+				break;
+			case "update":
+				break;
+			case "delete":
+				break;
+			case "select":
+				i = getSelect(i);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 	/*
 	 * keyword 분류
@@ -45,7 +102,6 @@ public class SQLCompiler
 	 * ex) create 를 할 때, 컬럼 순서는 상관없음.(모든 속성이 있으면 된것)
 	 * alter table_name ADD / MODIFY
 	 * 
-	 * 0. COMMIT / ROLLBACK
 	 * 1. select를 배우기
 	 *  SELECT * FROM table_name
 	 * 2. where 조건절을 배우기
@@ -58,6 +114,8 @@ public class SQLCompiler
 	 * 4. CREATE TABLE table_name
 	 * 	( attr_name data_type |default value| | null / not null | |UNIQUE|);
 	 * 5. DROP TABLE table_name;
+	 * 
+	 * 0. COMMIT / ROLLBACK
 	 * 6. INSERT INTO table_name
 	 * 	VALUES (value, ... );
 	 * 6-2.
@@ -78,15 +136,58 @@ public class SQLCompiler
 	 * 14. INNER JOIN / OUTER JOIN
 	 * etc. 제약조건( constraint)
 	 */
-	
-	public void splitTexts() {
-		ArrayList<String> result = new ArrayList<String>();
-		for(int i = 0; i<text.length(); i++ ) {
-			char c = text.charAt(i);
-			if ( c == ' ' || c == '	' || c == ' ') {
+
+	private int getSelect(int index)
+	{	// return 값은 i를 이용한 뒤에 +1 한 값
+		int i=0;
+		int stage = 1;
+		for (i = index; i < texts.length; i++ ) {
+			String current = texts[i];
+			if (stage == 1) {// 1. keyword가 나오면 안되는 순서
+				for (String s : COMMAND) {
+					if (s.equals(current)) {
+						return i++;
+					}
+				}
+				// column이 나오는지 체크한 뒤
 				
+				// 여기는 column 이름 쓰는 곳
+				// 1-2. FROM이 나오면 이 단계는 종료
+				if (current.equals("FROM")) {
+					stage++;
+				}
 			}
+			else if (stage == 2) {
+				// 2. FROM이 나오면 table_name 등록
+				// 2-1. select인지 체크
+				// table 이름 체크하기
+				
+				stage++;
+			}
+			else if (stage == 3) {
+				// where 문 체크하고 없으면 통과
+				if (current.equals("where")) {
+					// where 실행할것
+				}
+				stage++;
+			}
+			else if (stage == 4) {
+				// order by 체크하기
+				if (current.equals("order")) {
+					if (texts[++i].equals("by")) {
+						// order by 실행
+					}
+					else {
+						// order by 구문이 틀렸기 때문에
+						grammer_error = true;
+					}
+				}
+			}
+
+			
+			
 			
 		}
+		return i++;
 	}
 }
