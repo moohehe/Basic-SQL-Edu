@@ -25,13 +25,29 @@
 			}
 		});
 	}
+	function dbtest() {
+		console.log('뾰로롱');
+		$.ajax({
+			type:"GET"
+			, url:"dbtest"
+			, success: function(e) {
+				console.log(e);
+			}
+			, error : function(e) {
+				console.log(e);	
+			}
+		});
+	}
 </script>
 </head>
 <body>
-<div>
-<textarea cols="20" rows="20" id="sql">
-</textarea>
-</div>
-<button value="SQL 확인" id="sqltest" onclick="javascript:sqlrun();" ></button>
+
+	<div>
+		<textarea cols="20" rows="20" id="sql">
+		</textarea>
+	</div>
+	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
+	<button id="db" onclick="javascript:dbtest()">dbTest</button>
+
 </body>
 </html>
