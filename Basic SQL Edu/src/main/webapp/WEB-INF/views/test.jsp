@@ -29,10 +29,9 @@
 </head>
 <body>
 <div>
-<textarea cols="4" rows="4" id="sql">
+<textarea cols="20" rows="20" id="sql">
 </textarea>
 </div>
-<button value="SQL 확인" id="sqltest" onclick="javascript:sqlrun();" />
-test
+<button value="SQL 확인" id="sqltest" onclick="javascript:sqlrun();" ></button>
 </body>
 </html>
