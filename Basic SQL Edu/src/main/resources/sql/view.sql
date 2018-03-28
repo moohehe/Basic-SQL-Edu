@@ -47,3 +47,5 @@ and
 -- 사자 , s      r    4      land   meat
 -- 사자    b      r    3       land   meat 
 -- 호랑이  b     b     4      sky     meat
+
+
