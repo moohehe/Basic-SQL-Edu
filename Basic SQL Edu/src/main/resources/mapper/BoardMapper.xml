@@ -4,30 +4,13 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!-- 게시판 처리 SQL -->
-<mapper namespace="com.basicsqledu.www.mapper.BoardMapper">
+<mapper namespace="com.basicsqledu.www.mapper.TestMapper">
 
-	<!-- 게시판 글쓰기 -->
-	<insert id="write" parameterType="board">
-	INSERT INTO sek_board
-	(bnumber, id, content)
-	VALUES
-	(boardNumber_seq.nextval, #{id}, #{content})
-	</insert>
 	
-	<!-- 글 읽어오기 -->
-	<select id="list" resultType="board">
-	SELECT *
-	FROM sek_board
-	ORDER BY
-		bnumber desc
+	<!-- schema 읽어오기 -->
+	<select id="getSchema" parameterType="String" resultType="java.util.LinkedHashMap">
+		DESC ${table_name}
 	</select>
-	
-	<!-- 게시판 삭제하기 -->
-	<delete id="delete" parameterType="board">
-	DELETE sek_board
-	WHERE
-		bnumber = #{bnumber} and  id = #{id}
-	</delete>
 	
 	
 	

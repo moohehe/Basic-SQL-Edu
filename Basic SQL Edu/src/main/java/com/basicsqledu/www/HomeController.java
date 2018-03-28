@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.basicsqledu.www.dao.BoardDAO;
+
 /**
  * Handles requests for the application home page.
  */
@@ -37,6 +39,9 @@ public class HomeController {
 	}
 	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public String test() {
+		System.out.println("start test value!");
+
+		System.out.println("end test value!");
 		return "test";
 	}
 }

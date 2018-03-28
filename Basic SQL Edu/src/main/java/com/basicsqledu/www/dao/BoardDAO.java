@@ -61,4 +61,7 @@ public class BoardDAO
 		return list;
 	}
 	
+	
+	
+	
 }
