@@ -19,13 +19,31 @@ Insert into QUESTEXT (QSTEXT,LVSTATUS,QSTYPE,QSDETAIL,QSEXM,TEXTLANG) values ('�
 Insert into QUESTEXT (QSTEXT,LVSTATUS,QSTYPE,QSDETAIL,QSEXM,TEXTLANG) values ('select the rabbit',1,'SQL Query - Select (lv1)','Select rows that you want to have','Select OO from ()()',1);
 Insert into QUESTEXT (QSTEXT,LVSTATUS,QSTYPE,QSDETAIL,QSEXM,TEXTLANG) values ('토끼를 선택해',1,'SQL Query - Select (lv1)','원하는 칼럼을 선택합니다.','Select OO from ()()',2);
 Insert into QUESTEXT (QSTEXT,LVSTATUS,QSTYPE,QSDETAIL,QSEXM,TEXTLANG) values ('ウサギを選びなさい',1,'SQL Query - Select (lv1)','任意のコラムを選?します。','Select OO from ()()',3);
-   
-   
-  
 
 
-   
-   
-   
-   
-   
+--화면 데이터--
+create table quiz_group(
+    gp_code number  primary key
+    ,gp_name    varchar2(50)    not null
+);
+
+create sequence quiz_group_seq start with 1 increment by 1;
+
+create table quiz_theme(
+    th_code number  primary key
+    ,gp_code number not null
+    ,gp_name    varchar2(50)    not null
+    ,constraint theme_fk foreign key(gp_code) 
+		references quiz_group(gp_code) on delete cascade
+);
+
+create sequence quiz_theme_seq start with 1 increment by 1;
+
+create table quiz_detail(
+    th_code number  not null
+    ,de_code number not null
+    ,ver_name   varchar2(50)    not null
+    ,ver_data    varchar2(100)    not null
+    ,constraint detail_fk foreign key(th_code) 
+		references quiz_theme(th_code) on delete cascade
+);
