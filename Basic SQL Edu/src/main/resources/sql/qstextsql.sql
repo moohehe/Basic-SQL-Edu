@@ -1,3 +1,4 @@
+ --화면 언어 표시--
  CREATE TABLE QUESTEXT
    (	
    QSTEXT VARCHAR2(200) not null, 
@@ -20,7 +21,9 @@ Insert into QUESTEXT (QSTEXT,LVSTATUS,QSTYPE,QSDETAIL,QSEXM,TEXTLANG) values ('�
 Insert into QUESTEXT (QSTEXT,LVSTATUS,QSTYPE,QSDETAIL,QSEXM,TEXTLANG) values ('ウサギを選びなさい',1,'SQL Query - Select (lv1)','任意のコラムを選?します。','Select OO from ()()',3);
    
    
-   
+  
+
+
    
    
    
