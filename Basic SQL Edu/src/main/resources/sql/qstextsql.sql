@@ -47,3 +47,4 @@ create table quiz_detail(
     ,constraint detail_fk foreign key(th_code) 
 		references quiz_theme(th_code) on delete cascade
 );
+
