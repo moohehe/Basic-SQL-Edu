@@ -32,7 +32,7 @@ create sequence quiz_group_seq start with 1 increment by 1;
 create table quiz_theme(
     th_code number  primary key
     ,gp_code number not null
-    ,gp_name    varchar2(50)    not null
+    ,th_name    varchar2(50)    not null
     ,constraint theme_fk foreign key(gp_code) 
 		references quiz_group(gp_code) on delete cascade
 );
@@ -48,3 +48,117 @@ create table quiz_detail(
 		references quiz_theme(th_code) on delete cascade
 );
 
+
+- group insert ex) animal, person, ....
+INSERT INTO quiz_group VALUES (quiz_group_seq.nextval, 'animal');
+INSERT INTO quiz_group VALUES (quiz_group_seq.nextval, 'person');
+
+
+-- 개체 insert ex) lion, rabbit, bird, lion2, lion3, ...
+INSERT INTO quiz_theme (gp_code, th_code, th_name)VALUES ( 1, quiz_theme_seq.nextval, 'lion');
+INSERT INTO quiz_theme (gp_code, th_code, th_name)VALUES ( 1, quiz_theme_seq.nextval, 'lion2');
+INSERT INTO quiz_theme (gp_code, th_code, th_name)VALUES ( 1, quiz_theme_seq.nextval, 'lion3');
+INSERT INTO quiz_theme (gp_code, th_code, th_name)VALUES ( 1, quiz_theme_seq.nextval, 'bird');
+INSERT INTO quiz_theme (gp_code, th_code, th_name)VALUES ( 1, quiz_theme_seq.nextval, 'rabbit');
+INSERT INTO quiz_theme (gp_code, th_code, th_name)VALUES ( 1, quiz_theme_seq.nextval, 'fish');
+
+
+-- detail insert ex) animal_size, species, .... etc
+	-- lion
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (1, 1, 'animal_size', 'small');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (1, 2, 'species', 'lion');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (1, 3, 'legs', '4');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (1, 4, 'color', 'red');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (1, 5, 'habitat', 'land');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (1, 6, 'feed', 'meat');
+	-- lion2
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (2, 1, 'animal_size', 'small');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (2, 2, 'species', 'lion');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (2, 3, 'legs', '4');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (2, 4, 'color', 'blue');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (2, 5, 'habitat', 'land');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (2, 6, 'feed', 'meat');
+	-- lion3
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (3, 1, 'animal_size', 'small');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (3, 2, 'species', 'lion');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (3, 3, 'legs', '4');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (3, 4, 'color', 'black');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (3, 5, 'habitat', 'land');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (3, 6, 'feed', 'meat');
+	-- bird
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (4, 1, 'animal_size', 'small');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (4, 2, 'species', 'bird');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (4, 3, 'legs', '2');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (4, 4, 'color', 'blue');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (4, 5, 'habitat', 'land');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (4, 6, 'feed', 'meat');
+	-- rabbit
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (5, 1, 'animal_size', 'small');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (5, 2, 'species', 'rabbit');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (5, 3, 'legs', '4');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (5, 4, 'color', 'white');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (5, 5, 'habitat', 'land');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (5, 6, 'feed', 'grass');
+	-- fish
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (6, 1, 'animal_size', 'small');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (6, 2, 'species', 'fish');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (6, 3, 'legs', '0');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (6, 4, 'color', 'blue');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (6, 5, 'habitat', 'sea');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (6, 6, 'fe', 'meat');
+
+
+
+
+
+
+
+	-- sample(샘플)
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (, 1, 'animal_size', '');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (, 2, 'species', '');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (, 3, 'legs', '');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (, 4, 'color', '');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (, 5, 'habitat', '');
+INSERT INTO quiz_detail (th_code, de_code, ver_name, ver_data)
+VALUES (, 6, 'feed', '');
