@@ -5,15 +5,15 @@ FROM
     (SELECT de_code, th_code, ver_data FROM quiz_detail
     WHERE ver_name = 'animal_size') aa
     ,(SELECT de_code, th_code, ver_data FROM quiz_detail
-    WHERE ver_name = 'species') bb
+    WHERE ver_name = 'animal_species') bb
     ,(SELECT de_code, th_code, ver_data FROM quiz_detail
-    WHERE ver_name = 'legs') cc
+    WHERE ver_name = 'animal_legs') cc
     ,(SELECT de_code, th_code, ver_data FROM quiz_detail
-    WHERE ver_name = 'color') dd
+    WHERE ver_name = 'animal_color') dd
     ,(SELECT de_code, th_code, ver_data FROM quiz_detail
-    WHERE ver_name = 'habitat') ee
+    WHERE ver_name = 'animal_habitat') ee
     ,(SELECT de_code, th_code, ver_data FROM quiz_detail
-    WHERE ver_name = 'feed') ff
+    WHERE ver_name = 'animal_feed') ff
 WHERE
     aa.th_code = bb.th_code
     AND
@@ -26,6 +26,12 @@ WHERE
     ee.th_code = ff.th_code
 ORDER BY TH_CODE;
 
+
+
+
+
+
+-- 이걸 가지고 resulMap 을 만들어 봅시다.
 select
     gp.gp_code
     ,gp.gp_name

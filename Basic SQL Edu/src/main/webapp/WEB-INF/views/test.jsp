@@ -48,6 +48,7 @@
 	</div>
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
 	<button id="db" onclick="javascript:dbtest()">dbTest</button>
+	<a href="getTable">뷰 테스트1</a>
 
 </body>
 </html>

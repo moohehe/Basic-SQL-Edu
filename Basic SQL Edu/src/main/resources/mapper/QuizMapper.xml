@@ -2,15 +2,17 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- 게시판 처리 SQL -->
-<mapper namespace="com.basicsqledu.www.mapper.TestMapper">
 
-	
-	<!-- schema 읽어오기 -->
-	<select id="getSchema" parameterType="String" resultType="java.util.LinkedHashMap">
-		DESC ${table_name}
+
+<!-- 게시판 처리 SQL -->
+<mapper namespace="com.basicsqledu.www.mapper.QuizMapper">
+
+	<!-- View를 활용하는 데이터로 -->
+	<select id="getAnimal" resultType="animal">
+		SELECT *
+		FROM
+			animal_view
 	</select>
-	
-	
+
 	
 </mapper>
