@@ -1,6 +1,5 @@
 package com.basicsqledu.www.vo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SQLCompiler
@@ -11,7 +10,7 @@ public class SQLCompiler
 	private HashMap<String, Integer> columns; // String : columns_name / Integer : realdata_index
 	
 	
-	
+	private String errorMessage="";
 	private boolean grammer_error=false;
 	private String text;
 	private String texts[];
@@ -47,7 +46,8 @@ public class SQLCompiler
 		this.text = text;
 		// 구문 분석기에 넣어서 입력
 		texts = text.split("\\s|\r|\t");
-		System.out.println("length="+texts.length);
+		//System.out.println("length="+texts.length);
+		System.out.println("구문 분류");
 		for (String s : texts) {
 			if (s.equals("")) continue;
 			System.out.println("["+s+"]");
@@ -65,13 +65,38 @@ public class SQLCompiler
 	}
 	
 	
-	
-	public void getResult() {
+	/**
+	 * 구문 분석기
+	 * @return HashMap<String, Object>
+	 * @"complete": true / false .. 문장의 오류가 있었는지 확인
+	 * @"errorMessage" : 오류 내용
+	 */
+	public HashMap<String, Object> getResult() {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("complete", true);
+		
+		boolean end = false; // 끝났는지 체크하는 변수
+		errorMessage = "";
 		for (int i = 0 ; i < texts.length; i++) {
+			// ; 가 나왔는지 체크하여 end 변수를 true로 
+			if (texts[i].contains(";")) {
+				end = true;
+				// 여기 좀 복잡함 잘 생각해보고 만들어야함[
+				// 1. ';'를 포함하고 있으면 일단 끝난걸로 봐야하는데
+				// 2. 혹시 ;이 한 단어의 중간에 들어있을 경우에는 false 처리.. ex) SEL;ECT 라던가
+				// 3. ;이 일어난 뒤에 다음에 공백 이외의 character가 나올 경우에도 false -> 구현됨
+			}
 			// 공백이면 무시하기
 			if (texts[i].equals("")) {
 				continue;
 			}
+			// ; 이후에도 공백 이외의 문자가 있다면
+			if (end) {
+				System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
+				errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
+				map.put("complete",false);
+			}
+			
 			// select 인지 검사하기
 			switch (texts[i].toLowerCase()) {
 			case "create":
@@ -93,6 +118,15 @@ public class SQLCompiler
 				break;
 			}
 		}
+		if (!end) {
+			System.out.println("문법 오류 : 문장의 끝에 ;가 없습니다.");
+			errorMessage += "문법 오류 : 문장의 끝에 ;가 없습니다.\\n";
+			map.put("complete",false);
+		}
+		
+		
+		
+		return map;
 	}
 	/*
 	 * keyword 분류
@@ -190,5 +224,9 @@ public class SQLCompiler
 			
 		}
 		return i++;
+	}
+	public String getErrorMessage()
+	{
+		return errorMessage;
 	}
 }
