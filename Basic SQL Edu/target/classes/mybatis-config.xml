@@ -5,15 +5,15 @@
 <configuration>
 	
 	<typeAliases>
-		<!-- <typeAlias type="com.scmaster.web5.customer.vo.Customer" alias="customer"/>
-		<typeAlias type="com.scmaster.web5.reply.vo.Reply" alias="reply"/> -->
 		<typeAlias type="com.basicsqledu.www.vo.Board" alias="board"/>
+		<typeAlias type="com.basicsqledu.www.vo.Animal" alias="animal"/>
+		
 	</typeAliases>
 	
 	<mappers>
-	<!-- 
-		<mapper resource="mapper/customerMapper.xml" />	 -->
 		<mapper resource="mapper/BoardMapper.xml" />
+		<mapper resource="mapper/QuizMapper.xml" />
+		
 	 </mappers>
 	
 </configuration>
