@@ -9,7 +9,7 @@
 
 	<!-- View를 활용하는 데이터로 -->
 	<select id="getAnimal" resultType="animal">
-		SELECT *
+		SELECT *	
 		FROM
 			animal_view
 	</select>

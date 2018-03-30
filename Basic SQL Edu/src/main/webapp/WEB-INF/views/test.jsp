@@ -11,6 +11,9 @@
 	function sqlrun() {
 		var str = document.getElementById('sql').value;
 		console.log(str);
+		if (str == '') {
+			return;
+		}
 		$.ajax({
 			type:"POST"
 			, url:"sqlCompiler"
@@ -19,6 +22,7 @@
 			}
 			, success: function(e) {
 				console.log(e);
+				$('#resultView').val(e);
 			}
 			, error : function(e) {
 				console.log('error:'+e);	
@@ -44,10 +48,10 @@
 
 	<div>
 		<textarea cols="20" rows="20" id="sql"></textarea>
+		<textarea cols="20" rows="20" id="resultView"></textarea>
 	</div>
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
 	<button id="db" onclick="javascript:dbtest()">dbTest</button>
 	<a href="getTable">뷰 테스트1</a>
-
 </body>
 </html>
