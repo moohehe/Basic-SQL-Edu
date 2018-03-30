@@ -1,5 +1,8 @@
 package com.basicsqledu.www.vo;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SQLCompiler
@@ -56,14 +59,65 @@ public class SQLCompiler
 		}
 	}
 	
-	public void getTable() {
-		// Mybatis로 arrayList를 꺼내온다.
-		// table_name 은 구별자(gp_name)에서 
-		// column_name 은 ver_name에서 갖고 온다. -> HashMap에 입력
-		// table의 데이터는 ver_name을 맞춰서 hashmap에 ver_data를 입력
+/*	public void setTable(Object object) {
+		if (object instanceof ArrayList<Animal>) {
+			// 데이터 갯수(row) 속성 갯수 (col)
+		}
+	}*/
+	public void setTable(ArrayList<Object> list) {
+		if (list.size() == 0 ) {
+			table = new String[0][0];
+			return;
+		}
 		
+		// Animal 타입의 데이터면
+		if (list.get(0) instanceof Animal) {
+			int col=6, row=list.size();
+			table = new String[row+1][col];
+			// 테이블 속성(attribute) 명칭 입력
+			table[0][0] = "animal_size";
+			table[0][1] = "animal_species";
+			table[0][2] = "animal_legs";
+			table[0][3] = "animal_color";
+			table[0][4] = "animal_habitat";
+			table[0][5] = "animal_feed";
+			
+			
+			int i = 1;
+			for (Object a : list ) {
+				Animal animal = (Animal) a;
+				table[i][0] = animal.getAnimal_size();
+				table[i][1] = animal.getAnimal_species();
+				table[i][2] = animal.getAnimal_legs();
+				table[i][3] = animal.getAnimal_habitat();
+				table[i][4] = animal.getAnimal_feed();
+				table[i][5] = animal.getAnimal_size();
+				
+				i++;
+			}
+			
+		}
+	}
+	
+	public String getTable() {
+
+		// 무결성 체크
+		if (table == null ) {
+			return null;
+		}
+		if (table.length == 0 ) {
+			return null;
+		}
 		
+		String result = "";
+		for (int i = 0; i <table.length; i++) {
+			for (int j = 0; j < table[0].length; j++) {
+				result += table[i][j] + "\t";
+			}
+			result += "\n";
+		}
 		
+		return result;
 	}
 	
 	
@@ -77,34 +131,64 @@ public class SQLCompiler
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("complete", true);
 		
-		boolean end = false; // 끝났는지 체크하는 변수
 		errorMessage = "";
-		for (int i = 0 ; i < texts.length; i++) {
-			String current = texts[i];
-			
-/*			// ; 가 나왔는지 체크하여 end 변수를 true로 
-			if (current.contains(";")) {
-				end = true; // 끝남
-				
-			}*/
-			// 공백이면 무시하기
-			if (current.equals("")) {
-				continue;
+		
+		
+		
+		
+		
+		
+		
+		
+		// 1. 세미콜론 문법 체크
+		if (text.contains(";")) { // 세미콜론 등장했음.
+			int count = 0;
+			for (String s : texts) {
+				if (s.contains(";")) {
+					count++;
+				}
 			}
-			// ; 이후에도 공백 이외의 문자가 있다면
-			if (current.contains(";")) { // 세미콜론 등장했음.
+			System.out.println("세미콜론 갯수 : "+count);
+			if (count == 1) {
 				// 여기 좀 복잡함 잘 생각해보고 만들어야함[
 				// 1. ';'를 포함하고 있으면 일단 끝난걸로 봐야하는데
 				// 2. 혹시 ;이 한 단어의 중간에 들어있을 경우에는 false 처리.. ex) SEL;ECT 라던가
 				// 3. ;이 일어난 뒤에 다음에 공백 이외의 character가 나올 경우에도 false -> 구현됨
-				if (!(current.indexOf(';') == (current.length()-1))) {
-					// 문제 없음
-					System.out.println("index = " + i);
-					System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
-					errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
-					map.put("complete",false);
+				String lastWord = 
+						texts[texts.length-1]
+						.replace(" ","")
+						.replace("\t","")
+						.replace("\n","");
+				
+				if (!lastWord.contains(";")) { 
+					if (!(lastWord.indexOf(';') == (lastWord.length()-1))) {
+						System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
+						errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
+						map.put("complete",false);
+						return map;
+					}
 				}
 			}
+			else  {
+				System.out.println("문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.");
+				errorMessage += "문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.\n";
+			}
+		}
+		else {
+			System.out.println("문법 오류 : ; 가 없습니다.");
+			errorMessage += "문법 오류 : ; 가 없습니다. \n";
+			map.put("complete",false);
+			return map;
+		}
+		
+		
+		
+		// 2. 구문 검사 시작
+		for (int i = 0 ; i < texts.length; i++) {
+			String current = texts[i];
+			
+			// 공백이면 무시하기
+			
 			
 			// select 인지 검사하기
 			switch (current.toLowerCase()) {
@@ -179,18 +263,37 @@ public class SQLCompiler
 	private int getSelect(int index)
 	{	// return 값은 i를 이용한 뒤에 +1 한 값
 		int i=0;
-		int stage = 1;
+		
+		// stage == 1 : SELECT <여기> FROM
+		// stage == 2 : FROM <여기> WHERE 혹은 GROUP BY
+		// stage == 3 : WHERE <여기> ORDER BY
+		// stage == 4 : GROUP BY <여기> HAVING
+		// stage == 5 : stage3/4 <여기> ORDER BY
+		int stage = 1; 
 		for (i = index; i < texts.length; i++ ) {
 			String current = texts[i];
-			if (stage == 1) {// 1. keyword가 나오면 안되는 순서
+			
+			if (stage == 1) {// stage == 1 : SELECT <여기> FROM
+				// DDL이 나오면 안됨
 				for (String s : COMMAND) {
 					if (s.equals(current)) {
 						return i++;
 					}
+
+					// column이 나오는지 체크한 뒤
+					
+					// 여기는 column 이름 쓰는 곳
+					,
+					
 				}
-				// column이 나오는지 체크한 뒤
 				
-				// 여기는 column 이름 쓰는 곳
+				
+				
+				
+				
+				
+				
+				
 				// 1-2. FROM이 나오면 이 단계는 종료
 				if (current.equals("FROM")) {
 					stage++;
