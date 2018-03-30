@@ -1,11 +1,5 @@
 package com.basicsqledu.www.vo;
 
-<<<<<<< HEAD
-import static org.hamcrest.CoreMatchers.not;
-
-import java.util.ArrayList;
-=======
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 import java.util.HashMap;
 
 public class SQLCompiler
@@ -51,20 +45,15 @@ public class SQLCompiler
 	{
 		this.text = text;
 		// 구문 분석기에 넣어서 입력
-<<<<<<< HEAD
-		
-		//구문의 공백을 
-		texts = text.replace(" ","㈜").replace("\t", "㈜").replace("\n", "㈜").split("㈜");
-	
-		System.out.println("length="+texts.length);
-=======
-		texts = text.split("\\s|\r|\t");
+		texts = text.replace(" " , "㉿").replace("\t","㉿").replace("\n", "㉿").split("㉿");
+		//texts = text.split("\\s|\r|\t");
 		//System.out.println("length="+texts.length);
 		System.out.println("구문 분류");
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
-		for (String s : texts) {
-			if (s.equals("")) continue;
-			System.out.println("["+s+"]");
+
+		for (int i = 0 ; i < texts.length ; i++) {
+			//if (s.equals("")) continue;
+			String s = texts[i];
+			System.out.println("("+i+") "+"["+s+"]");
 		}
 	}
 	
@@ -88,7 +77,6 @@ public class SQLCompiler
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("complete", true);
 		
-		boolean end = false; // 끝났는지 체크하는 변수
 		errorMessage = "";
 		for (int i = 0 ; i < texts.length; i++) {
 			String current = texts[i];
@@ -110,6 +98,7 @@ public class SQLCompiler
 				// 3. ;이 일어난 뒤에 다음에 공백 이외의 character가 나올 경우에도 false -> 구현됨
 				if (!(current.indexOf(';') == (current.length()-1))) {
 					// 문제 없음
+					System.out.println("index = " + i);
 					System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
 					errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
 					map.put("complete",false);
@@ -136,11 +125,6 @@ public class SQLCompiler
 			default:
 				break;
 			}
-		}
-		if (!end) {
-			System.out.println("문법 오류 : 문장의 끝에 ;가 없습니다.");
-			errorMessage += "문법 오류 : 문장의 끝에 ;가 없습니다.\\n";
-			map.put("complete",false);
 		}
 		
 		
