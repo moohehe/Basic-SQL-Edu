@@ -80,32 +80,28 @@ public class SQLCompiler
 		for (int i = 0 ; i < texts.length; i++) {
 			String current = texts[i];
 			
-			// ; 가 나왔는지 체크하여 end 변수를 true로 
+/*			// ; 가 나왔는지 체크하여 end 변수를 true로 
 			if (current.contains(";")) {
-				// 여기 좀 복잡함 잘 생각해보고 만들어야함[
-				// 1. ';'를 포함하고 있으면 일단 끝난걸로 봐야하는데
-				// 2. 혹시 ;이 한 단어의 중간에 들어있을 경우에는 false 처리.. ex) SEL;ECT 라던가
-				// 3. ;이 일어난 뒤에 다음에 공백 이외의 character가 나올 경우에도 false -> 구현됨
-				if (current.charAt(current.length()-1) == ';' // 마지막 글자가 ; 이고
-						&& (i+1) == texts.length) {			// 마지막 단어일경우
-					//end = true;
-					
-					return map;
-				}
-				//end = true;
+				end = true; // 끝남
 				
-				
-			}
+			}*/
 			// 공백이면 무시하기
 			if (current.equals("")) {
 				continue;
 			}
 			// ; 이후에도 공백 이외의 문자가 있다면
-			/*if (end) {
-				System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
-				errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
-				map.put("complete",false);
-			}*/
+			if (current.contains(";")) { // 세미콜론 등장했음.
+				// 여기 좀 복잡함 잘 생각해보고 만들어야함[
+				// 1. ';'를 포함하고 있으면 일단 끝난걸로 봐야하는데
+				// 2. 혹시 ;이 한 단어의 중간에 들어있을 경우에는 false 처리.. ex) SEL;ECT 라던가
+				// 3. ;이 일어난 뒤에 다음에 공백 이외의 character가 나올 경우에도 false -> 구현됨
+				if (!(current.indexOf(';') == (current.length()-1))) {
+					// 문제 없음
+					System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
+					errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
+					map.put("complete",false);
+				}
+			}
 			
 			// select 인지 검사하기
 			switch (current.toLowerCase()) {
