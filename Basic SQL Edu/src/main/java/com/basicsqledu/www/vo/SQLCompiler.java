@@ -11,7 +11,7 @@ public class SQLCompiler
 	
 	
 	private String errorMessage="";
-	private boolean grammer_error=false;
+	private boolean grammar_error=false;
 	private String text;
 	private String texts[];
 	private String[] COMMAND = {"CREATE", "DROP", "ALTER", "SELECT", "INSERT", "DELETE", "UPDATE"};
@@ -78,27 +78,37 @@ public class SQLCompiler
 		boolean end = false; // 끝났는지 체크하는 변수
 		errorMessage = "";
 		for (int i = 0 ; i < texts.length; i++) {
+			String current = texts[i];
+			
 			// ; 가 나왔는지 체크하여 end 변수를 true로 
-			if (texts[i].contains(";")) {
-				end = true;
+			if (current.contains(";")) {
 				// 여기 좀 복잡함 잘 생각해보고 만들어야함[
 				// 1. ';'를 포함하고 있으면 일단 끝난걸로 봐야하는데
 				// 2. 혹시 ;이 한 단어의 중간에 들어있을 경우에는 false 처리.. ex) SEL;ECT 라던가
 				// 3. ;이 일어난 뒤에 다음에 공백 이외의 character가 나올 경우에도 false -> 구현됨
+				if (current.charAt(current.length()-1) == ';' // 마지막 글자가 ; 이고
+						&& (i+1) == texts.length) {			// 마지막 단어일경우
+					//end = true;
+					
+					return map;
+				}
+				//end = true;
+				
+				
 			}
 			// 공백이면 무시하기
-			if (texts[i].equals("")) {
+			if (current.equals("")) {
 				continue;
 			}
 			// ; 이후에도 공백 이외의 문자가 있다면
-			if (end) {
+			/*if (end) {
 				System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
 				errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
 				map.put("complete",false);
-			}
+			}*/
 			
 			// select 인지 검사하기
-			switch (texts[i].toLowerCase()) {
+			switch (current.toLowerCase()) {
 			case "create":
 				break;
 			case "drop":
@@ -214,7 +224,8 @@ public class SQLCompiler
 					}
 					else {
 						// order by 구문이 틀렸기 때문에
-						grammer_error = true;
+						grammar_error = true;
+						errorMessage += "group 다음에는 by가 와야합니다.";
 					}
 				}
 			}

@@ -43,8 +43,7 @@
 <body>
 
 	<div>
-		<textarea cols="20" rows="20" id="sql">
-		</textarea>
+		<textarea cols="20" rows="20" id="sql"></textarea>
 	</div>
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
 	<button id="db" onclick="javascript:dbtest()">dbTest</button>

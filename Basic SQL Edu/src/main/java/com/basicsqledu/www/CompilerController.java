@@ -21,9 +21,8 @@ public class CompilerController
 	@RequestMapping(value="sqlCompiler", method = RequestMethod.POST
 			, produces = "application/text; charset=utf8")
 	public String compiler(String sql, HttpServletResponse response) {
+		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8");
-		
-		//System.out.println("sql="+sql);
 		
 		// 1. sql 구문 입력 / 해석 
 		// 입력받은 sql 구문을 compiler 객체에 삽입
