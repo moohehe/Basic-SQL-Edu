@@ -1,5 +1,7 @@
 package com.basicsqledu.www.vo;
 
+import static org.hamcrest.CoreMatchers.not;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -46,7 +48,10 @@ public class SQLCompiler
 	{
 		this.text = text;
 		// 구문 분석기에 넣어서 입력
-		texts = text.split("\\s|\r|\t");
+		
+		//구문의 공백을 
+		texts = text.replace(" ","㈜").replace("\t", "㈜").replace("\n", "㈜").split("㈜");
+	
 		System.out.println("length="+texts.length);
 		for (String s : texts) {
 			if (s.equals("")) continue;
@@ -59,7 +64,6 @@ public class SQLCompiler
 		// table_name 은 구별자(gp_name)에서 
 		// column_name 은 ver_name에서 갖고 온다. -> HashMap에 입력
 		// table의 데이터는 ver_name을 맞춰서 hashmap에 ver_data를 입력
-		
 		
 		
 	}
