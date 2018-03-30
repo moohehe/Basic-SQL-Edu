@@ -283,7 +283,7 @@ public class SQLCompiler
                // column이 나오는지 체크한 뒤
                
                // 여기는 column 이름 쓰는 곳
-               ,
+               
                
             }
             
