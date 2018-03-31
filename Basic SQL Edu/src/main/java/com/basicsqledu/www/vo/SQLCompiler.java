@@ -1,16 +1,19 @@
 package com.basicsqledu.www.vo;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SQLCompiler
 {
-	// data 관련 변수
+	// data 관련 변수(DB 갔다옴)
 	private String[][] table;
 	private String table_name; // table name
-	private HashMap<String, Integer> columns; // String : columns_name / Integer : realdata_index
+	private HashMap<String, Integer> table_columns; // String : columns_name / Integer : realdata_index
+	
+	// SQL 구문 결과(내부에서 계산한 결과)
+	private String[][] result;
+	private String result_name;
+	private HashMap<String, Integer> result_columns;
 	
 	
 	private String errorMessage="";
@@ -35,10 +38,7 @@ public class SQLCompiler
 			// 안쓰지만 keyword 이기 때문에 적어놓음
 		};
 	
-	public SQLCompiler()
-	{
-		// TODO Auto-generated constructor stub
-	}
+	public SQLCompiler() {	}
 	
 	public String getText()
 	{
@@ -59,11 +59,12 @@ public class SQLCompiler
 		}
 	}
 	
-/*	public void setTable(Object object) {
-		if (object instanceof ArrayList<Animal>) {
-			// 데이터 갯수(row) 속성 갯수 (col)
-		}
-	}*/
+	/*
+	 * 객체 종류에 맞춰서 (ex. Animal, Person, etc)
+	 * 각자 String[][] 2차 배열로 등록할 수 있도록
+	 * 하는 전용 method임.
+	 * 
+	 */
 	public void setTable(ArrayList<Object> list) {
 		if (list.size() == 0 ) {
 			table = new String[0][0];
@@ -111,6 +112,7 @@ public class SQLCompiler
 		
 		String result = "";
 		for (int i = 0; i <table.length; i++) {
+			result += (i) + "\t";
 			for (int j = 0; j < table[0].length; j++) {
 				result += table[i][j] + "\t";
 			}
@@ -129,12 +131,10 @@ public class SQLCompiler
 	 */
 	public HashMap<String, Object> getResult() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		// 틀릴 때만 complete에 false를 입력하고 
+		// errorMessage에 에러 메세지를 더함(\n까지)
 		map.put("complete", true);
-		
 		errorMessage = "";
-		
-		
-		
 		
 		
 		
@@ -160,14 +160,14 @@ public class SQLCompiler
 						.replace("\t","")
 						.replace("\n","");
 				
-				if (!lastWord.contains(";")) { 
-					if (!(lastWord.indexOf(';') == (lastWord.length()-1))) {
-						System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
-						errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
-						map.put("complete",false);
-						return map;
-					}
+				if (!lastWord.contains(";") ||
+						!(lastWord.indexOf(';') == (lastWord.length()-1))) {
+					System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
+					errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
+					map.put("complete",false);
+					return map;
 				}
+				
 			}
 			else  {
 				System.out.println("문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.");
@@ -216,49 +216,6 @@ public class SQLCompiler
 		
 		return map;
 	}
-	/*
-	 * keyword 분류
-	 * 문법이 맞는지를 체크하는 것
-	 * ; 를 적절한 위치에 선언했는지 체크
-	 * order by가 마지막에 있는지를 체크(순서)
-	 * 우리가 문제를 내는 범위에서 체크하기(insert / delete / select)
-	 * ex) create 를 할 때, 컬럼 순서는 상관없음.(모든 속성이 있으면 된것)
-	 * alter table_name ADD / MODIFY
-	 * 
-	 * 1. select를 배우기
-	 *  SELECT * FROM table_name
-	 * 2. where 조건절을 배우기
-	 * 	SELECT * FROM table_name WHERE 조건
-	 * 2-1. where 심화 - or / and 
-	 * 2-2. where 심화2 - is null / not is null / 
-	 * 2-3. where 심화3 - like '%' // 요거는 조금 고민해봅시다.
-	 * 3. order by 정렬 기능 
-	 *  SELECT * FROM table_name WHERE 조건 ORDER BY column_name ASC;
-	 * 4. CREATE TABLE table_name
-	 * 	( attr_name data_type |default value| | null / not null | |UNIQUE|);
-	 * 5. DROP TABLE table_name;
-	 * 
-	 * 0. COMMIT / ROLLBACK
-	 * 6. INSERT INTO table_name
-	 * 	VALUES (value, ... );
-	 * 6-2.
-	 * 7. INSERT INTO table_name
-	 * (attr_name1, attr_name2, ...)
-	 * 	VALUES (value1, value2, ... );
-	 * 8. DELETE table_name WHERE 조건;
-	 * 9. UPDATE table_name SET attr_name = value WHERE 조건;
-	 * 10. ALTER TABLE table_name ADD column_name data_type...;
-	 * 10-2. ALTER TABLE table_name DROP column_name;
-	 * 10-3. ALTER TABLE table_name MODIFY (COLUMN) / ALTER COLUMN column_name;
-	 *  - alter table column 변경은 조금 고민해봅시다.
-	 * 11. PRIMARY KEY / FOREIGN KEY
-	 * 12. SUBQUERY
-	 *  - SELECT * FROM table_name (SELECT * FROM table_name2);
-	 * 13. GROUP FUNCTION - COUNT ( 문제는 count(*)만 내고, 나머지는 그냥 있다는 설명만 붙여준다)
-	 * 13-2. GROUP BY HAVING
-	 * 14. INNER JOIN / OUTER JOIN
-	 * etc. 제약조건( constraint)
-	 */
 
 	private int getSelect(int index)
 	{	// return 값은 i를 이용한 뒤에 +1 한 값
@@ -283,7 +240,16 @@ public class SQLCompiler
 					// column이 나오는지 체크한 뒤
 					
 					// 여기는 column 이름 쓰는 곳
-					,
+					// ,가 있으면 다음으로 넘어감
+					// ,가 중간에 있는지 확인함
+					// FROM의 위치를 찾은 후에 FROM 이전까지 index만 검사할것
+					// , 의 갯수를 센 후에 max_num로 지정
+					// column의 데이터를 배열로 입력 한 후 숫자를 max_num랑 매칭
+					for (int j = i ; j < texts.length; j++) {
+						
+					}
+					
+					
 					
 				}
 				

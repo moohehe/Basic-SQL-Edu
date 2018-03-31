@@ -53,5 +53,16 @@
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
 	<button id="db" onclick="javascript:dbtest()">dbTest</button>
 	<a href="getTable">뷰 테스트1</a>
+	<button class="btn" id="btn1">1</button><br>
+	<button class="btn" id="btn2">2</button><br>
+	<button class="btn" id="btn3">3</button><br>
+	<button class="btn" id="btn4">4</button><br>
+	<button class="btn" id="btn5">5</button><br>
+	<button class="btn" id="btn6">6</button><br>
+	<button class="btn" id="btn7">7</button><br>
+	<button class="btn" id="btn8">8</button><br>
+	<button class="btn" id="btn9">9</button><br>
+	
+	
 </body>
 </html>
