@@ -15,9 +15,10 @@ public class SQLCompiler
 	private String result_name;
 	private HashMap<String, Integer> result_columns;
 	
-	
+	HashMap<String, Object> map = new HashMap<String, Object>();
 	private String errorMessage="";
 	private boolean grammar_error=false;
+	
 	private String text;
 	private String texts[];
 	private String[] COMMAND = {"CREATE", "DROP", "ALTER", "SELECT", "INSERT", "DELETE", "UPDATE"};
@@ -37,6 +38,18 @@ public class SQLCompiler
 			, "year", "binary", "byte", "varbinary", "tinyblob", "blob", "mediumblob", "longblob"
 			// 안쓰지만 keyword 이기 때문에 적어놓음
 		};
+	private String[] nmDataType = {
+	         "integer","smallint","float","real","double","date","time","timestamp","clob","nclob","blob","bfile"
+	};
+	private String[] spDataType1 = {
+         "character","char","character varying"   ,"varchar","national character","nchar","nvarchar",
+         "number","decimal","varchar2","nvarchar2"
+	};
+	private String[] constraint = {
+         "not null","unique","primary key","foreign key","check"
+	};
+	
+	
 	
 	public SQLCompiler() {	}
 	
@@ -44,6 +57,7 @@ public class SQLCompiler
 	{
 		return text;
 	}
+	
 	public void setText(String text)
 	{
 		this.text = text;
@@ -66,6 +80,10 @@ public class SQLCompiler
 	 * 
 	 */
 	public void setTable(ArrayList<Object> list) {
+		if (list == null) {
+			return;
+		}
+			
 		if (list.size() == 0 ) {
 			table = new String[0][0];
 			return;
@@ -129,7 +147,6 @@ public class SQLCompiler
 	 * @"errorMessage" : 오류 내용
 	 */
 	public HashMap<String, Object> getResult() {
-		HashMap<String, Object> map = new HashMap<String, Object>();
 		// 틀릴 때만 complete에 false를 입력하고 
 		// errorMessage에 에러 메세지를 더함(\n까지)
 		map.put("complete", true);
@@ -164,6 +181,7 @@ public class SQLCompiler
 					System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
 					errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
 					map.put("complete",false);
+					map.put("errorMessage", errorMessage);
 					return map;
 				}
 				
@@ -209,8 +227,18 @@ public class SQLCompiler
 			default:
 				break;
 			}
+			if (i == -1 ) {
+				// 문법 오류난 것이므로 바로 리턴
+				break;
+			}
 		}
 		
+		
+		// 문제 없이 끝났으면 result를 맵에 입력
+		if ((boolean) map.get("complete")) {
+			map.put("result",result);
+		}
+		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
 		
 		
 		return map;
@@ -234,70 +262,104 @@ public class SQLCompiler
             // DDL이 나오면 안됨
             for (String s : COMMAND) {
                if (s.equals(current)) {
+            	   
                   return i++;
                }
-
-					// column이 나오는지 체크한 뒤
-					
-					// 여기는 column 이름 쓰는 곳
-					// FROM의 위치를 찾은 후에 FROM 이전까지 index만 검사할것
-					// , 의 갯수를 센 후에 max_num로 지정
-					// column의 데이터를 배열로 입력 한 후 숫자를 max_num랑 매칭
-					
-					// from의 index를 파악하고
-					// form이 없으면 오류
-					// ,의 갯수를 파악하고 +1만큼이 column 배열의 length
-					// column 배열을 , 단위로 찾기
-					for (int j = i ; j < texts.length; j++) {
-						if (texts[j].contains("from")) {
-							
-							break;
-						}
-					}
-					
-					
-					
-				}
-				
-				
-				
-				
-				
-				
-				
-				
-				// 1-2. FROM이 나오면 이 단계는 종료
-				if (current.equals("FROM")) {
-					stage++;
+            }
+			// column이 나오는지 체크한 뒤
+			
+			// 여기는 column 이름 쓰는 곳
+			// FROM의 위치를 찾은 후에 FROM 이전까지 index만 검사할것
+			// , 의 갯수를 센 후에 max_num로 지정
+			// column의 데이터를 배열로 입력 한 후 숫자를 max_num랑 매칭
+			
+			// from의 index를 파악하고
+			// form이 없으면 오류
+			// ,의 갯수를 파악하고 +1만큼이 column 배열의 length
+			// column 배열을 , 단위로 찾기
+       
+       		// 1. from이 있는지 확인하기
+       		int from_index;
+			for (from_index = i ; from_index < texts.length; from_index++) {
+				if (texts[from_index].contains("from")) {
+					break;
 				}
 			}
-			else if (stage == 2) {
-				// 2. FROM이 나오면 table_name 등록
-				// 2-1. select인지 체크
-				// table 이름 체크하기
+			// column ArrayList<String>
+			ArrayList<String> columns = new ArrayList<String>();
+			
+			// 2. column에서 ,의 갯수 파악
+			int comma_count = 0;
+			for (int j = i ; j < from_index; j++ ) {
+				if (texts[j].contains(",")) {
+					for (int k = 0; k < texts[j].length() ; k++) {
+						comma_count++;
+					}
+				}
+			}
+			// 2-2. column 명 + , 반복되고 마지막은 ,가 아니어야 됨
+			// column + as + 별칭 혹은 column +별칭 확인하기
+			for (int k = i; k < from_index; i++) {
+				current = texts[k];
+				// stage1에서는 ','로 시작하면 안됨
+				if (k == i) {
+					if (current.indexOf(",") == 0) {
+						System.out.println("문법오류 : SELECT 구문 뒤에 ,가 바로 올 수 없습니다.");
+						errorMessage += "문법오류 : SELECT 구문 뒤에 ,가 바로 올 수 없습니다.\n";
+						map.put("complete",false);
+						return -1;
+					}
+				}
 				
+				// column 명 획득
+				if (current.contains(",")) {
+					// ,가 처음에 있는 경우 (1개인지 2개인지
+					if (current.indexOf(",") == 0 ) {
+						
+					}
+					// ,가 중간에 있는 경우
+					// ,가 마지막에 있는 경우
+				}
+				
+				
+				
+			}
+			
+			
+			
+			
+			// 1-2. FROM이 나오면 이 단계는 종료
+			if (current.equals("FROM")) {
 				stage++;
 			}
-			else if (stage == 3) {
-				// where 문 체크하고 없으면 통과
-				if (current.equals("where")) {
-					// where 실행할것
-				}
-				stage++;
+		}
+		else if (stage == 2) {
+			// 2. FROM이 나오면 table_name 등록
+			// 2-1. select인지 체크
+			// table 이름 체크하기
+			
+			stage++;
+		}
+		else if (stage == 3) {
+			// where 문 체크하고 없으면 통과
+			if (current.equals("where")) {
+				// where 실행할것
 			}
-			else if (stage == 4) {
-				// order by 체크하기
-				if (current.equals("order")) {
-					if (texts[++i].equals("by")) {
-						// order by 실행
-					}
-					else {
-						// order by 구문이 틀렸기 때문에
-						grammar_error = true;
-						errorMessage += "group 다음에는 by가 와야합니다.";
-					}
+			stage++;
+		}
+		else if (stage == 4) {
+			// order by 체크하기
+			if (current.equals("order")) {
+				if (texts[++i].equals("by")) {
+					// order by 실행
 				}
-			}         
+				else {
+					// order by 구문이 틀렸기 때문에
+					grammar_error = true;
+					errorMessage += "group 다음에는 by가 와야합니다.";
+				}
+			}
+		}         
       }
       return i++;
    }
