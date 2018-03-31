@@ -246,7 +246,7 @@ public class SQLCompiler
 					// , 의 갯수를 센 후에 max_num로 지정
 					// column의 데이터를 배열로 입력 한 후 숫자를 max_num랑 매칭
 					for (int j = i ; j < texts.length; j++) {
-						// sys
+						// syss
 					}
 					
 					
