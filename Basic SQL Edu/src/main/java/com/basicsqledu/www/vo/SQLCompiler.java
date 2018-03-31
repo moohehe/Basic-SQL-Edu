@@ -210,6 +210,7 @@ public class SQLCompiler
 			// select 인지 검사하기
 			switch (current.toLowerCase()) {
 			case "create":
+				i = getCreate(i);
 				break;
 			case "drop":
 				break;
@@ -244,6 +245,84 @@ public class SQLCompiler
 		return map;
 	}
    
+	/**
+	 * 
+	 * create table quiz_theme(
+    		th_code number  primary key
+    		,gp_code number not null
+    		,th_name    varchar2(50)    not null
+    		,constraint theme_fk foreign key(gp_code) 
+			references quiz_group(gp_code) on delete cascade
+			);
+	 * */
+	private int getCreate(int index)
+	{   // return 값은 i를 이용한 뒤에 +1 한 값
+		int i=0;
+		int stage = 1;
+
+		for (i = stage; i < texts.length; i++ ) {
+			String current = texts[i];
+			System.out.println(current);
+
+			if (stage == 1) {// stage == 1 : SELECT <여기> FROM
+				//1. create <table>이 나오면 바로 종료
+				if(current.equals("table")){
+					stage++;
+				}else{
+					//<table>이 아니고 다른게 나옴
+					errorMessage += "create 다음에는 table이 나와야 합니다.";
+					map.put("complete", false);
+					return -1;
+				}
+			}
+			else if (stage == 2) {
+				// 2. table이 나오면 table_name을 찾음(내가 가지고 있는 table_name이여야함)
+				// table 이름 체크하기
+				result_name = current;				//현재 사용자가 입력한 테이블 네임
+				
+				table_name = "animal1"	;			//임시 테이블 네임(이후 DB결과에서 받아와야함)
+				
+				if(!(result_name.equals(table_name))){
+					//안맞음
+					errorMessage += "table 다음에는 정확한 table_name이 나와야 합니다.";
+					map.put("complete", false);
+					return -1;
+				}else{
+					stage++;	
+				}
+			}
+			else if (stage == 3) {
+				//3. table_name 다음에는 괄호다
+				if(current.startsWith("(") || current.equals("(")){
+					
+					
+					
+					
+					
+					stage++;
+				}else{
+					// 괄호로 시작하지 않거나 포함되지 않음
+					errorMessage += "괄호로 감싸야함";
+					map.put("complete", false);
+					return -1;
+				}
+				
+			}
+			else if (stage == 4) {
+				// 4. 괄호 안에 column 체크
+				// 4-0. 마지막에 ")"가 나올때까지 String배열에 저장,primary key는 한번만
+				// 4-1. 컬럼 이름
+				// 4-2. 컬럼의 데이터 형태
+				// 4-3. 컬럼의 제약조건(기본키, 외래키, not null, default)
+				// 4-4. 콤마
+			}         
+		}
+
+		return i++;
+	}
+
+	
+	
    
    private int getSelect(int index)
    {   // return 값은 i를 이용한 뒤에 +1 한 값
