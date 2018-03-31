@@ -100,8 +100,7 @@ public class SQLCompiler
 		}
 	}
 	
-	public String getTable() {
-
+   public String getTable() {
 		// 무결성 체크
 		if (table == null ) {
 			return null;
@@ -216,26 +215,27 @@ public class SQLCompiler
 		
 		return map;
 	}
-
-	private int getSelect(int index)
-	{	// return 값은 i를 이용한 뒤에 +1 한 값
-		int i=0;
-		
-		// stage == 1 : SELECT <여기> FROM
-		// stage == 2 : FROM <여기> WHERE 혹은 GROUP BY
-		// stage == 3 : WHERE <여기> ORDER BY
-		// stage == 4 : GROUP BY <여기> HAVING
-		// stage == 5 : stage3/4 <여기> ORDER BY
-		int stage = 1; 
-		for (i = index; i < texts.length; i++ ) {
-			String current = texts[i];
-			
-			if (stage == 1) {// stage == 1 : SELECT <여기> FROM
-				// DDL이 나오면 안됨
-				for (String s : COMMAND) {
-					if (s.equals(current)) {
-						return i++;
-					}
+   
+   
+   private int getSelect(int index)
+   {   // return 값은 i를 이용한 뒤에 +1 한 값
+      int i=0;
+      
+      // stage == 1 : SELECT <여기> FROM
+      // stage == 2 : FROM <여기> WHERE 혹은 GROUP BY
+      // stage == 3 : WHERE <여기> ORDER BY
+      // stage == 4 : GROUP BY <여기> HAVING
+      // stage == 5 : stage3/4 <여기> ORDER BY
+      int stage = 1; 
+      for (i = index; i < texts.length; i++ ) {
+         String current = texts[i];
+         
+         if (stage == 1) {// stage == 1 : SELECT <여기> FROM
+            // DDL이 나오면 안됨
+            for (String s : COMMAND) {
+               if (s.equals(current)) {
+                  return i++;
+               }
 
 					// column이 나오는지 체크한 뒤
 					
@@ -297,16 +297,12 @@ public class SQLCompiler
 						errorMessage += "group 다음에는 by가 와야합니다.";
 					}
 				}
-			}
-
-			
-			
-			
-		}
-		return i++;
-	}
-	public String getErrorMessage()
-	{
-		return errorMessage;
-	}
+			}         
+      }
+      return i++;
+   }
+   public String getErrorMessage()
+   {
+      return errorMessage;
+   }
 }
