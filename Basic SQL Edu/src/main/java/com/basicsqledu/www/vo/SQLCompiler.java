@@ -240,13 +240,20 @@ public class SQLCompiler
 					// column이 나오는지 체크한 뒤
 					
 					// 여기는 column 이름 쓰는 곳
-					// ,가 있으면 다음으로 넘어감
-					// ,가 중간에 있는지 확인함
 					// FROM의 위치를 찾은 후에 FROM 이전까지 index만 검사할것
 					// , 의 갯수를 센 후에 max_num로 지정
 					// column의 데이터를 배열로 입력 한 후 숫자를 max_num랑 매칭
+					
+					
+					// from의 index를 파악하고
+					// form이 없으면 오류
+					// ,의 갯수를 파악하고 +1만큼이 coum 배열의 length
+					// column 배열을 , 단위로 찾기
 					for (int j = i ; j < texts.length; j++) {
-						// syss
+						if (texts[j].contains("from")) {
+							
+							break;
+						}
 					}
 					
 					
