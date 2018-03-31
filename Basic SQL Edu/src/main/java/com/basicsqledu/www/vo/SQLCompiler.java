@@ -244,10 +244,9 @@ public class SQLCompiler
 					// , 의 갯수를 센 후에 max_num로 지정
 					// column의 데이터를 배열로 입력 한 후 숫자를 max_num랑 매칭
 					
-					
 					// from의 index를 파악하고
 					// form이 없으면 오류
-					// ,의 갯수를 파악하고 +1만큼이 coum 배열의 length
+					// ,의 갯수를 파악하고 +1만큼이 column 배열의 length
 					// column 배열을 , 단위로 찾기
 					for (int j = i ; j < texts.length; j++) {
 						if (texts[j].contains("from")) {
