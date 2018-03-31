@@ -3,6 +3,8 @@ package com.basicsqledu.www.vo;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.springframework.util.StringUtils;
+
 public class SQLCompiler
 {
 	// data 관련 변수(DB 갔다옴)
@@ -62,7 +64,11 @@ public class SQLCompiler
 	{
 		this.text = text;
 		// 구문 분석기에 넣어서 입력
-		texts = text.replace(" " , "㉿").replace("\t","㉿").replace("\n", "㉿").split("㉿");
+		texts = text.toLowerCase()
+				.replace(",","㉿,㉿").replace("(","㉿(㉿")
+				.replace(")","㉿)㉿").replace(" " , "㉿")
+				.replace("\t","㉿").replace("\n", "㉿")
+				.split("㉿");
 		//texts = text.split("\\s|\r|\t");
 		//System.out.println("length="+texts.length);
 		System.out.println("구문 분류");
@@ -208,7 +214,7 @@ public class SQLCompiler
 			
 			
 			// select 인지 검사하기
-			switch (current.toLowerCase()) {
+			switch (current) {
 			case "create":
 				i = getCreate(i);
 				break;
@@ -376,32 +382,49 @@ public class SQLCompiler
 					}
 				}
 			}
+			
 			// 2-2. column 명 + , 반복되고 마지막은 ,가 아니어야 됨
 			// column + as + 별칭 혹은 column +별칭 확인하기
 			for (int k = i; k < from_index; i++) {
 				current = texts[k];
 				// stage1에서는 ','로 시작하면 안됨
 				if (k == i) {
-					if (current.indexOf(",") == 0) {
+					if (current.startsWith(",")) {
 						System.out.println("문법오류 : SELECT 구문 뒤에 ,가 바로 올 수 없습니다.");
 						errorMessage += "문법오류 : SELECT 구문 뒤에 ,가 바로 올 수 없습니다.\n";
 						map.put("complete",false);
 						return -1;
 					}
 				}
-				
-				// column 명 획득
-				if (current.contains(",")) {
-					// ,가 처음에 있는 경우 (1개인지 2개인지
-					if (current.indexOf(",") == 0 ) {
-						
+				// stage1에서는 ','로 끝나면 안됨
+				if (k == from_index-1) {
+					if (current.endsWith(",")) {
+						System.out.println("문법오류 : 컬럼명 입력이 잘 못되었습니다.");
+						errorMessage += "문법오류 : 컬럼명 입력이 잘 못 되었습니다.\n";
+						map.put("complete",false);
+						return -1;
 					}
-					// ,가 중간에 있는 경우
-					// ,가 마지막에 있는 경우
 				}
 				
+				int current_comma = StringUtils.countOccurrencesOf(current, ",");
 				
 				
+				// column 명 획득
+				if (current.startsWith(",")) {
+					// ,가 처음에 있는 경우 (1개인지 2개인지도 체크)
+					
+				}
+				else if (current.endsWith(",")) {
+					// ,가 마지막에 있는 경우
+					
+				}
+				else if (current.contains(",")){
+					// ,가 중간에 있는 경우
+				}
+				else {
+					// ,가 없는 경우
+					
+				}
 			}
 			
 			
