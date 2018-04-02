@@ -58,8 +58,10 @@ public class SQLCompiler
 	{
 		this.text = text;
 		// 구문 분석기에 넣어서 입력
-		texts = text.toLowerCase().replace(",", "㉿,㉿").replace("(", "㉿(㉿").replace(")", "㉿)㉿").replace(" ", "㉿")
-				.replace("\t", "㉿").replace("\n", "㉿").replace("㉿as㉿", "㉿").split("㉿");
+		texts = text.toLowerCase().replace(",", "㉿,㉿").replace("(", "㉿(㉿")
+				.replace(")", "㉿)㉿").replace(" ", "㉿").replace("\t", "㉿")
+				.replace("\n", "㉿").replace("=", "㉿").replace("㉿as㉿", "㉿")
+				.split("㉿");
 		System.out.println("setText된 결과");
 		for (int i = 0; i < texts.length; i++)
 		{
@@ -201,7 +203,20 @@ public class SQLCompiler
 			map.put("complete", false);
 			return map;
 		}
-
+		// '*' 검사
+		for (i = 0; i < texts.length; i++ ) {
+			String current = texts[i];
+			if (current.contains("*")) {
+				if (current.length() != 1 ) {
+					System.out.println("문법 오류 : *은 단독으로 사용하여야 합니다.");
+					errorMessage += "문법 오류 : *은 단독으로 사용하여야 합니다.";
+					map.put("errorMessage",errorMessage);
+					map.put("complete",false);
+					return map;
+				}
+			}
+		}
+		
 		System.out.println("2. 구문검사 시작");
 
 		// 2. 구문 검사 시작
@@ -235,6 +250,9 @@ public class SQLCompiler
 				map.put("cmd","select");
 				result = getSelect();
 				break;
+			case "desc":
+				map.put("cmd","desc");
+				break;
 			default:
 				break;
 			}
@@ -251,7 +269,8 @@ public class SQLCompiler
 			map.put("result", result);
 		}
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
-
+		System.out.println("End of getResult");
+		System.out.println("result="+result);
 		return map;
 	}
 
@@ -263,7 +282,7 @@ public class SQLCompiler
 	 * key(gp_code) references quiz_group(gp_code) on delete cascade );
 	 */
 	private int getCreate(int index)
-	{ // return 값은 i를 이용한 뒤에 +1 한 값
+	{
 		int i = 0;
 		int stage = 1;
 
@@ -338,6 +357,7 @@ public class SQLCompiler
 	private String[][] getSelect()
 	{ // return 값은 2차원 배열
 		String[][] selectResult = null;
+		i++;
 		
 		// stage == 1 : SELECT <여기> FROM
 		// stage == 2 : FROM <여기> WHERE 혹은 GROUP BY
@@ -393,16 +413,7 @@ public class SQLCompiler
 				// ,의 갯수를 파악하고 +1만큼이 column 배열의 length
 				// column 배열을 , 단위로 찾기
 
-				/*// 2. column에서 ,의 갯수 파악
-				int comma_count = 0;
-				for (int j = i; j < from_index; j++)
-				{
-					if (texts[j].equals(","))
-					{
-						comma_count++;
-					}
-				}*/
-				// 2-2. column 명 + , 반복되고 마지막은 ,가 아니어야 됨
+				// 2. column 명 + , 반복되고 마지막은 ,가 아니어야 됨
 				// column + as + 별칭 혹은 column +별칭 확인하기
 				for (int k = index; k < from_index; k++)
 				{
@@ -419,6 +430,10 @@ public class SQLCompiler
 					{
 						if (s.equals(current))
 						{
+							/*
+							System.out.println("s="+s + " current="+current);
+							System.out.println("k="+k + " from_index="+from_index);
+							*/
 							System.out.println("문법오류 : SELECT ~ FROM 사이의 값이 없습니다.");
 							errorMessage += "문법오류 : SELECT ~ FROM 사이의 값이 없습니다.\n";
 							map.put("complete",false);
@@ -498,9 +513,7 @@ public class SQLCompiler
 				// 2. FROM이 나오면 table_name 등록
 				// 2-1. select인지 체크
 				// table 이름 체크하기
-				int kk = 0;
-				System.out.println("columns");
-				System.out.println(columns);
+				
 				// ( 로 시작하는지 체크
 				// ( 로 시작하면 )로 닫기는 지 체크
 				// as 구문이 있을 수 있으니 ,가 없이 두번 연속 단어가 나오면 별칭으로 등록
@@ -517,10 +530,45 @@ public class SQLCompiler
 				
 				
 				
+
+				// 다음 문법 주소
+				int next_index = i;
+				String next = "";
+				while ( true ) {
+					current = texts[next_index];
+					next_index++;
+					if (current.equals("where")) {
+						next = "where";
+						break;
+					}
+					if (current.equals("order")) {
+						next = "order by";
+						break;
+					}
+				}
 				
-				stage++;
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				// 1. next = "where" 이면 stage = 3 / next = "order by" 이면 stage =4
+				if (next.length() == 5) {
+					stage = 3;
+				} else if (next.length() == 8){
+					stage = 4;
+				} else { // next = "" 이면 뒤쪽에 아무것도 없음.
+					stage = 5;
+				}
+				// 3. where나 order가 없으면 next = ""
+				
 			} else if (stage == 3)
 			{
+				// where pname = (select pname FORM STUDENT WHERE sno=101122);
 				// where 문 체크하고 없으면 통과
 				if (current.equals("where"))
 				{
@@ -546,7 +594,7 @@ public class SQLCompiler
 					}
 				}
 			}
-			i = index++;
+			i = index+1;
 		}
 		return selectResult;
 	}
