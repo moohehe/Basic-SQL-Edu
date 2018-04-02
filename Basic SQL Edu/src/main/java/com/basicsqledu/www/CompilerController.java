@@ -68,7 +68,7 @@ public class CompilerController
 		String json = gson.toJson(resultMap);
 		System.out.println("[ResultData]\n"+json);
 		
-		return "success!!!\n"+compiler.getTable();
+		return "success!!!\n"+json;
 	}
 	
 	

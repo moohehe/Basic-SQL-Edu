@@ -185,11 +185,15 @@ public class SQLCompiler
 			{
 				System.out.println("문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.");
 				errorMessage += "문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.\n";
+				map.put("complete",false);
+				map.put("errorMessage",errorMessage);
+				return map;
 			}
 		} else
 		{
 			System.out.println("문법 오류 : ; 가 없습니다.");
 			errorMessage += "문법 오류 : ; 가 없습니다. \n";
+			map.put("errorMessage",errorMessage);
 			map.put("complete", false);
 			return map;
 		}
@@ -205,19 +209,26 @@ public class SQLCompiler
 			switch (current)
 			{
 			case "create":
+				map.put("cmd","create");
 				i = getCreate(++i);
 				break;
 			case "drop":
+				map.put("cmd","drop");
 				break;
 			case "alter":
+				map.put("cmd","alter");
 				break;
 			case "insert":
+				map.put("cmd","insert");
 				break;
 			case "update":
+				map.put("cmd","update");
 				break;
 			case "delete":
+				map.put("cmd","delete");
 				break;
 			case "select":
+				map.put("cmd","select");
 				i = getSelect(++i);
 				break;
 			default:
@@ -266,7 +277,8 @@ public class SQLCompiler
 				{
 					// <table>이 아니고 다른게 나옴
 					errorMessage += "create 다음에는 table이 나와야 합니다.";
-					map.put("complete", false);
+					map.put("complete",false);
+					map.put("errorMessage",errorMessage);
 					return -1;
 				}
 			} else if (stage == 2)
@@ -281,7 +293,8 @@ public class SQLCompiler
 				{
 					// 안맞음
 					errorMessage += "table 다음에는 정확한 table_name이 나와야 합니다.";
-					map.put("complete", false);
+					map.put("complete",false);
+					map.put("errorMessage",errorMessage);
 					return -1;
 				} else
 				{
@@ -298,7 +311,8 @@ public class SQLCompiler
 				{
 					// 괄호로 시작하지 않거나 포함되지 않음
 					errorMessage += "괄호로 감싸야함";
-					map.put("complete", false);
+					map.put("complete",false);
+					map.put("errorMessage",errorMessage);
 					return -1;
 				}
 
@@ -339,11 +353,16 @@ public class SQLCompiler
 		// form이 없으면 오류
 		for (from_index = i; from_index < texts.length; from_index++)
 		{
+			if (texts[from_index].equals("from")){
+				break;
+			}
 			if (from_index == (texts.length - 1))
 			{
+				System.out.println("여기");
 				System.out.println("문법오류 : FROM 구문이 없습니다.");
 				errorMessage += "문법오류 : FROM 구문이 없습니다.\n";
-				map.put("complete", false);
+				map.put("complete",false);
+				map.put("errorMessage",errorMessage);
 				return -1;
 			}
 		}
@@ -397,7 +416,8 @@ public class SQLCompiler
 						{
 							System.out.println("문법오류 : SELECT ~ FROM 사이의 값이 없습니다.");
 							errorMessage += "문법오류 : SELECT ~ FROM 사이의 값이 없습니다.\n";
-							map.put("complete", false);
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
 							return -1;
 						}
 					}
@@ -410,7 +430,8 @@ public class SQLCompiler
 							System.out.println("index=" + k);
 							System.out.println("문법오류 : ,를 확인해주세요.");
 							errorMessage += "문법오류 : ,를 확인해주세요.\n";
-							map.put("complete", false);
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
 							return -1;
 						}
 					}
@@ -423,7 +444,8 @@ public class SQLCompiler
 						{
 							System.out.println("문법오류 : , 가 연속으로 입력되었습니다.");
 							errorMessage += "문법오류 : , 가 연속으로 입력되었습니다.\n";
-							map.put("complete", false);
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
 							return -1;
 						}
 						comma = true;
@@ -460,7 +482,8 @@ public class SQLCompiler
 					{
 						System.out.println("문법오류 : 컬럼 구문은 ,로 끝날 수 없습니다.");
 						errorMessage += "문법오류 : 컬럼 구문은 ,로 끝날 수 없습니다.\n";
-						map.put("complete", false);
+						map.put("complete",false);
+						map.put("errorMessage",errorMessage);
 						return -1;
 					}
 				}
@@ -512,6 +535,9 @@ public class SQLCompiler
 						// order by 구문이 틀렸기 때문에
 						grammar_error = true;
 						errorMessage += "group 다음에는 by가 와야합니다.";
+						map.put("complete",false);
+						map.put("errorMessage",errorMessage);
+						return -1;
 					}
 				}
 			}
