@@ -6,6 +6,10 @@ import java.util.HashMap;
 
 public class SQLCompiler
 {
+	// index
+	private int i;
+	
+	
 	// data 관련 변수(DB 갔다옴)
 	private String[][] table;
 	private String table_name; // table name
@@ -201,7 +205,7 @@ public class SQLCompiler
 		System.out.println("2. 구문검사 시작");
 
 		// 2. 구문 검사 시작
-		for (int i = 0; i < texts.length; i++)
+		for (i = 0; i < texts.length; i++)
 		{
 			String current = texts[i];
 
@@ -229,12 +233,12 @@ public class SQLCompiler
 				break;
 			case "select":
 				map.put("cmd","select");
-				i = getSelect(++i);
+				result = getSelect();
 				break;
 			default:
 				break;
 			}
-			if (i == -1)
+			if (result == null)
 			{
 				// 문법 오류난 것이므로 바로 리턴
 				break;
@@ -250,6 +254,7 @@ public class SQLCompiler
 
 		return map;
 	}
+
 
 	/**
 	 * 
@@ -330,10 +335,10 @@ public class SQLCompiler
 		return i++;
 	}
 
-	private int getSelect(int index)
-	{ // return 값은 i를 이용한 뒤에 +1 한 값
-		int i = 0;
-
+	private String[][] getSelect()
+	{ // return 값은 2차원 배열
+		String[][] selectResult = null;
+		
 		// stage == 1 : SELECT <여기> FROM
 		// stage == 2 : FROM <여기> WHERE 혹은 GROUP BY
 		// stage == 3 : WHERE <여기> ORDER BY
@@ -363,13 +368,13 @@ public class SQLCompiler
 				errorMessage += "문법오류 : FROM 구문이 없습니다.\n";
 				map.put("complete",false);
 				map.put("errorMessage",errorMessage);
-				return -1;
+				return null;
 			}
 		}
 		
-		for (i = index; i < texts.length; i++)
+		for (int index = i; index < texts.length; index++)
 		{
-			String current = texts[i];
+			String current = texts[index];
 			if (current.length() == 0)
 			{
 				continue;
@@ -399,7 +404,7 @@ public class SQLCompiler
 				}*/
 				// 2-2. column 명 + , 반복되고 마지막은 ,가 아니어야 됨
 				// column + as + 별칭 혹은 column +별칭 확인하기
-				for (int k = i; k < from_index; k++)
+				for (int k = index; k < from_index; k++)
 				{
 					current = texts[k];
 					// 빈 데이터면 생략
@@ -418,12 +423,12 @@ public class SQLCompiler
 							errorMessage += "문법오류 : SELECT ~ FROM 사이의 값이 없습니다.\n";
 							map.put("complete",false);
 							map.put("errorMessage",errorMessage);
-							return -1;
+							return null;
 						}
 					}
 
 					// stage1에서는 ','로 시작하면 안됨
-					if (k == i)
+					if (k == index)
 					{
 						if (current.equals(","))
 						{
@@ -432,7 +437,7 @@ public class SQLCompiler
 							errorMessage += "문법오류 : ,를 확인해주세요.\n";
 							map.put("complete",false);
 							map.put("errorMessage",errorMessage);
-							return -1;
+							return null;
 						}
 					}
 
@@ -446,7 +451,7 @@ public class SQLCompiler
 							errorMessage += "문법오류 : , 가 연속으로 입력되었습니다.\n";
 							map.put("complete",false);
 							map.put("errorMessage",errorMessage);
-							return -1;
+							return null;
 						}
 						comma = true;
 						continue;
@@ -467,11 +472,11 @@ public class SQLCompiler
 						columns.add(current);
 						as = true;
 					}
-					i = k;
+					index = k;
 				}
 
 				// 1-2. FROM이 나오면 이 단계는 종료
-				if (i == from_index)
+				if (index == from_index)
 				{
 					System.out.println("1-2. i == from_index");
 					stage++;
@@ -484,7 +489,7 @@ public class SQLCompiler
 						errorMessage += "문법오류 : 컬럼 구문은 ,로 끝날 수 없습니다.\n";
 						map.put("complete",false);
 						map.put("errorMessage",errorMessage);
-						return -1;
+						return null;
 					}
 				}
 			} else if (stage == 2)
@@ -527,7 +532,7 @@ public class SQLCompiler
 				// order by 체크하기
 				if (current.equals("order"))
 				{
-					if (texts[++i].equals("by"))
+					if (texts[++index].equals("by"))
 					{
 						// order by 실행
 					} else
@@ -537,12 +542,13 @@ public class SQLCompiler
 						errorMessage += "group 다음에는 by가 와야합니다.";
 						map.put("complete",false);
 						map.put("errorMessage",errorMessage);
-						return -1;
+						return null;
 					}
 				}
 			}
+			i = index++;
 		}
-		return i++;
+		return selectResult;
 	}
 
 	public String getErrorMessage()
