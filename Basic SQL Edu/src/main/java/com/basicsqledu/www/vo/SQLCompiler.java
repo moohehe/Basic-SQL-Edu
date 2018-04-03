@@ -12,10 +12,10 @@ public class SQLCompiler
 	
 	// data 관련 변수(DB 갔다옴)
 	private String[][] table;
+	HashMap<String, Object> taaa = new HashMap<String, Object>();
 	private String table_name; // table name
 	private HashMap<String, Integer> table_columns; // String : columns_name /
 													// Integer : realdata_index
-
 	// SQL 구문 결과(내부에서 계산한 결과)
 	private String[][] result;
 	private String result_name;
@@ -27,7 +27,8 @@ public class SQLCompiler
 
 	private String text;
 	private String texts[];
-	private String[] COMMAND = { "create", "drop", "alter", "select", "insert", "delete", "update","grant","revoke" };
+	private String[] COMMAND = { "create", "drop", "alter", "select", "insert", "delete", "update","grant","revoke", "set","by" };
+	private String[] COMMAND2 = { "create", "drop", "alter", "insert", "delete", "update","grant","revoke" };
 	private String[] keywords = { "create", "drop", "alter", "select", "insert", "update", "delete", "from", "table",
 			"view", "schema", "sequence", "index", "column", "join", "inner", "outer", "as", "null", "not null",
 			"primary key", "foreign key", "unique", "default", "clustered", "nonclustered", "and", "or", "on", "set",
@@ -356,8 +357,10 @@ public class SQLCompiler
 
 	private String[][] getSelect()
 	{ // return 값은 2차원 배열
-		String[][] selectResult = null;
 		i++;
+		String[][] selectResult = null; // result 값
+		
+		
 		
 		// stage == 1 : SELECT <여기> FROM
 		// stage == 2 : FROM <여기> WHERE 혹은 GROUP BY
@@ -366,9 +369,11 @@ public class SQLCompiler
 		// stage == 5 : stage3/4 <여기> ORDER BY
 		int stage = 1;
 		int from_index; // from_index : from이 다음에 나오는 위치
-		boolean from = false; // from 이 나왔는지 체크
+		boolean isFrom = false; // from 이 나왔는지 체크
 		// column ArrayList<String>
 		ArrayList<String> columns = new ArrayList<String>();
+		// tables : from에서 가지고 오는 테이블
+		ArrayList<String[][]> tables = new ArrayList<String[][]>();
 		// comma와 as 문법 체크용 변수
 		boolean comma = false;
 		boolean as = false;
@@ -383,9 +388,8 @@ public class SQLCompiler
 			}
 			if (from_index == (texts.length - 1))
 			{
-				System.out.println("여기");
-				System.out.println("문법오류 : FROM 구문이 없습니다.");
-				errorMessage += "문법오류 : FROM 구문이 없습니다.\n";
+				System.out.println("문법오류 : FROM 이후 구문이 없습니다.");
+				errorMessage += "문법오류 : FROM 이후 구문이 없습니다.\n";
 				map.put("complete",false);
 				map.put("errorMessage",errorMessage);
 				return null;
@@ -534,19 +538,149 @@ public class SQLCompiler
 				// 다음 문법 주소
 				int next_index = i;
 				String next = "";
-				while ( true ) {
+				while ( next.length() == 0 && next_index < texts.length ) {
 					current = texts[next_index];
-					next_index++;
 					if (current.equals("where")) {
 						next = "where";
-						break;
 					}
 					if (current.equals("order")) {
 						next = "order by";
-						break;
+					}
+					next_index++;
+				}
+				if (next_index == texts.length) {
+					// where 도 order도 없으면 다음단계로 바로 넘어간다.
+					System.out.println("where도 order도 없음");
+					stage = 5;
+					continue;
+				}
+				
+				// 여기서부터 table을 가지고 온다.
+				// String[][] 2차원 배열로 가지고 온다.
+				
+				
+				// KEYWORD가 나오면 안됨
+				// SELECT 빼고
+				for (String s : COMMAND2)
+				{
+					if (s.equals(current))
+					{
+						System.out.println("문법오류 : FROM 뒤에는 "+s+"가 올 수 없습니다.");
+						errorMessage += "문법오류 : FROM 뒤에는 "+s+"가 올 수 없습니다.\n";
+						map.put("complete",false);
+						map.put("errorMessage",errorMessage);
+						return null;
 					}
 				}
 				
+
+				// tables 데이터 (key, value)
+				String table_key = "";
+				String table_value= "";
+				// 괄호 시작 여부 (bracket)
+				boolean bracket = false;
+				boolean last_bracket = false; // 바로 앞에 ')'가 있었는지 확인
+				
+				// 여기서부터 from ~ 테이블 명 + 서브쿼리(select) 테이블 획득
+				while ( i < next_index ) {
+					boolean from_comma = false;
+					current = texts[i];
+					// 비어있으면 생략
+					if (current.length() == 0) {
+						i++;
+						continue;
+					}
+					
+					// 콤마 먼저 처리함
+					if (current.equals(",")) {
+						last_bracket = false;
+						if (from_comma && !bracket) { // 괄호가 닫겨있거나 from_comma가 없어야 함
+							System.out.println("문법오류 : ','를 확인하세요.");
+							errorMessage += "문법오류 : ','를 확인하세요.\n";
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
+							return null;
+						}
+						from_comma = true;
+					}
+					
+					if (current.contains("(")) {
+						//괄호 오픈 상태
+						last_bracket = false;
+						if (bracket) {
+							// (가 두번 연속 나온 상황
+							System.out.println("문법오류 : '('는 두번연속 나올 수 없습니다.");
+							errorMessage += "문법오류 : '('는 두번연속 나올 수 없습니다.\n";
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
+							return null;
+						}
+						bracket = true;
+					}
+					
+					// 괄호 오픈 되었으면 select가 무조건 나와야함.
+					if (current.contains("select")) {
+						last_bracket = false;
+						// 여기서 재귀함수 발동!
+						String[][] ta = getSelect();
+						if (ta == null) {
+							System.out.println("문법 오류 : ");
+							errorMessage += "문법오류 : \n";
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
+							return null;
+						}
+						tables.add(ta);
+						continue;
+					}
+					else { // 'select 구문'은 여기에 오지 않음
+						// 여기 작성中
+						// map에 데이터를 넣을건데
+						// from aaaa as aa 같은 경웽 
+						// key : aa , value = aaaa 인데
+						// from aaaa 일 경우에는
+						// key = value = aaaa 인것
+						if (table_value.length() == 0 && !from_comma) {
+							table_value = current;
+						}
+						else if (table_key.length() == 0 ) {
+							table_key = current;
+						}
+						else {
+							// 단어만 3번 연속 반복됨
+							System.out.println("문법오류 : ','가 없습니다.");
+							errorMessage += "문법오류 : ','가 없습니다.\n";
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
+							return null;
+						}
+						
+					}
+					
+					// ')' 괄호 클로즈가 반드시 나와야 함.
+					if (current.contains(")")) {
+						last_bracket = true;
+						if (bracket) {
+							// '('가 앞에 있었음.
+							bracket = false;
+						}
+						else {
+							// 괄호가 오픈되지 않았음.
+							System.out.println("문법오류 : '('가 없습니다.");
+							errorMessage += "문법오류 : '('가 없습니다.\n";
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
+							return null;
+						}
+					}
+					
+					i++;
+				}
+				
+				if (bracket) {
+					
+				}
+				// comma 나오는지 확인해야함
 				
 				
 				
@@ -595,6 +729,18 @@ public class SQLCompiler
 				}
 			}
 			i = index+1;
+		}
+
+		// stage 2와 stage 3은 무조건 값이 있어야 함
+		// columns랑 tables가 비어있으면 문법 오류
+		System.out.println("select구문 마지막 검사");
+		System.out.println(columns.size() +" " + tables.size());
+		if (columns.size() == 0 || tables.size() == 0) {
+			System.out.println("문장 구성 요소가 부족합니다.");
+			errorMessage += "문장 구성 요소가 부족합니다.";
+			map.put("complete",false);
+			map.put("errorMessage",errorMessage);
+			return null;
 		}
 		return selectResult;
 	}
