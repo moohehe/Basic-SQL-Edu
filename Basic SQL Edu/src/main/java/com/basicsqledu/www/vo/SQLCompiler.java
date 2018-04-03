@@ -3,9 +3,17 @@ package com.basicsqledu.www.vo;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.basicsqledu.www.dao.QuizDAO;
+
 
 public class SQLCompiler
 {
+	
+	@Autowired
+	QuizDAO quizDAO;
+	
 	// index
 	private int i;
 	
@@ -16,6 +24,7 @@ public class SQLCompiler
 	private String table_name; // table name
 	private HashMap<String, Integer> table_columns; // String : columns_name /
 													// Integer : realdata_index
+	
 	// SQL 구문 결과(내부에서 계산한 결과)
 	private String[][] result;
 	private String result_name;
@@ -181,27 +190,18 @@ public class SQLCompiler
 
 				if (!lastWord.contains(";") || !(lastWord.indexOf(';') == (lastWord.length() - 1)))
 				{
-					System.out.println("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
-					errorMessage += "문법 오류 : ; 뒤에는 문자가 올 수 없습니다.\n";
-					map.put("complete", false);
-					map.put("errorMessage", errorMessage);
+					setErrorMessage("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
 					return map;
 				}
 
 			} else
 			{
-				System.out.println("문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.");
-				errorMessage += "문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.\n";
-				map.put("complete",false);
-				map.put("errorMessage",errorMessage);
+				setErrorMessage("문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.");
 				return map;
 			}
 		} else
 		{
-			System.out.println("문법 오류 : ; 가 없습니다.");
-			errorMessage += "문법 오류 : ; 가 없습니다. \n";
-			map.put("errorMessage",errorMessage);
-			map.put("complete", false);
+			setErrorMessage("문법 오류 : ; 가 없습니다.");
 			return map;
 		}
 		// '*' 검사
@@ -209,10 +209,7 @@ public class SQLCompiler
 			String current = texts[i];
 			if (current.contains("*")) {
 				if (current.length() != 1 ) {
-					System.out.println("문법 오류 : *은 단독으로 사용하여야 합니다.");
-					errorMessage += "문법 오류 : *은 단독으로 사용하여야 합니다.";
-					map.put("errorMessage",errorMessage);
-					map.put("complete",false);
+					setErrorMessage("문법 오류 : *은 단독으로 사용하여야 합니다.");
 					return map;
 				}
 			}
@@ -317,9 +314,7 @@ public class SQLCompiler
 				if (!(result_name.equals(table_name)))
 				{
 					// 안맞음
-					errorMessage += "table 다음에는 정확한 table_name이 나와야 합니다.";
-					map.put("complete",false);
-					map.put("errorMessage",errorMessage);
+					setErrorMessage("table 다음에는 정확한 table_name이 나와야 합니다.");
 					return -1;
 				} else
 				{
@@ -372,6 +367,9 @@ public class SQLCompiler
 		boolean isFrom = false; // from 이 나왔는지 체크
 		// column ArrayList<String>
 		ArrayList<String> columns = new ArrayList<String>();
+		// table_value / table_key
+		HashMap<Integer, String> table_values = new HashMap<Integer, String>();
+		HashMap<Integer, String> table_keys = new HashMap<Integer, String>();
 		// tables : from에서 가지고 오는 테이블
 		ArrayList<String[][]> tables = new ArrayList<String[][]>();
 		// comma와 as 문법 체크용 변수
@@ -388,10 +386,8 @@ public class SQLCompiler
 			}
 			if (from_index == (texts.length - 1))
 			{
-				System.out.println("문법오류 : FROM 이후 구문이 없습니다.");
-				errorMessage += "문법오류 : FROM 이후 구문이 없습니다.\n";
-				map.put("complete",false);
-				map.put("errorMessage",errorMessage);
+
+				setErrorMessage("문법오류 : FROM 이후 구문이 없습니다.");
 				return null;
 			}
 		}
@@ -434,14 +430,7 @@ public class SQLCompiler
 					{
 						if (s.equals(current))
 						{
-							/*
-							System.out.println("s="+s + " current="+current);
-							System.out.println("k="+k + " from_index="+from_index);
-							*/
-							System.out.println("문법오류 : SELECT ~ FROM 사이의 값이 없습니다.");
-							errorMessage += "문법오류 : SELECT ~ FROM 사이의 값이 없습니다.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
+							setErrorMessage("문법오류 : SELECT ~ FROM 사이의 값이 없습니다.");
 							return null;
 						}
 					}
@@ -452,10 +441,7 @@ public class SQLCompiler
 						if (current.equals(","))
 						{
 							System.out.println("index=" + k);
-							System.out.println("문법오류 : ,를 확인해주세요.");
-							errorMessage += "문법오류 : ,를 확인해주세요.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
+							setErrorMessage("문법오류 : ,를 확인해주세요.");
 							return null;
 						}
 					}
@@ -466,10 +452,7 @@ public class SQLCompiler
 						// ,가 두번 연속 나오면 안된다.
 						if (comma)
 						{
-							System.out.println("문법오류 : , 가 연속으로 입력되었습니다.");
-							errorMessage += "문법오류 : , 가 연속으로 입력되었습니다.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
+							setErrorMessage("문법오류 : , 가 연속으로 입력되었습니다.");
 							return null;
 						}
 						comma = true;
@@ -485,8 +468,6 @@ public class SQLCompiler
 						as = false;
 					} else
 					{
-
-						System.out.println(k + "지금 not comma");
 						// 띄어쓰기 이후에 뭔가 나온거면 별칭이 입력된거다
 						columns.add(current);
 						as = true;
@@ -504,10 +485,7 @@ public class SQLCompiler
 					// stage1에서는 ','로 끝나면 안됨
 					if (comma)
 					{
-						System.out.println("문법오류 : 컬럼 구문은 ,로 끝날 수 없습니다.");
-						errorMessage += "문법오류 : 컬럼 구문은 ,로 끝날 수 없습니다.\n";
-						map.put("complete",false);
-						map.put("errorMessage",errorMessage);
+						setErrorMessage("문법오류 : 컬럼 구문은 ,로 끝날 수 없습니다.");
 						return null;
 					}
 				}
@@ -548,12 +526,6 @@ public class SQLCompiler
 					}
 					next_index++;
 				}
-				if (next_index == texts.length) {
-					// where 도 order도 없으면 다음단계로 바로 넘어간다.
-					System.out.println("where도 order도 없음");
-					stage = 5;
-					continue;
-				}
 				
 				// 여기서부터 table을 가지고 온다.
 				// String[][] 2차원 배열로 가지고 온다.
@@ -565,10 +537,7 @@ public class SQLCompiler
 				{
 					if (s.equals(current))
 					{
-						System.out.println("문법오류 : FROM 뒤에는 "+s+"가 올 수 없습니다.");
-						errorMessage += "문법오류 : FROM 뒤에는 "+s+"가 올 수 없습니다.\n";
-						map.put("complete",false);
-						map.put("errorMessage",errorMessage);
+						setErrorMessage("문법오류 : FROM 뒤에는 \"+s+\"가 올 수 없습니다.");
 						return null;
 					}
 				}
@@ -579,21 +548,80 @@ public class SQLCompiler
 				String table_value= "";
 				// 괄호 시작 여부 (bracket)
 				boolean bracket = false;
-				boolean last_bracket = false; // 바로 앞에 ')'가 있었는지 확인
-				
+				boolean close_bracket = false; // 바로 앞에 ')'가 있었는지 확인
+
+				// comma가 있느냐?를 따지는건데, 그냥 on 시켜두면 편함
+				boolean from_comma = true;
 				// 여기서부터 from ~ 테이블 명 + 서브쿼리(select) 테이블 획득
+				int k = 0; // k는 table_value1,2,3,4,... k는 table_key1,2,3,4,...
 				while ( i < next_index ) {
-					boolean from_comma = false;
-					current = texts[i];
+					current = texts[i++];
 					// 비어있으면 생략
 					if (current.length() == 0) {
-						i++;
 						continue;
 					}
 					
-					// 콤마 먼저 처리함
+					switch(current) {
+					case ",": // ','를 발견
+						System.out.println("콤마 입력됨111");
+						close_bracket = true;
+						k++; // ','가 발견되면 count+1 된다.
+						if (from_comma && !bracket) { // 괄호가 닫겨있거나 from_comma가 없어야 함
+							setErrorMessage("문법 오류 : ','를 확인하세요.");
+							return null;
+						}
+						from_comma = true;
+						break;
+					case "(":
+						//괄호 오픈 상태
+						close_bracket = false; // 최근에 닫겼는지?
+						if (bracket) {
+							// (가 두번 연속 나온 상황
+							setErrorMessage("문법 오류 : '('는 두번연속 나올 수 없습니다.");
+							return null;
+						}
+						bracket = true;
+						break;
+					case ")":
+						close_bracket = true;
+						if (bracket) {
+							// '('가 앞에 있었음.
+							bracket = false;
+						}
+						else {
+							// 괄호가 오픈되지 않았음.
+							setErrorMessage("문법 오류 : '('가 빠졌습니다.");
+							return null;
+						}
+						break;
+					case "select":
+						if (table_value.length() != 0 || table_key.length() != 0 ) {
+							// ','가 없이 select 구문이 왔을 경우
+							setErrorMessage("문법 오류 : ','가 빠졌습니다.");
+							return null;
+						}
+						close_bracket = false;
+						// 여기서 재귀함수 발동!
+						String[][] ta = getSelect();
+						if (ta == null) {
+							System.out.println("문법 오류 : ");
+							errorMessage += "문법오류 : \n";
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
+							return null;
+						}
+						tables.add(ta);
+						break;
+					default: // 일반 단어 입력된 경우
+						break;
+							
+					}
+
+					/*// 콤마 먼저 처리함
 					if (current.equals(",")) {
+						System.out.println("콤마 입력됨111");
 						last_bracket = false;
+						k++;
 						if (from_comma && !bracket) { // 괄호가 닫겨있거나 from_comma가 없어야 함
 							System.out.println("문법오류 : ','를 확인하세요.");
 							errorMessage += "문법오류 : ','를 확인하세요.\n";
@@ -602,6 +630,29 @@ public class SQLCompiler
 							return null;
 						}
 						from_comma = true;
+						
+						
+						// 이거 중복 입력되어있음.
+						// 이제 테이블 입력받음
+						if (table_key.length() == 0) {
+							table_keys.put(k, current);
+						}
+						String[][] table = quizDAO.getTables(table_key);
+						System.out.println("**table="+table);
+						if (table == null || table.length == 0 ) {
+							// table이 없음.
+							System.out.println("문법 오류 : table이 존재하지 않습니다.");
+							errorMessage += "문법오류 : table이 존재하지 않습니다.\n";
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
+							return null;
+						}
+						tables.add(table);
+						table_key = "";
+						table_value = "";
+						
+						i++;
+						continue;
 					}
 					
 					if (current.contains("(")) {
@@ -616,10 +667,20 @@ public class SQLCompiler
 							return null;
 						}
 						bracket = true;
+						i++;
+						continue;
 					}
 					
 					// 괄호 오픈 되었으면 select가 무조건 나와야함.
 					if (current.contains("select")) {
+						if (table_value.length() != 0 || table_key.length() != 0 ) {
+							// ','가 없이 select 구문이 왔을 경우
+							System.out.println("문법 오류 : ','가 빠졌습니다.");
+							errorMessage += "문법오류 : ','가 빠졌습니다.\n";
+							map.put("complete",false);
+							map.put("errorMessage",errorMessage);
+							return null;
+						}
 						last_bracket = false;
 						// 여기서 재귀함수 발동!
 						String[][] ta = getSelect();
@@ -640,11 +701,33 @@ public class SQLCompiler
 						// key : aa , value = aaaa 인데
 						// from aaaa 일 경우에는
 						// key = value = aaaa 인것
-						if (table_value.length() == 0 && !from_comma) {
+						System.out.println("일반 단어 입력됨");
+						if (table_value.length() == 0) {
+							System.out.println("table_value="+current);
 							table_value = current;
 						}
 						else if (table_key.length() == 0 ) {
+							System.out.println("table_key="+current);
 							table_key = current;
+							if (from_comma) {
+								// 이제 테이블 입력받음
+								if (table_key.length() == 0) {
+									table_value = table_key;
+								}
+								String[][] table = quizDAO.getTables(table_key);
+								System.out.println("**table="+table);
+								if (table == null || table.length == 0 ) {
+									// table이 없음.
+									System.out.println("문법 오류 : table이 존재하지 않습니다.");
+									errorMessage += "문법오류 : table이 존재하지 않습니다.\n";
+									map.put("complete",false);
+									map.put("errorMessage",errorMessage);
+									return null;
+								}
+								tables.add(table);
+								table_key = "";
+								table_value = "";
+							}
 						}
 						else {
 							// 단어만 3번 연속 반복됨
@@ -672,22 +755,9 @@ public class SQLCompiler
 							map.put("errorMessage",errorMessage);
 							return null;
 						}
-					}
-					
-					i++;
-				}
-				
-				if (bracket) {
+					}*/
 					
 				}
-				// comma 나오는지 확인해야함
-				
-				
-				
-				
-				
-				
-				
 				
 				
 				// 1. next = "where" 이면 stage = 3 / next = "order by" 이면 stage =4
@@ -698,10 +768,10 @@ public class SQLCompiler
 				} else { // next = "" 이면 뒤쪽에 아무것도 없음.
 					stage = 5;
 				}
-				// 3. where나 order가 없으면 next = ""
 				
 			} else if (stage == 3)
 			{
+				System.out.println("-- stage3");
 				// where pname = (select pname FORM STUDENT WHERE sno=101122);
 				// where 문 체크하고 없으면 통과
 				if (current.equals("where"))
@@ -711,6 +781,7 @@ public class SQLCompiler
 				stage++;
 			} else if (stage == 4)
 			{
+				System.out.println("-- stage4");
 				// order by 체크하기
 				if (current.equals("order"))
 				{
@@ -720,10 +791,7 @@ public class SQLCompiler
 					} else
 					{
 						// order by 구문이 틀렸기 때문에
-						grammar_error = true;
-						errorMessage += "group 다음에는 by가 와야합니다.";
-						map.put("complete",false);
-						map.put("errorMessage",errorMessage);
+						setErrorMessage("group 다음에는 by가 와야합니다.");
 						return null;
 					}
 				}
@@ -736,10 +804,8 @@ public class SQLCompiler
 		System.out.println("select구문 마지막 검사");
 		System.out.println(columns.size() +" " + tables.size());
 		if (columns.size() == 0 || tables.size() == 0) {
-			System.out.println("문장 구성 요소가 부족합니다.");
-			errorMessage += "문장 구성 요소가 부족합니다.";
-			map.put("complete",false);
-			map.put("errorMessage",errorMessage);
+			System.out.println("columns.size()="+columns.size() + " tables.size()="+tables.size());
+			setErrorMessage("문장 구성 요소가 부족합니다.");
 			return null;
 		}
 		return selectResult;
@@ -748,5 +814,11 @@ public class SQLCompiler
 	public String getErrorMessage()
 	{
 		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		System.out.println(errorMessage);
+		this.errorMessage += errorMessage;
+		map.put("complete",false);
+		map.put("errorMessage",errorMessage);
 	}
 }
