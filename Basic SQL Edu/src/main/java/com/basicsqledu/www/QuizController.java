@@ -30,7 +30,6 @@ public class QuizController
 		
 		data = quizdao.getTable(table_name);
 		
-		
 		System.out.println("요기");
 		System.out.println(data.get("table_value"));
 		
