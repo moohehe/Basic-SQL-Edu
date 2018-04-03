@@ -342,7 +342,7 @@ public class SQLCompiler
 				// 4-0. 마지막에 ")"가 나올때까지 String배열에 저장,primary key는 한번만
 				// 4-1. 컬럼 이름
 				// 4-2. 컬럼의 데이터 형태
-				// 4-3. 컬럼의 제약조건(기본키, 외래키, not null, default)
+				// 4-3. 컬럼의 제약조건(기본키, 외래키, not null, default,,)
 				// 4-4. 콤마
 			}
 		}
