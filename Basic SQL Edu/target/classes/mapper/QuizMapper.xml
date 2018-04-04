@@ -17,8 +17,9 @@
 	<select id="getAnimal" parameterType="String" resultType="animal">
 		SELECT *	
 		FROM
-			animal_view
+			${value}
 	</select>
+	
 
 	
 </mapper>

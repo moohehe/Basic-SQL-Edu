@@ -121,9 +121,9 @@ public class QuizDAO
 					table[0][5] = "animal_feed";
 
 					int i = 1;
-					for (Object a : list)
+					for (Animal animal : list)
 					{
-						Animal animal = (Animal) a;
+						System.out.println(animal);
 						table[i][0] = animal.getAnimal_size();
 						table[i][1] = animal.getAnimal_species();
 						table[i][2] = animal.getAnimal_legs();
