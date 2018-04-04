@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.basicsqledu.www.dao.QuizDAO;
+import com.basicsqledu.www.services.QuizServices;
 import com.basicsqledu.www.vo.SQLCompiler;
 import com.google.gson.Gson;
 
@@ -24,7 +24,8 @@ public class CompilerController
 	@Autowired
 	QuizDAO quizDAO;
 	
-	
+	@Autowired
+	QuizServices quiz;
 	
 	private SQLCompiler compiler = new SQLCompiler();
 	
@@ -71,5 +72,34 @@ public class CompilerController
 		return "success!!!\n"+json;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="sqlCompiler2", method = RequestMethod.POST
+			, produces = "application/text; charset=utf8")
+	public String compiler2(String sql, HttpServletResponse response
+			, @RequestParam(defaultValue="animal_view") String table_name) {
+		// setup UTF-8
+		response.setContentType("text/html;charset=UTF-8");
+		// 0. 빈값이면 생략
+		if (sql.equals("")) {
+			return "";
+		}
+		
+		// 1. sql 구문 입력 / 해석 
+		// 입력받은 sql 구문을 compiler 객체에 삽입
+		compiler.setText(sql);
+		// DB 테이블 입력
+		HashMap<String, Object> map = quizDAO.getTable(table_name); // <- 여기 나중에 변수로 바꿔야됨!!!!!!!!!!!!!!!!!!!!!!!!!!
+		ArrayList<Object> list = (ArrayList<Object>) map.get("table_value");
+		compiler.setTable(list);
+		
+
+		HashMap<String, Object> resultMap = compiler.getResult();
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(resultMap);
+		System.out.println("[ResultData]\n"+json);
+		
+		return "success!!!\n"+json;
+	}
 	
 }
