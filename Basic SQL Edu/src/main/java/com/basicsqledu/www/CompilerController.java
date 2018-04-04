@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.basicsqledu.www.dao.QuizDAO;
-import com.basicsqledu.www.services.QuizServices;
 import com.basicsqledu.www.vo.SQLCompiler;
 import com.google.gson.Gson;
 

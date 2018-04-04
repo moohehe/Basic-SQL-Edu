@@ -71,7 +71,7 @@ public class SQLCompiler
 		texts = text.toLowerCase().replace(",", "㉿,㉿").replace("(", "㉿(㉿")
 				.replace(")", "㉿)㉿").replace(" ", "㉿").replace("\t", "㉿")
 				.replace("\n", "㉿").replace("=", "㉿").replace("㉿as㉿", "㉿")
-				.split("㉿");
+				.replace(";", "㉿;㉿").split("㉿");
 		System.out.println("setText된 결과");
 		for (int i = 0; i < texts.length; i++)
 		{

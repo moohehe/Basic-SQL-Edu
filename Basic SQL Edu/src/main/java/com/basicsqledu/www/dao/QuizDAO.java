@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -16,7 +18,7 @@ public class QuizDAO
 	@Autowired
 	SqlSession session;
 	
-	
+	private final static Logger logger = LoggerFactory.getLogger(QuizDAO.class);
 	
 	
 	private final static String[] ANIMALS = {"animal","tiger","bird","lion","rabbit","fish"};
@@ -25,7 +27,7 @@ public class QuizDAO
 	
 	
 	public HashMap<String, Object> getTable(String table_name){
-		
+		logger.info("{}",table_name);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
 		try
@@ -55,11 +57,12 @@ public class QuizDAO
 	
 	
 	public String[][] getTables(String table_key) {
-		System.out.println("들어가기는 하는가?");
+		logger.info("start of getTables()");
 		table_key = table_key.toLowerCase();
 		String type = "";
 		String[][] table = null;
-		
+
+		logger.info("table_key:{}, type:{}",table_key, type);
 		
 		for (String s : ANIMALS) {
 			if (table_key.contains(s)) {
@@ -84,13 +87,15 @@ public class QuizDAO
 		
 		
 		
-		System.out.println("여기까지 왔는가?");
 		switch (type) {
 		case "animal":
 			try
 			{
+				logger.info("animal");
 				QuizMapper mapper = session.getMapper(QuizMapper.class);
-				ArrayList<Animal> list = mapper.getAnimal(table_key+"_view");
+				String table_name = table_key+"_view";
+				logger.info("table_name:'{}' ",table_name);
+				ArrayList<Animal> list = mapper.getAnimal(table_name);
 				if (list == null)
 				{
 					return null;

@@ -5,13 +5,11 @@
 <configuration>
 	
 	<typeAliases>
-		<typeAlias type="com.basicsqledu.www.vo.Board" alias="board"/>
 		<typeAlias type="com.basicsqledu.www.vo.Animal" alias="animal"/>
 		
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="mapper/BoardMapper.xml" />
 		<mapper resource="mapper/QuizMapper.xml" />
 		
 	 </mappers>

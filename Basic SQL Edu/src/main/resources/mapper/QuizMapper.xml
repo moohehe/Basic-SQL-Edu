@@ -17,7 +17,7 @@
 	<select id="getAnimal" parameterType="String" resultType="animal">
 		SELECT *	
 		FROM
-			#{table_name}
+			animal_view
 	</select>
 
 	
