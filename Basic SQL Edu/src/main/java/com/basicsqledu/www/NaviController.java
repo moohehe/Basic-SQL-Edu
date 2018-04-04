@@ -43,7 +43,7 @@ public class NaviController {
 	/**
 	 * 초기 페이지로 들어오는 경우.
 	 */
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public String home(Model model, HttpServletResponse response, HttpServletRequest request) {
 		Questext qt = new Questext();
 		//쿠키 생성
@@ -78,7 +78,7 @@ public class NaviController {
 		model.addAttribute("questext", qt);
 		model.addAttribute("stageList", stageList);
 		
-		return "home";
+		return "test";
 	}
 	
 	//언어 변환 버튼 및 이전/다음 버튼 누를때, 전체 스테이지 맵에서 이동할 때 동작(비동기식)
