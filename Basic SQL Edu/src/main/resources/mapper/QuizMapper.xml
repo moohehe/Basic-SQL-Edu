@@ -8,10 +8,16 @@
 <mapper namespace="com.basicsqledu.www.mapper.QuizMapper">
 
 	<!-- View를 활용하는 데이터로 -->
-	<select id="getAnimal" resultType="animal">
+	<select id="getAnimal2" resultType="animal">
 		SELECT *	
 		FROM
 			animal_view
+	</select>
+	
+	<select id="getAnimal" parameterType="String" resultType="animal">
+		SELECT *	
+		FROM
+			#{table_name}
 	</select>
 
 	

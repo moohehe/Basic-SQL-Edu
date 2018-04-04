@@ -17,9 +17,11 @@ public class QuizDAO
 	SqlSession session;
 	
 	
-	String[] ANIMALS = {"animal","tiger","bird","lion","rabbit","fish"};
-	String[] ROBOTS = {"robot"};
-	String[] PERSONS = {"person"};
+	
+	
+	private final static String[] ANIMALS = {"animal","tiger","bird","lion","rabbit","fish"};
+	private final static String[] ROBOTS = {"robot"};
+	private final static String[] PERSONS = {"person"};
 	
 	
 	public HashMap<String, Object> getTable(String table_name){
@@ -31,7 +33,7 @@ public class QuizDAO
 			QuizMapper mapper = session.getMapper(QuizMapper.class);
 			switch (table_name) {
 			case "animal_view" : 
-				ArrayList<Animal> animals = mapper.getAnimal();
+				ArrayList<Animal> animals = mapper.getAnimal2();
 				result.put("table_name", "animal_view");
 				result.put("table_value", animals);
 				break;
@@ -53,6 +55,7 @@ public class QuizDAO
 	
 	
 	public String[][] getTables(String table_key) {
+		System.out.println("들어가기는 하는가?");
 		table_key = table_key.toLowerCase();
 		String type = "";
 		String[][] table = null;
@@ -73,7 +76,7 @@ public class QuizDAO
 
 		for (String s : PERSONS) {
 			if (table_key.contains(s)) {
-				type = "robot";
+				type = "person";
 				break;
 			}
 		}
@@ -81,7 +84,7 @@ public class QuizDAO
 		
 		
 		
-		
+		System.out.println("여기까지 왔는가?");
 		switch (type) {
 		case "animal":
 			try
