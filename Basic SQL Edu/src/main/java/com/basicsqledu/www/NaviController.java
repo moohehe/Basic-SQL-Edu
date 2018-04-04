@@ -1,10 +1,7 @@
 package com.basicsqledu.www;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,7 +38,7 @@ public class NaviController {
 	 * 초기 페이지로 들어오는 경우.
 	 */
 	@RequestMapping(value = "test", method = RequestMethod.GET)
-	public String home(Model model, HttpServletResponse response, HttpServletRequest request) {
+	public String test(Model model, HttpServletResponse response, HttpServletRequest request) {
 		Questext qt = new Questext();
 		//쿠키 생성
 		CookieGenerator cg = new CookieGenerator();
@@ -83,7 +77,7 @@ public class NaviController {
 	
 	//언어 변환 버튼 및 이전/다음 버튼 누를때, 전체 스테이지 맵에서 이동할 때 동작(비동기식)
 	@ResponseBody
-	@RequestMapping(value = "/langcheck", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "langcheck", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	public String langcheck(HttpServletRequest request,HttpServletResponse response, 
 			String lang, String stage, @RequestParam(defaultValue="non-pass")String compl) {
 		// setup UTF-8

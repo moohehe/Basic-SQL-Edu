@@ -70,7 +70,68 @@
 	<button class="btn" id="btn7">7</button><br>
 	<button class="btn" id="btn8">8</button><br>
 	<button class="btn" id="btn9">9</button><br>
+	<br>
+	<div class="navigation">
 	
+		<!-- 기본으로 보여지는 네비게이션 바 페이지 -->
+		<div class="wrap"> 
+			
+			<!-- 언어 선택 (영어, 한국어, 일본어) -->		
+			<div class="langcheck" >
+				<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
+				<button class="langbtn" data-num="1" > eng </button> 
+				<button class="langbtn" data-num="2" > kor </button> 
+				<button class="langbtn" data-num="3" > jpn </button> 
+			</div>
+			
+			<!-- 현재 레벨과  이전, 다음버튼 그리고 전체 스테이지 맵으로 이동 버튼-->
+			<div class="float-btnframe">
+			<div class="float-unit lvstat" id="LvInfo"> Level ${questext.lvstatus } of 10 </div>
+	
+			<button class="float-unit dropbtn">Stage</button>
+			<button class="float-unit btn nxtbtn" id="nextbtn" > ▶ </button>
+			<button class="float-unit btn" id="prevbtn" > ◀ </button>
+			<input id="currentLang" type="hidden" value="${questext.textLang }" >
+			</div>
+			<br>
+			
+			<!-- 진행 상태 표시 바 -->
+			<DIV class=progress-small> 
+			<DIV role=progressbar aria-valuenow=10 aria-valuemin=0 
+			class="progress-bar-small progress-bar-s-info" id="progresslv" style="width: ${questext.lvstatus }0%" aria-valuemax=100> 
+			<!-- <SPAN class=sr-only>20% Complete</SPAN>  -->
+			</DIV><!-- Complete --> 
+			</DIV>
+			
+			<div class="navicontext">
+				<p class="qs" id="qstext">${questext.qstext }</p><br>
+				<div id="qstype"> ${questext.qstype }</div> <br><br>
+			    <div id="qsdetail"> ${questext.qsdetail }</div> <br><br>
+				<p> Examples </p>
+				<div id="qsExm">${questext.qsExm }</div>
+			</div>
+		</div>	
+	
+		<!-- 전체 스테이지 맵 화면 -->
+		 <div class="level-menu">
+		 	<div class="float-btnframe lvmemu" style="background: #1a1a1a">
+	        	<div class="float-unit choosinglv" style="background: #1a1a1a">Choose a level</div> 
+	       		<button class="float-unit closing dropbtn"> CLOSE </button>
+	        </div>
+				<br>
+			
+			<!-- 전체 문제(단계) 출력 -->
+	        <div class="dropdown-content">
+	        <c:forEach var="stages" varStatus="status" items="${stageList}">
+	        	<button class="stagebtn${status.count }"> ${status.count } </button> 
+	        	<button class="moveStagebtn" data-num="${status.count }"> Level ${stages.lvstatus } </button> <br>
+	        </c:forEach>
+			   
+		    </div>
+	      	<br>
+	      	
+	      </div>
+	</div>
 	
 </body>
 </html>
