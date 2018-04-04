@@ -1,0 +1,126 @@
+.navigation {
+	width:370px;
+	height:100%;
+}
+.wrap { 
+position:relative; /*감싸는 레이어에 포지션 속성을 잡아주는 게 필수!(relative, absolute, fixed 중 택1*/
+ width:100%; height:100%;
+ background:black; 
+ margin:0 auto;  
+ color:#000; 
+ font-size:12px; 
+ }
+ 
+.level-menu { 
+position:absolute; top:0.1px; left:0.1px;/*위에 올라가는 레이어의 포지션은 top, bottom 둘 중 하나, left, right 둘 중 하나의 속성을 선택하여 잡아준다.*/ 
+height:100%;
+background: #1a1a1a; 
+display: none;
+}
+
+	body {
+		width:100%; 
+		height:100%;
+		color: white;
+		background-color: black;
+	}
+	
+	.choosinglv {
+		color: orange;
+		font-size: 28pt;
+		font: bold;
+		margin-right: 20px;
+	}
+	.langcheck {
+		position: absolute;
+	}
+	.float-btnframe {
+		background: black;
+  		padding: 10px;
+  		color: orange;
+  		overflow: hidden;
+  		margin-top: 30px;
+	}
+	.float-unit {
+		background-color: black;
+		border: none;
+		color: orange;
+		float: left;
+		margin-top: 35px;
+		margin-bottom: 15px;
+	}
+	.btn {
+		float: right;
+		font-size: 25px;
+	}
+	
+	.navicontext {
+		color: white;
+		font-size: 17px; 
+	}
+	.qs {
+		font-size: 25px;
+	}
+	.lvstat {
+		font-size: 30px;
+	}
+	.nxtbtn {
+		margin-right: 5px; 
+	}
+	
+		
+/* Dropdown Button */
+.dropbtn {
+    background-color: #ffcc33;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+   	float: right;
+   	margin-right: 9px;
+}
+
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+
+
+.progress-small { 
+overflow:hidden; height:7px; margin-bottom:0px; width:97%;
+background-color:gray; border-radius:0px; 
+-webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1); 
+box-shadow:inset 0 1px 2px rgba(0,0,0,.1); 
+} 
+.progress-bar-small { 
+float:left; 
+width:0;
+height:100%; 
+font-size:6px;
+line-height:7px; 
+color:#fff; 
+text-align:center; background-color:red; 
+-webkit-box-shadow:inset 0 -1px 0 rgba(0,0,0,.15); 
+box-shadow:inset 0 -1px 0 rgba(0,0,0,.15); 
+-webkit-transition:width .6s ease; transition:width .6s ease; 
+} 
+
+.progress-bar-s-info {background-color: #ff9900;} 
+
+.lvmemu {
+	border-bottom: 1px solid;
+	border-bottom-color: orange; 
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    background-color: #1a1a1a;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    font-size: 15pt;
+}

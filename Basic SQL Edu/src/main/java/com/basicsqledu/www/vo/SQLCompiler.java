@@ -11,8 +11,7 @@ import com.basicsqledu.www.dao.QuizDAO;
 public class SQLCompiler
 {
 	
-	@Autowired
-	QuizDAO quizDAO;
+	QuizDAO quizDAO = new QuizDAO();
 	
 	// index
 	private int i;
@@ -368,8 +367,8 @@ public class SQLCompiler
 		// column ArrayList<String>
 		ArrayList<String> columns = new ArrayList<String>();
 		// table_value / table_key
-		HashMap<Integer, String> table_values = new HashMap<Integer, String>();
-		HashMap<Integer, String> table_keys = new HashMap<Integer, String>();
+		ArrayList<String[][]> table_datas = new ArrayList<String[][]>();
+		ArrayList<String> table_names = new ArrayList<String>();
 		// tables : from에서 가지고 오는 테이블
 		ArrayList<String[][]> tables = new ArrayList<String[][]>();
 		// comma와 as 문법 체크용 변수
@@ -543,17 +542,17 @@ public class SQLCompiler
 				}
 				
 
-				// tables 데이터 (key, value)
-				String table_key = "";
-				String table_value= "";
+				// tables 데이터 (name,key)
+				String table_name= "";
+				String[][] table_data = null;
 				// 괄호 시작 여부 (bracket)
 				boolean bracket = false;
 				boolean close_bracket = false; // 바로 앞에 ')'가 있었는지 확인
-
+				boolean selectrun = false;
+				int conti = 0; // ',' 없이 등장한 단어 숫자(select 구문도 단어로 생각);
 				// comma가 있느냐?를 따지는건데, 그냥 on 시켜두면 편함
 				boolean from_comma = true;
 				// 여기서부터 from ~ 테이블 명 + 서브쿼리(select) 테이블 획득
-				int k = 0; // k는 table_value1,2,3,4,... k는 table_key1,2,3,4,...
 				while ( i < next_index ) {
 					current = texts[i++];
 					// 비어있으면 생략
@@ -563,18 +562,21 @@ public class SQLCompiler
 					
 					switch(current) {
 					case ",": // ','를 발견
-						System.out.println("콤마 입력됨111");
-						close_bracket = true;
-						k++; // ','가 발견되면 count+1 된다.
+						System.out.println("콤마 입력됨");
+						conti = 0; // ','사이의 단어 숫자 초기화
+						close_bracket = true; // 괄호가 닫김
 						if (from_comma && !bracket) { // 괄호가 닫겨있거나 from_comma가 없어야 함
 							setErrorMessage("문법 오류 : ','를 확인하세요.");
 							return null;
 						}
 						from_comma = true;
+						
+						table_names.add(table_name); // from절의 table 이름(별명) 넣기
 						break;
 					case "(":
 						//괄호 오픈 상태
 						close_bracket = false; // 최근에 닫겼는지?
+						from_comma = false;
 						if (bracket) {
 							// (가 두번 연속 나온 상황
 							setErrorMessage("문법 오류 : '('는 두번연속 나올 수 없습니다.");
@@ -583,23 +585,25 @@ public class SQLCompiler
 						bracket = true;
 						break;
 					case ")":
-						close_bracket = true;
+						close_bracket = true; // 최근에 닫겼는지?
+						selectrun = false;
 						if (bracket) {
 							// '('가 앞에 있었음.
 							bracket = false;
 						}
 						else {
 							// 괄호가 오픈되지 않았음.
-							setErrorMessage("문법 오류 : '('가 빠졌습니다.");
+							setErrorMessage("문법 오류 : '('가 없습니다.");
 							return null;
 						}
 						break;
 					case "select":
-						if (table_value.length() != 0 || table_key.length() != 0 ) {
-							// ','가 없이 select 구문이 왔을 경우
-							setErrorMessage("문법 오류 : ','가 빠졌습니다.");
+						// ',' 혹은 '('가 없이 select 구문이 시작되지 않음.
+						if (!from_comma && !bracket ) {
+							setErrorMessage("문법 오류 : ',' 혹은 '('가 없습니다.");
 							return null;
 						}
+						
 						close_bracket = false;
 						// 여기서 재귀함수 발동!
 						String[][] ta = getSelect();
@@ -611,12 +615,36 @@ public class SQLCompiler
 							return null;
 						}
 						tables.add(ta);
+						selectrun = true;
 						break;
 					default: // 일반 단어 입력된 경우
+						if (selectrun) { // select 구문이 끝났는데 ')'가 없음.
+							setErrorMessage("구문 오류 : ')'가 없습니다. ");
+							return null;
+						}
+						if (conti == 0) { // ',' 이후에 첫번째 단어
+							table_name = current;
+							System.out.println("name="+table_name + " table_data="+table_data);
+							table_data = quizDAO.getTables(table_name);
+							if ( table_data == null ) {
+								setErrorMessage("문법 오류 : table이 없습니다.");
+								return null;
+							}
+							conti++;
+						}
+						
+						if (conti == 1) {
+							table_name = current; // ',' 없이 단어가 두번 연속되었을 경우에는 table_name을 변경한다.
+						}
+						if (conti == 2) {
+							setErrorMessage("문법 오류 : ','가 없습니다.");
+							return null;
+						}
 						break;
 							
 					}
 
+					
 					/*// 콤마 먼저 처리함
 					if (current.equals(",")) {
 						System.out.println("콤마 입력됨111");
@@ -759,6 +787,18 @@ public class SQLCompiler
 					
 				}
 				
+				
+				// from_comma 로 끝날 경우
+				if (from_comma ) {
+					setErrorMessage("문법 오류 : from 절은 ,(comma)로 끝날 수 없습니다.");
+					return null;
+				}
+				// bracket이 open 된 채로 끝날 경우
+				if (bracket) {
+					setErrorMessage("문법 오류 : ')'가 없습니다.");
+					return null;
+				}
+				// 
 				
 				// 1. next = "where" 이면 stage = 3 / next = "order by" 이면 stage =4
 				if (next.length() == 5) {
