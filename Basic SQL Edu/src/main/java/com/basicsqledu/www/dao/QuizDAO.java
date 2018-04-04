@@ -100,7 +100,6 @@ public class QuizDAO
 				{
 					return null;
 				}
-
 				if (list.size() == 0)
 				{
 					table = new String[0][0];
