@@ -25,9 +25,7 @@ public class CompilerController
 	QuizDAO quizDAO;
 	
 	@Autowired
-	QuizServices quiz;
-	
-	private SQLCompiler compiler = new SQLCompiler();
+	private SQLCompiler compiler;
 	
 	
 	@ResponseBody
@@ -76,7 +74,7 @@ public class CompilerController
 	@RequestMapping(value="sqlCompiler2", method = RequestMethod.POST
 			, produces = "application/text; charset=utf8")
 	public String compiler2(String sql, HttpServletResponse response
-			, @RequestParam(defaultValue="animal_view") String table_name) {
+			, @RequestParam(defaultValue="animal") String table_name) {
 		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8");
 		// 0. 빈값이면 생략

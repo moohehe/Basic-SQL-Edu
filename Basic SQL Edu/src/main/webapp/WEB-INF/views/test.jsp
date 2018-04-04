@@ -48,6 +48,7 @@
 			, error : function(e) {
 				console.log('error:'+e);	
 			}
+		});
 	}
 </script>
 </head>

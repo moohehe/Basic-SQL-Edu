@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.basicsqledu.www.dao.QuizDAO;
 
-
+@Service
 public class SQLCompiler
 {
-	
-	QuizDAO quizDAO = new QuizDAO();
+	@Autowired
+	QuizDAO quizDAO;
 	
 	// index
 	private int i;
