@@ -30,17 +30,24 @@
 		});
 	}
 	function dbtest() {
-		console.log('뾰로롱');
+		var str = document.getElementById('sql').value;
+		console.log(str);
+		if (str == '') {
+			return;
+		}
 		$.ajax({
-			type:"GET"
-			, url:"dbtest"
+			type:"POST"
+			, url:"sqlCompiler2"
+			, data:{
+				sql:str
+			}
 			, success: function(e) {
 				console.log(e);
+				$('#resultView').val(e);
 			}
 			, error : function(e) {
-				console.log(e);	
+				console.log('error:'+e);	
 			}
-		});
 	}
 </script>
 </head>
