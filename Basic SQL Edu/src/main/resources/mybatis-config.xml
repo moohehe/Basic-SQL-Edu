@@ -7,12 +7,14 @@
 	<typeAliases>
 		<typeAlias type="com.basicsqledu.www.vo.Board" alias="board"/>
 		<typeAlias type="com.basicsqledu.www.vo.Animal" alias="animal"/>
+		<typeAlias type="com.scmaster.bsenavi.Questext" alias="questext" />
 		
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mapper/BoardMapper.xml" />
 		<mapper resource="mapper/QuizMapper.xml" />
+		<mapper resource="QuestextMapper.xml" />
 		
 	 </mappers>
 	

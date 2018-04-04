@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.scmaster.bsenavi.QuestextMapper">
+	
+	<select id="selectLang" parameterType="questext" resultType="questext">
+		select
+			qstext
+		    ,lvstatus
+		    ,qstype
+		    ,qsdetail
+		    ,qsExm
+		    ,textLang 
+		from   
+		    questext
+		where
+			lvstatus = #{lvstatus} and textLang = #{textLang}   
+	
+	</select>
+	
+	<select id="selectStageAll" parameterType="questext" resultType="questext">
+		select
+			qstext
+		    ,lvstatus
+		    ,qstype
+		    ,qsdetail
+		    ,qsExm
+		    ,textLang 
+		from   
+		    questext
+		where
+			textLang = #{textLang}
+		order by
+			lvstatus 
+	
+	</select>
+	
+</mapper>
