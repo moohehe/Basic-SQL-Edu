@@ -22,7 +22,6 @@ public class CompilerController
 {
 	@Autowired
 	QuizDAO quizDAO;
-	
 	@Autowired
 	private SQLCompiler compiler;
 	
