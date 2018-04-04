@@ -6,11 +6,13 @@
 	
 	<typeAliases>
 		<typeAlias type="com.basicsqledu.www.vo.Animal" alias="animal"/>
+		<typeAlias type="com.basicsqledu.www.vo.Questext" alias="questext" />
 		
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mapper/QuizMapper.xml" />
+		<mapper resource="mapper/QuestextMapper.xml" />
 		
 	 </mappers>
 	

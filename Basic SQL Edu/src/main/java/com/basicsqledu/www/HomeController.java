@@ -37,11 +37,5 @@ public class HomeController {
 		
 		return "home";
 	}
-	@RequestMapping(value = "test", method = RequestMethod.GET)
-	public String test() {
-		System.out.println("start test value!");
-
-		System.out.println("end test value!");
-		return "test";
-	}
+	
 }
