@@ -38,7 +38,7 @@ public class SQLCompiler
 	private String text;
 	private String texts[];
 	private String[] COMMAND = { "create", "drop", "alter", "select", "insert", "delete", "update","grant","revoke", "set","by" };
-	private String[] COMMAND2 = { "create", "drop", "alter", "insert", "delete", "update","grant","revoke" };
+	private String[] COMMAND2 = { "create", "drop", "alter", "insert", "delete", "update","grant","revoke","set","by" };
 	private String[] keywords = { "create", "drop", "alter", "select", "insert", "update", "delete", "from", "table",
 			"view", "schema", "sequence", "index", "column", "join", "inner", "outer", "as", "null", "not null",
 			"primary key", "foreign key", "unique", "default", "clustered", "nonclustered", "and", "or", "on", "set",
@@ -715,12 +715,24 @@ public class SQLCompiler
 				
 				System.out.println("columns="+columns);
 				System.out.println();
-				
-				
-				
-				
-				
-				
+				switch(current) {
+				default:
+					for (String s : COMMAND2) {
+						if (s.equals(current)) {
+							setErrorMessage("");
+							return null;
+						}
+					}
+					break;
+				case "order" : 
+					break;
+				case "(":
+					break;
+				case ")":
+					break;
+				case "":
+					break;
+				}
 				
 				
 				
