@@ -166,7 +166,7 @@ public class SQLCompiler
 		// 틀릴 때만 complete에 false를 입력하고
 		// errorMessage에 에러 메세지를 더함(\n까지)
 		map.put("complete", true);
-		errorMessage = "";
+		setErrorMessage(null);
 
 		System.out.println("1. 세미콜론 문법 체크");
 		// 1. 세미콜론 문법 체크
@@ -202,6 +202,10 @@ public class SQLCompiler
 		} else
 		{
 			setErrorMessage("문법 오류 : ; 가 없습니다.");
+			return map;
+		}
+		if (text.contains(" .") || text.contains(". ")) {
+			setErrorMessage("문법 오류 : '.'는 앞뒤에는 공백이 있으면 안됩니다.");
 			return map;
 		}
 		// '*' 검사
@@ -609,188 +613,52 @@ public class SQLCompiler
 						// 여기서 재귀함수 발동!
 						String[][] ta = getSelect();
 						if (ta == null) {
-							System.out.println("문법 오류 : ");
-							errorMessage += "문법오류 : \n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
+							setErrorMessage("문법 오류 : 재귀함수select 구문이 틀렸습니다. ");
 							return null;
 						}
 						tables.add(ta);
 						selectrun = true;
 						break;
+					case ";":
+						if (from_comma) {
+							setErrorMessage("문법 오류 : ,로 끝날 수 없습니다.");
+							return null;
+						}
+						stage++;
+						break;
 					default: // 일반 단어 입력된 경우
+						from_comma = false;
 						if (selectrun) { // select 구문이 끝났는데 ')'가 없음.
 							setErrorMessage("구문 오류 : ')'가 없습니다. ");
 							return null;
 						}
 						if (conti == 0) { // ',' 이후에 첫번째 단어
 							table_name = current;
-							System.out.println("name="+table_name + " table_data="+table_data);
 							table_data = quizDAO.getTables(table_name);
 							if ( table_data == null ) {
-								setErrorMessage("문법 오류 : table이 없습니다.");
+								setErrorMessage("문법 오류 : table ["+table_name+"]이 존재하지 않습니다.");
 								return null;
 							}
+							tables.add(table_data);
 							conti++;
 						}
-						
-						if (conti == 1) {
-							table_name = current; // ',' 없이 단어가 두번 연속되었을 경우에는 table_name을 변경한다.
+						if (conti == 1) { // ',' 없이 단어가 두번 연속되었을 경우에는 table_name을 변경한다.
+							table_name = current; 
 						}
-						if (conti == 2) {
+						if (conti == 2) { // ',' 없이 단어가 세번 연속으로 입력되었음.
 							setErrorMessage("문법 오류 : ','가 없습니다.");
 							return null;
 						}
 						break;
 							
 					}
-
-					
-					/*// 콤마 먼저 처리함
-					if (current.equals(",")) {
-						System.out.println("콤마 입력됨111");
-						last_bracket = false;
-						k++;
-						if (from_comma && !bracket) { // 괄호가 닫겨있거나 from_comma가 없어야 함
-							System.out.println("문법오류 : ','를 확인하세요.");
-							errorMessage += "문법오류 : ','를 확인하세요.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
-							return null;
-						}
-						from_comma = true;
-						
-						
-						// 이거 중복 입력되어있음.
-						// 이제 테이블 입력받음
-						if (table_key.length() == 0) {
-							table_keys.put(k, current);
-						}
-						String[][] table = quizDAO.getTables(table_key);
-						System.out.println("**table="+table);
-						if (table == null || table.length == 0 ) {
-							// table이 없음.
-							System.out.println("문법 오류 : table이 존재하지 않습니다.");
-							errorMessage += "문법오류 : table이 존재하지 않습니다.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
-							return null;
-						}
-						tables.add(table);
-						table_key = "";
-						table_value = "";
-						
-						i++;
-						continue;
-					}
-					
-					if (current.contains("(")) {
-						//괄호 오픈 상태
-						last_bracket = false;
-						if (bracket) {
-							// (가 두번 연속 나온 상황
-							System.out.println("문법오류 : '('는 두번연속 나올 수 없습니다.");
-							errorMessage += "문법오류 : '('는 두번연속 나올 수 없습니다.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
-							return null;
-						}
-						bracket = true;
-						i++;
-						continue;
-					}
-					
-					// 괄호 오픈 되었으면 select가 무조건 나와야함.
-					if (current.contains("select")) {
-						if (table_value.length() != 0 || table_key.length() != 0 ) {
-							// ','가 없이 select 구문이 왔을 경우
-							System.out.println("문법 오류 : ','가 빠졌습니다.");
-							errorMessage += "문법오류 : ','가 빠졌습니다.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
-							return null;
-						}
-						last_bracket = false;
-						// 여기서 재귀함수 발동!
-						String[][] ta = getSelect();
-						if (ta == null) {
-							System.out.println("문법 오류 : ");
-							errorMessage += "문법오류 : \n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
-							return null;
-						}
-						tables.add(ta);
-						continue;
-					}
-					else { // 'select 구문'은 여기에 오지 않음
-						// 여기 작성中
-						// map에 데이터를 넣을건데
-						// from aaaa as aa 같은 경웽 
-						// key : aa , value = aaaa 인데
-						// from aaaa 일 경우에는
-						// key = value = aaaa 인것
-						System.out.println("일반 단어 입력됨");
-						if (table_value.length() == 0) {
-							System.out.println("table_value="+current);
-							table_value = current;
-						}
-						else if (table_key.length() == 0 ) {
-							System.out.println("table_key="+current);
-							table_key = current;
-							if (from_comma) {
-								// 이제 테이블 입력받음
-								if (table_key.length() == 0) {
-									table_value = table_key;
-								}
-								String[][] table = quizDAO.getTables(table_key);
-								System.out.println("**table="+table);
-								if (table == null || table.length == 0 ) {
-									// table이 없음.
-									System.out.println("문법 오류 : table이 존재하지 않습니다.");
-									errorMessage += "문법오류 : table이 존재하지 않습니다.\n";
-									map.put("complete",false);
-									map.put("errorMessage",errorMessage);
-									return null;
-								}
-								tables.add(table);
-								table_key = "";
-								table_value = "";
-							}
-						}
-						else {
-							// 단어만 3번 연속 반복됨
-							System.out.println("문법오류 : ','가 없습니다.");
-							errorMessage += "문법오류 : ','가 없습니다.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
-							return null;
-						}
-						
-					}
-					
-					// ')' 괄호 클로즈가 반드시 나와야 함.
-					if (current.contains(")")) {
-						last_bracket = true;
-						if (bracket) {
-							// '('가 앞에 있었음.
-							bracket = false;
-						}
-						else {
-							// 괄호가 오픈되지 않았음.
-							System.out.println("문법오류 : '('가 없습니다.");
-							errorMessage += "문법오류 : '('가 없습니다.\n";
-							map.put("complete",false);
-							map.put("errorMessage",errorMessage);
-							return null;
-						}
-					}*/
-					
-				}
+				}// end of while()
 				
+				// 마지막 from 절의 table 이름(별명) 넣기
+				table_names.add(table_name); 
 				
 				// from_comma 로 끝날 경우
-				if (from_comma ) {
+				if (from_comma && !(tables.size() == 1) ) {
 					setErrorMessage("문법 오류 : from 절은 ,(comma)로 끝날 수 없습니다.");
 					return null;
 				}
@@ -807,17 +675,31 @@ public class SQLCompiler
 				} else if (next.length() == 8){
 					stage = 4;
 				} else { // next = "" 이면 뒤쪽에 아무것도 없음.
-					stage = 5;
+					stage = 3;
 				}
 				
 			} else if (stage == 3)
 			{
 				System.out.println("-- stage3");
+				// where 구문
 				// where pname = (select pname FORM STUDENT WHERE sno=101122);
 				// where 문 체크하고 없으면 통과
-				if (current.equals("where"))
+				// 여기서부터 결과 테이블을 만들어낸다.
+				// current
+				System.out.println("tables.size()="+tables.size());
+				System.out.println("table_names.size()="+table_names.size());
+				System.out.println("table_names\n"+table_names);
+				
+				
+				
+				
+				
+				
+				
+				if (current.equals("order"))
 				{
-					// where 실행할것
+					stage++;
+					continue;
 				}
 				stage++;
 			} else if (stage == 4)
@@ -842,10 +724,9 @@ public class SQLCompiler
 
 		// stage 2와 stage 3은 무조건 값이 있어야 함
 		// columns랑 tables가 비어있으면 문법 오류
-		System.out.println("select구문 마지막 검사");
-		System.out.println(columns.size() +" " + tables.size());
+		System.out.println("-- select구문 마지막 검사");
+		System.out.println("columns.size()="+columns.size() +", tables.size()=" + tables.size());
 		if (columns.size() == 0 || tables.size() == 0) {
-			System.out.println("columns.size()="+columns.size() + " tables.size()="+tables.size());
 			setErrorMessage("문장 구성 요소가 부족합니다.");
 			return null;
 		}
@@ -858,7 +739,7 @@ public class SQLCompiler
 	}
 	public void setErrorMessage(String errorMessage) {
 		System.out.println(errorMessage);
-		this.errorMessage += errorMessage;
+		this.errorMessage = errorMessage;
 		map.put("complete",false);
 		map.put("errorMessage",errorMessage);
 	}

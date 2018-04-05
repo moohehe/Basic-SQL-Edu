@@ -144,6 +144,8 @@ public class QuizDAO
 			break;
 		case "person":
 			break;
+		default :
+				
 		}
 		
 		
