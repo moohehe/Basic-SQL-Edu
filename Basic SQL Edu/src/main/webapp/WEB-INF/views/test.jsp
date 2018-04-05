@@ -55,7 +55,7 @@
 </script>
 <style type="text/css">
 	.sqlAnswer {
-		position: absolute; top: 52%;
+		position: absolute; top: 40%;
 		width: 100%;
 		border-top: 5px;
 		border-top-style: solid;
