@@ -796,6 +796,7 @@ public class SQLCompiler
 		return result;
 	}
 
+
 	public String getErrorMessage()
 	{
 		return errorMessage;
