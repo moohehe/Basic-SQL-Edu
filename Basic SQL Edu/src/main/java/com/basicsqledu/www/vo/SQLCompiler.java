@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.basicsqledu.www.dao.QuizDAO;
 
@@ -73,11 +74,23 @@ public class SQLCompiler
 				.replace("\n", "㉿").replace("=", "㉿").replace("㉿as㉿", "㉿")
 				.replace(";", "㉿;㉿").split("㉿");
 		System.out.println("setText된 결과");
-		for (int i = 0; i < texts.length; i++)
+		ArrayList<String> temp = new ArrayList<String>();
+		for (int k = 0; k < texts.length; k++)
 		{
-			// if (s.equals("")) continue;
-			String s = texts[i];
-			System.out.println("(" + i + ") " + "[" + s + "]");
+			
+			String s = texts[k];
+			if (s.length() == 0 ) continue;
+			temp.add(s);
+		}
+		texts = new String[temp.size()];
+		for (int k = 0; k < temp.size(); k++) {
+			texts[k] = temp.get(k);
+		}
+		for (int k = 0; k < texts.length; k++)
+		{
+			
+			String s = texts[k];
+			System.out.println("(" + k + ") " + "[" + s + "]");
 		}
 	}
 
@@ -178,6 +191,10 @@ public class SQLCompiler
 				if (s.contains(";"))
 				{
 					count++;
+				}
+				// '.'이 몇개 있는지 체크
+				if (StringUtils.countOccurrencesOf(s, ".") > 2) {
+					setErrorMessage("문법 오류 : '.'의 사용법을 체크하세요");
 				}
 			}
 			if (count == 1)
@@ -379,7 +396,9 @@ public class SQLCompiler
 		// comma와 as 문법 체크용 변수
 		boolean comma = false;
 		boolean as = false;
-
+		// '*'이 columns에서 나왔었는지 체크함
+		boolean star = false;
+		
 		// 1. from의 index 확인하기
 		// from의 index를 파악하고
 		// form이 없으면 오류
@@ -513,7 +532,14 @@ public class SQLCompiler
 				// 3. 뒤쪽에 select 구문이 나오면 안됨. 그래서 괄호가 있는지를 먼저 체크한다.
 				// 4. COMMAND 들이 나오면 안됨.
 				
-				
+				// columns에 '*'이 있다면 다른 column_name이 있으면 안됨
+				if (columns.size() != 1) {
+					for(String s : columns) {
+						if (s.contains("*")) {
+							star = true;
+						}
+					}
+				}
 				
 				
 
@@ -686,12 +712,24 @@ public class SQLCompiler
 				// where 문 체크하고 없으면 통과
 				// 여기서부터 결과 테이블을 만들어낸다.
 				// current
-				System.out.println("tables.size()="+tables.size());
-				System.out.println("table_names.size()="+table_names.size());
-				System.out.println("table_names\n"+table_names);
+				
+				System.out.println("columns="+columns);
+				System.out.println();
 				
 				
 				
+				
+				
+				
+				
+				
+				
+				// 여기서부터 마지막으로 2차원 배열을 생성한다.
+				
+				// data name column
+				String[] data_names = getNames(columns);
+				
+				// data value columns
 				
 				
 				
@@ -731,6 +769,19 @@ public class SQLCompiler
 			return null;
 		}
 		return selectResult;
+	}
+
+	// column 명 세팅해주는 메소드
+	private String[] getNames(ArrayList<String> columns)
+	{
+		if (columns.size() == 0) {return null;}
+		String[] result = new String[columns.size()];
+		
+		for (int k = 0; k < columns.size(); k++) {
+			result[k] = columns.get(k);
+		}
+		
+		return result;
 	}
 
 	public String getErrorMessage()
