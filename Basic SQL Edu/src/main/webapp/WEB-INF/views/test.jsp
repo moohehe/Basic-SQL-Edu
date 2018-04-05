@@ -61,10 +61,25 @@
 		border-top-style: solid;
 		border-top-color: gray;
 	}
+	.qustionTable {
+		position: absolute; top: 1px;
+		width: 30%;
+		border: 1px;
+		border-color: blue;
+		border-style: solid;
+	}
+	
 </style>
 </head>
 <body>
-
+	
+	<!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
+	<div class="questionTable"> 
+		테이블 나와야 함
+	</div>
+	
+	
+	
 	<!-- SQL 정답 입력 화면 DIV -->
 	<div class="sqlAnswer">
 	<div >
