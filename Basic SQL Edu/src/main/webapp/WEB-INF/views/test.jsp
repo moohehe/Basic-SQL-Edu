@@ -6,7 +6,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title></title>
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/Navibar.css"/>"/>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/navigationbarjs.js"/>"></script>
 <script type="text/javascript">
 	function sqlrun() {
 		var str = document.getElementById('sql').value;
@@ -51,26 +53,29 @@
 		});
 	}
 </script>
+<style type="text/css">
+	.sqlAnswer {
+		position: absolute; top: 52%;
+		width: 100%;
+		border-top: 5px;
+		border-top-style: solid;
+		border-top-color: gray;
+	}
+</style>
 </head>
 <body>
 
-	<div>
+	<!-- SQL 정답 입력 화면 DIV -->
+	<div class="sqlAnswer">
+	<div >
 		<textarea cols="20" rows="20" id="sql"></textarea>
 		<textarea cols="20" rows="20" id="resultView"></textarea>
 	</div>
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
 	<button id="db" onclick="javascript:dbtest()">dbTest</button>
-	<a href="getTable">뷰 테스트1</a> <br>
-	<button class="btn" id="btn1">1</button><br>
-	<button class="btn" id="btn2">2</button><br>
-	<button class="btn" id="btn3">3</button><br>
-	<button class="btn" id="btn4">4</button><br>
-	<button class="btn" id="btn5">5</button><br>
-	<button class="btn" id="btn6">6</button><br>
-	<button class="btn" id="btn7">7</button><br>
-	<button class="btn" id="btn8">8</button><br>
-	<button class="btn" id="btn9">9</button><br>
-	<br>
+	</div><!-- SQL 정답 입력 화면 DIV 종료 -->
+
+	<!-- 우측 네비게이션 화면 관련 DIV -->	
 	<div class="navigation">
 	
 		<!-- 기본으로 보여지는 네비게이션 바 페이지 -->
@@ -103,6 +108,7 @@
 			</DIV><!-- Complete --> 
 			</DIV>
 			
+			<!-- 네이게이션 내부 text들 받아옴. -->
 			<div class="navicontext">
 				<p class="qs" id="qstext">${questext.qstext }</p><br>
 				<div id="qstype"> ${questext.qstype }</div> <br><br>
@@ -111,11 +117,11 @@
 				<div id="qsExm">${questext.qsExm }</div>
 			</div>
 		</div>	
-	
-		<!-- 전체 스테이지 맵 화면 -->
+		
+		<!-- stage 버튼 누르면 나타나는 전체 스테이지 맵 화면 -->
 		 <div class="level-menu">
-		 	<div class="float-btnframe lvmemu" style="background: #1a1a1a">
-	        	<div class="float-unit choosinglv" style="background: #1a1a1a">Choose a level</div> 
+		 	<div class="float-btnframe lvmemu" style="background: #6e6e6e">
+	        	<div class="float-unit choosinglv" style="background: #6e6e6e">Choose a level</div> 
 	       		<button class="float-unit closing dropbtn"> CLOSE </button>
 	        </div>
 				<br>
@@ -131,7 +137,7 @@
 	      	<br>
 	      	
 	      </div>
-	</div>
+	</div><!-- 우측 네비게이션 화면 관련 DIV 종료 -->	
 	
 </body>
 </html>
