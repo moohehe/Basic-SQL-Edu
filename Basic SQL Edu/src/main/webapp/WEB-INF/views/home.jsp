@@ -60,11 +60,7 @@ body, h1, h2, h3, h4, h5, h6 {
 
 			<div class="w3-display-middle w3-center" style="margin-top: 20%;">
 				<div style="">
-<<<<<<< HEAD
 					<p style="font-size: 30px; font-weight: bold;">
-=======
-					<p style="font-size: 100px; font-weight: bold;">
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 						<a href="test" class="w3-btn w3-button w3-yellow">W E L C O M E</a>
 					</p>
 
