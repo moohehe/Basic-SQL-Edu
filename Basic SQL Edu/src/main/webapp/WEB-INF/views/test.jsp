@@ -135,7 +135,31 @@
 		position: absolute;
 		color: white;
 	}
-	
+	.strobe {
+  transform-origin: bottom;
+  animation: strobeStart .5s ease-out, strobe 1s infinite;
+  animation-delay: 0s, .5s;
+}
+
+@keyframes strobeStart {
+  0% {
+    transform:  skew(0deg,0deg) scaleY(1) ;
+    animation-timing-function: ease-in;
+   }
+  40% {
+    transform:  skew(0deg,0deg) scaleY(.9);
+    animation-timing-function: ease-out;
+  }
+  100% { transform:   skew(4deg,0deg) scaleX(1); }
+}
+
+@keyframes strobe {
+  0% { transform:   skew(4deg,0deg) scaleX(1); }
+  10% { transform:  skew(1deg,0deg) scaleY(.9) ; }
+  50% { transform:  skew(-4deg,0deg) scaleX(1); }
+  60% { transform:  skew(-1deg,0deg) scaleY(.9) ; }
+  100% {transform: skew(4deg,0deg) scaleX(1); }
+}
 	
 </style>
 </head>
@@ -144,8 +168,8 @@
 	
 	<!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
 	<div class="questionTable"> 
-		<div class="tcolumes" tcolumes="1"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/bluebird.jpg"/>">
+		<div class="tcolumes strobe" tcolumes="1"> 
+			<img class="tableColumes" src="<c:url value="/resources/image/bluebird2.png"/>">
 		</div>	
 		
 		<div class="tcolumes" tcolumes="2"> 
