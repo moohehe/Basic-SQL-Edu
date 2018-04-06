@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import com.basicsqledu.www.dao.QuizDAO;
 
@@ -74,23 +73,11 @@ public class SQLCompiler
 				.replace("\n", "㉿").replace("=", "㉿").replace("㉿as㉿", "㉿")
 				.replace(";", "㉿;㉿").split("㉿");
 		System.out.println("setText된 결과");
-		ArrayList<String> temp = new ArrayList<String>();
-		for (int k = 0; k < texts.length; k++)
+		for (int i = 0; i < texts.length; i++)
 		{
-			
-			String s = texts[k];
-			if (s.length() == 0 ) continue;
-			temp.add(s);
-		}
-		texts = new String[temp.size()];
-		for (int k = 0; k < temp.size(); k++) {
-			texts[k] = temp.get(k);
-		}
-		for (int k = 0; k < texts.length; k++)
-		{
-			
-			String s = texts[k];
-			System.out.println("(" + k + ") " + "[" + s + "]");
+			// if (s.equals("")) continue;
+			String s = texts[i];
+			System.out.println("(" + i + ") " + "[" + s + "]");
 		}
 	}
 
@@ -192,10 +179,6 @@ public class SQLCompiler
 				{
 					count++;
 				}
-				// '.'이 몇개 있는지 체크
-				if (StringUtils.countOccurrencesOf(s, ".") > 2) {
-					setErrorMessage("문법 오류 : '.'의 사용법을 체크하세요");
-				}
 			}
 			if (count == 1)
 			{
@@ -248,7 +231,7 @@ public class SQLCompiler
 			{
 			case "create":
 				map.put("cmd","create");
-				i = getCreate(++i);
+				grammar_error = getCreate();
 				break;
 			case "drop":
 				map.put("cmd","drop");
@@ -295,20 +278,22 @@ public class SQLCompiler
 
 
 	/**
+	 * create table quiz_theme( th_code 숫자 기본키 ,gp_code 숫자 빈값 불가
+	 * ,th_name 문자열(최대20자) 중복 값 불가 );
 	 * 
-	 * create table quiz_theme( th_code number primary key ,gp_code number not
-	 * null ,th_name varchar2(50) not null ,constraint theme_fk foreign
-	 * key(gp_code) references quiz_group(gp_code) on delete cascade );
+	 * create table __정해진 예시(대략 종류 4개)___ (____ number primary key, _____, number not null,
+	 * ______ varchar(40) unique );
+	 * 
 	 */
-	private int getCreate(int index)
+	private boolean getCreate()
 	{
 		int i = 0;
 		int stage = 1;
+		String createResult []  = null;
 
 		for (i = stage; i < texts.length; i++)
 		{
 			String current = texts[i];
-			System.out.println(current);
 
 			if (stage == 1)
 			{// stage == 1 : SELECT <여기> FROM
@@ -319,10 +304,8 @@ public class SQLCompiler
 				} else
 				{
 					// <table>이 아니고 다른게 나옴
-					errorMessage += "create 다음에는 table이 나와야 합니다.";
-					map.put("complete",false);
-					map.put("errorMessage",errorMessage);
-					return -1;
+					setErrorMessage("create 다음에는 table이 나와야 합니다.");
+					return false;
 				}
 			} else if (stage == 2)
 			{
@@ -336,41 +319,85 @@ public class SQLCompiler
 				{
 					// 안맞음
 					setErrorMessage("table 다음에는 정확한 table_name이 나와야 합니다.");
-					return -1;
+					return false;
 				} else
 				{
 					stage++;
 				}
-			} else if (stage == 3)
-			{
-				// 3. table_name 다음에는 괄호다
-				if (current.startsWith("(") || current.equals("("))
-				{
-
+			} else if (stage == 3){
+				// 3. table_name 다음에는 컬럼들
+				if(current.equals("(")){
 					stage++;
-				} else
-				{
-					// 괄호로 시작하지 않거나 포함되지 않음
-					errorMessage += "괄호로 감싸야함";
-					map.put("complete",false);
-					map.put("errorMessage",errorMessage);
-					return -1;
 				}
-
-			} else if (stage == 4)
-			{
+				else{
+					setErrorMessage("괄호를 열어주어야 합니다.");
+					return false;
+				}
+			} else if(stage == 4){
+				// 4. 컬럼명들과 그 속성들 검사
+				createResult = new String[texts.length-stage];
+				int k = 0;
+				for(int j = stage;j<texts.length;j++){
+					if(texts[j].equals(")") || texts[j].equals(";") || texts[j].equals("")) continue;
+						createResult[k] = texts[j] + " ";
+						k++;
+				}
+				
+				/*System.out.println("[ 컬럼값들 ]");
+				for(String str : createResult){
+					System.out.print(str + " ");
+				}*/
+				
+				int col,type;
+				type = 1;
 				// 4. 괄호 안에 column 체크
-				// 4-0. 마지막에 ")"가 나올때까지 String배열에 저장,primary key는 한번만
+				// 4-0. 마지막에 ")"가 나올때까지 String배열에 저장
 				// 4-1. 컬럼 이름
+				for(String str : createResult){
+					if(str == null){
+						continue;
+					}
+					
+				}
+				//2차원 테이블에서 컬럼들 받아오기 --> 컬럼들 예시에서 검사
+				boolean corr = false;
+				String column[] = new String[table.length];
+				
+				for(i=0;i<table.length;i++){
+					column[i] = table[0][i];
+				}
+				
+				for(col= 0;col<createResult.length;col+=2){
+					for(i=0;i<column.length;i++){
+						//컬럼 제대로 입력됨
+						if(createResult[col].equals(column[i])){
+							corr = true;
+						}else{
+							corr = false;
+						}
+					}
+				}
+				
+				//컬럼 맞음
+				if(corr){
+					System.out.println(column.toString());
+				}
+				
 				// 4-2. 컬럼의 데이터 형태
-				// 4-3. 컬럼의 제약조건(기본키, 외래키, not null, default,,)
+				// 4-3. 컬럼의 제약조건(primary key는 한번만, 기본키, 외래키, not null, default,,)
 				// 4-4. 콤마
+				
+			}
+			else{
+				// 괄호로 시작하지 않거나 포함되지 않음
+				setErrorMessage("괄호로 감싸야함");
+				return false;
 			}
 		}
 
-		return i++;
+		return true;
 	}
-
+	
 	private String[][] getSelect()
 	{ // return 값은 2차원 배열
 		i++;
@@ -396,9 +423,7 @@ public class SQLCompiler
 		// comma와 as 문법 체크용 변수
 		boolean comma = false;
 		boolean as = false;
-		// '*'이 columns에서 나왔었는지 체크함
-		boolean star = false;
-		
+
 		// 1. from의 index 확인하기
 		// from의 index를 파악하고
 		// form이 없으면 오류
@@ -532,14 +557,7 @@ public class SQLCompiler
 				// 3. 뒤쪽에 select 구문이 나오면 안됨. 그래서 괄호가 있는지를 먼저 체크한다.
 				// 4. COMMAND 들이 나오면 안됨.
 				
-				// columns에 '*'이 있다면 다른 column_name이 있으면 안됨
-				if (columns.size() != 1) {
-					for(String s : columns) {
-						if (s.contains("*")) {
-							star = true;
-						}
-					}
-				}
+				
 				
 				
 
@@ -707,29 +725,27 @@ public class SQLCompiler
 			} else if (stage == 3)
 			{
 				System.out.println("-- stage3");
+				System.out.println("먼저 결과 outter join 결과물이 나와야함");
+				// 카티션 곱으로 table x table
+				String[][] temp_result = table_datas.get(0);
+				for (int k = 1; k < table_names.size(); k++ ) {
+					temp_result = getTempResultTable(
+							temp_result,table_names.get(k-1),
+							table_datas.get(k),table_names.get(k));
+				}
+				
+				
 				// where 구문
 				// where pname = (select pname FORM STUDENT WHERE sno=101122);
 				// where 문 체크하고 없으면 통과
 				// 여기서부터 결과 테이블을 만들어낸다.
 				// current
-				
-				System.out.println("columns="+columns);
-				System.out.println();
-				
-				
+				System.out.println("tables.size()="+tables.size());
+				System.out.println("table_names.size()="+table_names.size());
+				System.out.println("table_names\n"+table_names);
 				
 				
 				
-				
-				
-				
-				
-				// 여기서부터 마지막으로 2차원 배열을 생성한다.
-				
-				// data name column
-				String[] data_names = getNames(columns);
-				
-				// data value columns
 				
 				
 				
@@ -771,6 +787,49 @@ public class SQLCompiler
 		return selectResult;
 	}
 
+	private String[][] getTempResultTable(
+			String[][] table1, String table1_name,
+			String[][] table2, String table2_name)
+	{
+		// table2가 없는 테이블이면 그냥 table1 리턴
+		if (table2.length == 0) {
+			return table1;
+		}
+		
+		
+		int t1_w = table1.length;
+		int t1_h = table1[0].length;
+		int t2_w = table2.length;
+		int t2_h = table2[0].length;
+		
+		
+		
+		String[][] result_data = new String[t1_w * t2_w + 1][t1_h + t2_h +1];
+		
+		// 첫번째 줄은 column_names
+		for (int k = 0; k < result_data[0].length; k++) {
+			if ( k < table1.length) {
+				result_data[0][k] = table1_name+"."+table1[0][k];
+			}
+			else {
+				result_data[0][k] = table2_name+"."+table2[0][k-table1.length+1];
+			}
+		}
+		
+		for (int j = 0; j < table1.length; j++) {// table1 한바퀴
+			for (int k = 0; k < result[0].length; k++) {
+				// table1한줄 입력될때마다 table2 전부 다 입력되게
+				
+				
+			}
+		}
+		
+		
+		
+		
+		return result_data;
+	}
+
 	// column 명 세팅해주는 메소드
 	private String[] getNames(ArrayList<String> columns)
 	{
@@ -788,6 +847,7 @@ public class SQLCompiler
 	{
 		return errorMessage;
 	}
+	
 	public void setErrorMessage(String errorMessage) {
 		System.out.println(errorMessage);
 		this.errorMessage = errorMessage;

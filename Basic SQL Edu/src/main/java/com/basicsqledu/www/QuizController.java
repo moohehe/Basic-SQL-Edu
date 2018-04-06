@@ -32,6 +32,7 @@ public class QuizController
 		
 		System.out.println("요기");
 		System.out.println(data.get("table_value"));
+		System.out.println(data+"이게 데이터");
 		
 		return "test";
 	}
