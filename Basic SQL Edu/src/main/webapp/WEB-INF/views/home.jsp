@@ -42,29 +42,30 @@ body, h1, h2, h3, h4, h5, h6 {
 	<header>
 		<div class="w3-display-top w3-center">
 			<br> <span class="w3-text-purple w3-hide-small"
-				style="font-size: 300px"><b>Everybody's SQL</b></span>
+				style="font-size: 100px"><b>Everybody's SQL</b></span>
 		</div>
 	</header>
 
-	<div class="borderimg w3-text-purple w3-center" style="height: 65%;">
-		<div class="" style="padding-top: 15%;">
-			<b style="font-size: 90px">♡-About-♡</b>
-			<div class="w3-text-purple" style="font-weight: bold">
-				<ul style="font-size: 50px; list-style: none;">
-					<li>단순하고 직관적인 방식의 미니게임을 통해서</li>
-					<li>누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.</li>
-					<li>k o r . p n g t r e e . c o m</li>
+	<div class="borderimg w3-text-purple w3-center" style="height: 63%;">
+		<div class="" style="padding-top: 13%;">
+			<b style="font-size: 40px">♡-About-♡</b>
+			<div class="w3-text-purple" style="font-weight: bold; text-align: center">
+				<ul style="font-size: 17px; list-style:none;">
+					<li>단순하고 직관적인 방식의</li>
+					<li>미니게임을 통해서</li>
+					<li>누구나 쉽~게</li> 
+					<li>기초 SQL구문을 익힐 수 있습니다.</li>					
 				</ul>
 			</div>
 
 			<div class="w3-display-middle w3-center" style="margin-top: 20%;">
 				<div style="">
-					<p style="font-size: 100px; font-weight: bold;">
+					<p style="font-size: 30px; font-weight: bold;">
 						<a href="test" class="w3-btn w3-button w3-yellow">W E L C O M E</a>
 					</p>
 
-					<span class="w3-text-purple w3-tag" style="font-size: 50px"><b>Select
-							Language</b></span> <select name="lang" style="font-size: 60px;">
+					<span class="w3-text-purple w3-tag" style="font-size: 20px"><b>Select
+							Language</b></span> <select name="lang" style="font-size: 20px;">
 						<option value="jp">일본어</option>
 						<option value="eng">영어</option>
 						<option value="default" selected>한국어</option>
