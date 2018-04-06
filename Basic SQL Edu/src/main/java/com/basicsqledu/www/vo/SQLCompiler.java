@@ -725,6 +725,16 @@ public class SQLCompiler
 			} else if (stage == 3)
 			{
 				System.out.println("-- stage3");
+				System.out.println("먼저 결과 outter join 결과물이 나와야함");
+				// 카티션 곱으로 table x table
+				String[][] temp_result = table_datas.get(0);
+				for (int k = 1; k < table_names.size(); k++ ) {
+					temp_result = getTempResultTable(
+							temp_result,table_names.get(k-1),
+							table_datas.get(k),table_names.get(k));
+				}
+				
+				
 				// where 구문
 				// where pname = (select pname FORM STUDENT WHERE sno=101122);
 				// where 문 체크하고 없으면 통과
@@ -775,6 +785,62 @@ public class SQLCompiler
 			return null;
 		}
 		return selectResult;
+	}
+
+	private String[][] getTempResultTable(
+			String[][] table1, String table1_name,
+			String[][] table2, String table2_name)
+	{
+		// table2가 없는 테이블이면 그냥 table1 리턴
+		if (table2.length == 0) {
+			return table1;
+		}
+		
+		
+		int t1_w = table1.length;
+		int t1_h = table1[0].length;
+		int t2_w = table2.length;
+		int t2_h = table2[0].length;
+		
+		
+		
+		String[][] result_data = new String[t1_w * t2_w + 1][t1_h + t2_h +1];
+		
+		// 첫번째 줄은 column_names
+		for (int k = 0; k < result_data[0].length; k++) {
+			if ( k < table1.length) {
+				result_data[0][k] = table1_name+"."+table1[0][k];
+			}
+			else {
+				result_data[0][k] = table2_name+"."+table2[0][k-table1.length+1];
+			}
+		}
+		
+		for (int j = 0; j < table1.length; j++) {// table1 한바퀴
+			for (int k = 0; k < result[0].length; k++) {
+				// table1한줄 입력될때마다 table2 전부 다 입력되게
+				
+				
+			}
+		}
+		
+		
+		
+		
+		return result_data;
+	}
+
+	// column 명 세팅해주는 메소드
+	private String[] getNames(ArrayList<String> columns)
+	{
+		if (columns.size() == 0) {return null;}
+		String[] result = new String[columns.size()];
+		
+		for (int k = 0; k < columns.size(); k++) {
+			result[k] = columns.get(k);
+		}
+		
+		return result;
 	}
 
 	public String getErrorMessage()
