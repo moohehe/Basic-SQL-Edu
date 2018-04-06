@@ -847,6 +847,7 @@ public class SQLCompiler
 	{
 		return errorMessage;
 	}
+	
 	public void setErrorMessage(String errorMessage) {
 		System.out.println(errorMessage);
 		this.errorMessage = errorMessage;
