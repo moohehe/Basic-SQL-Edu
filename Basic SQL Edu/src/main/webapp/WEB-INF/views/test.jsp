@@ -52,75 +52,124 @@
 			}
 		});
 	}
+	
+	$(function(){
+		
+		//테이블 이름 표시
+		$('.questionTable').hover(function(){
+			
+				$('.helptext').text('table_land');
+				
+		}, function(){
+			$('.helptext').text('');
+			$('.helptext2').text('');
+			$('.helptext3').text('');
+
+		});
+		
+		//칼럼 안내문구
+		$('.tcolumes').hover(function(){
+			var colume =$(this).attr('tcolumes');
+			
+			if(colume == '1'){
+				$('.helptext').text('bluebird');
+			}else if(colume == '2'){
+				$('.helptext2').text('blackpenguin');
+			}else if(colume == '3'){
+				$('.helptext3').text('giraffe');
+			}
+		}
+		, function(){
+			var colume =$(this).attr('tcolumes');
+				$('.helptext').text('');
+				$('.helptext2').text('');
+				$('.helptext3').text('');
+
+		});
+		
+	});
+	
+	
+	
 </script>
 <style type="text/css">
 	.sqlAnswer {
-		position: absolute; top: 40%;
+		position: absolute; top: 50%; 
 		width: 100%;
+		height: 80%;
 		border-top: 5px;
 		border-top-style: solid;
 		border-top-color: gray;
 	}
+	.sqlAnswersheet{
+		position: absolute; left: 20%; 
+		width: 35%;
+		border: 2px;
+		border-style: solid;
+		border-color: red;
+	}
 	.questionTable {
-		background-image: url("<c:url value="/resources/image/bgi.jpg"/>");
+		background-image: url("<c:url value="/resources/image/table_land.jpg"/>");
 		background-repeat: no-repeat;
-		background-size: cover;
-		position: absolute; top: 10%;
+		background-position: center center;
+		background-size: full;
+		position: absolute; top: 10%; left: 10%;
 		width: 50%;
+		height: 30%;
 		border: 1px;
 		border-color: blue;
 		border-style: solid;
 		padding-left: 10px;
 		color: black;
+		
+		
 	}
 	.tableColumes {
+		float: left;
 		width: auto; height: auto;
-    	max-width: 150px;
-    	max-height: 150px;
-    	
+    	max-width: 130px;
+    	max-height: 130px;
+	}
+	.helpdiv{
+		top: 80%;
+		position: absolute;
+		color: white;
 	}
 	
-	.tableColumes {
-  animation-duration: 3s;
-  animation-name: slidein;
-}
-
-@keyframes slidein {
-  from {
-    margin-left: 100%;
-    width: 300%
-  }
-
-  to {
-    margin-left: 0%;
-    width: 100%;
-  }
-}
 	
 </style>
 </head>
 <body>
-	test
+	
 	
 	<!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
 	<div class="questionTable"> 
-		테이블 나와야 함 (일단 화면만이라도 띄워봅니다...) <br><br>
-		<img class="tableColumes" src="<c:url value="/resources/image/bluebird.PNG"/>">
-		<img class="tableColumes" src="<c:url value="/resources/image/redbird.PNG"/>">
-		<img class="tableColumes" src="<c:url value="/resources/image/greenbird.PNG"/>">
-		<img class="tableColumes" src="<c:url value="/resources/image/orangebird.PNG"/>">
+		<div class="tcolumes" tcolumes="1"> 
+			<img class="tableColumes" src="<c:url value="/resources/image/bluebird.jpg"/>">
+		</div>	
+		
+		<div class="tcolumes" tcolumes="2"> 
+			<img class="tableColumes" src="<c:url value="/resources/image/blackpenguin.jpg"/>">
+		</div>	
+		
+		<div class="tcolumes" tcolumes="3"> 
+			<img class="tableColumes" src="<c:url value="/resources/image/girrafe.jpg"/>">
+		</div> 
+		<br>
+			<div class="helpdiv helptext"> </div>
+			<div class="helpdiv helptext2"> </div>
+			<div class="helpdiv helptext3"> </div>
 	</div>
-	
 	
 	
 	<!-- SQL 정답 입력 화면 DIV -->
 	<div class="sqlAnswer">
-	<div >
+	<div class="sqlAnswersheet">
 		<textarea cols="20" rows="20" id="sql"></textarea>
-		<textarea cols="20" rows="20" id="resultView"></textarea>
-	</div>
+		<textarea cols="20" rows="20" id="resultView"></textarea> <br>
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
 	<button id="db" onclick="javascript:dbtest()">dbTest</button>
+	</div>
 	</div><!-- SQL 정답 입력 화면 DIV 종료 -->
 
 	<!-- 우측 네비게이션 화면 관련 DIV -->	

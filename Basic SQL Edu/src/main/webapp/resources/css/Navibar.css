@@ -15,6 +15,7 @@
  color:#000; 
  font-size:12px; 
  padding-left: 10px;
+ padding-right: 15px;
  }
  
  /* stage 버튼을 눌렀을 경우 나타나는 화면을 감싼 DIV */
@@ -23,6 +24,7 @@ position:absolute; top:0.01px; left:0.01px;/*위에 올라가는 레이어의 �
 height:100%;
 width: 100%;
 padding-left: 5px;
+padding-right: 5px;
 background: #6e6e6e; 
 display: none;
 }
@@ -71,7 +73,8 @@ html, body {
 
 .navicontext {
 	color: white;
-	font-size: 17px; 
+	font-size: 17px;
+	padding-right: 10px; 
 }
 .qs {
 	font-size: 25px;
