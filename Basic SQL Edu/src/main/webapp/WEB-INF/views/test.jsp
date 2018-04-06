@@ -61,13 +61,41 @@
 		border-top-style: solid;
 		border-top-color: gray;
 	}
-	.qustionTable {
-		position: absolute; top: 1px;
-		width: 30%;
+	.questionTable {
+		background-image: url("<c:url value="/resources/image/bgi.jpg"/>");
+		background-repeat: no-repeat;
+		background-size: cover;
+		position: absolute; top: 10%;
+		width: 50%;
 		border: 1px;
 		border-color: blue;
 		border-style: solid;
+		padding-left: 10px;
+		color: black;
 	}
+	.tableColumes {
+		width: auto; height: auto;
+    	max-width: 150px;
+    	max-height: 150px;
+    	
+	}
+	
+	.tableColumes {
+  animation-duration: 3s;
+  animation-name: slidein;
+}
+
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
 	
 </style>
 </head>
@@ -75,7 +103,11 @@
 	
 	<!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
 	<div class="questionTable"> 
-		테이블 나와야 함
+		테이블 나와야 함 (일단 화면만이라도 띄워봅니다...) <br><br>
+		<img class="tableColumes" src="<c:url value="/resources/image/bluebird.PNG"/>">
+		<img class="tableColumes" src="<c:url value="/resources/image/redbird.PNG"/>">
+		<img class="tableColumes" src="<c:url value="/resources/image/greenbird.PNG"/>">
+		<img class="tableColumes" src="<c:url value="/resources/image/orangebird.PNG"/>">
 	</div>
 	
 	
