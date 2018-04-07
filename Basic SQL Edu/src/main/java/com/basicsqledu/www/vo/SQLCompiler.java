@@ -72,8 +72,8 @@ public class SQLCompiler
 	{
 		this.text = text;
 		// 구문 분석기에 넣어서 입력
-		texts = text.toLowerCase().replace(",", "㉿,㉿").replace("(", "㉿(㉿")
-				.replace(")", "㉿)㉿").replace(" ", "㉿").replace("\t", "㉿")
+		texts = text.toLowerCase().replace(",", "㉿,").replace("(", "㉿(㉿")
+				.replace(")", "㉿)").replace(" ", "㉿").replace("\t", "㉿")
 				.replace("\n", "㉿").replace("=", "㉿").replace("㉿as㉿", "㉿")
 				.replace(";", "㉿;㉿").split("㉿");
 		System.out.println("setText된 결과");
@@ -239,6 +239,7 @@ public class SQLCompiler
 				break;
 			case "drop":
 				map.put("cmd","drop");
+				result = getDrop();
 				break;
 			case "alter":
 				map.put("cmd","alter");
@@ -282,8 +283,8 @@ public class SQLCompiler
 
 
 	/**
-	 * create table quiz_theme( th_code 숫자 기본키 ,gp_code 숫자 빈값 불가
-	 * ,th_name 문자열(최대20자) 중복 값 불가 );
+	 * 
+	 * DB 정답 테이블에서 정답을 꺼내와야함!!
 	 * 
 	 * create table __정해진 예시(대략 종류 4개)___ (____ number primary key, _____, number not null,
 	 * ______ varchar(40) unique );
@@ -296,10 +297,10 @@ public class SQLCompiler
 		System.out.println("==create문 들어옴==");
 
 		int i = 0;
-		int stage = 1;
-		String crResult[][] = null;
-		String createResult []  = null;
-		boolean faa = false;
+		int stage = 1;							//현재 단계별 진행상황
+		String crResult[][] = null;			//전체 create문 결과 판별
+		String createResult []  = null;	//괄호안에 컬럼들 담아줄 배열
+		boolean faa = false;					//컬럼 판별
 
 		for (i = stage; i < texts.length; i++)
 		{
@@ -476,6 +477,63 @@ public class SQLCompiler
 		
 		return null;
 	}
+	
+	
+	/**
+	 * 
+	 * DB 정답 테이블에서 정답을 꺼내와야함!!
+	 * 
+	 * 정답 예시 : drop table _____(테이블 이름)
+	 * 
+	 * */
+	private String[][] getDrop(){
+		System.out.println("==Drop문 들어옴==");
+
+		int i = 0;
+		int stage = 1;							//현재 단계별 진행상황
+		String [][] dropResult = null;		//전체 drop문 결과 판별
+
+		for (i = stage; i < texts.length; i++)
+		{
+			String current = texts[stage];
+
+			if (stage == 1)
+			{// stage == 1
+				// 1. drop <table>이 나오면 바로 종료
+				if (current.equals("table"))
+				{
+					stage++;
+				} else
+				{
+					// <table>이 아니고 다른게 나옴
+					setErrorMessage("drop 다음에는 table이 나와야 합니다.");
+					return null;
+
+				}
+			}else if(stage == 2){
+				//2. drop table <테이블 이름>이 나와야 함
+				result_name = current;			//사용자가 입력한 테이블 네임
+				table_name = "zoo"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
+
+				if (!(result_name.equals(table_name)))
+				{
+					// 안맞음
+					setErrorMessage("table 다음에는 정확한 table_name이 나와야 합니다.");
+					return null;
+
+				} else{
+					dropResult = new String[0][0];
+					return dropResult;
+				}
+				
+			}
+			
+		}
+		
+		return null;
+	}
+	
+	
 	
 	private String[][] getSelect()
 	{ // return 값은 2차원 배열
