@@ -36,7 +36,7 @@ public class SQLCompiler
 
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	private String errorMessage = "";
-	private boolean grammar_error = false;
+	private boolean grammar_error = false;		//구문 오류
 
 	private String text;
 	private String texts[];
