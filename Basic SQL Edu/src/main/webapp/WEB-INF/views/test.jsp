@@ -60,6 +60,7 @@
 			
 				$('.helptext').text('table_land');
 				
+				
 		}, function(){
 			$('.helptext').text('');
 			$('.helptext2').text('');
@@ -74,9 +75,9 @@
 			if(colume == '1'){
 				$('.helptext').text('bluebird');
 			}else if(colume == '2'){
-				$('.helptext2').text('blackpenguin');
+				$('.helptext').text('blackpenguin');
 			}else if(colume == '3'){
-				$('.helptext3').text('giraffe');
+				$('.helptext').text('giraffe');
 			}
 		}
 		, function(){
@@ -84,8 +85,9 @@
 				$('.helptext').text('');
 				$('.helptext2').text('');
 				$('.helptext3').text('');
-
 		});
+		
+		
 		
 	});
 	
