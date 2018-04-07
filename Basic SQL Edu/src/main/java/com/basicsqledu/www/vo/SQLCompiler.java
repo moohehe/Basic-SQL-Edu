@@ -2,7 +2,10 @@ package com.basicsqledu.www.vo;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +14,7 @@ import com.basicsqledu.www.dao.QuizDAO;
 @Service
 public class SQLCompiler
 {
+	private final static Logger logger = LoggerFactory.getLogger(SQLCompiler.class);
 	@Autowired
 	QuizDAO quizDAO;
 	
@@ -420,6 +424,9 @@ public class SQLCompiler
 		ArrayList<String> table_names = new ArrayList<String>();
 		// tables : from에서 가지고 오는 테이블
 		ArrayList<String[][]> tables = new ArrayList<String[][]>();
+		ArrayList<Integer> rows = new ArrayList<Integer>();
+		Stack<String> stack = new Stack<String>();
+		int status = 0;
 		// comma와 as 문법 체크용 변수
 		boolean comma = false;
 		boolean as = false;
@@ -694,7 +701,6 @@ public class SQLCompiler
 							return null;
 						}
 						break;
-							
 					}
 				}// end of while()
 				
@@ -721,40 +727,51 @@ public class SQLCompiler
 				} else { // next = "" 이면 뒤쪽에 아무것도 없음.
 					stage = 3;
 				}
-				
+				// table data 출력
+				System.out.println("테이블 갖고온거 테스트");
+				int iii = 0;
+				for (String[][] s : tables) {
+					System.out.println(table_names.get(iii));
+					for (String[] ss : s) {
+						for (String sss : ss ) {
+							System.out.print(sss + " ");
+						}
+						System.out.println();
+					}
+				}
 			} else if (stage == 3)
 			{
 				System.out.println("-- stage3");
 				System.out.println("먼저 결과 outter join 결과물이 나와야함");
 				// 카티션 곱으로 table x table
-				String[][] temp_result = table_datas.get(0);
+				String[][] temp_result = tables.get(0);
 				for (int k = 1; k < table_names.size(); k++ ) {
 					temp_result = getTempResultTable(
 							temp_result,table_names.get(k-1),
-							table_datas.get(k),table_names.get(k));
+							tables.get(k),table_names.get(k));
+				}
+				/*logger.info("tables width : {}, height : {}",temp_result[0].length, temp_result.length);
+				System.out.println("여기 table 해설 결과를 바친다.");
+				for ( String[] s : temp_result) {
+					for (String ss : s) {
+						System.out.print(ss + " ");
+					}
+					System.out.println();
+				}*/
+				
+				
+				// rows 를 얻어옴
+				rows = getRows(current, rows, stack);
+				if (rows == null) {
+					// 에러메세지는 getRows 안에서 set 됨
+					return null;
 				}
 				
 				
-				// where 구문
-				// where pname = (select pname FORM STUDENT WHERE sno=101122);
-				// where 문 체크하고 없으면 통과
-				// 여기서부터 결과 테이블을 만들어낸다.
-				// current
-				System.out.println("tables.size()="+tables.size());
-				System.out.println("table_names.size()="+table_names.size());
-				System.out.println("table_names\n"+table_names);
 				
 				
 				
 				
-				
-				
-				
-				if (current.equals("order"))
-				{
-					stage++;
-					continue;
-				}
 				stage++;
 			} else if (stage == 4)
 			{
@@ -787,6 +804,57 @@ public class SQLCompiler
 		return selectResult;
 	}
 
+
+	private ArrayList<Integer> getRows(String current, ArrayList<Integer> pre_rows, Stack<String> stack)
+	{
+		ArrayList<Integer> rows = new ArrayList<Integer>();
+		// where 구문
+		// where pname = (select pname FORM STUDENT WHERE sno=101122);
+		// where 문 체크하고 없으면 통과
+		// 여기서부터 결과 테이블을 만들어낸다.
+		// 괄호 시작 여부 (bracket)
+		
+		
+		
+		
+		
+		
+		
+		
+		boolean bracket = false;
+		boolean close_bracket = false; // 바로 앞에 ')'가 있었는지 확인
+		boolean selectrun = false;
+		int conti = 0; // ',' 없이 등장한 단어 숫자(select 구문도 단어로 생각);
+		// comma가 있느냐?를 따지는건데, 그냥 on 시켜두면 편함
+		boolean from_comma = true;
+		
+		
+		switch(current) {
+		case "(":
+			if (bracket) {
+				setErrorMessage("구문 오류 : (가 두번 연속될 수는 없습니다.");
+				return null;
+			}
+			bracket = true;
+			break;
+		case ")":
+			if (!bracket) {
+				setErrorMessage("구문 오류 : '('가 없이 ')'이 사용될 수 없습니다.");
+				return null;
+			}
+			bracket = false;
+			break;
+		case "and":	case "or":
+			stack.push(current);
+			break;
+		case "order":
+			break;
+		default:
+			break;
+		}
+		return rows;
+	}
+
 	private String[][] getTempResultTable(
 			String[][] table1, String table1_name,
 			String[][] table2, String table2_name)
@@ -796,37 +864,40 @@ public class SQLCompiler
 			return table1;
 		}
 		
+		int t1_w = table1[0].length;
+		int t1_h = table1.length;
+		int t2_w = table2[0].length;
+		int t2_h = table2.length;
+
+		logger.info("t1_w : {}, t1_h : {}",t1_w,t1_h);
+		logger.info("t2_w : {}, t2_h : {}",t2_w,t2_h);
 		
-		int t1_w = table1.length;
-		int t1_h = table1[0].length;
-		int t2_w = table2.length;
-		int t2_h = table2[0].length;
-		
-		
-		
-		String[][] result_data = new String[t1_w * t2_w + 1][t1_h + t2_h +1];
-		
+		logger.info("");
+		String[][] result_data = new String[(t1_h-1) * (t2_h-1) + 1][t1_w + t2_w];
+		logger.info("result_data w : {}, h : {}",result_data[0].length, result_data.length);
 		// 첫번째 줄은 column_names
 		for (int k = 0; k < result_data[0].length; k++) {
-			if ( k < table1.length) {
+			if ( k < table1[0].length) {
 				result_data[0][k] = table1_name+"."+table1[0][k];
 			}
 			else {
 				result_data[0][k] = table2_name+"."+table2[0][k-table1.length+1];
 			}
 		}
-		
-		for (int j = 0; j < table1.length; j++) {// table1 한바퀴
-			for (int k = 0; k < result[0].length; k++) {
-				// table1한줄 입력될때마다 table2 전부 다 입력되게
-				
-				
+		int col = 1;
+		for (int t1 = 1; t1 < table1.length; t1++) {
+			for (int t2 = 1; t2 < table2.length; t2++) {
+				for (int k = 0; k< result_data[0].length; k++) {
+					if (k < table1[0].length) {
+						result_data[col][k] = table1[t1][k];
+					}
+					else {
+						result_data[col][k] = table2[t2][k-table1.length+1];
+					}
+				}
+				col++;
 			}
 		}
-		
-		
-		
-		
 		return result_data;
 	}
 
