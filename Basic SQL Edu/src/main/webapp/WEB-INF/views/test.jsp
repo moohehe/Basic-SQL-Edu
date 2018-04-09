@@ -31,29 +31,19 @@
 			}
 		});
 	}
-	function dbtest() {
-		var str = document.getElementById('sql').value;
-		console.log(str);
-		if (str == '') {
-			return;
-		}
-		$.ajax({
-			type:"POST"
-			, url:"sqlCompiler2"
-			, data:{
-				sql:str
-			}
-			, success: function(e) {
-				console.log(e);
-				$('#resultView').val(e);
-			}
-			, error : function(e) {
-				console.log('error:'+e);	
-			}
-		});
-	}
 	
+	
+	//화면 처리. (문제 테이블 화면)
 	$(function(){
+		
+		// 쿠키를 읽어서 들어오는 경우에 처리를 해야...
+		//쿠키에 있는 내용을 읽어서 어느 stage까지 풀었는지 확인 후 해당 문제 들고 들어와야 함.
+		
+		
+		
+		
+		
+		
 		
 		//테이블 이름 표시
 		$('.questionTable').hover(function(){
@@ -88,7 +78,7 @@
 		});
 		
 		
-		
+				
 	});
 	
 	
@@ -181,6 +171,12 @@
 		<div class="tcolumes" tcolumes="3"> 
 			<img class="tableColumes" src="<c:url value="/resources/image/girrafe.jpg"/>">
 		</div> 
+		<div class="tcolumes" tcolumes="4"> 
+			<img class="tableColumes" src="<c:url value="/resources/image/girrafe.jpg"/>">
+		</div> 
+		<div class="tcolumes" tcolumes="5"> 
+			<img class="tableColumes" src="<c:url value="/resources/image/girrafe.jpg"/>">
+		</div> 
 		<br>
 			<div class="helpdiv helptext"> </div>
 			<div class="helpdiv helptext2"> </div>
@@ -194,7 +190,6 @@
 		<textarea cols="20" rows="20" id="sql"></textarea>
 		<textarea cols="20" rows="20" id="resultView"></textarea> <br>
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
-	<button id="db" onclick="javascript:dbtest()">dbTest</button>
 	</div>
 	</div><!-- SQL 정답 입력 화면 DIV 종료 -->
 

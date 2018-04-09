@@ -21,7 +21,7 @@
 	 * 2. where 조건절을 배우기
 	 * 	SELECT * FROM table_name WHERE 조건
 	 * 2-1. where 심화 - or / and 
-	 * 2-2. where 심화2 - is null / not is null / 
+	 * 2-2. where 심화2 - is null / not is null /  --> 로봇 다리?
 	 * 2-3. where 심화3 - like '%' // 요거는 조금 고민해봅시다.
 	 * 3. order by 정렬 기능 
 	 *  SELECT * FROM table_name WHERE 조건 ORDER BY column_name ASC;
