@@ -285,12 +285,17 @@ public class SQLCompiler
 	/**
 	 * 
 	 * DB 정답 테이블에서 정답을 꺼내와야함!!
+	 *
 	 * 
 	 * create table __정해진 예시(대략 종류 4개)___ (____ number primary key, _____, number not null,
 	 * ______ varchar(40) unique );
 	 * 
-	 * 
-	 * 지금 정답 : create table zoo(tree number primary key, grass number not null, background varchar(40) unique);
+	 * 지금 정답 : create table animal(
+							name	 varchar(40)	primary key
+							,color	 varchar(40)	unique
+							,habitat  varchar(40)	foreign key
+							,legs	 number		not null
+						);
 	 */
 	private String[][] getCreate()
 	{
@@ -407,11 +412,11 @@ public class SQLCompiler
 				 * */ 
 				faa = false;
 				//첫번째 컬럼
-				if(createResult[0].equals("tree")){
+				if(createResult[0].equals("name")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[1] + " " + createResult[2]) ){
+						if(dt.equals(createResult[1] + "(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[3])){
+								if(ct.equals(createResult[2] + " " + createResult[3])){
 									faa = true;
 									break;
 								}else{
@@ -424,11 +429,11 @@ public class SQLCompiler
 					}
 				}
 				//두번째 컬럼
-				if(createResult[4].equals("grass")){
+				if(createResult[4].equals("color")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[5] + " " + createResult[6])){
+						if(dt.equals(createResult[5] + "(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[7])){
+								if(ct.equals(createResult[6])){
 									faa = true;
 									break;
 								}else{
@@ -441,11 +446,27 @@ public class SQLCompiler
 					}
 				}
 				//세번째 컬럼
-				if(createResult[8].equals("background")){
+				if(createResult[7].equals("habitat")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[9]+"(40)")){
+						if(dt.equals(createResult[8]+"(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[10])){
+								if(ct.equals(createResult[9]+ " " + createResult[10] )){
+									faa = true;
+									break;
+								}else{
+									setErrorMessage("컬럼 값이 잘못되었습니다");
+									return null;
+								}
+							}
+						}
+					}
+				}
+				//네번째 컬럼
+				if(createResult[11].equals("legs")){
+					for(String dt : spDataType1){
+						if(dt.equals(createResult[12])){
+							for(String ct : constraint){
+								if(ct.equals(createResult[13]+ " " + createResult[14] )){
 									faa = true;
 									break;
 								}else{
@@ -500,7 +521,7 @@ public class SQLCompiler
 			if (stage == 1)
 			{// stage == 1
 				// 1. drop <table>이 나오면 바로 종료
-				if (current.equals("table"))
+				if (current.equals("table") || current.equals("sequence") || current.equals("view"))
 				{
 					stage++;
 				} else
