@@ -759,7 +759,7 @@ public class SQLCompiler
 				// 2. FROM이 나오면 table_name 등록
 				// 2-1. select인지 체크
 				// table 이름 체크하기
-
+				
 				// ( 로 시작하는지 체크
 				// ( 로 시작하면 )로 닫기는 지 체크
 				// as 구문이 있을 수 있으니 ,가 없이 두번 연속 단어가 나오면 별칭으로 등록
@@ -773,7 +773,7 @@ public class SQLCompiler
 				// 2. 나온다면 where이 앞에 있는지를 먼저 체크
 				// 3. 뒤쪽에 select 구문이 나오면 안됨. 그래서 괄호가 있는지를 먼저 체크한다.
 				// 4. COMMAND 들이 나오면 안됨.
-
+				
 				// 다음 문법 주소
 				int next_index = i;
 				String next = "";
