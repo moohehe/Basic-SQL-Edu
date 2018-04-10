@@ -52,7 +52,6 @@ $(function(){
 			alert('가장 마지막 페이지입니다.');
 			return;
 		}
-		
 		$.ajax({
 			url : "langcheck",
 			type : "post",

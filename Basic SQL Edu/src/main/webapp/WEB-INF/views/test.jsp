@@ -8,6 +8,7 @@
 <title></title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/Navibar.css"/>"/>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/questionsnaiyo.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/navigationbarjs.js"/>"></script>
 <script type="text/javascript">
 	function sqlrun() {
@@ -161,21 +162,21 @@
 	<!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
 	<div class="questionTable"> 
 		<div class="tcolumes strobe" tcolumes="1"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/bluebird2.png"/>">
+			<img class="tableColumes" columesimg="1" src="<c:url value="/resources/image/bluebird2.png"/>">
 		</div>	
 		
 		<div class="tcolumes" tcolumes="2"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/blackpenguin.jpg"/>">
+			<img class="tableColumes" columesimg="2" src="<c:url value="/resources/image/blackpenguin.jpg"/>">
 		</div>	
 		
 		<div class="tcolumes" tcolumes="3"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/girrafe.jpg"/>">
+			<img class="tableColumes" columesimg="3" src="<c:url value="/resources/image/girrafe.jpg"/>">
 		</div> 
 		<div class="tcolumes" tcolumes="4"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/girrafe.jpg"/>">
+			<img class="tableColumes" columesimg="4" src="<c:url value="/resources/image/girrafe.jpg"/>">
 		</div> 
 		<div class="tcolumes" tcolumes="5"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/girrafe.jpg"/>">
+			<img class="tableColumes"  columesimg="5" src="<c:url value="/resources/image/girrafe.jpg"/>">
 		</div> 
 		<br>
 			<div class="helpdiv helptext"> </div>
