@@ -354,7 +354,7 @@ public class SQLCompiler
 				// table 이름 체크하기
 				result_name = current; // 현재 사용자가 입력한 테이블 네임
 
-				table_name = "zoo"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
+				table_name = "animal"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
 
 				if (!(result_name.equals(table_name)))
 				{
@@ -387,10 +387,20 @@ public class SQLCompiler
 						k++;
 						
 				}
+				int comma = 0;
 				System.out.println(createResult.length);
 				for(String cr : createResult){
 					System.out.println(cr);
+					if(cr.equals(",")){
+						comma++;
+					}
 				}
+				
+				//콤마 갯수 계산
+				if(comma != 4) {
+					faa = false;
+				}
+				
 				
 				/*System.out.println("[ 컬럼값들 ]");
 				for(String str : createResult){
@@ -441,7 +451,7 @@ public class SQLCompiler
 					for(String dt : spDataType1){
 						if(dt.equals(createResult[1] + "(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[2] + " " + createResult[3])){
+								if(ct.equals(createResult[2] + " " + createResult[3]) && createResult[4].equals(",")){
 									faa = true;
 									break;
 								}else{
@@ -454,11 +464,11 @@ public class SQLCompiler
 					}
 				}
 				//두번째 컬럼
-				if(createResult[4].equals("color")){
+				if(createResult[5].equals("color")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[5] + "(40)")){
+						if(dt.equals(createResult[6] + "(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[6])){
+								if(ct.equals(createResult[7]) && createResult[8].equals(",")){
 									faa = true;
 									break;
 								}else{
@@ -471,11 +481,11 @@ public class SQLCompiler
 					}
 				}
 				//세번째 컬럼
-				if(createResult[7].equals("habitat")){
+				if(createResult[9].equals("habitat")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[8]+"(40)")){
+						if(dt.equals(createResult[10]+"(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[9]+ " " + createResult[10] )){
+								if(ct.equals(createResult[11]+ " " + createResult[12] ) && createResult[13].equals(",")){
 									faa = true;
 									break;
 								}else{
@@ -487,11 +497,11 @@ public class SQLCompiler
 					}
 				}
 				//네번째 컬럼
-				if(createResult[11].equals("legs")){
+				if(createResult[14].equals("legs")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[12])){
+						if(dt.equals(createResult[15])){
 							for(String ct : constraint){
-								if(ct.equals(createResult[13]+ " " + createResult[14] )){
+								if(ct.equals(createResult[16]+ " " + createResult[17] )){
 									faa = true;
 									break;
 								}else{
@@ -592,7 +602,6 @@ public class SQLCompiler
 		
 		return null;
 	}
-	
 	
 	
 	
