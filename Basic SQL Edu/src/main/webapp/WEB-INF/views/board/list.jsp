@@ -56,9 +56,9 @@
 	<tr>
 		<th>처리여부</th>
 		<td class="left">
-			<input type="radio" name="process" checked="checked"><span class="up">완료</span>&nbsp;&nbsp;
-			<input type="radio" name="process" /><span class="up">대기</span>
-			<input type="radio" name="process" /><span class="up">불가</span>
+			<label><input type="radio" name="process" checked="checked"><span class="up">완료</span></label>
+			<label><input type="radio" name="process" /><span class="up">대기</span></label>
+			<label><input type="radio" name="process" /><span class="up">불가</span></label>
 		</td>
 	</tr>
 	<tr>
@@ -102,8 +102,7 @@
 	<input type="hidden" name="page" id="page">
 	<select name="searchSelect">
 		<option value="title">제목</option>
-		<option value="content">본문</option>
-		<option value="id">작성자</option>
+		<option value="fb_user">작성자</option>
 	</select> 
 	
 	<input type="text" name="searchText" value="${searchText}">
