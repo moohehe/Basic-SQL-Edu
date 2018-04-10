@@ -262,5 +262,11 @@
 	      </div>
 	</div><!-- 우측 네비게이션 화면 관련 DIV 종료 -->	
 	
+	<ul class="a">
+		<li><a href="board/writeForm">글쓰기</a></li>		
+		<li><a href="board/list">피드백 게시판</a></li>
+		<li><a href="board/successView">작성완료화면 테스트</a></li>
+	</ul>
+	
 </body>
 </html>

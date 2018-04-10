@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 게시판 처리 SQL -->
+<mapper namespace="com.scmaster.www01.dao.FeedbackMapper">
+	<insert id="insertBoard" parameterType="board">
+		insert into	board2(
+				fb_no
+				,fb_user
+				,email
+				,title
+				,content
+			)values(
+				board2_seq.nextval
+				,#{fb_user}
+				,#{email}
+				,#{title}
+				,#{content}
+			)				
+	</insert>
+
+	<select id="selectBoardAll" resultType="board">
+		select			
+			*		
+		from
+			board2
+		order by
+			fb_no desc
+	</select>
+	
+	<select id="selectBoardOne" parameterType="int" resultType="board">
+		select
+			fb_no
+			,title
+			,content
+			,to_char(inputdate, 'yyyy-MM-dd') inputdate
+		from
+			board2
+		where
+			fb_no = #{fb_no}	
+	</select>
+	
+	<select id="getTotal" parameterType="HashMap" resultType="int">
+		select
+			count(*)
+		from
+			board2
+	</select>
+	
+	<update id="updateHits" parameterType="int">
+		update
+			board2
+		set
+			hits = hits + 1
+		where
+			fb_no = #{fb_no}	
+	</update>
+	
+	<insert id="insertMemo" parameterType="board">
+		update
+			board2
+		set
+			memo = #{memo}
+		where
+			fb_no = #{fb_no}					
+	</insert>
+	
+</mapper>
