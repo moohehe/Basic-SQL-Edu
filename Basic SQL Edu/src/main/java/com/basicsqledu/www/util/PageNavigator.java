@@ -1,4 +1,4 @@
-package com.scmaster.www01.util;
+package com.basicsqledu.www.util;
 
 /**
  * 게시판 페이징 처리 클래스

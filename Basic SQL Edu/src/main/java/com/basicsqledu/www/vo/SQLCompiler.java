@@ -50,7 +50,7 @@ public class SQLCompiler
 			"primary key", "foreign key", "unique", "default", "clustered", "nonclustered", "and", "or", "on", "set",
 			"values", "asc", "desc", "number", "varchar", "varchar2", "date", "char", "(", ")", "add", "modify",
 			"count", "sum", "max", "min", "avg", "group by", "having", ">", "<", "=", ">=", "<="
-			// 안 쓰지만 keyword이기 때문에 봉인한 키워드들
+			// 안 쓰지만 keyword이기 때문에 등록한 키워드들
 			, "tinytext", "text", "mediumtext", "longtext", "tinyint", "smallint", "mediumint", "int", "bigint",
 			"float", "decimal", "double", "time", "datetime", "timestamp", "year", "binary", "byte", "varbinary",
 			"tinyblob", "blob", "mediumblob", "longblob"
@@ -77,9 +77,9 @@ public class SQLCompiler
 		map.put("result", null);
 		
 		// 구문 분석기에 넣어서 입력
-		texts = text.toLowerCase().replace(",", "㉿,").replace("(", "㉿(㉿")
+		texts = text.toLowerCase().replace(",", "㉿,㉿").replace("(", "㉿(㉿")
 				.replace(")", "㉿)").replace(" ", "㉿").replace("\t", "㉿")
-				.replace("\n", "㉿").replace("=", "㉿").replace("㉿as㉿", "㉿")
+				.replace("\n", "㉿").replace("=", "㉿=㉿").replace("㉿as㉿", "㉿")
 				.replace(";", "㉿;㉿").split("㉿");
 		System.out.println("setText된 결과");
 
@@ -354,7 +354,7 @@ public class SQLCompiler
 				// table 이름 체크하기
 				result_name = current; // 현재 사용자가 입력한 테이블 네임
 
-				table_name = "zoo"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
+				table_name = "animal"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
 
 				if (!(result_name.equals(table_name)))
 				{
@@ -387,10 +387,20 @@ public class SQLCompiler
 						k++;
 						
 				}
+				int comma = 0;
 				System.out.println(createResult.length);
 				for(String cr : createResult){
 					System.out.println(cr);
+					if(cr.equals(",")){
+						comma++;
+					}
 				}
+				
+				//콤마 갯수 계산
+				if(comma != 4) {
+					faa = false;
+				}
+				
 				
 				/*System.out.println("[ 컬럼값들 ]");
 				for(String str : createResult){
@@ -441,7 +451,7 @@ public class SQLCompiler
 					for(String dt : spDataType1){
 						if(dt.equals(createResult[1] + "(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[2] + " " + createResult[3])){
+								if(ct.equals(createResult[2] + " " + createResult[3]) && createResult[4].equals(",")){
 									faa = true;
 									break;
 								}else{
@@ -454,11 +464,11 @@ public class SQLCompiler
 					}
 				}
 				//두번째 컬럼
-				if(createResult[4].equals("color")){
+				if(createResult[5].equals("color")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[5] + "(40)")){
+						if(dt.equals(createResult[6] + "(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[6])){
+								if(ct.equals(createResult[7]) && createResult[8].equals(",")){
 									faa = true;
 									break;
 								}else{
@@ -471,11 +481,11 @@ public class SQLCompiler
 					}
 				}
 				//세번째 컬럼
-				if(createResult[7].equals("habitat")){
+				if(createResult[9].equals("habitat")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[8]+"(40)")){
+						if(dt.equals(createResult[10]+"(40)")){
 							for(String ct : constraint){
-								if(ct.equals(createResult[9]+ " " + createResult[10] )){
+								if(ct.equals(createResult[11]+ " " + createResult[12] ) && createResult[13].equals(",")){
 									faa = true;
 									break;
 								}else{
@@ -487,11 +497,11 @@ public class SQLCompiler
 					}
 				}
 				//네번째 컬럼
-				if(createResult[11].equals("legs")){
+				if(createResult[14].equals("legs")){
 					for(String dt : spDataType1){
-						if(dt.equals(createResult[12])){
+						if(dt.equals(createResult[15])){
 							for(String ct : constraint){
-								if(ct.equals(createResult[13]+ " " + createResult[14] )){
+								if(ct.equals(createResult[16]+ " " + createResult[17] )){
 									faa = true;
 									break;
 								}else{
@@ -592,7 +602,6 @@ public class SQLCompiler
 		
 		return null;
 	}
-	
 	
 	
 	
@@ -750,7 +759,7 @@ public class SQLCompiler
 				// 2. FROM이 나오면 table_name 등록
 				// 2-1. select인지 체크
 				// table 이름 체크하기
-
+				
 				// ( 로 시작하는지 체크
 				// ( 로 시작하면 )로 닫기는 지 체크
 				// as 구문이 있을 수 있으니 ,가 없이 두번 연속 단어가 나오면 별칭으로 등록
@@ -764,7 +773,7 @@ public class SQLCompiler
 				// 2. 나온다면 where이 앞에 있는지를 먼저 체크
 				// 3. 뒤쪽에 select 구문이 나오면 안됨. 그래서 괄호가 있는지를 먼저 체크한다.
 				// 4. COMMAND 들이 나오면 안됨.
-
+				
 				// 다음 문법 주소
 				int next_index = i;
 				String next = "";
@@ -965,7 +974,7 @@ public class SQLCompiler
 				}
 				if (current.equals(";")) {
 					stage = 3;
-					i = i - 2; 
+					i = i - 1; 
 					System.out.println("input ; i="+i);
 					continue;
 				}
@@ -978,18 +987,67 @@ public class SQLCompiler
 				
 				// 카티션 곱으로 table x table
 				String[][] temp_result = tables.get(0);
-				for (int k = 1; k < table_names.size(); k++)
+				int k=0;
+				for (k = 1; k < table_names.size(); k++)
 				{
 					temp_result = getTempResultTable(temp_table, table_names.get(k - 1),
 							tables.get(k), table_names.get(k));
 				}
-
+				// columns 값 가져오기
+				// table이 1개일 때  k == 1 이다.
+				// table이 2개 이상일 때는 k == 2 이다.
+				for (int n = 0 ; n < columns.size(); n++) {
+					String col = columns.get(n);
+					if (col.equals("*")) {
+						if (k == 1) {
+							// *이고, table이 1개임 ==> table1의 모든 table 획득해야됨
+							columns.remove("*");
+							for (String c : temp_result[0]) {
+								columns.add(c);
+							}
+						}
+					}
+					else if (col.contains("*")) {
+						if (k == 1) {
+							setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
+							return null;
+						}
+						else {
+							// table_name.* 형태 인지 확인할 것
+							String[] c = col.split(".*");
+							if ( c.length != 2) {
+								setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
+								return null;
+							}
+							// table_name으로 된 모든 column을 획득하기
+							for (String t_name : table_names) {
+								if (c[0].equals(t_name)) {
+									for (String cc : temp_table[0]) {
+										if (cc.contains(t_name)) {
+											columns.add(cc);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				System.out.println("-- columns print");
+				for (String col : columns) {
+					System.out.print(col + " ");
+				}
+				
+				
 				// rows 를 얻어옴
 				rows = getRows(current, columns, temp_result);
 				if (rows == null)
 				{
 					// 에러메세지는 getRows 안에서 set 됨
 					return null;
+				}
+				System.out.println("-- rows print");
+				for (int r : rows) {
+					System.out.print(r + " ");
 				}
 				// rows != null 이면 order by로 간다
 				temp_table = temp_result;
@@ -999,7 +1057,7 @@ public class SQLCompiler
 					continue;
 				}*/
 				stage++;
-				i -= 2;
+				i -= 1;
 				System.out.println(" i="+i+" texts.length="+texts.length);
 			} else if (stage == 4)
 			{
@@ -1098,7 +1156,18 @@ public class SQLCompiler
 
 	private int[] getRows(String current, ArrayList<String> columns, String[][] temp_table)
 	{
-		logger.info("start of getRows()");
+		logger.info("start of getRows(), current : {}",current);
+		if (current == null ) {
+			setErrorMessage("알 수 없는 오류로 종료되었습니다.");
+			return null;
+		}
+		if (current.equals(";")) {
+			int[] result = new int[temp_table.length];
+			for(int r : result) {
+				r = 1;
+			}
+			return result;
+		}
 		Stack<Object> stack = new Stack<Object>();
 		stack.push("");
 		int[] result = new int[temp_table.length];
