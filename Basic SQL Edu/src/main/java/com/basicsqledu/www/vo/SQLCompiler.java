@@ -270,6 +270,7 @@ public class SQLCompiler
 				break;
 			case "insert":
 				map.put("cmd", "insert");
+				result = getInsert();
 				break;
 			case "update":
 				map.put("cmd", "update");
@@ -309,11 +310,9 @@ public class SQLCompiler
 	 * 
 	 * DB 정답 테이블에서 정답을 꺼내와야함!!
 	 *
-	 * create table quiz_theme( th_code 숫자 기본키 ,gp_code 숫자 빈값 불가 ,th_name
-	 * 문자열(최대20자) 중복 값 불가 );
 	 * 
-	 * create table __정해진 예시(대략 종류 4개)___ (____ number primary key, _____,
-	 * number not null, ______ varchar(40) unique );
+	 * create table __정해진 예시(대략 종류 4개)___ (____ number primary key, _____, number not null,
+	 * ______ varchar(40) unique );
 	 * 
 	 * 지금 정답 : create table animal(
 							name	 varchar(40)	primary key
@@ -321,13 +320,207 @@ public class SQLCompiler
 							,habitat  varchar(40)	foreign key
 							,legs	 number		not null
 						);
-	 * 
-	 * 지금 정답 : create table zoo(tree number primary key, grass number not null,
-	 * background varchar(40) unique);
 	 */
 	private String[][] getCreate()
 	{
+		System.out.println("==create문 들어옴==");
 
+		int i = 0;
+		int stage = 1;							//현재 단계별 진행상황
+		String crResult[][] = null;			//전체 create문 결과 판별
+		String createResult []  = null;	//괄호안에 컬럼들 담아줄 배열
+		boolean faa = false;					//컬럼 판별
+
+		for (i = stage; i < texts.length; i++)
+		{
+			String current = texts[stage];
+
+			if (stage == 1)
+			{// stage == 1
+				// 1. create <table>이 나오면 바로 종료
+				if (current.equals("table"))
+				{
+					stage++;
+				} else
+				{
+					// <table>이 아니고 다른게 나옴
+					setErrorMessage("create 다음에는 table이 나와야 합니다.");
+					return null;
+
+				}
+			} else if (stage == 2)
+			{
+				// 2. table이 나오면 table_name을 찾음(내가 가지고 있는 table_name이여야함)
+				// table 이름 체크하기
+				result_name = current; // 현재 사용자가 입력한 테이블 네임
+
+				table_name = "zoo"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
+
+				if (!(result_name.equals(table_name)))
+				{
+					// 안맞음
+					setErrorMessage("table 다음에는 정확한 table_name이 나와야 합니다.");
+					return null;
+
+				} else
+				{
+					stage++;
+				}
+			} else if (stage == 3){
+				// 3. table_name 다음에는 컬럼들
+				if(current.equals("(")){
+					stage++;
+				}
+				else{
+					setErrorMessage("괄호를 열어주어야 합니다.");
+					return null;
+
+				}
+			} else if(stage == 4){
+				// 4. 컬럼명들과 그 속성들 검사
+				createResult = new String[texts.length-stage-3];
+				int k = 0;
+				for(int j = stage;j<texts.length;j++){
+					if(texts[j].equals(")") || texts[j].equals(";") || texts[j].equals("")
+							|| texts[j].equals("(")) continue;
+						createResult[k] = texts[j] + " ";
+						k++;
+						
+				}
+				System.out.println(createResult.length);
+				for(String cr : createResult){
+					System.out.println(cr);
+				}
+				
+				/*System.out.println("[ 컬럼값들 ]");
+				for(String str : createResult){
+					System.out.print(str + " ");
+				}*/
+				
+				
+				// 4. 괄호 안에 column 체크
+				// 4-0. 마지막에 ")"가 나올때까지 String배열에 저장
+				// 4-1. 컬럼 이름
+				for(String str : createResult){
+					if(str == null){
+						continue;
+					}
+					
+				}
+				
+				/*
+				 * 사용자가 입력한 컬럼명이 우리테이블뷰에 있는 컬럼명이랑 같은지 검사시에 사용
+				 * 
+				boolean corr = false;
+				int col,type;
+				type = 1;
+				String column[] = new String[table.length];
+				
+				for(i=0;i<table.length;i++){
+					column[i] = table[0][i];
+				}
+				
+				for(col= 0;col<createResult.length;col+=3){
+					for(i=0;i<column.length;i++){
+						//컬럼 제대로 입력됨
+						if(createResult[col].equals(column[i])){
+							corr = true;
+						}else{
+							corr = false;
+						}
+					}
+				}*/
+				
+				
+				/*
+				 * 컬럼들 예시에서 검사 --> 나중에 예시추가하고 사용자에게 입력받은값을 토대로 검사
+				 * */ 
+				faa = false;
+				//첫번째 컬럼
+				if(createResult[0].equals("name")){
+					for(String dt : spDataType1){
+						if(dt.equals(createResult[1] + "(40)")){
+							for(String ct : constraint){
+								if(ct.equals(createResult[2] + " " + createResult[3])){
+									faa = true;
+									break;
+								}else{
+									setErrorMessage("컬럼 값이 잘못되었습니다");
+									return null;
+
+								}
+							}
+						}
+					}
+				}
+				//두번째 컬럼
+				if(createResult[4].equals("color")){
+					for(String dt : spDataType1){
+						if(dt.equals(createResult[5] + "(40)")){
+							for(String ct : constraint){
+								if(ct.equals(createResult[6])){
+									faa = true;
+									break;
+								}else{
+									setErrorMessage("컬럼 값이 잘못되었습니다");
+									return null;
+
+								}
+							}
+						}
+					}
+				}
+				//세번째 컬럼
+				if(createResult[7].equals("habitat")){
+					for(String dt : spDataType1){
+						if(dt.equals(createResult[8]+"(40)")){
+							for(String ct : constraint){
+								if(ct.equals(createResult[9]+ " " + createResult[10] )){
+									faa = true;
+									break;
+								}else{
+									setErrorMessage("컬럼 값이 잘못되었습니다");
+									return null;
+								}
+							}
+						}
+					}
+				}
+				//네번째 컬럼
+				if(createResult[11].equals("legs")){
+					for(String dt : spDataType1){
+						if(dt.equals(createResult[12])){
+							for(String ct : constraint){
+								if(ct.equals(createResult[13]+ " " + createResult[14] )){
+									faa = true;
+									break;
+								}else{
+									setErrorMessage("컬럼 값이 잘못되었습니다");
+									return null;
+								}
+							}
+						}
+					}
+				}
+				//컬럼명들이 맞으면 반복문 종료
+				if(faa = true){
+					break;
+				}
+				// 4-2. 컬럼의 데이터 형태
+				// 4-3. 컬럼의 제약조건(primary key는 한번만, 기본키, 외래키, not null, default,,)
+				// 4-4. 콤마
+			}
+			else{
+				// 괄호로 시작하지 않거나 포함되지 않음
+				setErrorMessage("괄호로 감싸야함");
+				return null;
+			}
+		}
+		if(faa){
+			//전부완료
+			return new String[0][0];
+		}
+		
 		return null;
 	}
 	
@@ -385,6 +578,22 @@ public class SQLCompiler
 		
 		return null;
 	}
+	
+	
+	/**
+	 * 
+	 * insert into Person(gender,height,haircolor,clothescolor) values('man', 숫자, 'red', 'blue');
+	 * insert into robot(r_color,r_size,r_type,weapon) values('white','small','R2','beam');
+	 * 
+	 * 
+	 * 
+	 * */
+	private String[][] getInsert(){
+		
+		return null;
+	}
+	
+	
 	
 	
 	
