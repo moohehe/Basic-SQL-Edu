@@ -61,6 +61,37 @@ public class CompilerController
 		}*/
 		// 오류가 없으면
 		// 데이터 테이블을 json으로 출력해서 보내준다. 그럼 그걸 받아서 js로 그림으로 출력함.
+		
+		//문제 테이블 출력을 위한 가짜 데이터를 일단 맵에 넣어서 보냄... 표시된 곳 까지는 나중에 지울 것.
+		
+		String[][] fakeTest = new String[3][6];
+		fakeTest[0][0] = "animal_size";
+		fakeTest[0][1] = "animal_species";
+		fakeTest[0][2] = "animal_legs";
+		fakeTest[0][3] = "animal_color";
+		fakeTest[0][4] = "animal_habitat";
+		fakeTest[0][5] = "animal_feed";
+		
+		fakeTest[1][0] = "small";
+		fakeTest[1][1] = "bird";
+		fakeTest[1][2] = "2";
+		fakeTest[1][3] = "blue";
+		fakeTest[1][4] = "sky";
+		fakeTest[1][5] = "grass";
+		
+		fakeTest[2][0] = "small";
+		fakeTest[2][1] = "penguin";
+		fakeTest[2][2] = "2";
+		fakeTest[2][3] = "blue";
+		fakeTest[2][4] = "NorthPole";
+		fakeTest[2][5] = "grass";
+		
+		
+		resultMap.put("fakeData", fakeTest);
+		
+		
+		//여기까지가 실험 데이터(fakeData) 즉, 여기 위에는 지워야...
+		
 		Gson gson = new Gson();
 		String json = gson.toJson(resultMap);
 		System.out.println("[ResultData]\n"+json);
