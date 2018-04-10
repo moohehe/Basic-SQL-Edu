@@ -50,7 +50,7 @@ public class SQLCompiler
 			"primary key", "foreign key", "unique", "default", "clustered", "nonclustered", "and", "or", "on", "set",
 			"values", "asc", "desc", "number", "varchar", "varchar2", "date", "char", "(", ")", "add", "modify",
 			"count", "sum", "max", "min", "avg", "group by", "having", ">", "<", "=", ">=", "<="
-			// 안 쓰지만 keyword이기 때문에 봉인한 키워드들
+			// 안 쓰지만 keyword이기 때문에 등록한 키워드들
 			, "tinytext", "text", "mediumtext", "longtext", "tinyint", "smallint", "mediumint", "int", "bigint",
 			"float", "decimal", "double", "time", "datetime", "timestamp", "year", "binary", "byte", "varbinary",
 			"tinyblob", "blob", "mediumblob", "longblob"
@@ -79,7 +79,7 @@ public class SQLCompiler
 		// 구문 분석기에 넣어서 입력
 		texts = text.toLowerCase().replace(",", "㉿,").replace("(", "㉿(㉿")
 				.replace(")", "㉿)").replace(" ", "㉿").replace("\t", "㉿")
-				.replace("\n", "㉿").replace("=", "㉿").replace("㉿as㉿", "㉿")
+				.replace("\n", "㉿").replace("=", "㉿=㉿").replace("㉿as㉿", "㉿")
 				.replace(";", "㉿;㉿").split("㉿");
 		System.out.println("setText된 결과");
 
@@ -987,18 +987,67 @@ public class SQLCompiler
 				
 				// 카티션 곱으로 table x table
 				String[][] temp_result = tables.get(0);
-				for (int k = 1; k < table_names.size(); k++)
+				int k=0;
+				for (k = 1; k < table_names.size(); k++)
 				{
 					temp_result = getTempResultTable(temp_table, table_names.get(k - 1),
 							tables.get(k), table_names.get(k));
 				}
-
+				// columns 값 가져오기
+				// table이 1개일 때  k == 1 이다.
+				// table이 2개 이상일 때는 k == 2 이다.
+				for (int n = 0 ; n < columns.size(); n++) {
+					String col = columns.get(n);
+					if (col.equals("*")) {
+						if (k == 1) {
+							// *이고, table이 1개임 ==> table1의 모든 table 획득해야됨
+							columns.remove("*");
+							for (String c : temp_result[0]) {
+								columns.add(c);
+							}
+						}
+					}
+					else if (col.contains("*")) {
+						if (k == 1) {
+							setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
+							return null;
+						}
+						else {
+							// table_name.* 형태 인지 확인할 것
+							String[] c = col.split(".*");
+							if ( c.length != 2) {
+								setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
+								return null;
+							}
+							// table_name으로 된 모든 column을 획득하기
+							for (String t_name : table_names) {
+								if (c[0].equals(t_name)) {
+									for (String cc : temp_table[0]) {
+										if (cc.contains(t_name)) {
+											columns.add(cc);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				System.out.println("-- columns print");
+				for (String col : columns) {
+					System.out.print(col + " ");
+				}
+				
+				
 				// rows 를 얻어옴
 				rows = getRows(current, columns, temp_result);
 				if (rows == null)
 				{
 					// 에러메세지는 getRows 안에서 set 됨
 					return null;
+				}
+				System.out.println("-- rows print");
+				for (int r : rows) {
+					System.out.print(r + " ");
 				}
 				// rows != null 이면 order by로 간다
 				temp_table = temp_result;
