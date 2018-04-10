@@ -77,7 +77,7 @@ public class SQLCompiler
 		map.put("result", null);
 		
 		// 구문 분석기에 넣어서 입력
-		texts = text.toLowerCase().replace(",", "㉿,").replace("(", "㉿(㉿")
+		texts = text.toLowerCase().replace(",", "㉿,㉿").replace("(", "㉿(㉿")
 				.replace(")", "㉿)").replace(" ", "㉿").replace("\t", "㉿")
 				.replace("\n", "㉿").replace("=", "㉿=㉿").replace("㉿as㉿", "㉿")
 				.replace(";", "㉿;㉿").split("㉿");
@@ -974,7 +974,7 @@ public class SQLCompiler
 				}
 				if (current.equals(";")) {
 					stage = 3;
-					i = i - 2; 
+					i = i - 1; 
 					System.out.println("input ; i="+i);
 					continue;
 				}
@@ -1057,7 +1057,7 @@ public class SQLCompiler
 					continue;
 				}*/
 				stage++;
-				i -= 2;
+				i -= 1;
 				System.out.println(" i="+i+" texts.length="+texts.length);
 			} else if (stage == 4)
 			{
@@ -1156,7 +1156,18 @@ public class SQLCompiler
 
 	private int[] getRows(String current, ArrayList<String> columns, String[][] temp_table)
 	{
-		logger.info("start of getRows()");
+		logger.info("start of getRows(), current : {}",current);
+		if (current == null ) {
+			setErrorMessage("알 수 없는 오류로 종료되었습니다.");
+			return null;
+		}
+		if (current.equals(";")) {
+			int[] result = new int[temp_table.length];
+			for(int r : result) {
+				r = 1;
+			}
+			return result;
+		}
 		Stack<Object> stack = new Stack<Object>();
 		stack.push("");
 		int[] result = new int[temp_table.length];

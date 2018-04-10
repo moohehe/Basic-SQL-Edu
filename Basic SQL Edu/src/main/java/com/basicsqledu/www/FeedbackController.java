@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.basicsqledu.www.dao.FeedbackDAO;
+import com.basicsqledu.www.util.PageNavigator;
 import com.basicsqledu.www.vo.Feedback_Board;
-import com.scmaster.www01.util.PageNavigator;
 
 @Controller
 @RequestMapping(value="board")
