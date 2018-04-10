@@ -8,6 +8,7 @@
 <title></title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/Navibar.css"/>"/>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/questionsnaiyo.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/navigationbarjs.js"/>"></script>
 <script type="text/javascript">
 	function sqlrun() {
@@ -31,29 +32,19 @@
 			}
 		});
 	}
-	function dbtest() {
-		var str = document.getElementById('sql').value;
-		console.log(str);
-		if (str == '') {
-			return;
-		}
-		$.ajax({
-			type:"POST"
-			, url:"sqlCompiler2"
-			, data:{
-				sql:str
-			}
-			, success: function(e) {
-				console.log(e);
-				$('#resultView').val(e);
-			}
-			, error : function(e) {
-				console.log('error:'+e);	
-			}
-		});
-	}
 	
+	
+	//화면 처리. (문제 테이블 화면)
 	$(function(){
+		
+		// 쿠키를 읽어서 들어오는 경우에 처리를 해야...
+		//쿠키에 있는 내용을 읽어서 어느 stage까지 풀었는지 확인 후 해당 문제 들고 들어와야 함.
+		
+		
+		
+		
+		
+		
 		
 		//테이블 이름 표시
 		$('.questionTable').hover(function(){
@@ -88,7 +79,7 @@
 		});
 		
 		
-		
+				
 	});
 	
 	
@@ -166,20 +157,26 @@
 </style>
 </head>
 <body>
-	
+	push를 위한 구문
 	
 	<!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
 	<div class="questionTable"> 
 		<div class="tcolumes strobe" tcolumes="1"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/bluebird2.png"/>">
+			<img class="tableColumes" columesimg="1" src="<c:url value="/resources/image/bluebird2.png"/>">
 		</div>	
 		
 		<div class="tcolumes" tcolumes="2"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/blackpenguin.jpg"/>">
+			<img class="tableColumes" columesimg="2" src="<c:url value="/resources/image/blackpenguin.jpg"/>">
 		</div>	
 		
 		<div class="tcolumes" tcolumes="3"> 
-			<img class="tableColumes" src="<c:url value="/resources/image/girrafe.jpg"/>">
+			<img class="tableColumes" columesimg="3" src="<c:url value="/resources/image/girrafe.jpg"/>">
+		</div> 
+		<div class="tcolumes" tcolumes="4"> 
+			<img class="tableColumes" columesimg="4" src="<c:url value="/resources/image/girrafe.jpg"/>">
+		</div> 
+		<div class="tcolumes" tcolumes="5"> 
+			<img class="tableColumes"  columesimg="5" src="<c:url value="/resources/image/girrafe.jpg"/>">
 		</div> 
 		<br>
 			<div class="helpdiv helptext"> </div>
@@ -194,7 +191,6 @@
 		<textarea cols="20" rows="20" id="sql"></textarea>
 		<textarea cols="20" rows="20" id="resultView"></textarea> <br>
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
-	<button id="db" onclick="javascript:dbtest()">dbTest</button>
 	</div>
 	</div><!-- SQL 정답 입력 화면 DIV 종료 -->
 
