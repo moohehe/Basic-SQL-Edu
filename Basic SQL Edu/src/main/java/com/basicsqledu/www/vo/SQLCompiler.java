@@ -134,6 +134,7 @@ public class SQLCompiler
 			table[0][3] = "animal_color";
 			table[0][4] = "animal_habitat";
 			table[0][5] = "animal_feed";
+			
 
 			int i = 1;
 			for (Object a : list)
