@@ -974,7 +974,6 @@ public class SQLCompiler
 				}
 				if (current.equals(";")) {
 					stage = 3;
-					i = i - 1; 
 					System.out.println("input ; i="+i);
 					continue;
 				}
@@ -1036,10 +1035,23 @@ public class SQLCompiler
 				for (String col : columns) {
 					System.out.print(col + " ");
 				}
+				System.out.println();
 				
 				
 				// rows 를 얻어옴
-				rows = getRows(current, columns, temp_result);
+				System.out.println("rows를 얻어옴. current="+current);
+				if (current.equals(";")) { // 끝나는 거니까
+					int[] row = new int[temp_result.length];
+					System.out.println("row.length="+row.length);
+					for (int l = 1; l<row.length; l++) {
+						row[l] = 1;
+						System.out.print(row[l]+" ");
+					}
+					rows = row;
+				}
+				else{
+					rows = getRows(current, columns, temp_result);
+				}
 				if (rows == null)
 				{
 					// 에러메세지는 getRows 안에서 set 됨
@@ -1049,6 +1061,7 @@ public class SQLCompiler
 				for (int r : rows) {
 					System.out.print(r + " ");
 				}
+				System.out.println("rows="+rows);
 				// rows != null 이면 order by로 간다
 				temp_table = temp_result;
 				System.out.println("end of stage3");
@@ -1091,6 +1104,7 @@ public class SQLCompiler
 				
 				//rows 구하기
 				int count = 0;
+				System.out.println("여기 rows="+rows);
 				for (int r : rows) {
 					System.out.println("r="+r);
 					if (r == 1) {
@@ -1103,27 +1117,28 @@ public class SQLCompiler
 				int result_row = 0;
 				for (int l = 0; l <temp_table.length; l++) {
 					int result_col = 0;
-					logger.info("rows[{}] , {}",l,rows[l]);
-					//logger.info("temp_table.length : {} ", temp_table.length);
+					//logger.info("rows[{}] , {}",l,rows[l]);
+					//logger.info(" ** result_row : {}, result_col : {} ", result_row,result_col);
 					if (l == 0) {
 						for (int k = 0; k < temp_table[0].length; k++) {
 							if (cols[k] == 1) {
 								selectResult[0][result_col++] = temp_table[0][k];
 							}
 						}
-						result_row++;
 					}
-					if ( rows[l] == 1) {
+					if ( rows[l] == 1 && l != 0) {
 						for (int k = 0; k < temp_table[0].length; k++) {
-							logger.info("	cols[{}] , {}",k,cols[k]);
+							//logger.info("	cols[{}] , {}",k,cols[k]);
 							if (cols[k] == 1) {
 								System.out.println("\t\ttemp_table["+l+"]["+k+"]="+temp_table[l][k]);
+								//logger.info("k : {}, l : {}",k,l);
+								//logger.info("result_row : {}, result_col : {} ", result_row,result_col);
 								selectResult[result_row][result_col] = temp_table[l][k];
 								result_col++;
 							}
 						}
-						result_row++;
 					}
+					result_row++;
 				}
 			} // end of 
 			i++;
@@ -1140,7 +1155,7 @@ public class SQLCompiler
 		}
 		System.out.println("[selectResult]");
 		if (selectResult == null) {
-			setErrorMessage("알 수 없는 오류로 종료됩니다.");
+			setErrorMessage("selectResult == null, 알 수 없는 오류로 종료됩니다.");
 			return null;
 		}
 		logger.info("selectResult.length : {}, selectResult[0].length : {}",selectResult.length, selectResult[0].length);
