@@ -30,7 +30,8 @@ public class CompilerController
 	@RequestMapping(value="sqlCompiler", method = RequestMethod.POST
 			, produces = "application/text; charset=utf8")
 	public String compiler(String sql, HttpServletResponse response
-			, @RequestParam(defaultValue="animal_view") String table_name) {
+			, @RequestParam(defaultValue="animal_view") String table_name
+			, @RequestParam(defaultValue="1") int questionNumber) {
 		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8");
 		// 0. 빈값이면 생략
@@ -41,7 +42,7 @@ public class CompilerController
 		// 1. sql 구문 입력 / 해석 
 		// 입력받은 sql 구문을 compiler 객체에 삽입
 		compiler.setText(sql);
-		compiler.setQuestionNumber(questionNumber);
+		compiler.setQuestionNumber(question1111Number);
 		// DB 테이블 입력
 		HashMap<String, Object> map = quizDAO.getTable(questionNumber); // <- 여기 나중에 변수로 바꿔야됨!!!!!!!!!!!!!!!!!!!!!!!!!!
 		ArrayList<Object> list = (ArrayList<Object>) map.get("table_value");
