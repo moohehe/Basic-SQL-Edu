@@ -20,18 +20,7 @@ public class SQLCompiler
    private final static Logger logger = LoggerFactory.getLogger(SQLCompiler.class);
    @Autowired
    QuizDAO quizDAO;
-<<<<<<< Upstream, based on branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
-=======
-
-   // 현재 questionNumber
-   private int questionNumber;
    
-   public int getQuestionNumber()
-   {
-      return questionNumber;
-   }
->>>>>>> 8186611 jh7
-
    // 현재 questionNumber
    private int questionNumber;
    
