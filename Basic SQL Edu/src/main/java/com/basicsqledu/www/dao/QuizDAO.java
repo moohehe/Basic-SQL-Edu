@@ -26,24 +26,25 @@ public class QuizDAO
 	private final static String[] PERSONS = {"person"};
 	
 	
-	public HashMap<String, Object> getTable(String table_name){
-		logger.info("{}",table_name);
+	public HashMap<String, Object> getTable(int questionNumber){
+		logger.info("{}",questionNumber);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		
 		try
 		{
 			QuizMapper mapper = session.getMapper(QuizMapper.class);
-			switch (table_name) {
-			case "animal_view" : 
-				ArrayList<Animal> animals = mapper.getAnimal2();
+			switch (questionNumber) {
+			case 1 : case 2: case 3: case 4 : case 5: case 6:
+			case 7 : case 8 : case 9: case 10:
+				ArrayList<Animal> animals = mapper.getAnimal(questionNumber);
 				result.put("table_name", "animal_view");
 				result.put("table_value", animals);
 				break;
-			case "person_view" :
+			case 11: case 12: case 13: case 14: case 15: case 16:
 				result.put("table_name","person_view");
 				result.put("table_value","persons 라는 테이블 ArrayList");
 				break;
-				
+			case 17 : case 18: case 19: case 20:
 			}
 			
 		} catch (Exception e)
@@ -56,34 +57,27 @@ public class QuizDAO
 	}
 	
 	
-	public String[][] getTables(String table_key) {
+	public String[][] getTables(int questionNumber, String table_key) {
 		logger.info("start of getTables()");
+		logger.info("questionNumber:{}, table_key : {}",questionNumber, table_key);
 		table_key = table_key.toLowerCase();
 		String type = "";
 		String[][] table = null;
 
 		logger.info("table_key:{}, type:{}",table_key, type);
 		
-		for (String s : ANIMALS) {
-			if (table_key.contains(s)) {
-				type = "animal";
-				break;
-			}
+		// questionNumber가 1~ 11까지는 animal
+		// questionNumber가 12~16은 PERSON
+		// questionNumber가 17~20은 ROBOT
+		if (questionNumber > 0 && questionNumber < 12) {
+			type="animal";
+		} else if (questionNumber > 11 && questionNumber < 17) {
+			type="person";
+		} else if (questionNumber > 16) {
+			type="robot";
+		} else {
+			return null;
 		}
-		for (String s : ROBOTS) {
-			if (table_key.contains(s)) {
-				type = "robot";
-				break;
-			}
-		}
-
-		for (String s : PERSONS) {
-			if (table_key.contains(s)) {
-				type = "person";
-				break;
-			}
-		}
-		
 		
 		
 		
@@ -94,8 +88,10 @@ public class QuizDAO
 				logger.info("animal");
 				QuizMapper mapper = session.getMapper(QuizMapper.class);
 				String table_name = table_key+"_view";
+				// exam) q1_animal
+				// exam) q4_birds, q4_tigers, q4_animal
 				logger.info("table_name:'{}' ",table_name);
-				ArrayList<Animal> list = mapper.getAnimal(table_name);
+				ArrayList<Animal> list = mapper.getAnimal2(table_name);
 				if (list == null)
 				{
 					return null;
@@ -126,9 +122,9 @@ public class QuizDAO
 						table[i][0] = animal.getAnimal_size();
 						table[i][1] = animal.getAnimal_species();
 						table[i][2] = animal.getAnimal_legs();
-						table[i][3] = animal.getAnimal_habitat();
-						table[i][4] = animal.getAnimal_feed();
-						table[i][5] = animal.getAnimal_size();
+						table[i][3] = animal.getAnimal_color();
+						table[i][4] = animal.getAnimal_habitat();
+						table[i][5] = animal.getAnimal_feed();
 
 						i++;
 					}
@@ -140,9 +136,9 @@ public class QuizDAO
 			}
 			
 			break;
-		case "robots":
-			break;
 		case "person":
+			break;
+		case "robot":
 			break;
 		default :
 				
@@ -154,7 +150,5 @@ public class QuizDAO
 		return table;
 	}
 
-
-	
 	
 }

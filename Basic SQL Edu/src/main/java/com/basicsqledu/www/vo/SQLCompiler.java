@@ -1,6 +1,9 @@
 package com.basicsqledu.www.vo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Stack;
 
@@ -17,6 +20,19 @@ public class SQLCompiler
 	private final static Logger logger = LoggerFactory.getLogger(SQLCompiler.class);
 	@Autowired
 	QuizDAO quizDAO;
+
+	// 현재 questionNumber
+	private int questionNumber;
+	
+	public int getQuestionNumber()
+	{
+		return questionNumber;
+	}
+
+	public void setQuestionNumber(int questionNumber)
+	{
+		this.questionNumber = questionNumber;
+	}
 
 	// index
 	private int i;
@@ -80,9 +96,8 @@ public class SQLCompiler
 		texts = text.toLowerCase().replace(",", "㉿,㉿").replace("(", "㉿(㉿")
 				.replace(")", "㉿)").replace(" ", "㉿").replace("\t", "㉿")
 				.replace("\n", "㉿").replace("=", "㉿=㉿").replace("㉿as㉿", "㉿")
-				.replace(";", "㉿;㉿").split("㉿");
+				.replace(";", "㉿;㉿").replace("!㉿=","㉿!=").split("㉿");
 		System.out.println("setText된 결과");
-
 		ArrayList<String> temp = new ArrayList<String>();
 		
 		for (int i = 0; i < texts.length; i++)
@@ -90,6 +105,62 @@ public class SQLCompiler
 			String s = texts[i];
 			if (s.length() == 0) continue;
 			temp.add(s);
+			
+			
+			
+			// '가 몇개인지 체크함.
+			if (s.contains("'")) {
+				int count = 0;
+				// 따옴표는 '가 포함되어있는 단어(contain("'"); 을 for으로 돌려서 있는 구문이면 index0과 lastindex에만 '가 있는지 체크
+				// 쌍따옴표도 동일
+				for ( int k = 0; k < s.length(); k++) {
+					if (s.charAt(k) == '\'') {
+						count++;
+					}
+					if (s.charAt(k) == '"') {
+						setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+						text = null;
+						return;
+					}
+				}
+				if (count != 2) {
+					setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+					texts = null;
+					return;
+				} else {
+					if (!(s.charAt(0) == '\'' && s.charAt(s.length()-1) == '\'')) {
+						setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+						texts = null;
+						map.put("complete",false);
+						return;
+					}
+				}
+			}
+			if (s.contains("\"")) {
+				int count = 0;
+				for ( int k = 0; k < s.length(); k++) {
+					if (s.charAt(k) == '\"') {
+						count++;
+					}
+					if (s.charAt(k) == '\'') {
+						setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+						texts = null;
+						return;
+					}
+				}
+				if (count != 2) {
+					setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+					texts = null;
+					return;
+				} else {
+					if (!(s.charAt(0) == '"' && s.charAt(s.length()-1) == '"')) {
+						setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+						texts = null;
+						map.put("complete",false);
+						return;
+					}
+				}
+			}
 		}
 		texts = new String[temp.size()];
 		for (int k = 0; k < temp.size(); k++) {
@@ -102,6 +173,11 @@ public class SQLCompiler
 			String s = texts[i];
 			System.out.println("(" + i + ") " + "[" + s + "]");
 		}
+
+		// where sizes = 'small' 체크 방법
+		// 'small'로 stack에 입력해두었다가, row0 검사할때(검사column을 찾을때)는 '를 제거하지 않고
+		// row1~이후 를 검사할때는 '를 제거한다.
+			
 	}
 
 	/*
@@ -143,9 +219,9 @@ public class SQLCompiler
 				table[i][0] = animal.getAnimal_size();
 				table[i][1] = animal.getAnimal_species();
 				table[i][2] = animal.getAnimal_legs();
-				table[i][3] = animal.getAnimal_habitat();
-				table[i][4] = animal.getAnimal_feed();
-				table[i][5] = animal.getAnimal_size();
+				table[i][3] = animal.getAnimal_color();
+				table[i][4] = animal.getAnimal_habitat();
+				table[i][5] = animal.getAnimal_feed();
 
 				i++;
 			}
@@ -187,11 +263,18 @@ public class SQLCompiler
 	 */
 	public HashMap<String, Object> getResult()
 	{
+		System.out.println("start of getResult()");
 		// 틀릴 때만 complete에 false를 입력하고
 		// errorMessage에 에러 메세지를 더함(\n까지)
+		System.out.println("0. texts 제대로 입력되었나 확인");
+		if (texts == null) {
+			map.put("complete",false);
+			return map;
+		}
 		map.put("complete", true);
 		setErrorMessage(null);
 
+		
 		System.out.println("1. 세미콜론 문법 체크");
 		// 1. 세미콜론 문법 체크
 		if (text.contains(";"))
@@ -248,53 +331,58 @@ public class SQLCompiler
 		}
 
 		System.out.println("2. 구문검사 시작");
-
-		// 2. 구문 검사 시작
-		for (i = 0; i < texts.length; i++)
-		{
-			String current = texts[i];
-
-			// select 인지 검사하기
-			switch (current)
+		try {
+			// 2. 구문 검사 시작
+			for (i = 0; i < texts.length; i++)
 			{
-			case "create":
-				map.put("cmd", "create");
-				result = getCreate();
-				break;
-			case "drop":
-				map.put("cmd","drop");
-				result = getDrop();
-				break;
-			case "alter":
-				map.put("cmd", "alter");
-				break;
-			case "insert":
-				map.put("cmd", "insert");
-				result = getInsert();
-				break;
-			case "update":
-				map.put("cmd", "update");
-				break;
-			case "delete":
-				map.put("cmd", "delete");
-				break;
-			case "select":
-				map.put("cmd", "select");
-				result = getSelect();
-				break;
-			case "desc":
-				map.put("cmd", "desc");
-				break;
-			default:
-				break;
+				String current = texts[i];
+	
+				// select 인지 검사하기
+				switch (current)
+				{
+				case "create":
+					map.put("cmd", "create");
+					result = getCreate();
+					break;
+				case "drop":
+					map.put("cmd","drop");
+					result = getDrop();
+					break;
+				case "alter":
+					map.put("cmd", "alter");
+					break;
+				case "insert":
+					map.put("cmd", "insert");
+					result = getInsert();
+					break;
+				case "update":
+					map.put("cmd", "update");
+					break;
+				case "delete":
+					map.put("cmd", "delete");
+					break;
+				case "select":
+					map.put("cmd", "select");
+					result = getSelect();
+					break;
+				case "desc":
+					map.put("cmd", "desc");
+					break;
+				default:
+					break;
+				}
+				if (result == null)
+				{
+					// 문법 오류난 것이므로 바로 리턴
+					break;
+				}
 			}
-			if (result == null)
-			{
-				// 문법 오류난 것이므로 바로 리턴
-				break;
-			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			setErrorMessage(errorMessage+"\nselect구문 오류");
+			return map;
 		}
-
+		
 		// 문제 없이 끝났으면 result를 맵에 입력
 		if ((boolean) map.get("complete"))
 		{
@@ -606,7 +694,7 @@ public class SQLCompiler
 	
 	
 	
-	private String[][] getSelect()
+	private String[][] getSelect() throws Exception
 	{ // return 값은 2차원 배열
 		i++;
 		String[][] selectResult = null; // result 값
@@ -825,7 +913,7 @@ public class SQLCompiler
 						i++;
 						continue;
 					}
-
+					
 					switch (current)
 					{
 					case ",": // ','를 발견
@@ -904,7 +992,7 @@ public class SQLCompiler
 						if (conti == 0)
 						{ // ',' 이후에 첫번째 단어
 							table_name = current;
-							table_data = quizDAO.getTables(table_name);
+							table_data = quizDAO.getTables(questionNumber,table_name);
 							if (table_data == null)
 							{
 								setErrorMessage("문법 오류 : table [" + table_name + "]이 존재하지 않습니다.");
@@ -971,8 +1059,9 @@ public class SQLCompiler
 						}
 						System.out.println();
 					}
+					iii++;
 				}
-				if (current.equals(";")) {
+				if (current.equals(";") || current.equals("order")) {
 					stage = 3;
 					System.out.println("input ; i="+i);
 					continue;
@@ -1040,7 +1129,7 @@ public class SQLCompiler
 				
 				// rows 를 얻어옴
 				System.out.println("rows를 얻어옴. current="+current);
-				if (current.equals(";")) { // 끝나는 거니까
+				if (current.equals(";") || current.equals("order")) { // 끝나는 거니까
 					int[] row = new int[temp_result.length];
 					System.out.println("row.length="+row.length);
 					for (int l = 1; l<row.length; l++) {
@@ -1061,35 +1150,21 @@ public class SQLCompiler
 				for (int r : rows) {
 					System.out.print(r + " ");
 				}
-				System.out.println("rows="+rows);
+				//System.out.println("rows="+rows);
 				// rows != null 이면 order by로 간다
+				System.out.println("temp_table = temp_result");
 				temp_table = temp_result;
 				System.out.println("end of stage3");
-				/*if (current.equals("order") || current.equals(";")) {
-					stage++;
-					continue;
-				}*/
 				stage++;
-				i -= 1;
+				System.out.println(" i="+i+" texts.length="+texts.length);
+				i--;
+				if (i == (texts.length -1)) {
+					i--;
+				}
 				System.out.println(" i="+i+" texts.length="+texts.length);
 			} else if (stage == 4)
 			{
 				System.out.println("-- stage4");
-				// order by 체크하기
-				if (current.equals("order"))
-				{
-					if (texts[++i].equals("by"))
-					{
-						// order by 실행
-						
-					} else
-					{
-						// order by 구문이 틀렸기 때문에
-						setErrorMessage("group 다음에는 by가 와야합니다.");
-						return null;
-					}
-				}
-
 
 				// columns index 구하기
 				int[] cols = new int[temp_table[0].length];
@@ -1111,8 +1186,11 @@ public class SQLCompiler
 						count++;
 					}
 				}
+				System.out.println("count="+count);
 				// order by 없으면 그냥 전체 출력
-				selectResult = new String[count+1][columns.size()];		
+				selectResult = new String[(++count)][columns.size()];		
+				System.out.println("selectResult.size = ["+selectResult.length+","+selectResult[0].length+"]");
+				System.out.println("temp_table =["+temp_table.length+"]["+temp_table[0].length+"]");
 				System.out.println("뾰롱 여기");
 				int result_row = 0;
 				for (int l = 0; l <temp_table.length; l++) {
@@ -1125,22 +1203,158 @@ public class SQLCompiler
 								selectResult[0][result_col++] = temp_table[0][k];
 							}
 						}
+						result_row++;
 					}
 					if ( rows[l] == 1 && l != 0) {
 						for (int k = 0; k < temp_table[0].length; k++) {
 							//logger.info("	cols[{}] , {}",k,cols[k]);
 							if (cols[k] == 1) {
-								System.out.println("\t\ttemp_table["+l+"]["+k+"]="+temp_table[l][k]);
+								//System.out.println("\t\ttemp_table["+l+"]["+k+"]="+temp_table[l][k]);
 								//logger.info("k : {}, l : {}",k,l);
 								//logger.info("result_row : {}, result_col : {} ", result_row,result_col);
-								selectResult[result_row][result_col] = temp_table[l][k];
+								//System.out.println("l="+l+" k="+k+" result_row="+result_row+" result_col="+result_col);
+								String cc = temp_table[l][k];
+								selectResult[result_row][result_col] = cc;
 								result_col++;
 							}
 						}
+						result_row++;
 					}
-					result_row++;
 				}
-			} // end of 
+				// order by 체크하기
+				if (current.equals("order"))
+				{
+					if (texts[++i].equals("by"))
+					{
+						++i;
+
+						// 현재 column keyword인지 정렬 keyword인지 표시하는 level variable 
+						int keyword_level = 0;
+						int ascdesc = 0;
+						// 키워드
+						ArrayList<Integer> orders = new ArrayList<Integer>();
+						// asc : 0, desc : 1
+						ArrayList<Integer> bys = new ArrayList<Integer>();
+						// order by 실행
+						while ( i < texts.length) {
+							current = texts[i];
+							// order by까지 나옴
+							switch (current) {
+							case ";":
+								// level이 1이나 2로 끝나야 함. 아닐 경우에는 문제
+								if (!(keyword_level == 1 || keyword_level == 2 )) {
+									setErrorMessage("문법 오류 : order by 구문은 ','로 끝날 수 없습니다.");
+									return null;
+								}
+								break;
+							case ",":
+								if (keyword_level == 0) {
+									setErrorMessage("문법 오류 : order by에서 ','의 사용법을 확인해주세요");
+									return null;
+								}
+								keyword_level = 0; // level 0
+								break;
+							case "desc":
+							case "asc":
+								if (keyword_level != 1) {
+									setErrorMessage("문법 오류 : order by 구문을 확인해주세요");
+									return null;
+								}
+								bys.remove(bys.size()-1);
+								bys.add(current.equals("asc")? 0:1); // asc면 0, desc 면 1
+								keyword_level++; // level 2.
+								break;
+							default:
+								keyword_level++; // level 1+
+								if (keyword_level > 1 ) {
+									setErrorMessage("문법 오류 : order by 구문 확인해주세요");
+									return null;
+								}
+								int col = -1;
+								for (int k = 0; k < columns.size(); k++) {
+									if (columns.get(k).equals(current)) {
+										col = k;
+										break;
+									}
+								}
+								if (col == -1) {
+									setErrorMessage("문법 오류 : in order by "+current+" column을 찾을 수 없습니다.");
+									return null;
+								}
+								orders.add(col);
+								bys.add(0); // 일단 기본적으로 오름차순 입력
+							}
+							i++;
+						} // end of while(order by 구문)
+						System.out.println("-- order by print");
+						System.out.println(": 정렬 전");
+						for (String[] s : selectResult) {
+							for (int k = 0; k < s.length; k++) {
+								System.out.print(s[k] + " ");
+							}
+							System.out.println();
+						}
+						System.out.println();
+						// sort 과정
+						// 0. order by 하면  row 0도 정렬됨. row 0을 빼고 정렬하자.
+						// 1. 임시로 row 0 을 제거한 temp_result 생성
+						String[][] temp_result = new String[selectResult.length-1][selectResult[0].length-1];
+						for (int k = 1; k< selectResult.length; k++) {
+							temp_result[k-1] = selectResult[k];
+						}
+						for (String[] s : temp_result) {
+							for (int k = 0; k < s.length; k++) {
+								System.out.print(s[k] + " ");
+							}
+							System.out.println();
+						}
+						System.out.println();
+						
+						// 2. 정렬 실행
+						System.out.println("orders.size()="+orders.size());
+						for (int k = 0; k < orders.size(); k++) {
+							System.out.println("("+k+") "+ orders.get(k) + " " + bys.get(k));
+							final int order = orders.get(k);
+							final int by = bys.get(k);
+							Arrays.sort	(temp_result, new Comparator<String[]>() {
+								@Override
+								public int compare(String[] o1, String[] o2)
+								{
+									System.out.println("o1:");
+									for (String s : o1) System.out.print(s + " ");
+									System.out.println();
+									System.out.println("o2:");
+									for (String s : o2) System.out.print(s + " ");
+									System.out.println();
+									
+									if (by == 0 ) {
+										if( o1[order].compareTo(o2[order]) < 0 )
+						                    return 1;
+						                else
+						                    return -1;
+									}
+									else {
+										if( o1[order].compareTo(o2[order]) < 0 )
+						                    return -1;
+						                else
+						                    return 1;
+									}
+								}
+					        });
+						}
+						// 3. 정렬이 끝났으면 temp_result를 selectResult로 돌린다. row 0은 남기고
+						for (int k = 0; k<temp_result.length;k++) {
+							selectResult[k+1] = temp_result[k];
+						}
+												
+					} else
+					{
+						// order by 구문이 틀렸기 때문에
+						setErrorMessage("group 다음에는 by가 와야합니다.");
+						return null;
+					}
+				}
+			} // end of stage4
 			i++;
 		}
 
@@ -1310,10 +1524,20 @@ public class SQLCompiler
 						setErrorMessage("구문 오류 : null 사용이 잘못되었습니다.");
 						return null;
 					}
-					stack.push(current);
-					row = getRow(current, stack, columns, temp_table);
-					if (row != null)
+					Object ob = stack.peek();
+					if (!(ob instanceof String)) {
+						setErrorMessage("구문 오류 : is 의 위치를 확인해주세요");
+						return null;
+					}
+					lastWord = (String) o;
+					if	(!(lastWord.equals("and") || lastWord.equals("or") || lastWord.equals("")))
 					{
+						setErrorMessage("문법 오류  : where 구문을 체크해주세요");
+						return null;
+					}
+					
+					row = getRow(current, stack, columns, temp_table);
+					if (row != null) {
 						stack.push(row);
 					}
 					break;
@@ -1321,6 +1545,7 @@ public class SQLCompiler
 				case "<":
 				case "=":
 				case "<>":
+				case "!=":
 				case ">=":
 				case "<=":
 				case "!>":
@@ -1419,11 +1644,11 @@ public class SQLCompiler
 					op = (String) o;
 				}
 				if (op.equals("")) { // stack에 첫번째 데이터 = "" 이므로, while 구문이 끝남
-					System.out.println("이거 끝나긴 하나?");
+					System.out.println("row 획득 종료");
 					return row;
 				}
 				if (!(op.equals("and") || op.equals("or"))) {
-					setErrorMessage("문법 오류 : where 구문을 확인해주세요");
+					setErrorMessage("문법 오류 : where 구문을 확인해주세요. and 나 or이 아닙니다.");
 					return null;
 				}
 				Object o2 = stack.pop();
@@ -1475,6 +1700,7 @@ public class SQLCompiler
 
 		if (current.equals("isnull")) {
 			int index = -1;
+			current = (String) stack.pop();
 			for (int k = 0; k< temp_table[0].length; k++) {
 				if (temp_table[0][k].equals(current)) {
 					index = k;
@@ -1493,6 +1719,8 @@ public class SQLCompiler
 		}
 		if (current.equals("isnotnull")) {
 			// is not null 은 따로 계산
+			System.out.println("isnotnull 계산중");
+			current = (String) stack.pop();
 			int index = -1;
 			for (int k = 0; k< temp_table[0].length; k++) {
 				if (temp_table[0][k].equals(current)) {
@@ -1504,10 +1732,11 @@ public class SQLCompiler
 				return row;
 			}
 			for (int k = 0; k< temp_table.length; k++) {
-				if (!temp_table[k].equals("")) {
+				if (!temp_table[k].equals("null")) {
 					row[k] = 1;
 				}
 			}
+			System.out.println("isnotnull 계산결과:"+row);
 			return row;
 		}
 		String a;
@@ -1574,56 +1803,124 @@ public class SQLCompiler
 				}
 				logger.info("aa : {}, bb : {}",aa,bb);
 				logger.info("AA : {}, BB : {}",AA,BB);
-				try {
-					switch (op)
-					{
-					// operator 종류에 따라 데이터 선별해서 1 : 선택 , 0 : 미선택
-					case ">":
-						if (Double.valueOf(AA) > Double.valueOf(BB)) {
-							row[index] = 1;
-						}
-						break;
-					case "<":
-						if (Double.valueOf(AA) < Double.valueOf(BB)) {
-							row[index] = 1;
-						}
-						break;
-					case "=":
-						if (AA.equals(BB) ) {
-							row[index] = 1;
-						}
-						break;
-					case "<>":
-						if (!AA.equals(BB) ) {
-							row[index] = 1;
-						}
-						break;
-					case ">=":
-					case "!<":
-						if (Double.valueOf(AA) >= Double.valueOf(BB)) {
-							row[index] = 1;
-						}
-						break;
-					case "<=":
-					case "!>":
-						if (Double.valueOf(AA) <= Double.valueOf(BB)) {
-							row[index] = 1;
-						}
-						break;
+				logger.info("op : {}",op);
+				switch (op)
+				{
+				// operator 종류에 따라 데이터 선별해서 1 : 선택 , 0 : 미선택
+				case ">":
+					if (Double.valueOf(AA) > Double.valueOf(BB)) {
+						row[index] = 1;
 					}
-				} catch (Exception e) {
-					setErrorMessage("구문 오류 : "+op+"의 사용법을 확인해주세요");
-					return null;
+					break;
+				case "<":
+					if (Double.valueOf(AA) < Double.valueOf(BB)) {
+						row[index] = 1;
+					}
+					break;
+				case "=":
+					if (AA.contains("'")) {
+						if ( isStringToDouble(BB) ) {
+							setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+							return null;
+						}
+						AA = AA.split("'")[1];
+					}
+					if (AA.contains("\"")) {
+						if ( isStringToDouble(BB) ) {
+							setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+							return null;
+						}
+						AA = AA.split("\"")[1];
+					}
+					if (BB.contains("'")) {
+						if ( isStringToDouble(AA) ) {
+							setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+							return null;
+						}
+						BB = BB.split("'")[1];
+					}
+					if (BB.contains("\"")) {
+						if ( isStringToDouble(AA) ) {
+							setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+							return null;
+						}
+						BB = BB.split("\"")[1];
+					}
+					System.out.println("AA="+AA + " BB="+BB);
+					if ( AA.equals(BB) ) {
+						row[index] = 1;
+					}
+					break;
+				case "<>": case "!=":
+					if (AA.contains("'")) {
+						if ( isStringToDouble(BB) ) {
+							setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+							return null;
+						}
+						AA = AA.split("'")[1];
+					}
+					if (AA.contains("\"")) {
+						if ( isStringToDouble(BB) ) {
+							setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+							return null;
+						}
+						AA = AA.split("\"")[1];
+					}
+					if (BB.contains("'")) {
+						if ( isStringToDouble(AA) ) {
+							setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+							return null;
+						}
+						BB = BB.split("'")[1];
+					}
+					if (BB.contains("\"")) {
+						if ( isStringToDouble(AA) ) {
+							setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+							return null;
+						}
+						BB = BB.split("\"")[1];
+					}
+					if ( !AA.equals(BB) ) {
+						row[index] = 1;
+					}
+					break;
+				case ">=":
+				case "!<":
+					if (Double.valueOf(AA) >= Double.valueOf(BB)) {
+						row[index] = 1;
+					}
+					break;
+				case "<=":
+				case "!>":
+					if (Double.valueOf(AA) <= Double.valueOf(BB)) {
+						row[index] = 1;
+					}
+					break;
 				}
 				index++;
-			}
+			} // end of while
 		} catch (Exception e ) {
-			setErrorMessage("문법 오류 : where 구문을 확인해주세요");
+			setErrorMessage("문법 오류 : "+op+"의 사용법을 확인해주세요");
 			return null;
 		}
 		logger.info("row : {} ", row);
 		return row;
 	} // end of getRow()
+
+	/**
+	 * 숫자가 될 수 있는지 판별하는 method
+	 * @param String str
+	 * @return true / false
+	 */
+	private boolean isStringToDouble(String str)
+	{
+		try {
+			Double.valueOf(str);
+		} catch (Exception e ) {
+			return false;
+		}
+		return true;
+	}
 
 	private String[][] getTempResultTable(String[][] table1, String table1_name, String[][] table2, String table2_name)
 	{
@@ -1676,6 +1973,7 @@ public class SQLCompiler
 		return result_data;
 	}
 
+	
 	// column 명 세팅해주는 메소드
 	private String[] getNames(ArrayList<String> columns)
 	{
