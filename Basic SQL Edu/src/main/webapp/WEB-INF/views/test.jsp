@@ -187,27 +187,16 @@
 	
 	<!-- SQL 정답 입력 화면 DIV -->
 	<div class="sqlAnswer">
-<<<<<<< HEAD
+
 	<div class="sqlAnswersheet">
-=======
-	<div class="sqlAnswersheet">
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 		<textarea cols="149" rows="10" id="sql"></textarea><br>
 		<div align="right">
 		<button id="sqltest" onclick="javascript:sqlrun();" style="text-align: right;">Submit</button><br>
 		</div>
 	<div>
-		<li style="list-style: none">Console</li>	
+		<span>Console</span>	
 		<textarea cols="149" rows="5" id="resultView"></textarea> 
-<<<<<<< HEAD
 	</div>
-	
-		<textarea cols="20" rows="20" id="sql"></textarea>
-		<textarea cols="20" rows="20" id="resultView"></textarea> <br>
-	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
-=======
-	</div>
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 	</div>
 	</div><!-- SQL 정답 입력 화면 DIV 종료 -->
 
@@ -263,6 +252,15 @@
 				<div id="qsExm">${questext.qsExm }</div>
 			</div>
 		</div>	
+		
+		<!-- 피드백 게시판-->
+		<div class="contact">
+			<ul class="a">
+				<li><a href="board/writeForm">글쓰기</a></li>		
+				<li><a href="board/list">피드백 게시판</a></li>
+				<li><a href="board/successView">작성완료화면 테스트</a></li>
+			</ul>
+		</div>
 		
 		<!-- stage 버튼 누르면 나타나는 전체 스테이지 맵 화면 -->
 		 <div class="level-menu">
