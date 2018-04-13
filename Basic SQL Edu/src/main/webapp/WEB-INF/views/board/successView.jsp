@@ -9,7 +9,7 @@
 </head>
 <body>
 <div class="centerdiv">
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<br><br><br><br><br><br><br>
 
 <h1>
 Thank you.

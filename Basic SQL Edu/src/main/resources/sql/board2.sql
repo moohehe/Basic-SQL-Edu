@@ -8,8 +8,8 @@ create table board2
 	  ,title	varchar2(200) not null		-- 글제목
 	  ,content	varchar2(2000) not null		-- 글내용
 	  ,fb_indate	date	default sysdate		-- 작성날짜
-	  ,status 	number(1)	not null	-- 처리상태
-	  ,memo		varchar2(1000)	not null	-- 메모
+	  ,status 	number(1)	not null default 0	-- 처리상태
+	  ,memo		varchar2(1000)		-- 메모
 	);
 
 -- 일련번호 시퀀스 --

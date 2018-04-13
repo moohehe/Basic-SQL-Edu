@@ -22,6 +22,6 @@ public interface FeedbackMapper {
 	
 	public ArrayList<Feedback_Board> listBoard(String searchText, RowBounds rb);
 
-	public void insertMemo(Feedback_Board board);
-	
+	public void updateMemo(Feedback_Board board);
+
 }
