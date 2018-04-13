@@ -1381,7 +1381,7 @@ public class SQLCompiler
 		}
 		logger.info("end of getSelect()");
 		return selectResult;
-	}
+	} // end of getselect()
 
 	private int[] getRows(String current, ArrayList<String> columns, String[][] temp_table)
 	{
