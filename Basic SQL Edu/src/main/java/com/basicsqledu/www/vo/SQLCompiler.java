@@ -1078,7 +1078,7 @@ public class SQLCompiler
 						if (conti == 0)
 						{ // ',' 이후에 첫번째 단어
 							table_name = current;
-							table_data = quizDAO.getTables(table_name);
+							table_data = quizDAO.getTables(questionNumber,table_name);
 							if (table_data == null)
 							{
 								setErrorMessage("문법 오류 : table [" + table_name + "]이 존재하지 않습니다.");
