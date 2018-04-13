@@ -42,7 +42,7 @@ public class SQLCompiler
 	HashMap<String, Object> taaa = new HashMap<String, Object>();
 	private String table_name; // table name
 	private HashMap<String, Integer> table_columns; // String : columns_name /
-												// Integer : realdata_index
+													// Integer : realdata_index
 
 	// SQL 구문 결과(내부에서 계산한 결과)
 	private String[][] result;
