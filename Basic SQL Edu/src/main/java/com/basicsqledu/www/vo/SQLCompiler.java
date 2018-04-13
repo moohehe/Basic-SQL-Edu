@@ -40,10 +40,13 @@ public class SQLCompiler
       return questionNumber;
    }
 
+<<<<<<< Upstream, based on branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
    public void setQuestionNumber(int questionNumber)
    {
       this.questionNumber = questionNumber;
    }
+=======
+>>>>>>> f21b6cf jh8
 
    // index
    private int i;
