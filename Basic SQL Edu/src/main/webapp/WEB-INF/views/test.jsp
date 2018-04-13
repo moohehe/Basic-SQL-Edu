@@ -187,7 +187,11 @@
 	
 	<!-- SQL 정답 입력 화면 DIV -->
 	<div class="sqlAnswer">
+<<<<<<< HEAD
 	<div class="sqlAnswersheet">
+=======
+	<div class="sqlAnswersheet">
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 		<textarea cols="149" rows="10" id="sql"></textarea><br>
 		<div align="right">
 		<button id="sqltest" onclick="javascript:sqlrun();" style="text-align: right;">Submit</button><br>
@@ -195,11 +199,15 @@
 	<div>
 		<li style="list-style: none">Console</li>	
 		<textarea cols="149" rows="5" id="resultView"></textarea> 
+<<<<<<< HEAD
 	</div>
 	
 		<textarea cols="20" rows="20" id="sql"></textarea>
 		<textarea cols="20" rows="20" id="resultView"></textarea> <br>
 	<button id="sqltest" onclick="javascript:sqlrun();">SQL 확인</button>
+=======
+	</div>
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 	</div>
 	</div><!-- SQL 정답 입력 화면 DIV 종료 -->
 

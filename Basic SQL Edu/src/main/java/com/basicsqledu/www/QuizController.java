@@ -28,7 +28,7 @@ public class QuizController
 		
 		HashMap<String, Object> data = null;
 		
-		data = quizdao.getTable(table_name);
+		data = quizdao.getTable(1);
 		
 		System.out.println("요기");
 		System.out.println(data.get("table_value"));
