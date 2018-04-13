@@ -30,7 +30,8 @@ public class CompilerController
 	@RequestMapping(value="sqlCompiler", method = RequestMethod.POST
 			, produces = "application/text; charset=utf8")
 	public String compiler(String sql, HttpServletResponse response
-			, @RequestParam(defaultValue="animal_view") String table_name) {
+			, @RequestParam(defaultValue="animal_view") String table_name
+			, @RequestParam(defaultValue="1") int questionNumber) {
 		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8");
 		// 0. 빈값이면 생략
@@ -41,8 +42,9 @@ public class CompilerController
 		// 1. sql 구문 입력 / 해석 
 		// 입력받은 sql 구문을 compiler 객체에 삽입
 		compiler.setText(sql);
+		compiler.setQuestionNumber(questionNumber);
 		// DB 테이블 입력
-		HashMap<String, Object> map = quizDAO.getTable(table_name); // <- 여기 나중에 변수로 바꿔야됨!!!!!!!!!!!!!!!!!!!!!!!!!!
+		HashMap<String, Object> map = quizDAO.getTable(questionNumber); // <- 여기 나중에 변수로 바꿔야됨!!!!!!!!!!!!!!!!!!!!!!!!!!
 		ArrayList<Object> list = (ArrayList<Object>) map.get("table_value");
 		compiler.setTable(list);
 		
@@ -64,7 +66,7 @@ public class CompilerController
 		
 		//문제 테이블 출력을 위한 가짜 데이터를 일단 맵에 넣어서 보냄... 표시된 곳 까지는 나중에 지울 것.
 		
-		String[][] fakeTest = new String[3][6];
+		/*String[][] fakeTest = new String[3][6];
 		fakeTest[0][0] = "animal_size";
 		fakeTest[0][1] = "animal_species";
 		fakeTest[0][2] = "animal_legs";
@@ -87,7 +89,7 @@ public class CompilerController
 		fakeTest[2][5] = "grass";
 		
 		
-		resultMap.put("fakeData", fakeTest);
+		resultMap.put("fakeData", fakeTest);*/
 		
 		
 		//여기까지가 실험 데이터(fakeData) 즉, 여기 위에는 지워야...
