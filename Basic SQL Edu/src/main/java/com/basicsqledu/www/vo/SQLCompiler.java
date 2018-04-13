@@ -21,6 +21,19 @@ public class SQLCompiler
 	@Autowired
 	QuizDAO quizDAO;
 
+	// 현재 questionNumber
+	private int questionNumber;
+	
+	public int getQuestionNumber()
+	{
+		return questionNumber;
+	}
+
+	public void setQuestionNumber(int questionNumber)
+	{
+		this.questionNumber = questionNumber;
+	}
+
 	// index
 	private int i;
 
@@ -1328,7 +1341,7 @@ public class SQLCompiler
 		}
 		logger.info("end of getSelect()");
 		return selectResult;
-	}
+	} // end of getselect()
 
 	private int[] getRows(String current, ArrayList<String> columns, String[][] temp_table)
 	{
