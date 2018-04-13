@@ -187,17 +187,22 @@
 	
 	<!-- SQL 정답 입력 화면 DIV -->
 	<div class="sqlAnswer">
+
 	<div class="sqlAnswersheet">
 		<textarea cols="149" rows="10" id="sql"></textarea><br>
-		<div align="right"">
+		<div align="right">
 		<button id="sqltest" onclick="javascript:sqlrun();" style="text-align: right;">Submit</button><br>
 		</div>
 	<div>
-		<li style="list-style: none">Console</li>	
+		<span>Console</span>	
 		<textarea cols="149" rows="5" id="resultView"></textarea> 
 	</div>
 	</div>
 	</div><!-- SQL 정답 입력 화면 DIV 종료 -->
+
+
+
+
 
 	<!-- 우측 네비게이션 화면 관련 DIV -->	
 	<div class="navigation">
@@ -232,6 +237,12 @@
 			</DIV><!-- Complete --> 
 			</DIV>
 			
+			
+			
+			
+			
+			
+			
 			<!-- 네이게이션 내부 text들 받아옴. -->
 			<div class="navicontext">
 				<p class="qs" id="qstext">${questext.qstext }</p><br>
@@ -242,6 +253,15 @@
 			</div>
 		</div>	
 		
+		<!-- 피드백 게시판-->
+		<div class="contact">
+			<ul class="a">
+				<li><a href="board/writeForm">글쓰기</a></li>		
+				<li><a href="board/list">피드백 게시판</a></li>
+				<li><a href="board/successView">작성완료화면 테스트</a></li>
+			</ul>
+		</div>
+		
 		<!-- stage 버튼 누르면 나타나는 전체 스테이지 맵 화면 -->
 		 <div class="level-menu">
 		 	<div class="float-btnframe lvmemu" style="background: #6e6e6e">
@@ -249,7 +269,7 @@
 	       		<button class="float-unit closing dropbtn"> CLOSE </button>
 	        </div>
 				<br>
-			
+				
 			<!-- 전체 문제(단계) 출력 -->
 	        <div class="dropdown-content">
 	        <c:forEach var="stages" varStatus="status" items="${stageList}">
@@ -261,13 +281,10 @@
 	      	<br>
 	      	
 	      </div>
-	</div><!-- 우측 네비게이션 화면 관련 DIV 종료 -->	
 	
-	<ul class="a">
-		<li><a href="board/writeForm">글쓰기</a></li>		
-		<li><a href="board/list">피드백 게시판</a></li>
-		<li><a href="board/successView">작성완료화면 테스트</a></li>
-	</ul>
+
+		  
+	</div><!-- 우측 네비게이션 화면 관련 DIV 종료 -->	
 	
 </body>
 </html>

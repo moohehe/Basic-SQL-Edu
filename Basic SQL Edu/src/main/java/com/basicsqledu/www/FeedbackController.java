@@ -22,7 +22,7 @@ public class FeedbackController {
 	@Autowired
 	FeedbackDAO dao;
 	
-	final int countPerPage = 5;			//페이지 당 글 수
+	final int countPerPage = 3;			//페이지 당 글 수
 	final int pagePerGroup = 5;				//페이지 이동 그룹 당 표시할 페이지 수
 	
 	@RequestMapping(value="list",method=RequestMethod.GET)
@@ -59,8 +59,6 @@ public class FeedbackController {
 	
 	@RequestMapping(value="write", method=RequestMethod.POST)
 	public String write(Feedback_Board board){
-		System.out.println("여기");		//테스트
-		System.out.println(board);	//테스트
 		int result = dao.insertBoard(board);
 		if(result == 0){
 			System.out.println("데이터 입력 실패");
@@ -78,13 +76,15 @@ public class FeedbackController {
 	}
 	
 	//메모 등록 부분
-	@RequestMapping(value="insertMemo", method=RequestMethod.POST)
-	public String insertMemo(Feedback_Board board){
-
+	@RequestMapping(value="updateMemo", method=RequestMethod.POST)
+	public String updateMemo(Feedback_Board board){
+		
+		System.out.println("메모 입력 실패");
+		
 		System.out.println(board);
 		
-		dao.insertMemo(board);
-	
+		dao.updateMemo(board);
+		
 		return "redirect:list?fb_no="+board.getFb_no();
 	}
 	
