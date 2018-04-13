@@ -35,5 +35,12 @@ public class HomeController {
 		
 		return "home";
 	}
+	@RequestMapping(value = "intro", method = RequestMethod.GET)
+	public String tointro(Model model) {				
+		System.out.println("여기");
+		return "intro";
+	}
 	
 }
+	
+
