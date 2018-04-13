@@ -70,17 +70,18 @@ public class FeedbackDAO {
 		return result;
 	}
 	
-	public void insertMemo(Feedback_Board board){
+	public void updateMemo(Feedback_Board board){
 		
 		FeedbackMapper mapper = sqlSession.getMapper(FeedbackMapper.class);
 		
 		try{
-			mapper.insertMemo(board);
+			mapper.updateMemo(board);
+			
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 			
 	}
-
+	
 	
 }
