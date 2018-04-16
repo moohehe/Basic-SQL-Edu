@@ -31,7 +31,7 @@ public class CompilerController
 			, produces = "application/text; charset=utf8")
 	public String compiler(String sql, HttpServletResponse response
 			, @RequestParam(defaultValue="animal_view") String table_name
-			, @RequestParam(defaultValue="1") int questionNumber) {
+			, @RequestParam(defaultValue="2") int questionNumber) {
 		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8");
 		// 0. 빈값이면 생략

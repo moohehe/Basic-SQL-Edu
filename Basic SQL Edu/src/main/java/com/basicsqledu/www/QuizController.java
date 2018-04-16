@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.basicsqledu.www.dao.QuizDAO;
 
@@ -22,7 +23,8 @@ public class QuizController
 	 * @return
 	 */
 	@RequestMapping(value = "getTable", method=RequestMethod.GET)
-	public String getTable() {
+	public String getTable(
+			@RequestParam(defaultValue = "2") int questionNumber) {
 		// 임시로 세팅 - 나중에 parameter로 받아올것
 		String table_name = "animal_view";
 		
