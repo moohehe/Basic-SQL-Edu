@@ -978,7 +978,7 @@ public class SQLCompiler
 				}
 			}
 			System.out.println();
-		}
+		} 
  
 		// stage == 1 : SELECT <여기> FROM
 		// stage == 2 : FROM <여기> WHERE 혹은 GROUP BY
