@@ -976,7 +976,7 @@ public class SQLCompiler
 				if (k%5 == 1 ) {
 					System.out.println();
 				}
-			}
+			} 
 			System.out.println();
 		} 
  
