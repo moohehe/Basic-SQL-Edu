@@ -237,7 +237,6 @@ public class SQLCompiler
 				table[i][2] = animal.getAnimal_legs();
 				table[i][3] = animal.getAnimal_color();
 				table[i][4] = animal.getAnimal_habitat();
-				table[i][5] = animal.getAnimal_feed();
 
 				i++;
 			}

@@ -9,6 +9,8 @@ $(function() {
 	
 	
 	
+	
+	
 	//배경 이미지 경로 함수 지정
 	var imgpath = function(file){
 		return "url(/www/resources/image/"+file+")";
@@ -100,20 +102,60 @@ $(function() {
 	$('#nextbtn').on('click', function(){
 		var stage = Number($('#currentLv').val())+1;
 		
-		stageDisplay(stage);		
+		$.ajax({
+			url : "getTable",
+			type : "get",
+			data : {
+				stage : stage
+			},
+			dataType : "json",
+			success : function(obj){
+				stageDisplay(stage);		
+			},
+			error : function(err){
+				alert('실패'+JSON.stringify(err));
+			}
+		});
 	});
 	
 	//이전 버튼을 누름에 따라서 계속 문제 변형.
 	$('#prevbtn').on('click', function(){
 		var stage = Number($('#currentLv').val())-1;
 		
-		stageDisplay(stage);		
+		$.ajax({
+			url : "getTable",
+			type : "get",
+			data : {
+				stage : stage
+			},
+			dataType : "json",
+			success : function(obj){
+				stageDisplay(stage);		
+			},
+			error : function(err){
+				alert('실패'+JSON.stringify(err));
+			}
+		});
 	});
 	
 	//스테이지 이동화면에서 이동 시 계속 문제 변형.
 	$('.moveStagebtn').on('click', function(){
-		var stage = Number($(this).attr('data-num'));	
-		stageDisplay(stage);		
+		var stage = Number($(this).attr('data-num'));
+		
+		$.ajax({
+			url : "getTable",
+			type : "get",
+			data : {
+				stage : stage
+			},
+			dataType : "json",
+			success : function(obj){
+				stageDisplay(stage);		
+			},
+			error : function(err){
+				alert('실패'+JSON.stringify(err));
+			}
+		});		
 	});
 	
 	

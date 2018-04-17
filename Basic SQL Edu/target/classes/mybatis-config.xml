@@ -6,6 +6,8 @@
 	
 	<typeAliases>
 		<typeAlias type="com.basicsqledu.www.vo.Animal" alias="animal"/>
+		<typeAlias type="com.basicsqledu.www.vo.Person" alias="person"/>
+		<typeAlias type="com.basicsqledu.www.vo.Robots" alias="robots"/>
 		<typeAlias type="com.basicsqledu.www.vo.Questext" alias="questext" />
 		<typeAlias type="com.basicsqledu.www.vo.Feedback_Board" alias="board" />
 		
