@@ -1444,6 +1444,7 @@ public class SQLCompiler
 								setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
 								return null;
 							}
+							
 							// table_name으로 된 모든 column을 획득하기
 							for (String t_name : table_names)
 							{
