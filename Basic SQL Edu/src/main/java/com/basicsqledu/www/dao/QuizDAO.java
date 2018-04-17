@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 
 import com.basicsqledu.www.mapper.QuizMapper;
 import com.basicsqledu.www.vo.Animal;
+import com.basicsqledu.www.vo.Person;
+import com.basicsqledu.www.vo.Robots;
 
 @Repository
 public class QuizDAO
@@ -38,17 +40,26 @@ public class QuizDAO
 		{
 			QuizMapper mapper = session.getMapper(QuizMapper.class);
 			switch (questionNumber) {
-			case 1 : case 2: case 3: case 4 : case 5: case 6:
+			case 2: case 3: case 4 : case 5: case 6:
 			case 7 : case 8 : case 9: case 10:
 				ArrayList<Animal> animals = mapper.getAnimal(questionNumber);
 				result.put("table_name", "animal_view");
 				result.put("table_value", animals);
+				
+				for(Animal ani : animals){
+				System.out.println("db에서 가져오나?"+ani);
+				}
 				break;
-			case 11: case 12: case 13: case 14: case 15: case 16:
+			case 12: case 13: case 14:
+				ArrayList<Person> person = mapper.getPerson(questionNumber);
 				result.put("table_name","person_view");
-				result.put("table_value","persons 라는 테이블 ArrayList");
+				result.put("table_value",person);
 				break;
-			case 17 : case 18: case 19: case 20:
+			case 17 : case 18: 
+				ArrayList<Robots> robots = mapper.getRobots(questionNumber);
+				result.put("table_name","robots_view");
+				result.put("table_value",robots);
+				break;
 			}
 			
 		} catch (Exception e)
@@ -133,7 +144,6 @@ public class QuizDAO
 						table[i][2] = animal.getAnimal_legs();
 						table[i][3] = animal.getAnimal_color();
 						table[i][4] = animal.getAnimal_habitat();
-						table[i][5] = animal.getAnimal_feed();
 
 						i++;
 					}

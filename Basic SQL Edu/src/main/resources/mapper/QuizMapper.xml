@@ -18,7 +18,19 @@
 	<select id="getAnimal" parameterType="int" resultType="animal">
 		SELECT *	
 		FROM
-			q${value}_view
+			q${value}_animal_view
+	</select>
+	
+	<select id="getPerson" parameterType="int" resultType="person">
+		SELECT *	
+		FROM
+			q${value}_person_view
+	</select>
+	
+	<select id="getRobots" parameterType="int" resultType="robots">
+		SELECT *	
+		FROM
+			q${value}_robot_view
 	</select>
 	
 </mapper>

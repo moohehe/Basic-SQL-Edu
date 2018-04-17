@@ -2,6 +2,8 @@ package com.basicsqledu.www;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,10 @@ import org.springframework.web.util.CookieGenerator;
 
 import com.basicsqledu.www.dao.QuestextDao;
 import com.basicsqledu.www.dao.QuizDAO;
+import com.basicsqledu.www.vo.Animal;
+import com.basicsqledu.www.vo.Person;
 import com.basicsqledu.www.vo.Questext;
+import com.basicsqledu.www.vo.Robots;
 import com.google.gson.Gson;
 
 
@@ -33,7 +38,10 @@ public class NaviController {
 	private static final Logger logger = LoggerFactory.getLogger(NaviController.class);
 	
 	@Autowired
-	QuestextDao dao; 
+	QuestextDao dao;
+	@Autowired
+	QuizDAO quizdao;
+	
 	CookieGenerator cg = new CookieGenerator();
 	
 	/**
@@ -52,17 +60,14 @@ public class NaviController {
 		if(cks != null && cks.length>1){ //이미 사용자 아이디가 하나 들어가므로 length의 초기는 1이다.
 			//쿠키 있으면 읽기
 			for(Cookie c : cks){
-				System.out.println("쿠키들: "+c.getName());
 				//저장된 현재 스테이지 정보가 있으면 이를 vo에 넣음.
 				if(c.getName().equals("currentStage")){
 					stage = Integer.parseInt(c.getValue());
 					qt.setLvstatus(stage);
-					System.out.println("현재스테이지쿠키: "+stage);
 				}
 				if(c.getName().equals("currentLang")){
 					lang = Integer.parseInt(c.getValue());
 					qt.setTextLang(lang);
-					System.out.println("현재언어쿠키: "+lang);
 
 				}
 			}
@@ -87,10 +92,48 @@ public class NaviController {
 				qt.setTextLang(lang);
 				System.out.println("처음 홈 들어올때"+qt);
 		}
-		//DB에서 해당 문제 및 언어에 대한 정보를 읽어옴.
+		
+		
+		//DB에서 해당 문제 택스트 및 언어에 대한 정보를 읽어옴.
 		qt = dao.selectLang(qt);
 		//DB에서 문제 전체에 대한 정보를 불러옴. (얘는 stage 전체 단계에서 쓰임)
 		ArrayList<Questext> stageList = dao.selectStageAll(qt);
+		
+		
+		//문제 그림 관련 정보 읽어오기.
+		HashMap<String, Object> quizData = null;
+		
+		//지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 19, 20)
+		if(qt.getLvstatus() == 1 || qt.getLvstatus() == 11 || qt.getLvstatus() == 15 
+			|| qt.getLvstatus() == 16 || qt.getLvstatus() == 19 || qt.getLvstatus() == 20 ){
+			
+		}else{
+			//문제 뷰가 있는 애들만 해당 DAO의 함수에서 문제를 불러온다.
+			quizData = quizdao.getTable(qt.getLvstatus()); //Map으로 return
+			
+			if(quizData.get("table_name").equals("animal_view")){
+				
+				ArrayList<Animal> animalqlist = (ArrayList<Animal>) quizData.get("table_value");
+				model.addAttribute("qlist", animalqlist);
+			}
+			else if(quizData.get("table_name").equals("person_view")){
+				ArrayList<Person> personqlist = (ArrayList<Person>) quizData.get("table_value");
+				model.addAttribute("qlist", personqlist);
+				
+			}else if(quizData.get("table_name").equals("robots_view")){
+				ArrayList<Robots> robotsqlist = (ArrayList<Robots>) quizData.get("table_value");
+				model.addAttribute("qlist", robotsqlist);
+			}
+
+		
+		
+		}
+		
+		
+		System.out.println(quizData.get("table_value"));
+		System.out.println(quizData+"이게 데이터");
+		
+		
 		
 		model.addAttribute("questext", qt);
 		model.addAttribute("stageList", stageList);
@@ -102,7 +145,8 @@ public class NaviController {
 	@ResponseBody
 	@RequestMapping(value = "langcheck", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	public String langcheck(HttpServletRequest request,HttpServletResponse response, 
-			String lang, String stage, @RequestParam(defaultValue="non-pass")String compl) {
+			String lang, String stage, @RequestParam(defaultValue="non-pass")String compl,
+			@RequestParam(defaultValue = "2") int questionNumber) {
 		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8"); 
 		
@@ -151,6 +195,13 @@ public class NaviController {
 				naviContentMap.put(c.getName(),c.getValue()); //완료한 스테이지들 맵에 저장.
 			}
 		}
+		
+		//DB에서 문제 그림 관련 정보를 가져옴.
+		//문제 그림 관련 정보 읽어오기.
+		HashMap<String, Object> quizData = null;
+		quizData = quizdao.getTable(questionNumber);
+		
+		
 		
 		//맵 변환 후 보내기.
 		Gson gson = new Gson();
