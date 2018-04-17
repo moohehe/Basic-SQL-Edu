@@ -64,13 +64,23 @@ public class NaviController {
 				if(c.getName().equals("currentStage")){
 					stage = Integer.parseInt(c.getValue());
 					qt.setLvstatus(stage);
+				}else{
+					cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
+					cg.addCookie(response, "1");
+					stage = 1;
+					qt.setLvstatus(stage);
 				}
 				if(c.getName().equals("currentLang")){
 					lang = Integer.parseInt(c.getValue());
 					qt.setTextLang(lang);
-
+				}else{
+					cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
+					cg.addCookie(response, "2");
+					lang= 2;
+					qt.setTextLang(lang);
 				}
 			}
+			
 		}else{
 			//쿠키없으면 쿠키 생성
 			
@@ -115,6 +125,8 @@ public class NaviController {
 				
 				ArrayList<Animal> animalqlist = (ArrayList<Animal>) quizData.get("table_value");
 				model.addAttribute("qlist", animalqlist);
+				//jsp에서 꺼낼때에는 jpg파일명을 animal의 경우, species와 color를 합쳐놓을것.
+				
 			}
 			else if(quizData.get("table_name").equals("person_view")){
 				ArrayList<Person> personqlist = (ArrayList<Person>) quizData.get("table_value");
@@ -126,12 +138,17 @@ public class NaviController {
 			}
 
 		
+			System.out.println(quizData.get("table_value"));
+			System.out.println(quizData+"이게 데이터");
 		
 		}
 		
 		
+<<<<<<< HEAD
 		//System.out.println(quizData.get("table_value"));
 		//System.out.println(quizData+"이게 데이터");
+=======
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 		
 		
 		
@@ -195,6 +212,8 @@ public class NaviController {
 				naviContentMap.put(c.getName(),c.getValue()); //완료한 스테이지들 맵에 저장.
 			}
 		}
+		
+		questionNumber = Integer.parseInt(stage);
 		
 		//DB에서 문제 그림 관련 정보를 가져옴.
 		//문제 그림 관련 정보 읽어오기.

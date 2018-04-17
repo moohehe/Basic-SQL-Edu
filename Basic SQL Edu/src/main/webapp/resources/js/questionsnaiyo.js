@@ -102,60 +102,18 @@ $(function() {
 	$('#nextbtn').on('click', function(){
 		var stage = Number($('#currentLv').val())+1;
 		
-		$.ajax({
-			url : "getTable",
-			type : "get",
-			data : {
-				stage : stage
-			},
-			dataType : "json",
-			success : function(obj){
-				stageDisplay(stage);		
-			},
-			error : function(err){
-				alert('실패'+JSON.stringify(err));
-			}
-		});
 	});
 	
 	//이전 버튼을 누름에 따라서 계속 문제 변형.
 	$('#prevbtn').on('click', function(){
 		var stage = Number($('#currentLv').val())-1;
 		
-		$.ajax({
-			url : "getTable",
-			type : "get",
-			data : {
-				stage : stage
-			},
-			dataType : "json",
-			success : function(obj){
-				stageDisplay(stage);		
-			},
-			error : function(err){
-				alert('실패'+JSON.stringify(err));
-			}
-		});
 	});
 	
 	//스테이지 이동화면에서 이동 시 계속 문제 변형.
 	$('.moveStagebtn').on('click', function(){
 		var stage = Number($(this).attr('data-num'));
 		
-		$.ajax({
-			url : "getTable",
-			type : "get",
-			data : {
-				stage : stage
-			},
-			dataType : "json",
-			success : function(obj){
-				stageDisplay(stage);		
-			},
-			error : function(err){
-				alert('실패'+JSON.stringify(err));
-			}
-		});		
 	});
 	
 	
