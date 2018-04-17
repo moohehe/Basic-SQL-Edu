@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html >
 <html>
 <head>
@@ -10,7 +10,24 @@
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/questionsnaiyo.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/navigationbarjs.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery-linenumbers.min.js"/>"></script>
 <script type="text/javascript">
+
+	function getLineNumberAndColumnIndex(textarea){
+	    //var textLines = textarea.value.substr(0, textarea.value.length).split("\n");
+	    var textLines = textarea.val().split("\n");
+	    //console.log ('t ='+t);
+	    var currentLineNumber = textLines.length;
+	    var currentColumnIndex = textLines[textLines.length-1].length;
+	    console.log("Current Line Number "+ currentLineNumber+" Current Column Index "+currentColumnIndex );
+	    var linesView = document.getElementById('.lined');
+	    var lines = "";
+	    for (var k = 1; k <= currentLineNumber; k++){
+	    	lines += k+"."+"\n";
+	    }
+	    console.log(lines);
+	    $('.lined').val(lines);
+	 }
 	function sqlrun() {
 		var str = document.getElementById('sql').value;
 		console.log(str);
@@ -36,6 +53,9 @@
 	
 	//화면 처리. (문제 테이블 화면)
 	$(function(){
+		
+		getLineNumberAndColumnIndex($('#sql'));
+		
 		
 		// 쿠키를 읽어서 들어오는 경우에 처리를 해야...
 		//쿠키에 있는 내용을 읽어서 어느 stage까지 풀었는지 확인 후 해당 문제 들고 들어와야 함.
@@ -78,7 +98,13 @@
 				$('.helptext3').text('');
 		});
 		
-		
+		// textarea skin 변경
+		// Target all classed with ".lined"
+		  /* $(".lined").linedtextarea(
+		    {selectedLine: 1}
+		  ); */
+
+
 				
 	});
 	
@@ -86,6 +112,15 @@
 	
 </script>
 <style type="text/css">
+	textarea{
+		width: 555px;
+		height: 270px;
+		font-size: 20px;
+		padding: 10px;
+		line-height: 30px;
+		border-radius: 3px;
+		border: 1px solid #aaaaaa;
+	}
 	.sqlAnswer {
 		position: absolute; top: 50%; 
 		width: 100%;
@@ -187,9 +222,12 @@
 	
 	<!-- SQL 정답 입력 화면 DIV -->
 	<div class="sqlAnswer">
-
 	<div class="sqlAnswersheet">
-		<textarea cols="149" rows="10" id="sql"></textarea><br>
+		<textarea style="width:480px;float:left;margin-right:-480px;font-family:monospace;white-space:pre;overflow:hidden;" disabled="disabled" class="lined"></textarea>
+		<textarea style="font-family:monospace;width:480px;float:right;" cols="149" rows="10" id="sql" onkeyup="getLineNumberAndColumnIndex(this);" onmouseup="this.onkeyup();">SELECT
+   *
+FROM
+   ANIMAL;</textarea><br>
 		<div align="right">
 		<button id="sqltest" onclick="javascript:sqlrun();" style="text-align: right;">Submit</button><br>
 		</div>

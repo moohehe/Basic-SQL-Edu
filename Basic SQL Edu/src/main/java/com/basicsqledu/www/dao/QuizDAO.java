@@ -25,7 +25,11 @@ public class QuizDAO
 	private final static String[] ROBOTS = {"robot"};
 	private final static String[] PERSONS = {"person"};
 	
-	
+	/**
+	 * 문제 제출용 table 얻어오기
+	 * @param questionNumber
+	 * @return HashMap<String, Object>
+	 */
 	public HashMap<String, Object> getTable(int questionNumber){
 		logger.info("{}",questionNumber);
 		HashMap<String, Object> result = new HashMap<String, Object>();
@@ -56,7 +60,12 @@ public class QuizDAO
 		return result;
 	}
 	
-	
+	/**
+	 * 각 문제별 talbe data 갖고 오기(ex. 문제1번의 animal -> animal_view 연결해줌)
+	 * @param questionNumber
+	 * @param table_key
+	 * @return String[][]
+	 */
 	public String[][] getTables(int questionNumber, String table_key) {
 		logger.info("start of getTables()");
 		logger.info("questionNumber:{}, table_key : {}",questionNumber, table_key);
@@ -150,5 +159,14 @@ public class QuizDAO
 		return table;
 	}
 
-	
+	public String getTableName(int questionNumber, String table_name) {
+		String result = "";
+		table_name += questionNumber;
+		switch (table_name) {
+		case "animal2":
+			result = "q2_animal_view";
+			break;
+		}
+		return result;
+	}
 }
