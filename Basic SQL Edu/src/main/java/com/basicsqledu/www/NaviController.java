@@ -130,8 +130,8 @@ public class NaviController {
 		}
 		
 		
-		System.out.println(quizData.get("table_value"));
-		System.out.println(quizData+"이게 데이터");
+		//System.out.println(quizData.get("table_value"));
+		//System.out.println(quizData+"이게 데이터");
 		
 		
 		

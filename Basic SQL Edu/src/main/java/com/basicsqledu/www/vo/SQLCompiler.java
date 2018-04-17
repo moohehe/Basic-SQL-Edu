@@ -64,7 +64,7 @@ public class SQLCompiler
 			"set", "by" };
 	private String[] COMMAND2 = { "create", "drop", "alter", "insert", "delete", "update", "grant", "revoke" };
 	private String[] COMMAND_OP = { ">", "<", "=", "<>", ">=", "<=", "!>", "between", "and", "or", "like", "not", "is",
-			"null" };
+	"null" };
 	private String[] COMMAND_OP2 = { ">", "<", "=", "<>", ">=", "<=", "!>", "between", "like", "not", "is", "null" };
 	private String[] keywords = { "create", "drop", "alter", "select", "insert", "update", "delete", "from", "table",
 			"view", "schema", "sequence", "index", "column", "join", "inner", "outer", "as", "null", "not null",
@@ -421,11 +421,11 @@ public class SQLCompiler
 	 *
 	 *
 	 * 지금 정답 1 : create table robot(
-	 *      					r_color varchar(50)
-	 *      					,r_size varchar(50)
-	 *      					,r_type varchar(50)
-	 *      					,weapon varchar(50)
-	 *  				  );
+	       					r_color varchar(50)
+	       					,r_size varchar(50)
+	       					,r_type varchar(50)
+	       					,weapon varchar(50)
+	   				  );
 	 * 
 	 * 
 	 * 지금 정답 2 : create table animal(
@@ -470,12 +470,11 @@ public class SQLCompiler
 
 				//table_name = "animal"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
 
-				if (!(result_name.equals("animal") || !(result_name.equals("robot"))))
+				if (!(result_name.equals("animal") || result_name.equals("robot")))
 				{
 					// 안맞음
 					setErrorMessage("문법 오류 : table 다음에는 정확한 table_name이 나와야 합니다.");
 					return null;
-
 				} else
 				{
 					stage++;
@@ -662,7 +661,7 @@ public class SQLCompiler
 					//첫번째 컬럼
 					if(createResult[0].equals("r_color")){
 						for(String dt : spDataType1){
-							if(dt.equals("varchar") && (dt+"(50)").equals("("+createResult[1]+")") && createResult[2].equals(",")){
+							if(dt.equals("varchar") && (dt+"(50)").equals(createResult[1]+"("+createResult[2]+")") && createResult[3].equals(",")){
 								faa = true;
 								System.out.println("[ 로봇 : 첫번째 컬럼 검사 완료 ]");
 								break;
@@ -672,9 +671,9 @@ public class SQLCompiler
 						}
 					}
 					//두번째 컬럼
-					if(createResult[0].equals("r_size")){
+					if(createResult[4].equals("r_size")){
 						for(String dt : spDataType1){
-							if(dt.equals("varchar") && (dt+"(50)").equals("("+createResult[1]+")") && createResult[2].equals(",")){
+							if(dt.equals("varchar") && (dt+"(50)").equals(createResult[5]+"("+createResult[6]+")") && createResult[7].equals(",")){
 								faa = true;
 								System.out.println("[ 로봇 : 두번째 컬럼 검사 완료 ]");
 								break;
@@ -684,9 +683,9 @@ public class SQLCompiler
 						}
 					}
 					//세번째 컬럼
-					if(createResult[0].equals("r_type")){
+					if(createResult[8].equals("r_type")){
 						for(String dt : spDataType1){
-							if(dt.equals("varchar") && (dt+"(50)").equals("("+createResult[1]+")") && createResult[2].equals(",")){
+							if(dt.equals("varchar") && (dt+"(50)").equals(createResult[9]+"("+createResult[10]+")") && createResult[11].equals(",")){
 								faa = true;
 								System.out.println("[ 로봇 : 세번째 컬럼 검사 완료 ]");
 								break;
@@ -696,9 +695,9 @@ public class SQLCompiler
 						}
 					}
 					//네번째 컬럼
-					if(createResult[0].equals("weapon")){
+					if(createResult[12].equals("weapon")){
 						for(String dt : spDataType1){
-							if(dt.equals("varchar") && (dt+"(50)").equals("("+createResult[1]+")") && createResult[2].equals(",")){
+							if(dt.equals("varchar") && (dt+"(50)").equals(createResult[13]+"("+createResult[14]+")")){
 								faa = true;
 								System.out.println("[ 로봇 : 네번째 컬럼 검사 완료 ]");
 								break;
@@ -727,10 +726,8 @@ public class SQLCompiler
 		if(faa){
 			//전부완료
 			return new String[0][0];
-		}else{
-			setErrorMessage("문법 오류 : 컬럼의 형태가 잘못되었습니다");
 		}
-
+		setErrorMessage("문법 오류 : 컬럼의 형태가 잘못되었습니다");
 		return null;
 	}
 
@@ -763,7 +760,6 @@ public class SQLCompiler
 					// <table>이 아니고 다른게 나옴
 					setErrorMessage("문법 오류 : drop 다음에는 table이 나와야 합니다.");
 					return null;
-
 				}
 			}else if(stage == 2){
 				//2. drop table <테이블 이름>이 나와야 함
@@ -834,14 +830,22 @@ public class SQLCompiler
 					//2차원 배열에 해쉬맵 값 넣어주기
 					for(int k = 0;k<alterResult[0].length;k++){
 						for(Entry<String, Object> entry : alterMap.entrySet()){
-							alterResult[k][0] = entry.getKey();
-							alterResult[k][1] = entry.getValue().toString();
+							alterResult[0][k] = entry.getKey();
+							alterResult[1][k] = entry.getValue().toString();
 						}
 					}
-
+					
+					//값 찍어볼까
+					for(i=0;i<alterResult[0].length;i++){
+						for(int j = 0;j<alterResult.length;j++){
+							System.out.print(alterResult[j][i] + " ");
+						}
+						System.out.println();
+					}
+					
+					break;
 				}
 			}
-
 		}
 		return alterResult;
 	}
@@ -872,7 +876,7 @@ public class SQLCompiler
 
 		switch (content) {
 		case "drop":
-			if(col[0].equals("legs")){
+			if(col[1].equals("legs")){
 				colMap.put("drop", true);
 			}else{
 				colMap.put("drop", false);
@@ -880,8 +884,8 @@ public class SQLCompiler
 			break;
 		case "change":
 			//color
-			if(col[0].equals("color") && col[1].equals("haircolor")){
-				col[2] = col[2]+col[3]+col[4]+col[5];
+			if(col[1].equals("color") && col[2].equals("haircolor")){
+				col[3] = col[3]+col[4]+col[5]+col[6];
 				for(String type: spDataType1){
 					if(type.equals("varchar") && (type+"(20)").equals(col[2])){
 						colMap.put("change1", true);
@@ -891,10 +895,10 @@ public class SQLCompiler
 					}
 				}
 				//habitat
-			}else if(col[0].equals("habit") && col[1].equals("job")){
-				col[2] = col[2]+col[3]+col[4]+col[5];
+			}else if(col[1].equals("habit") && col[2].equals("job")){
+				col[3] = col[3]+col[4]+col[5]+col[6];
 				for(String type: spDataType1){
-					if(type.equals("varchar") && (type+"(20)").equals(col[2])){
+					if(type.equals("varchar") && (type+"(20)").equals(col[3])){
 						colMap.put("change2", true);
 						break;
 					}else{
@@ -905,8 +909,8 @@ public class SQLCompiler
 			break;
 		case "add":
 			//gender
-			if(col[0].equals("gender")){
-				col[1] = col[1]+col[2]+col[3]+col[4];
+			if(col[1].equals("gender")){
+				col[2] = col[2]+col[3]+col[4]+col[5];
 				for(String type: spDataType1){
 					if(type.equals("varchar") && (type+"(20)").equals(col[2])){
 						colMap.put("add", true);
@@ -918,14 +922,14 @@ public class SQLCompiler
 			}
 			break;
 		case "modify":
-			int count = StringUtils.countOccurrencesOf(col[0], "(");
-			if(count == 1 && col[0].equals("(") || col[0].startsWith("(")){
-				if(col[0].equals("(gender")){
+			int count = StringUtils.countOccurrencesOf(col[1], "(");
+			if(count == 1 && col[1].equals("(") || col[1].startsWith("(")){
+				if(col[1].equals("(gender")){
 					//varchar(10) not null
 					for(String type : spDataType1){
-						if(type.equals("varchar") && (type+"(20)").equals(col[1]+col[2]+col[3]+col[4])){
+						if(type.equals("varchar") && (type+"(20)").equals(col[2]+col[3]+col[4]+col[5])){
 							for(String cons : constraint){
-								if(cons.equals("not null") && cons.equals(col[5] + col[6] )){
+								if(cons.equals("not null") && cons.equals(col[6] + col[7] )){
 									colMap.put("modify", true);
 									break;
 								}else{
@@ -938,7 +942,7 @@ public class SQLCompiler
 			}
 			break;
 		case "rename":
-			if(col[0].equals("person")){
+			if(col[1].equals("person")){
 				colMap.put("rename", true);
 			}else{
 				colMap.put("rename", false);
@@ -1149,7 +1153,7 @@ public class SQLCompiler
 			} 
 			System.out.println();
 		} 
- 
+
 		// stage == 1 : SELECT <여기> FROM
 		// stage == 2 : FROM <여기> WHERE 혹은 GROUP BY
 		// stage == 3 : WHERE <여기> ORDER BY
@@ -1357,161 +1361,161 @@ public class SQLCompiler
 				// subquery 갔다와서 테이블 이름이 필요함 column들을 table_name.colum1, table_name.colum2 등으로 표현하기 위해서
 				boolean need_table_name = false;
 				out2:
-				while (i < next_index)
-				{
-					current = texts[i++];
-					// 비어있으면 생략
-					if (current.length() == 0)
+					while (i < next_index)
 					{
-						i++;
-						continue;
-					}
-
-					switch (current)
-					{
-					case ",": // ','를 발견
-						System.out.println("콤마 입력됨");
-						conti = 0; // ','사이의 단어 숫자 초기화
-						close_bracket = true; // 괄호가 닫김
-						if (from_comma && !bracket)
-						{ // 괄호가 닫겨있거나 from_comma가 없어야 함
-							setErrorMessage("문법 오류 : ','를 확인하세요.");
-							return null;
-						}
-						from_comma = true;
-
-						table_names.add(table_name); // from절의 table 이름(별명) 넣기
-						break;
-					case "(":
-						// 괄호 오픈 상태
-						close_bracket = false; // 최근에 닫겼는지?
-						from_comma = false;
-						if (bracket)
+						current = texts[i++];
+						// 비어있으면 생략
+						if (current.length() == 0)
 						{
-							// (가 두번 연속 나온 상황
-							setErrorMessage("문법 오류 : '('는 두번연속 나올 수 없습니다.");
-							return null;
+							i++;
+							continue;
 						}
-						bracket = true;
-						break;
-					case ")":
-						close_bracket = true; // 최근에 닫겼는지?
-						if (bracket)
+
+						switch (current)
 						{
-							// '('가 앞에 있었음.
+						case ",": // ','를 발견
+							System.out.println("콤마 입력됨");
+							conti = 0; // ','사이의 단어 숫자 초기화
+							close_bracket = true; // 괄호가 닫김
+							if (from_comma && !bracket)
+							{ // 괄호가 닫겨있거나 from_comma가 없어야 함
+								setErrorMessage("문법 오류 : ','를 확인하세요.");
+								return null;
+							}
+							from_comma = true;
+
+							table_names.add(table_name); // from절의 table 이름(별명) 넣기
+							break;
+						case "(":
+							// 괄호 오픈 상태
+							close_bracket = false; // 최근에 닫겼는지?
+							from_comma = false;
+							if (bracket)
+							{
+								// (가 두번 연속 나온 상황
+								setErrorMessage("문법 오류 : '('는 두번연속 나올 수 없습니다.");
+								return null;
+							}
+							bracket = true;
+							break;
+						case ")":
+							close_bracket = true; // 최근에 닫겼는지?
+							if (bracket)
+							{
+								// '('가 앞에 있었음.
+								bracket = false;
+							} else
+							{
+								// 괄호가 오픈되지 않았음.
+								setErrorMessage("문법 오류 : '('가 없습니다.");
+								return null;
+							}
+							break;
+						case ";":
+							if (from_comma)
+							{
+								setErrorMessage("문법 오류 : ,로 끝날 수 없습니다.");
+								return null;
+							}
+							stage++;
+							break;
+						case "select":
+							// ',' 혹은 '('가 없이 select 구문이 시작되지 않음.
+							String lastWord = texts[i - 2];
+							if (!from_comma && !bracket)
+							{
+								setErrorMessage("문법 오류 : ',' 혹은 '('가 없습니다.");
+								return null;
+							}
+							if (!lastWord.equals("("))
+							{
+								System.out.println("lastWord=" + lastWord);
+								setErrorMessage("문법 오류 : 서브쿼리문을 확인해주세요");
+								return null;
+							}
+							// 서브쿼리에 가기전에 변수 정리
 							bracket = false;
-						} else
-						{
-							// 괄호가 오픈되지 않았음.
-							setErrorMessage("문법 오류 : '('가 없습니다.");
-							return null;
-						}
-						break;
-					case ";":
-						if (from_comma)
-						{
-							setErrorMessage("문법 오류 : ,로 끝날 수 없습니다.");
-							return null;
-						}
-						stage++;
-						break;
-					case "select":
-						// ',' 혹은 '('가 없이 select 구문이 시작되지 않음.
-						String lastWord = texts[i - 2];
-						if (!from_comma && !bracket)
-						{
-							setErrorMessage("문법 오류 : ',' 혹은 '('가 없습니다.");
-							return null;
-						}
-						if (!lastWord.equals("("))
-						{
-							System.out.println("lastWord=" + lastWord);
-							setErrorMessage("문법 오류 : 서브쿼리문을 확인해주세요");
-							return null;
-						}
-						// 서브쿼리에 가기전에 변수 정리
-						bracket = false;
-						close_bracket = true;
-						i--;
-						isSubquery = true;
-						
-						String[][] ta = getSelect();
-						System.out.println("end of subquery, i="+i);
-						if (ta == null)
-						{
-							System.out.println("ta="+ta);
-							setErrorMessage("문법 오류 : 재귀함수select 구문이 틀렸습니다. ");
-							return null;
-						}
-						tables.add(ta);
-						conti = 1;
-						i -= 1;
-						current = texts[i];
-						table_name = texts[i-1];
-						System.out.println("cur="+current+ " i ="+i);
-						if (!(current.equals(",") || current.equals("(") || current.equals(")")
-								|| current.equals(";") || current.equals("select"))) {
-							// 다음 단어는 무조건 일반 단어여야 한다.
-							for (String s : COMMAND2) { // COMMAND LIST에 있는 단어는 안됨
-								if (s.equals(current)) {
-									setErrorMessage("구문 오류 : 이 위치에 명령어가 올 수 없습니다.");
+							close_bracket = true;
+							i--;
+							isSubquery = true;
+
+							String[][] ta = getSelect();
+							System.out.println("end of subquery, i="+i);
+							if (ta == null)
+							{
+								System.out.println("ta="+ta);
+								setErrorMessage("문법 오류 : 재귀함수select 구문이 틀렸습니다. ");
+								return null;
+							}
+							tables.add(ta);
+							conti = 1;
+							i -= 1;
+							current = texts[i];
+							table_name = texts[i-1];
+							System.out.println("cur="+current+ " i ="+i);
+							if (!(current.equals(",") || current.equals("(") || current.equals(")")
+									|| current.equals(";") || current.equals("select"))) {
+								// 다음 단어는 무조건 일반 단어여야 한다.
+								for (String s : COMMAND2) { // COMMAND LIST에 있는 단어는 안됨
+									if (s.equals(current)) {
+										setErrorMessage("구문 오류 : 이 위치에 명령어가 올 수 없습니다.");
+										return null;
+									}
+								}
+								current = texts[++i];
+							}
+							need_table_name = true; // table_name 을 columns에 추가하라
+							System.out.println("after subquery current="+current);
+						default: // 일반 단어 입력된 경우
+							from_comma = false;
+							if (conti == 0)
+							{ // ',' 이후에 첫번째 단어
+								table_name = current;
+								if (table_name.equals(";")) {
+									setErrorMessage("구문 오류 : table_name이 ';'일 수는 없습니다.");
 									return null;
 								}
-							}
-							current = texts[++i];
-						}
-						need_table_name = true; // table_name 을 columns에 추가하라
-						System.out.println("after subquery current="+current);
-					default: // 일반 단어 입력된 경우
-						from_comma = false;
-						if (conti == 0)
-						{ // ',' 이후에 첫번째 단어
-							table_name = current;
-							if (table_name.equals(";")) {
-								setErrorMessage("구문 오류 : table_name이 ';'일 수는 없습니다.");
-								return null;
-							}
-							table_data = quizDAO.getTables(questionNumber, table_name);
-							if (table_data == null)
-							{
-								setErrorMessage("문법 오류 : table [" + table_name + "]이 존재하지 않습니다.");
-								return null;
-							}
-							tables.add(table_data);
-							conti++;
-						}
-						if (conti == 1)
-						{ // ',' 없이 단어가 두번 연속되었을 경우에는 table_name을 변경한다.
-							table_name = texts[i-1];
-							if (need_table_name) { // subquery 갔다왔으니 table_name을 추가하라
-								need_table_name = false;
-								// table data를 바꿈(첫번째 
-								String[][] t = tables.get(tables.size()-1);
-								tables.remove(tables.size()-1);
-								for (int l = 0; l< t[0].length; l++ ) {
-									t[0][l] = table_name+"."+t[0][l];
+								table_data = quizDAO.getTables(questionNumber, table_name);
+								if (table_data == null)
+								{
+									setErrorMessage("문법 오류 : table [" + table_name + "]이 존재하지 않습니다.");
+									return null;
 								}
-								tables.add(t);
+								tables.add(table_data);
+								conti++;
 							}
-						}
-						if (conti == 2)
-						{ // ',' 없이 단어가 세번 연속으로 입력되었음.
-							if (current.equals(";") ) {
-								
-								break out2;
+							if (conti == 1)
+							{ // ',' 없이 단어가 두번 연속되었을 경우에는 table_name을 변경한다.
+								table_name = texts[i-1];
+								if (need_table_name) { // subquery 갔다왔으니 table_name을 추가하라
+									need_table_name = false;
+									// table data를 바꿈(첫번째 
+									String[][] t = tables.get(tables.size()-1);
+									tables.remove(tables.size()-1);
+									for (int l = 0; l< t[0].length; l++ ) {
+										t[0][l] = table_name+"."+t[0][l];
+									}
+									tables.add(t);
+								}
 							}
-							setErrorMessage("문법 오류 : ','가 없습니다.");
-							return null;
+							if (conti == 2)
+							{ // ',' 없이 단어가 세번 연속으로 입력되었음.
+								if (current.equals(";") ) {
+
+									break out2;
+								}
+								setErrorMessage("문법 오류 : ','가 없습니다.");
+								return null;
+							}
+							break;
 						}
-						break;
-					}
-				} // end of while() (out2)
+					} // end of while() (out2)
 				System.out.println("요기 : i=" + i);
 				i--;
 				System.out.println("table_name.add("+table_name+")");
 				// 마지막 from 절의 table 이름(별명) 넣기
 				table_names.add(table_name);
-				
+
 				// from_comma 로 끝날 경우
 				if (from_comma && !(tables.size() == 1))
 				{
@@ -1541,7 +1545,7 @@ public class SQLCompiler
 				// table data 출력
 				System.out.println("테이블 갖고온거 테스트");
 				int iii = 0;
-				
+
 				for (String[][] s : tables)
 				{
 					System.out.println("[table_names = "+table_names.get(iii)+"]");
@@ -1614,7 +1618,7 @@ public class SQLCompiler
 								setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
 								return null;
 							}
-							
+
 							// table_name으로 된 모든 column을 획득하기
 							for (String t_name : table_names)
 							{
@@ -1799,9 +1803,9 @@ public class SQLCompiler
 								}
 								bys.remove(bys.size() - 1);
 								bys.add(current.equals("asc") ? 0 : 1); // asc면
-																		// 0,
-																		// desc
-																		// 면 1
+								// 0,
+								// desc
+								// 면 1
 								keyword_level++; // level 2.
 								break;
 							default:
@@ -2068,7 +2072,7 @@ public class SQLCompiler
 				case "like":
 					setErrorMessage("구문 에러 : like 구문은 지원하지 않습니다.");
 					return null;
-				// like 구문은 다시 생각해보자.
+					// like 구문은 다시 생각해보자.
 				case "is":
 					current = texts[++i];
 					if (current.equals("null"))
@@ -2199,76 +2203,76 @@ public class SQLCompiler
 				} // end of switch
 				i++;
 			} // end of while
-			System.out.println(" -- end of while, i=" + i + " texts.length=" + texts.length);
+		System.out.println(" -- end of while, i=" + i + " texts.length=" + texts.length);
 
-			String op = null;
-			Object o2 = stack.pop();
-			System.out.println("stack.pop()="+o2);
-			int[] row = (int[]) o2;
-			
-			logger.info("row : {}", row);
-			int[] row2 = null;
-			boolean boo = true;
-			while (true)
-			{ // and 과 or 연산실행
-				o = stack.pop();
-				logger.info(" o : {} ", o);
+		String op = null;
+		Object o2 = stack.pop();
+		System.out.println("stack.pop()="+o2);
+		int[] row = (int[]) o2;
 
-				if (o instanceof String)
-				{
-					op = (String) o;
-				}
-				if (op.equals(""))
-				{ // stack에 첫번째 데이터 = "" 이므로, while 구문이 끝남
-					System.out.println("row 획득 종료");
-					return row;
-				}
-				if (!(op.equals("and") || op.equals("or")))
-				{
-					setErrorMessage("문법 오류 : where 구문을 확인해주세요. and 나 or이 아닙니다.");
-					return null;
-				}
-				Object o3 = stack.pop();
-				if (o3 instanceof int[])
-				{
-					row2 = (int[]) o3;
-				}
-				logger.info("value of row");
-				logger.info("row  : {} ", row);
-				logger.info("row2 : {} ", row2);
+		logger.info("row : {}", row);
+		int[] row2 = null;
+		boolean boo = true;
+		while (true)
+		{ // and 과 or 연산실행
+			o = stack.pop();
+			logger.info(" o : {} ", o);
 
-				if (row2 == null)
+			if (o instanceof String)
+			{
+				op = (String) o;
+			}
+			if (op.equals(""))
+			{ // stack에 첫번째 데이터 = "" 이므로, while 구문이 끝남
+				System.out.println("row 획득 종료");
+				return row;
+			}
+			if (!(op.equals("and") || op.equals("or")))
+			{
+				setErrorMessage("문법 오류 : where 구문을 확인해주세요. and 나 or이 아닙니다.");
+				return null;
+			}
+			Object o3 = stack.pop();
+			if (o3 instanceof int[])
+			{
+				row2 = (int[]) o3;
+			}
+			logger.info("value of row");
+			logger.info("row  : {} ", row);
+			logger.info("row2 : {} ", row2);
+
+			if (row2 == null)
+			{
+				return row;
+			}
+			for (int k = 0; k < row.length; k++)
+			{
+				if (op.equals("and"))
 				{
-					return row;
-				}
-				for (int k = 0; k < row.length; k++)
-				{
-					if (op.equals("and"))
+					logger.info("row AND row");
+					if (row2[k] == 1 && row[k] == 1)
 					{
-						logger.info("row AND row");
-						if (row2[k] == 1 && row[k] == 1)
-						{
-							row[k] = 1;
-						} else
-						{
-							row[k] = 0;
-						}
-					}
-					if (op.equals("or"))
+						row[k] = 1;
+					} else
 					{
-						logger.info("row OR row");
-						if (row[k] == 1 || row2[k] == 1)
-						{
-							row[k] = 1;
-						} else
-						{
-							row[k] = 0;
-						}
+						row[k] = 0;
 					}
 				}
-				result = row;
-			} // end of while() -- and or 연산
-				// System.out.println("코코");
+				if (op.equals("or"))
+				{
+					logger.info("row OR row");
+					if (row[k] == 1 || row2[k] == 1)
+					{
+						row[k] = 1;
+					} else
+					{
+						row[k] = 0;
+					}
+				}
+			}
+			result = row;
+		} // end of while() -- and or 연산
+		// System.out.println("코코");
 		} catch (Exception e)
 		{
 			e.printStackTrace();
