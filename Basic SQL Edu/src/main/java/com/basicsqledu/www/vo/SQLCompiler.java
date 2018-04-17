@@ -1186,6 +1186,7 @@ public class SQLCompiler
 				// 여기서부터 from ~ 테이블 명 + 서브쿼리(select) 테이블 획득
 				// subquery 갔다와서 테이블 이름이 필요함 column들을 table_name.colum1, table_name.colum2 등으로 표현하기 위해서
 				boolean need_table_name = false;
+				out2:
 				while (i < next_index)
 				{
 					current = texts[i++];
@@ -1273,15 +1274,31 @@ public class SQLCompiler
 							return null;
 						}
 						tables.add(ta);
-						conti++;
+						conti = 2;
 						i -= 2;
 						current = texts[i];
+						if (!(current.equals(",") || current.equals("(") || current.equals(")")
+								|| current.equals(";") || current.equals("select"))) {
+							// 다음 단어는 무조건 일반 단어여야 한다.
+							for (String s : COMMAND2) { // COMMAND LIST에 있는 단어는 안됨
+								if (s.equals(current)) {
+									setErrorMessage("구문 오류 : 이 위치에 명령어가 올 수 없습니다.");
+									return null;
+								}
+							}
+							current = texts[++i];
+						}
 						need_table_name = true; // table_name 을 columns에 추가하라
+						System.out.println("after subquery current="+current);
 					default: // 일반 단어 입력된 경우
 						from_comma = false;
 						if (conti == 0)
 						{ // ',' 이후에 첫번째 단어
 							table_name = current;
+							if (table_name.equals(";")) {
+								setErrorMessage("구문 오류 : table_name이 ';'일 수는 없습니다.");
+								return null;
+							}
 							table_data = quizDAO.getTables(questionNumber, table_name);
 							if (table_data == null)
 							{
@@ -1306,12 +1323,17 @@ public class SQLCompiler
 						}
 						if (conti == 2)
 						{ // ',' 없이 단어가 세번 연속으로 입력되었음.
+							String[] list = { ",", ";", "(", ")" };
+							for (String s : list) {
+								if (s.equals(current) )
+									break out2;
+							}
 							setErrorMessage("문법 오류 : ','가 없습니다.");
 							return null;
 						}
 						break;
 					}
-				} // end of while()
+				} // end of while() (out2)
 				System.out.println("요기 : i=" + i);
 				i--;
 
@@ -1347,6 +1369,7 @@ public class SQLCompiler
 				// table data 출력
 				System.out.println("테이블 갖고온거 테스트");
 				int iii = 0;
+				
 				for (String[][] s : tables)
 				{
 					System.out.println("[table_names = "+table_names.get(iii)+"]");
@@ -1999,7 +2022,9 @@ public class SQLCompiler
 			System.out.println(" -- end of while, i=" + i + " texts.length=" + texts.length);
 
 			String op = null;
-			int[] row = (int[]) stack.pop();
+			Object o2 = stack.pop();
+			System.out.println("stack.pop()="+o2);
+			int[] row = (int[]) o2;
 			logger.info("row : {}", row);
 			int[] row2 = null;
 			boolean boo = true;
