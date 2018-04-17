@@ -2047,10 +2047,10 @@ public class SQLCompiler
 					setErrorMessage("문법 오류 : where 구문을 확인해주세요. and 나 or이 아닙니다.");
 					return null;
 				}
-				Object o2 = stack.pop();
-				if (o2 instanceof int[])
+				Object o3 = stack.pop();
+				if (o3 instanceof int[])
 				{
-					row2 = (int[]) o2;
+					row2 = (int[]) o3;
 				}
 				logger.info("value of row");
 				logger.info("row  : {} ", row);
