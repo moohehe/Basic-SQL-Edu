@@ -27,6 +27,8 @@ public class QuizDAO
 	private final static String[] ROBOTS = {"robot"};
 	private final static String[] PERSONS = {"person"};
 	
+	
+	ArrayList<Animal> animals = null;
 	/**
 	 * 문제 제출용 table 얻어오기
 	 * @param questionNumber
@@ -40,9 +42,15 @@ public class QuizDAO
 		{
 			QuizMapper mapper = session.getMapper(QuizMapper.class);
 			switch (questionNumber) {
+			case 1: 
+				 animals = mapper.getAnimal(2);
+				result.put("table_name", "animal_view");
+				result.put("table_value", animals);
+				break;
+				
 			case 2: case 3: case 4 : case 5: case 6:
 			case 7 : case 8 : case 9: case 10:
-				ArrayList<Animal> animals = mapper.getAnimal(questionNumber);
+				 animals = mapper.getAnimal(questionNumber);
 				result.put("table_name", "animal_view");
 				result.put("table_value", animals);
 				
