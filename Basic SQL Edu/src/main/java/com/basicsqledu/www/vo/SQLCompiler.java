@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Stack;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
@@ -13,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.basicsqledu.www.dao.QuizDAO;
 
@@ -50,6 +52,7 @@ public class SQLCompiler
 	private String[][] result;
 	private String result_name;
 	private HashMap<String, Integer> result_columns;
+	private HashMap<String, Object> alterMap;
 
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	private String errorMessage = "";
@@ -366,6 +369,7 @@ public class SQLCompiler
 					break;
 				case "alter":
 					map.put("cmd", "alter");
+					result = getAlter();
 					break;
 				case "insert":
 					map.put("cmd", "insert");
@@ -415,22 +419,31 @@ public class SQLCompiler
 	 * 
 	 * DB 정답 테이블에서 정답을 꺼내와야함!!
 	 *
+	 *
+	 * 지금 정답 1 : create table robot(
+	 *      					r_color varchar(50)
+	 *      					,r_size varchar(50)
+	 *      					,r_type varchar(50)
+	 *      					,weapon varchar(50)
+	 *  				  );
 	 * 
-	 * create table __정해진 예시(대략 종류 4개)___ (____ number primary key, _____,
-	 * number not null, ______ varchar(40) unique );
 	 * 
-	 * 지금 정답 : create table animal( animal_num number primary key ,name
-	 * varchar(40) unique ,color varchar(40) not null ,habitat varchar(40)
-	 * foreign key ,legs number );
+	 * 지금 정답 2 : create table animal(
+	  						animal_num number  primary key
+							,name	 varchar(40)	unique
+							,color	 varchar(40)	not null
+							,habitat  varchar(40)	foreign key
+							,legs	 	 number
+						);
 	 */
 	private String[][] getCreate()
 	{
 		System.out.println("==create문 들어옴==");
 
 		int i = 0;
-		int stage = 1; // 현재 단계별 진행상황
-		String createResult[] = null; // 괄호안에 컬럼들 담아줄 배열
-		boolean faa = false; // 컬럼 판별
+		int stage = 1;							//현재 단계별 진행상황
+		String createResult []  = null;	//괄호안에 컬럼들 담아줄 배열
+		boolean faa = false;					//컬럼 판별
 
 		for (i = stage; i < texts.length; i++)
 		{
@@ -445,7 +458,7 @@ public class SQLCompiler
 				} else
 				{
 					// <table>이 아니고 다른게 나옴
-					setErrorMessage("create 다음에는 table이 나와야 합니다.");
+					setErrorMessage("문법오류 : create 다음에는 table이 나와야 합니다.");
 					return null;
 
 				}
@@ -455,82 +468,72 @@ public class SQLCompiler
 				// table 이름 체크하기
 				result_name = current; // 현재 사용자가 입력한 테이블 네임
 
-				table_name = "animal"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
+				//table_name = "animal"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
 
-				if (!(result_name.equals(table_name)))
+				if (!(result_name.equals("animal") || !(result_name.equals("robot"))))
 				{
 					// 안맞음
-					setErrorMessage("table 다음에는 정확한 table_name이 나와야 합니다.");
+					setErrorMessage("문법 오류 : table 다음에는 정확한 table_name이 나와야 합니다.");
 					return null;
 
 				} else
 				{
 					stage++;
 				}
-			} else if (stage == 3)
-			{
+			} else if (stage == 3){
 				// 3. table_name 다음에는 컬럼들
-				if (current.equals("("))
-				{
+				if(current.equals("(")){
 					stage++;
-				} else
-				{
-					setErrorMessage("괄호를 열어주어야 합니다.");
+				}
+				else{
+					setErrorMessage("문법 오류 : 괄호를 열어주어야 합니다.");
 					return null;
 
 				}
-			} else if (stage == 4)
-			{
+			} else if(stage == 4){
 				// 4. 컬럼명들과 그 속성들 검사
 
-				try
-				{
-					createResult = new String[texts.length - stage - 5];
+				try{
+					createResult = new String[texts.length-stage-5];
 					int k = 0;
-					for (int j = stage; j < texts.length; j++)
-					{
-						if (texts[j].equals(")") || texts[j].equals(";") || texts[j].equals("") || texts[j].equals("("))
-							continue;
+					for(int j = stage;j<texts.length;j++){
+						if(texts[j].equals(")") || texts[j].equals(";") || texts[j].equals("")
+								|| texts[j].equals("(")) continue;
 						createResult[k] = texts[j];
 						k++;
 					}
 
 					int index = 0;
 					int comma = 0;
-					System.out.println("컬럼 배열의 길이 : " + "[ " + createResult.length + " ]");
-					for (String cr : createResult)
-					{
-						if (cr == null)
-						{
+					System.out.println("컬럼 배열의 길이 : " + "[ "+createResult.length+" ]");
+					for(String cr : createResult){
+						if(cr == null){
 							continue;
-						} else
-						{
-							System.out.println("컬럼 배열의 인덱스 : [ " + index++ + " ]  [" + cr + "]");
-							if (cr.equals(","))
-							{
-								comma++;
+						}else{
+							System.out.println("컬럼 배열의 인덱스 : [ " + index++ +" ]  [" + cr + "]");
+							if(cr.equals(",")){
+								comma++;	
 							}
 						}
 					}
 
-					// 콤마 갯수 계산
-					if (comma != 4)
-					{
+					//콤마 갯수 계산
+					if(comma != 4) {
 						faa = false;
 					}
 
-					/*
-					 * System.out.println("[ 컬럼값들 ]"); for(String str :
-					 * createResult){ System.out.print(str + " "); }
-					 */
+
+					/*System.out.println("[ 컬럼값들 ]");
+				for(String str : createResult){
+					System.out.print(str + " ");
+				}*/
+
 
 					// 4. 괄호 안에 column 체크
 					// 4-0. 마지막에 ")"가 나올때까지 String배열에 저장
 					// 4-1. 컬럼 이름
-					for (String str : createResult)
-					{
-						if (str == null)
-						{
+					for(String str : createResult){
+						if(str == null){
 							break;
 						}
 					}
@@ -538,165 +541,199 @@ public class SQLCompiler
 					/*
 					 * 사용자가 입력한 컬럼명이 우리테이블뷰에 있는 컬럼명이랑 같은지 검사시에 사용
 					 * 
-					 * boolean corr = false; int col,type; type = 1; String
-					 * column[] = new String[table.length];
-					 * 
-					 * for(i=0;i<table.length;i++){ column[i] = table[0][i]; }
-					 * 
-					 * for(col= 0;col<createResult.length;col+=3){
-					 * for(i=0;i<column.length;i++){ //컬럼 제대로 입력됨
-					 * if(createResult[col].equals(column[i])){ corr = true;
-					 * }else{ corr = false; } } }
-					 */
-				} catch (Exception e)
-				{
+				boolean corr = false;
+				int col,type;
+				type = 1;
+				String column[] = new String[table.length];
+
+				for(i=0;i<table.length;i++){
+					column[i] = table[0][i];
+				}
+
+				for(col= 0;col<createResult.length;col+=3){
+					for(i=0;i<column.length;i++){
+						//컬럼 제대로 입력됨
+						if(createResult[col].equals(column[i])){
+							corr = true;
+						}else{
+							corr = false;
+						}
+					}
+				}*/
+				}catch(Exception e){
 					e.printStackTrace();
 				}
 
+
 				/*
 				 * 컬럼들 예시에서 검사 --> 나중에 예시추가하고 사용자에게 입력받은값을 토대로 검사
-				 */
+				 * */ 
 				faa = false;
-				// 첫번째 컬럼 (animal_num number primary key)
-				if (createResult[0].equals("animal_num"))
-				{
-					for (String dt : spDataType1)
-					{
-						if (dt.equals(createResult[1]))
-						{
-							for (String ct : constraint)
-							{
-								if (ct.equals(createResult[2] + " " + createResult[3]) && createResult[4].equals(","))
-								{
-									faa = true;
-									System.out.println("[ 첫번째 컬럼 검사 완료 ]");
-									break;
-								} else
-								{
-									setErrorMessage("컬럼 값이 잘못되었습니다");
-									faa = false;
+
+				//동물 create
+				if(result_name.equals("animal")){
+					//첫번째 컬럼 (animal_num number primary key)
+					if(createResult[0].equals("animal_num")){
+						for(String dt : spDataType1){
+							if(dt.equals("number") && dt.equals(createResult[1])){
+								for(String ct : constraint){
+									if(ct.equals("primary key") && ct.equals(createResult[2] + " " + createResult[3]) && createResult[4].equals(",")){
+										faa = true;
+										System.out.println("[ 동물 : 첫번째 컬럼 검사 완료 ]");
+										break;
+									}else{
+										faa = false;
+									}
 								}
 							}
 						}
 					}
-				}
-				// 두번째 컬럼(name varchar(40) unique)
-				if (createResult[5].equals("name"))
-				{
-					for (String dt : spDataType1)
-					{
-						dt += "(40)";
-						if (dt.equals(createResult[6] + "(" + createResult[7] + ")"))
-						{
-							for (String ct : constraint)
-							{
-								if (ct.equals(createResult[8]) && createResult[9].equals(","))
-								{
-									faa = true;
-									System.out.println("[ 두번째 컬럼 검사 완료 ]");
-									break;
-								} else
-								{
-									setErrorMessage("컬럼 값이 잘못되었습니다");
-									faa = false;
+					//두번째 컬럼(name varchar(40) unique)
+					if(createResult[5].equals("name")){
+						for(String dt : spDataType1){
+							if(dt.equals("varchar")) { 
+								dt += "(40)";
+								if(dt.equals(createResult[6] + "("+createResult[7]+")")){
+									for(String ct : constraint){
+										if(ct.equals("unique") && ct.equals(createResult[8]) && createResult[9].equals(",")){
+											faa = true;
+											System.out.println("[ 동물 : 두번째 컬럼 검사 완료 ]");
+											break;
+										}else{
+											faa = false;
+										}
+									}
 								}
 							}
 						}
 					}
-				}
-				// 세번째 컬럼(color varchar(40) not null)
-				if (createResult[10].equals("color"))
-				{
-					for (String dt : spDataType1)
-					{
-						dt += "(40)";
-						if (dt.equals(createResult[11] + "(" + createResult[12] + ")"))
-						{
-							for (String ct : constraint)
-							{
-								if (ct.equals(createResult[13] + " " + createResult[14])
-										&& createResult[15].equals(","))
-								{
-									faa = true;
-									System.out.println("[ 세번째 컬럼 검사 완료 ]");
-									break;
-								} else
-								{
-									faa = false;
-									setErrorMessage("컬럼 값이 잘못되었습니다");
+					//세번째 컬럼(color varchar(40) not null)
+					if(createResult[10].equals("color")){
+						for(String dt : spDataType1){
+							if(dt.equals("varchar")){
+								dt += "(40)";
+								if(dt.equals(createResult[11] + "("+createResult[12]+")")){
+									for(String ct : constraint){
+										if(ct.equals("not null") && ct.equals(createResult[13]+ " " + createResult[14] ) && createResult[15].equals(",")){
+											faa = true;
+											System.out.println("[ 동물 : 세번째 컬럼 검사 완료 ]");
+											break;
+										}else{
+											faa = false;
+										}
+									}
 								}
 							}
 						}
 					}
-				}
-				// 네번째 컬럼(habitat varchar(40) foreign key)
-				if (createResult[16].equals("habitat"))
-				{
-					for (String dt : spDataType1)
-					{
-						dt += "(40)";
-						if (dt.equals(createResult[17] + "(" + createResult[18] + ")"))
-						{
-							for (String ct : constraint)
-							{
-								if (ct.equals(createResult[19] + " " + createResult[20])
-										&& createResult[21].equals(","))
-								{
-									faa = true;
-									System.out.println("[ 네번째 컬럼 검사 완료 ]");
-									break;
-								} else
-								{
-									setErrorMessage("컬럼 값이 잘못되었습니다");
-									faa = false;
+					//네번째 컬럼(habitat varchar(40) foreign key)
+					if(createResult[16].equals("habitat")){
+						for(String dt : spDataType1){
+							if(dt.equals("varchar")){
+								dt += "(40)";
+								if(dt.equals(createResult[17]+"("+createResult[18]+")")){
+									for(String ct : constraint){
+										if(ct.equals("foreign key") && ct.equals(createResult[19]+ " " + createResult[20] ) && createResult[21].equals(",")){
+											faa = true;
+											System.out.println("[ 동물 : 네번째 컬럼 검사 완료 ]");
+											break;
+										}else{
+											faa = false;
+										}
+									}
 								}
 							}
 						}
 					}
-				}
-				// 다섯번째 컬럼(legs number)
-				if (createResult[22].equals("legs"))
-				{
-					for (String dt : spDataType1)
-					{
-						if (dt.equals(createResult[23]))
-						{
-							faa = true;
-							System.out.println("[ 다섯번째 컬럼 검사 완료 ]");
-							break;
-						} else
-						{
-							setErrorMessage("컬럼 값이 잘못되었습니다");
-							faa = false;
+					//다섯번째 컬럼(legs number)
+					if(createResult[22].equals("legs")){
+						for(String dt : spDataType1){
+							if(dt.equals("number") && dt.equals(createResult[23])){
+								faa = true;
+								System.out.println("[ 동물 : 다섯번째 컬럼 검사 완료 ]");
+								break;
+							}else{
+								faa = false;
+							}
+						}
+					}
+				} else if(result_name.equals("robot")){
+					//로봇 create
+					//첫번째 컬럼
+					if(createResult[0].equals("r_color")){
+						for(String dt : spDataType1){
+							if(dt.equals("varchar") && (dt+"(50)").equals("("+createResult[1]+")") && createResult[2].equals(",")){
+								faa = true;
+								System.out.println("[ 로봇 : 첫번째 컬럼 검사 완료 ]");
+								break;
+							}else{
+								faa = false;
+							}
+						}
+					}
+					//두번째 컬럼
+					if(createResult[0].equals("r_size")){
+						for(String dt : spDataType1){
+							if(dt.equals("varchar") && (dt+"(50)").equals("("+createResult[1]+")") && createResult[2].equals(",")){
+								faa = true;
+								System.out.println("[ 로봇 : 두번째 컬럼 검사 완료 ]");
+								break;
+							}else{
+								faa = false;
+							}
+						}
+					}
+					//세번째 컬럼
+					if(createResult[0].equals("r_type")){
+						for(String dt : spDataType1){
+							if(dt.equals("varchar") && (dt+"(50)").equals("("+createResult[1]+")") && createResult[2].equals(",")){
+								faa = true;
+								System.out.println("[ 로봇 : 세번째 컬럼 검사 완료 ]");
+								break;
+							}else{
+								faa = false;
+							}
+						}
+					}
+					//네번째 컬럼
+					if(createResult[0].equals("weapon")){
+						for(String dt : spDataType1){
+							if(dt.equals("varchar") && (dt+"(50)").equals("("+createResult[1]+")") && createResult[2].equals(",")){
+								faa = true;
+								System.out.println("[ 로봇 : 네번째 컬럼 검사 완료 ]");
+								break;
+							}else{
+								faa = false;
+							}
 						}
 					}
 				}
 
-				// 컬럼명들이 맞으면 반복문 종료
-				if (faa = true)
-				{
+				//컬럼명들이 맞으면 반복문 종료
+				if(faa = true){
 					break;
 				}
 				// 4-2. 컬럼의 데이터 형태
-				// 4-3. 컬럼의 제약조건(primary key는 한번만, 기본키, 외래키, not null,
-				// default,,)
+				// 4-3. 컬럼의 제약조건(primary key는 한번만, 기본키, 외래키, not null, default,,)
 				// 4-4. 콤마
-			} else
-			{
-				// stage 5 이상
+			}
+			else{
+				//stage 5 이상
 				// 괄호로 시작하지 않거나 포함되지 않음
-				setErrorMessage("괄호로 감싸야함");
+				setErrorMessage("문법 오류 : 괄호로 감싸야함");
 				return null;
 			}
 		}
-		if (faa)
-		{
-			// 전부완료
+		if(faa){
+			//전부완료
 			return new String[0][0];
+		}else{
+			setErrorMessage("문법 오류 : 컬럼의 형태가 잘못되었습니다");
 		}
 
 		return null;
 	}
+
 
 	/**
 	 * 
@@ -704,13 +741,12 @@ public class SQLCompiler
 	 * 
 	 * 정답 예시 : drop table _____(테이블 이름)
 	 * 
-	 */
-	private String[][] getDrop()
-	{
+	 * */
+	private String[][] getDrop(){
 		System.out.println("==Drop문 들어옴==");
 
 		int i = 0;
-		int stage = 1; // 현재 단계별 진행상황
+		int stage = 1;							//현재 단계별 진행상황
 
 		for (i = stage; i < texts.length; i++)
 		{
@@ -725,24 +761,22 @@ public class SQLCompiler
 				} else
 				{
 					// <table>이 아니고 다른게 나옴
-					setErrorMessage("drop 다음에는 table이 나와야 합니다.");
+					setErrorMessage("문법 오류 : drop 다음에는 table이 나와야 합니다.");
 					return null;
 
 				}
-			} else if (stage == 2)
-			{
-				// 2. drop table <테이블 이름>이 나와야 함
-				result_name = current; // 사용자가 입력한 테이블 네임
-				table_name = "zoo"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
+			}else if(stage == 2){
+				//2. drop table <테이블 이름>이 나와야 함
+				result_name = current;			//사용자가 입력한 테이블 네임
+				table_name = "animal"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
 
 				if (!(result_name.equals(table_name)))
 				{
 					// 안맞음
-					setErrorMessage("table 다음에는 정확한 table_name이 나와야 합니다.");
+					setErrorMessage("문법 오류 : table 다음에는 정확한 table_name이 나와야 합니다.");
 					return null;
 
-				} else
-				{
+				} else{
 					return new String[0][0];
 				}
 
@@ -753,111 +787,258 @@ public class SQLCompiler
 		return null;
 	}
 
+
 	/**
-	 * insert into person(gender,haircolor,clothescolor,height) values('male',
-	 * 'white', 'white', 177); insert into robot(r_color,r_size,r_type,weapon)
-	 * values('white','small','R2','beam');
+	 * Alter table animal drop legs;
+	 * Alter table animal change color haircolor varchar(20);
+	 * Alter table animal change habitat job varchar(20);
+	 * Alter table animal add gender varchar(20);
+	 * Alter table animal modify(gender varchar(10) not null);
+	 * Alter table animal rename person;
+	 * */
+	private String[][] getAlter(){
+		//문제 단계 : 6단계
+		//어떤 문제를 먼저 맞춰도 상관없게 6개의 문제가 모두 맞으면 다음 문제로 이동할 수 있음
+		String [][] alterResult = null;
+		int stage= 1;
+
+		for(int i = stage;i<texts.length;i++){
+			String content = texts[stage];
+
+			if(stage == 1){
+				// <table>
+				if(content.equals("table")){
+					stage++;
+				}else{
+					setErrorMessage("문법 오류 : ALTER 뒤에는 TABLE이 와야 합니다.");
+					return null;
+				}
+			}else if(stage == 2){
+				// <animal>
+				if(content.equals("animal")){
+					stage++;
+				}else{
+					setErrorMessage("문법 오류 : 정확한 테이블 이름이 나와야 합니다.");
+					return null;
+				}
+			}else if(stage == 3 ){
+				//분기 처리
+				if(content.equals("drop") || content.equals("change") || content.equals("add")
+						|| content.equals("modify") || content.equals("rename")){
+
+					alterResult = new String[2][6];		//결과 판별 2차원 배열 선언
+
+					//함수만들자 걍,,
+					alterMap = alterCol(stage, content);
+
+					//2차원 배열에 해쉬맵 값 넣어주기
+					for(int k = 0;k<alterResult[0].length;k++){
+						for(Entry<String, Object> entry : alterMap.entrySet()){
+							alterResult[k][0] = entry.getKey();
+							alterResult[k][1] = entry.getValue().toString();
+						}
+					}
+
+				}
+			}
+
+		}
+		return alterResult;
+	}
+
+
+
+	//Alter문 세부 검사
+	private HashMap<String,Object> alterCol(int stage, String content){
+		HashMap<String, Object> colMap = new HashMap<>();
+
+		//컬럼 잘라서 배열에 넣어랑
+		String [] col = new String[texts.length-stage];
+		int j = 0;
+
+		for(int i = stage;i<texts.length;i++){
+			if(!texts[i].equals(";")){
+				col[j] = texts[i];
+				j++;
+			}
+		}
+
+		int k = 0;
+		for(String co : col){
+			if(co != null){
+				System.out.println("배열의 인덱스 : [ " + k++ +" ] " + co);
+			}
+		}
+
+		switch (content) {
+		case "drop":
+			if(col[0].equals("legs")){
+				colMap.put("drop", true);
+			}else{
+				colMap.put("drop", false);
+			}
+			break;
+		case "change":
+			//color
+			if(col[0].equals("color") && col[1].equals("haircolor")){
+				col[2] = col[2]+col[3]+col[4]+col[5];
+				for(String type: spDataType1){
+					if(type.equals("varchar") && (type+"(20)").equals(col[2])){
+						colMap.put("change1", true);
+						break;
+					}else{
+						colMap.put("change1", false);
+					}
+				}
+				//habitat
+			}else if(col[0].equals("habit") && col[1].equals("job")){
+				col[2] = col[2]+col[3]+col[4]+col[5];
+				for(String type: spDataType1){
+					if(type.equals("varchar") && (type+"(20)").equals(col[2])){
+						colMap.put("change2", true);
+						break;
+					}else{
+						colMap.put("change2", false);
+					}
+				}
+			}
+			break;
+		case "add":
+			//gender
+			if(col[0].equals("gender")){
+				col[1] = col[1]+col[2]+col[3]+col[4];
+				for(String type: spDataType1){
+					if(type.equals("varchar") && (type+"(20)").equals(col[2])){
+						colMap.put("add", true);
+						break;
+					}else{
+						colMap.put("add", false);
+					}
+				}
+			}
+			break;
+		case "modify":
+			int count = StringUtils.countOccurrencesOf(col[0], "(");
+			if(count == 1 && col[0].equals("(") || col[0].startsWith("(")){
+				if(col[0].equals("(gender")){
+					//varchar(10) not null
+					for(String type : spDataType1){
+						if(type.equals("varchar") && (type+"(20)").equals(col[1]+col[2]+col[3]+col[4])){
+							for(String cons : constraint){
+								if(cons.equals("not null") && cons.equals(col[5] + col[6] )){
+									colMap.put("modify", true);
+									break;
+								}else{
+									colMap.put("modify", false);
+								}
+							}
+						}
+					}
+				}
+			}
+			break;
+		case "rename":
+			if(col[0].equals("person")){
+				colMap.put("rename", true);
+			}else{
+				colMap.put("rename", false);
+			}
+			break;
+
+		default:
+			break;
+		}
+
+		return colMap;
+	}
+
+
+
+
+	/**
+	 * insert into person(gender,haircolor,job,height) values('male', 'white', 'scientist', 177);
+	 * insert into robot(r_color,r_size,r_type,weapon) values('white','small','R2','beam');
 	 * 
-	 */
-	private String[][] getInsert()
-	{
+	 * */
+	private String[][] getInsert(){
 		int i = 0;
-		int stage = 1; // 문제 단계
+		int stage = 1;								//문제 단계
 
 		for (i = stage; i < texts.length; i++)
 		{
 			String current = texts[stage];
 
-			if (stage == 1)
-			{
-				// 1. insert <into>
-				if (current.equals("into"))
-				{
-					stage++;
-				} else
-				{
-					setErrorMessage("insert 뒤에는 반드시 into 가 와야 합니다.");
+			if(stage == 1){
+				//1. insert <into>
+				if(current.equals("into")){
+					stage ++;
+				}else{
+					setErrorMessage("문법 오류 : insert 뒤에는 반드시 into 가 와야 합니다.");
 					return null;
 				}
-			} else if (stage == 2)
-			{
-				// 2. insert into <person or robot>
-				if (current.equals("person") || current.equals("robot"))
-				{
-					stage++;
-				} else
-				{
-					setErrorMessage("정확한 테이블 명을 입력해 주세요");
-					return null;
+			}else if(stage == 2){
+				//2. insert into <person or robot>
+				if(current.equals("person") || current.equals("robot")){
+					stage ++;
+				}else{
+					setErrorMessage("문법 오류 : 정확한 테이블 명을 입력해 주세요");
+					return null;	
 				}
-			} else if (stage == 3)
-			{
-				if (current.equals("("))
-				{
-					stage++;
-				} else
-				{
-					setErrorMessage("테이블 이름 뒤에는 괄호를 열어주어야 합니다.");
-					return null;
+			}else if(stage == 3){
+				if(current.equals("(")){
+					stage ++;
+				}else{
+					setErrorMessage("문법 오류 : 테이블 이름 뒤에는 괄호를 열어주어야 합니다.");
+					return null;	
 				}
-			} else if (stage == 4)
-			{
-				// 사람 삽입
-				if (insertObject(current, stage))
-				{
+			}else if(stage == 4){
+				//사람 삽입
+				if(insertObject(current,stage)){
 					return new String[0][0];
 				}
 			}
-
 		}
 		return null;
 	}
 
-	// 삽입 컬럼 검사 함수
-	private boolean insertObject(String current, int stage)
-	{
-		// current = gender, r_color
+	//삽입 컬럼 검사 함수
+	private boolean insertObject(String current,int stage){
+		//current = gender, r_color
 		String insertCol[] = null;
 		int comma = 0;
 		boolean result = false;
 
-		try
-		{
-			insertCol = new String[texts.length - stage - 1];
+		try{
+			insertCol = new String[texts.length-stage-1];
 			int k = 0;
-			for (int j = stage; j < texts.length; j++)
-			{
-				if (texts[j].equals(" ") || texts[j].equals(";") || texts[j].equals("") || texts[j].equals(""))
-					continue;
+			for(int j = stage;j<texts.length;j++){
+				if(texts[j].equals(" ") || texts[j].equals(";") || texts[j].equals("")
+						|| texts[j].equals("")) continue;
 
-				// 작은따옴표로 감싸져 있을 시 붙여서 하나의 문자열로 만든 뒤 배열에 삽입
-				if (texts[j].equals("'"))
-				{
-					if (texts[j + 1].equals("male'") || texts[j + 1].equals("white'") || texts[j + 1].equals("small'")
-							|| texts[j + 1].equals("r2'") || texts[j + 1].equals("beam'"))
-					{
+				//작은따옴표로 감싸져 있을 시 붙여서 하나의 문자열로 만든 뒤 배열에 삽입
+				if(texts[j].equals("'")){
+					if(texts[j+1].equals("male'") || texts[j+1].equals("white'") || texts[j+1].equals("small'") 
+							|| texts[j+1].equals("r2'") || texts[j+1].equals("beam'")){
 						// ex) ' man' 의 형태로 잘려져 있을 시
-						texts[j] = texts[j] + texts[j + 1];
+						texts[j]=texts[j]+texts[j+1];
 						j++;
-					} else if ((texts[j + 1].equals("male") && texts[j + 2].equals("'"))
-							|| (texts[j + 1].equals("white") && texts[j + 2].equals("'"))
-							|| (texts[j + 1].equals("small") && texts[j + 2].equals("'"))
-							|| (texts[j + 1].equals("r2") && texts[j + 2].equals("'"))
-							|| (texts[j + 1].equals("beam") && texts[j + 2].equals("'")))
-					{
+					}else if((texts[j+1].equals("male") && texts[j+2].equals("'")) || 
+							(texts[j+1].equals("white") && texts[j+2].equals("'")) ||
+							(texts[j+1].equals("small") && texts[j+2].equals("'")) ||
+							(texts[j+1].equals("r2") && texts[j+2].equals("'")) ||
+							(texts[j+1].equals("beam") && texts[j+2].equals("'"))){
 						// ex) ' man ' 의 형태로 잘려져 있을 시
-						texts[j] = texts[j] + texts[j + 1] + texts[j + 2];
-						j += 2;
+						texts[j]=texts[j]+texts[j+1]+texts[j+2];
+						j+=2;
 					}
 				}
 				// ex) 'man' 의 형태로 잘려져 있을 시
-				if ((texts[j].startsWith("'male") && texts[j + 1].equals("'"))
-						|| (texts[j].startsWith("'white") && texts[j + 1].equals("'"))
-						|| (texts[j].startsWith("'small") && texts[j + 1].equals("'"))
-						|| (texts[j].startsWith("'r2") && texts[j + 1].equals("'"))
-						|| (texts[j].startsWith("'beam") && texts[j + 1].equals("'")))
-				{
-					texts[j] = texts[j] + texts[j + 1];
+				if((texts[j].startsWith("'male") && texts[j+1].equals("'")) 
+						|| (texts[j].startsWith("'white") && texts[j+1].equals("'"))
+						|| (texts[j].startsWith("'small") && texts[j+1].equals("'"))
+						|| (texts[j].startsWith("'r2") && texts[j+1].equals("'"))
+						|| (texts[j].startsWith("'beam") && texts[j+1].equals("'"))){
+					texts[j] = texts[j] + texts[j+1];
 					j++;
 				}
 				insertCol[k] = texts[j];
@@ -867,64 +1048,54 @@ public class SQLCompiler
 
 			int index = 0;
 			System.out.println("삽입 컬럼의 배열 길이 : " + insertCol.length);
-			for (String cr : insertCol)
-			{
-				if (cr == null)
-					break;
-				System.out.println("[ " + index++ + " ] 번째: " + cr);
-				if (cr.equals(","))
-				{
+			for(String cr : insertCol){
+				if(cr == null)	break;
+				System.out.println("[ " +index++ +" ] 번째: "+ cr);
+				if(cr.equals(",")){
 					comma++;
 				}
 			}
 
-		} catch (Exception e)
-		{
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 
-		// 콤마 갯수 검사
-		if (comma != 6)
-		{
+		//콤마 갯수 검사
+		if(comma != 6){
 			result = false;
 		}
 
-		// 사람
-		if (current.equals("gender"))
-		{
-			// 컬럼 : gender,height,haircolor,clothescolor
-			if (insertCol[0].equals("gender") && insertCol[1].equals(",") && insertCol[2].equals("haircolor")
-					&& insertCol[3].equals(",") && insertCol[4].equals("clothescolor") && insertCol[5].equals(",")
-					&& insertCol[6].equals("height") && (insertCol[7] + insertCol[8] + insertCol[9]).equals(")values("))
-			{
-				if (insertCol[10].equals("'male'") && insertCol[11].equals(",") && insertCol[12].equals("'white'")
-						&& insertCol[13].equals(",") && insertCol[14].equals("'white'") && insertCol[15].equals(",")
-						&& insertCol[16].equals("177") && insertCol[17].equals(")"))
-				{
+
+		//사람
+		if(current.equals("gender")){
+			//컬럼 : gender,height,haircolor,job
+			if(insertCol[0].equals("gender") && insertCol[1].equals(",") && insertCol[2].equals("haircolor")
+					&& insertCol[3].equals(",")&& insertCol[4].equals("job")&& insertCol[5].equals(",")
+					&& insertCol[6].equals("height") && (insertCol[7]+insertCol[8] + insertCol[9]).equals(")values(")){
+				if(insertCol[10].equals("'male'") && insertCol[11].equals(",")
+						&& insertCol[12].equals("'white'") && insertCol[13].equals(",")
+						&& insertCol[14].equals("'scientist'") && insertCol[15].equals(",")
+						&& insertCol[16].equals("177") && insertCol[17].equals(")")){
 					result = true;
 				}
-			} else
-			{
+			}else{
 				result = false;
 			}
 		}
 
-		// 로봇
-		if (current.equals("r_color"))
-		{
-			// r_color,r_size,r_type,weapon
-			if (insertCol[0].equals("r_color") && insertCol[1].equals(",") && insertCol[2].equals("r_size")
-					&& insertCol[3].equals(",") && insertCol[4].equals("r_type") && insertCol[5].equals(",")
-					&& insertCol[6].equals("weapon") && (insertCol[7] + insertCol[8] + insertCol[9]).equals(")values("))
-			{
-				if (insertCol[10].equals("'white'") && insertCol[11].equals(",") && insertCol[12].equals("'small'")
-						&& insertCol[13].equals(",") && insertCol[14].equals("'r2'") && insertCol[15].equals(",")
-						&& insertCol[16].equals("'beam'") && insertCol[17].equals(")"))
-				{
+		//로봇
+		if(current.equals("r_color")){
+			//r_color,r_size,r_type,weapon
+			if(insertCol[0].equals("r_color") && insertCol[1].equals(",") && insertCol[2].equals("r_size")
+					&& insertCol[3].equals(",")&& insertCol[4].equals("r_type")&& insertCol[5].equals(",")
+					&& insertCol[6].equals("weapon") && (insertCol[7]+insertCol[8] + insertCol[9]).equals(")values(")){
+				if(insertCol[10].equals("'white'") && insertCol[11].equals(",")
+						&& insertCol[12].equals("'small'") && insertCol[13].equals(",")
+						&& insertCol[14].equals("'r2'") && insertCol[15].equals(",")
+						&& insertCol[16].equals("'beam'") && insertCol[17].equals(")")){
 					result = true;
 				}
-			} else
-			{
+			}else{
 				result = false;
 			}
 		}
