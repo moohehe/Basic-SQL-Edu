@@ -1273,9 +1273,11 @@ public class SQLCompiler
 							return null;
 						}
 						tables.add(ta);
-						conti = 2;
-						i -= 2;
+						conti = 1;
+						i -= 1;
 						current = texts[i];
+						table_name = texts[i-1];
+						System.out.println("cur="+current+ " i ="+i);
 						if (!(current.equals(",") || current.equals("(") || current.equals(")")
 								|| current.equals(";") || current.equals("select"))) {
 							// 다음 단어는 무조건 일반 단어여야 한다.
@@ -1309,23 +1311,23 @@ public class SQLCompiler
 						}
 						if (conti == 1)
 						{ // ',' 없이 단어가 두번 연속되었을 경우에는 table_name을 변경한다.
-							table_name = current;
+							table_name = texts[i-1];
 							if (need_table_name) { // subquery 갔다왔으니 table_name을 추가하라
 								need_table_name = false;
+								// table data를 바꿈(첫번째 
 								String[][] t = tables.get(tables.size()-1);
 								tables.remove(tables.size()-1);
 								for (int l = 0; l< t[0].length; l++ ) {
-									t[0][l] = table_name+"."+t[0][1];
+									t[0][l] = table_name+"."+t[0][l];
 								}
 								tables.add(t);
 							}
 						}
 						if (conti == 2)
 						{ // ',' 없이 단어가 세번 연속으로 입력되었음.
-							String[] list = { ",", ";", "(", ")" };
-							for (String s : list) {
-								if (s.equals(current) )
-									break out2;
+							if (current.equals(";") ) {
+								
+								break out2;
 							}
 							setErrorMessage("문법 오류 : ','가 없습니다.");
 							return null;
@@ -1335,7 +1337,7 @@ public class SQLCompiler
 				} // end of while() (out2)
 				System.out.println("요기 : i=" + i);
 				i--;
-
+				System.out.println("table_name.add("+table_name+")");
 				// 마지막 from 절의 table 이름(별명) 넣기
 				table_names.add(table_name);
 				
@@ -1385,7 +1387,7 @@ public class SQLCompiler
 				if (current.equals(";") || current.equals("order"))
 				{
 					stage = 3;
-					System.out.println("input ; i=" + i);
+					System.out.println("22current="+current+" i=" + i);
 					continue;
 				}
 			} else if (stage == 3)
@@ -1398,7 +1400,7 @@ public class SQLCompiler
 				// 카티션 곱으로 table x table
 				String[][] temp_result = tables.get(0);
 				System.out.println("tables.size()="+tables.size()+" tables.get(0)="+tables.get(0));
-				System.out.println("temp_result=["+temp_result.length+"]["+temp_result[0].length+"");
+				System.out.println("temp_result=["+temp_result.length+"]["+temp_result[0].length+"]");
 				int k = 0;
 				for (k = 1; k < table_names.size(); k++)
 				{
@@ -1441,6 +1443,7 @@ public class SQLCompiler
 								setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
 								return null;
 							}
+							
 							// table_name으로 된 모든 column을 획득하기
 							for (String t_name : table_names)
 							{
@@ -1770,7 +1773,7 @@ public class SQLCompiler
 
 	private int[] getRows(String current, ArrayList<String> columns, String[][] temp_table)
 	{
-		logger.info("start of getRows(), current : {}", current);
+		logger.info("start of getRows(), current : {}, i : {}", current, i);
 		if (current == null)
 		{
 			setErrorMessage("알 수 없는 오류로 종료되었습니다.");
@@ -1823,6 +1826,7 @@ public class SQLCompiler
 						return null;
 					}
 					stack.push(current);
+					logger.info("stack.push(current)0 : {}", current);
 					break;
 				case ")":
 					o = stack.pop();
@@ -1847,6 +1851,7 @@ public class SQLCompiler
 						return null;
 					}
 					stack.push(current);
+					logger.info("stack.push(current)5 : {}", current);
 					break;
 				case "between":
 					o = stack.peek();
@@ -1928,6 +1933,7 @@ public class SQLCompiler
 					if (row != null)
 					{
 						stack.push(row);
+						logger.info("stack.push(row)0 : {}", current);
 					}
 					break;
 				case ">":
@@ -1961,6 +1967,7 @@ public class SQLCompiler
 						return null;
 					}
 					stack.push(current);
+					logger.info("stack.push(current)1 : {}", current);
 					current = texts[++i];
 					System.out.println("current='" + current + "' stack='" + stack.peek() + "'");
 					for (String op : COMMAND_OP)
@@ -1982,7 +1989,7 @@ public class SQLCompiler
 					row = getRow(current, stack, columns, temp_table);
 					if (row != null)
 					{
-						logger.info("stack.push(row) : {}", row);
+						logger.info("stack.push(row)2 : {}", row);
 						stack.push(row);
 					}
 					break;
@@ -1995,6 +2002,9 @@ public class SQLCompiler
 							return null;
 						}
 					}
+					if (current.equals(";")) {
+						break out;
+					}
 					// 앞에 and / or 만 나와야함
 					o = stack.peek();
 					if (!(o instanceof String))
@@ -2003,11 +2013,11 @@ public class SQLCompiler
 						return null;
 					}
 					lastWord = (String) o;
-
 					// and, or, "" 일 때는 그냥 대입
+					System.out.println(" -- lastWord=["+lastWord+"]");
 					if (lastWord.equals("and") || lastWord.equals("or") || lastWord.equals(""))
 					{
-						logger.info("stack.push(current) : {}", current);
+						logger.info("stack.push(current)3 : {}, i : {}", current, i);
 						stack.push(current);
 					} else
 					{
@@ -2024,6 +2034,7 @@ public class SQLCompiler
 			Object o2 = stack.pop();
 			System.out.println("stack.pop()="+o2);
 			int[] row = (int[]) o2;
+			
 			logger.info("row : {}", row);
 			int[] row2 = null;
 			boolean boo = true;
