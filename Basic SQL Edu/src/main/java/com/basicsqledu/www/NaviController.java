@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.CookieGenerator;
 
 import com.basicsqledu.www.dao.QuestextDao;
+import com.basicsqledu.www.dao.QuizDAO;
 import com.basicsqledu.www.vo.Questext;
 import com.google.gson.Gson;
 
@@ -33,6 +34,7 @@ public class NaviController {
 	
 	@Autowired
 	QuestextDao dao; 
+	CookieGenerator cg = new CookieGenerator();
 	
 	/**
 	 * 초기 페이지로 들어오는 경우.
@@ -40,33 +42,54 @@ public class NaviController {
 	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public String test(Model model, HttpServletResponse response, HttpServletRequest request) {
 		Questext qt = new Questext();
-		//쿠키 생성
-		CookieGenerator cg = new CookieGenerator();
-		cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
-		cg.addCookie(response, "1"); //일단 1부터 시작이므로 1을 넣어줌.
+		int lang=0; //언어
+		int stage=0; //단계(레벨)
 		
-		for(int i=1; i<4; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "none"으로.
-			cg.setCookieName("completeStage"+i);
-			cg.addCookie(response, "non-pass");
-		}
+			
+		//사용자 배열 쿠키로 읽어오기.
+		Cookie cks[] = request.getCookies();
 		
-		
-		int lang=0;
-		int stage=0;
-		
-		if(qt.getLvstatus()==0 && qt.getTextLang()==0){
-			stage = 1;
-			lang= 2;
-			qt.setLvstatus(stage);
-			qt.setTextLang(lang);
-			System.out.println("처음 홈 들어올때"+qt);
+		if(cks != null && cks.length>1){ //이미 사용자 아이디가 하나 들어가므로 length의 초기는 1이다.
+			//쿠키 있으면 읽기
+			for(Cookie c : cks){
+				System.out.println("쿠키들: "+c.getName());
+				//저장된 현재 스테이지 정보가 있으면 이를 vo에 넣음.
+				if(c.getName().equals("currentStage")){
+					stage = Integer.parseInt(c.getValue());
+					qt.setLvstatus(stage);
+					System.out.println("현재스테이지쿠키: "+stage);
+				}
+				if(c.getName().equals("currentLang")){
+					lang = Integer.parseInt(c.getValue());
+					qt.setTextLang(lang);
+					System.out.println("현재언어쿠키: "+lang);
+
+				}
+			}
 		}else{
-			qt.setLvstatus(qt.getLvstatus());
-			qt.setTextLang(qt.getTextLang());
+			//쿠키없으면 쿠키 생성
+			
+			cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
+			cg.addCookie(response, "1"); //일단 1부터 시작이므로 1을 넣어줌.
+			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
+			cg.addCookie(response, "2"); //일단 영어가 기본값.
+			cg.setCookieMaxAge(24*60*60); //유효시간 하루 설정.
+		
+			for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
+				cg.setCookieName("completeStage"+i);
+				cg.addCookie(response, "non-pass");
+			}
+		
+			//아무 값이 없는 경우, 기본 영어와 레벨1을 넣는다.
+				stage = 1;
+				lang= 2;
+				qt.setLvstatus(stage);
+				qt.setTextLang(lang);
+				System.out.println("처음 홈 들어올때"+qt);
 		}
-		
+		//DB에서 해당 문제 및 언어에 대한 정보를 읽어옴.
 		qt = dao.selectLang(qt);
-		
+		//DB에서 문제 전체에 대한 정보를 불러옴. (얘는 stage 전체 단계에서 쓰임)
 		ArrayList<Questext> stageList = dao.selectStageAll(qt);
 		
 		model.addAttribute("questext", qt);
@@ -95,15 +118,22 @@ public class NaviController {
 		}
 		
 		//여기로 올 때마다 쿠키의 현재 스테이지 값을 변경해주어야 한다.
-		CookieGenerator cg = new CookieGenerator();
+		
 		cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 		cg.addCookie(response, stage); 
+		cg.setCookieMaxAge(24*60*60); //유효시간 하루 설정.
 		
 		if(compl.equals("pass")){
 			int cstage = Integer.parseInt(stage)-1;
 			cg.setCookieName("completeStage"+cstage);
 			cg.addCookie(response, "pass"); 
+			cg.setCookieMaxAge(24*60*60); //유효시간 하루 설정.
 		}
+		
+		//현재 언어 값에 대한 변경(쿠키)
+		cg.setCookieName("currentLang");
+		cg.addCookie(response, lang);
+		cg.setCookieMaxAge(24*60*60); //유효시간 하루 설정.
 		
 		//DB에서 해당 언어의 문제관련 택스트들을 가져옴.
 		qt.setLvstatus(Integer.parseInt(stage));

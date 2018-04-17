@@ -192,7 +192,6 @@
 </style>
 </head>
 <body>
-	push를 위한 구문
 	
 	<!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
 	<div class="questionTable"> 
