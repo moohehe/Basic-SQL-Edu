@@ -134,10 +134,10 @@ $(function(){
 		var stage = Number($('#currentLv').val())+1;
 		var lang = $('#currentLang').val();
 		
-		if(stage >3){
+		/*if(stage >20){
 			alert('가장 마지막 페이지입니다.');
 			return;
-		}
+		}*/
 		$.ajax({
 			url : "langcheck",
 			type : "post",
@@ -155,7 +155,7 @@ $(function(){
 				$('.stagebtn'+$('#currentLv').val()).css('color', 'red');
 				
 				//화면 값 갱신
-				$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 10"); 
+				$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
 				$('#currentLv').val(obj.questext.lvstatus);
 				$('#qstext').text(obj.questext.qstext);
 				$('#qstype').text(obj.questext.qstype);
@@ -193,7 +193,7 @@ $(function(){
 			},
 			dataType : "json",
 			success : function(obj){
-				$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 10"); 
+				$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
 				$('#currentLv').val(obj.questext.lvstatus);
 				$('#qstext').text(obj.questext.qstext);
 				$('#qstype').text(obj.questext.qstype);
@@ -227,7 +227,7 @@ $(function(){
 			dataType : "json",
 			success : function(obj){
 				//화면 갱신
-				$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 10"); 
+				$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
 				$('#currentLv').val(obj.questext.lvstatus);
 				$('#qstext').text(obj.questext.qstext);
 				$('#qstype').text(obj.questext.qstype);

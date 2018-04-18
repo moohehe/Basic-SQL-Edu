@@ -88,7 +88,7 @@ public class NaviController {
 			cg.addCookie(response, "1"); //일단 1부터 시작이므로 1을 넣어줌.
 			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 			cg.addCookie(response, "2"); //일단 영어가 기본값.
-			cg.setCookieMaxAge(24*60*60); //유효시간 하루 설정.
+			cg.setCookieMaxAge(48*60*60); //유효시간 하루 설정.
 		
 			for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
 				cg.setCookieName("completeStage"+i);

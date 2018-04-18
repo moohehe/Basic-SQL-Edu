@@ -269,7 +269,7 @@ FROM
 			
 			<!-- 현재 레벨과  이전, 다음버튼 그리고 전체 스테이지 맵으로 이동 버튼-->
 			<div class="float-btnframe">
-			<div class="float-unit lvstat" id="LvInfo"> Level ${questext.lvstatus } of 10 </div>
+			<div class="float-unit lvstat" id="LvInfo"> Level ${questext.lvstatus } of 20 </div>
 	
 			<button class="float-unit dropbtn">Stage</button>
 			<button class="float-unit btn nxtbtn" id="nextbtn" > ▶ </button>
