@@ -387,7 +387,7 @@ public class SQLCompiler
 					// delete는 결국 row를 선택하는 것/ 결국 select구문이랑 거의 흡사하다.
 					// select * from table where !~~~~!;
 					// 즉, (delete = select *)
-					texts[0] = "delete";
+					texts[0] = "select";
 					texts[1] = "*";
 					result = getSelect();
 					break;
