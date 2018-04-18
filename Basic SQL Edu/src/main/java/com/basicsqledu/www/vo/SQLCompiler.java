@@ -40,7 +40,8 @@ public class SQLCompiler
 
 	// index
 	private int i;
-
+	private int alterI;
+	
 	// data 관련 변수(DB 갔다옴)
 	private String[][] table;
 	HashMap<String, Object> taaa = new HashMap<String, Object>();
@@ -50,10 +51,11 @@ public class SQLCompiler
 
 	// SQL 구문 결과(내부에서 계산한 결과)
 	private String[][] result;
+	private String[][] alterResult = new String[2][6];
 	private String result_name;
 	private HashMap<String, Integer> result_columns;
-	private HashMap<String, Object> alterMap;
-
+	private HashMap<String, Object> alterMap = new HashMap<>();
+	
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	private String errorMessage = "";
 	private boolean grammar_error = false; // 구문 오류
@@ -356,6 +358,11 @@ public class SQLCompiler
 			{
 				String current = texts[i];
 
+				//Alter문 drop 중복땜에 한번 걸러줌요
+				if(i >=3 && current.equals("drop")){
+					continue;
+				}
+				
 				// select 인지 검사하기
 				switch (current)
 				{
@@ -764,7 +771,7 @@ public class SQLCompiler
 			}else if(stage == 2){
 				//2. drop table <테이블 이름>이 나와야 함
 				result_name = current;			//사용자가 입력한 테이블 네임
-				table_name = "animal"; // 임시 테이블 네임(이후 DB결과에서 받아와야함)
+				table_name = "animal"; 			// 임시 테이블 네임(이후 DB결과에서 받아와야함)
 
 				if (!(result_name.equals(table_name)))
 				{
@@ -795,7 +802,6 @@ public class SQLCompiler
 	private String[][] getAlter(){
 		//문제 단계 : 6단계
 		//어떤 문제를 먼저 맞춰도 상관없게 6개의 문제가 모두 맞으면 다음 문제로 이동할 수 있음
-		String [][] alterResult = null;
 		int stage= 1;
 
 		for(int i = stage;i<texts.length;i++){
@@ -822,16 +828,15 @@ public class SQLCompiler
 				if(content.equals("drop") || content.equals("change") || content.equals("add")
 						|| content.equals("modify") || content.equals("rename")){
 
-					alterResult = new String[2][6];		//결과 판별 2차원 배열 선언
-
 					//함수만들자 걍,,
 					alterMap = alterCol(stage, content);
 
 					//2차원 배열에 해쉬맵 값 넣어주기
-					for(int k = 0;k<alterMap.size();k++){
+					for(;alterI<alterMap.size();alterI++){
 						for(Entry<String, Object> entry : alterMap.entrySet()){
-							alterResult[0][k] = entry.getKey();
-							alterResult[1][k] = entry.getValue().toString();
+							System.out.println("해쉬맵 키 : " + entry.getKey());
+							alterResult[0][alterI] = entry.getKey();
+							alterResult[1][alterI] = entry.getValue().toString();
 						}
 					}
 					
@@ -843,7 +848,7 @@ public class SQLCompiler
 						}
 						System.out.println();
 					}
-					
+					stage++;
 					break;
 				}
 			}
@@ -855,7 +860,6 @@ public class SQLCompiler
 
 	//Alter문 세부 검사
 	private HashMap<String,Object> alterCol(int stage, String content){
-		HashMap<String, Object> colMap = new HashMap<>();
 
 		//컬럼 잘라서 배열에 넣어랑
 		String [] col = new String[texts.length-stage];
@@ -878,9 +882,9 @@ public class SQLCompiler
 		switch (content) {
 		case "drop":
 			if(col[1].equals("legs")){
-				colMap.put("drop", true);
+				alterMap.put("drop", true);
 			}else{
-				colMap.put("drop", false);
+				alterMap.put("drop", false);
 			}
 			break;
 		case "change":
@@ -889,21 +893,21 @@ public class SQLCompiler
 				col[3] = col[3]+col[4]+col[5]+col[6];
 				for(String type: spDataType1){
 					if(type.equals("varchar") && (type+"(20)").equals(col[3])){
-						colMap.put("change1", true);
+						alterMap.put("change1", true);
 						break;
 					}else{
-						colMap.put("change1", false);
+						alterMap.put("change1", false);
 					}
 				}
 				//habitat
-			}else if(col[1].equals("habit") && col[2].equals("job")){
+			}else if(col[1].equals("habitat") && col[2].equals("job")){
 				col[3] = col[3]+col[4]+col[5]+col[6];
 				for(String type: spDataType1){
 					if(type.equals("varchar") && (type+"(20)").equals(col[3])){
-						colMap.put("change2", true);
+						alterMap.put("change2", true);
 						break;
 					}else{
-						colMap.put("change2", false);
+						alterMap.put("change2", false);
 					}
 				}
 			}
@@ -914,10 +918,10 @@ public class SQLCompiler
 				col[2] = col[2]+col[3]+col[4]+col[5];
 				for(String type: spDataType1){
 					if(type.equals("varchar") && (type+"(20)").equals(col[2])){
-						colMap.put("add", true);
+						alterMap.put("add", true);
 						break;
 					}else{
-						colMap.put("add", false);
+						alterMap.put("add", false);
 					}
 				}
 			}
@@ -925,16 +929,16 @@ public class SQLCompiler
 		case "modify":
 			int count = StringUtils.countOccurrencesOf(col[1], "(");
 			if(count == 1 && col[1].equals("(") || col[1].startsWith("(")){
-				if(col[1].equals("(gender")){
+				if((col[1]+col[2]).equals("(gender")){
 					//varchar(10) not null
 					for(String type : spDataType1){
-						if(type.equals("varchar") && (type+"(20)").equals(col[2]+col[3]+col[4]+col[5])){
+						if(type.equals("varchar") && (type+"(20)").equals(col[3]+col[4]+col[5]+col[6])){
 							for(String cons : constraint){
-								if(cons.equals("not null") && cons.equals(col[6] + col[7] )){
-									colMap.put("modify", true);
+								if(cons.equals("not null") && cons.equals(col[7] + col[8] )){
+									alterMap.put("modify", true);
 									break;
 								}else{
-									colMap.put("modify", false);
+									alterMap.put("modify", false);
 								}
 							}
 						}
@@ -944,9 +948,9 @@ public class SQLCompiler
 			break;
 		case "rename":
 			if(col[1].equals("person")){
-				colMap.put("rename", true);
+				alterMap.put("rename", true);
 			}else{
-				colMap.put("rename", false);
+				alterMap.put("rename", false);
 			}
 			break;
 
@@ -954,7 +958,7 @@ public class SQLCompiler
 			break;
 		}
 
-		return colMap;
+		return alterMap;
 	}
 
 

@@ -281,7 +281,7 @@ FROM
 			<!-- 진행 상태 표시 바 -->
 			<DIV class=progress-small> 
 			<DIV role=progressbar aria-valuenow=10 aria-valuemin=0 
-			class="progress-bar-small progress-bar-s-info" id="progresslv" style="width: ${questext.lvstatus }0%" aria-valuemax=100> 
+			class="progress-bar-small progress-bar-s-info" id="progresslv" style="width: ${questext.lvstatus *5}%" aria-valuemax=100> 
 			<!-- <SPAN class=sr-only>20% Complete</SPAN>  -->
 			</DIV><!-- Complete --> 
 			</DIV>
