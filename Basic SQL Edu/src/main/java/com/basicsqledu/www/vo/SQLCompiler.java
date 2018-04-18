@@ -828,12 +828,13 @@ public class SQLCompiler
 					alterMap = alterCol(stage, content);
 
 					//2차원 배열에 해쉬맵 값 넣어주기
-					for(int k = 0;k<alterResult[0].length;k++){
+					for(int k = 0;k<alterMap.size();k++){
 						for(Entry<String, Object> entry : alterMap.entrySet()){
 							alterResult[0][k] = entry.getKey();
 							alterResult[1][k] = entry.getValue().toString();
 						}
 					}
+					
 					
 					//값 찍어볼까
 					for(i=0;i<alterResult[0].length;i++){
@@ -887,7 +888,7 @@ public class SQLCompiler
 			if(col[1].equals("color") && col[2].equals("haircolor")){
 				col[3] = col[3]+col[4]+col[5]+col[6];
 				for(String type: spDataType1){
-					if(type.equals("varchar") && (type+"(20)").equals(col[2])){
+					if(type.equals("varchar") && (type+"(20)").equals(col[3])){
 						colMap.put("change1", true);
 						break;
 					}else{
