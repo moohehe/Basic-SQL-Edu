@@ -61,23 +61,24 @@ public class NaviController {
 			//쿠키 있으면 읽기
 			for(Cookie c : cks){
 				//저장된 현재 스테이지 정보가 있으면 이를 vo에 넣음.
+				
 				if(c.getName().equals("currentStage")){
 					stage = Integer.parseInt(c.getValue());
 					qt.setLvstatus(stage);
 				}else{
-					cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
+					/*cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 					cg.addCookie(response, "1");
 					stage = 1;
-					qt.setLvstatus(stage);
+					qt.setLvstatus(stage);*/
 				}
 				if(c.getName().equals("currentLang")){
 					lang = Integer.parseInt(c.getValue());
 					qt.setTextLang(lang);
 				}else{
-					cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
+					/*cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 					cg.addCookie(response, "2");
 					lang= 2;
-					qt.setTextLang(lang);
+					qt.setTextLang(lang);*/
 				}
 			}
 			
@@ -116,6 +117,8 @@ public class NaviController {
 		//지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 19, 20)
 		if(qt.getLvstatus() == 1 || qt.getLvstatus() == 11 || qt.getLvstatus() == 15 
 			|| qt.getLvstatus() == 16 || qt.getLvstatus() == 19 || qt.getLvstatus() == 20 ){
+			
+			
 			
 		}else{
 			//문제 뷰가 있는 애들만 해당 DAO의 함수에서 문제를 불러온다.
@@ -213,7 +216,33 @@ public class NaviController {
 		//DB에서 문제 그림 관련 정보를 가져옴.
 		//문제 그림 관련 정보 읽어오기.
 		HashMap<String, Object> quizData = null;
-		quizData = quizdao.getTable(questionNumber);
+		//지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 19, 20)
+				if(qt.getLvstatus() == 1 || qt.getLvstatus() == 11 || qt.getLvstatus() == 15 
+					|| qt.getLvstatus() == 16 || qt.getLvstatus() == 19 || qt.getLvstatus() == 20 ){
+					
+					
+				}else{
+					//문제 뷰가 있는 애들만 해당 DAO의 함수에서 문제를 불러온다.
+					quizData = quizdao.getTable(qt.getLvstatus()); //Map으로 return
+					
+					if(quizData.get("table_name").equals("animal_view")){
+						
+						ArrayList<Animal> animalqlist = (ArrayList<Animal>) quizData.get("table_value");
+						//jsp에서 꺼낼때에는 jpg파일명을 animal의 경우, species와 color를 합쳐놓을것.
+						naviContentMap.put("qlist", animalqlist);
+						
+					}
+					else if(quizData.get("table_name").equals("person_view")){
+						ArrayList<Person> personqlist = (ArrayList<Person>) quizData.get("table_value");
+						naviContentMap.put("qlist", personqlist);
+						
+					}else if(quizData.get("table_name").equals("robots_view")){
+						ArrayList<Robots> robotsqlist = (ArrayList<Robots>) quizData.get("table_value");
+						naviContentMap.put("qlist", robotsqlist);
+					}
+					//System.out.println(quizData.get("table_value"));
+				
+				}
 		
 		
 		

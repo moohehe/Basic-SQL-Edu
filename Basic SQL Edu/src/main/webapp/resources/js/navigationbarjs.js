@@ -5,6 +5,9 @@
 
 $(function(){
 	
+	//arraylist 받을 변수 설정.
+	var qlist = [];
+	
 	//배경 이미지 경로 함수 지정
 	var imgpath = function(file){
 		return "url(/www/resources/image/"+file+")";
@@ -66,7 +69,7 @@ $(function(){
 		$(imgselector(5)).attr("src", "");
 	}
 	
-	//문제 번호(스테이지)가 들어오면 해당 문제(스테이지)에 해당하는  화면을 보여주는 함수.
+	//문제 번호(스테이지)가 들어오면 해당 문제(스테이지)에 해당하는  화면을 보여주는 함수. (이 함수는 추후 대체됨)
 	function stageDisplay(stage){
 		
 		switch(stage){
@@ -88,6 +91,34 @@ $(function(){
 		
 		}
 		
+	}
+	//(얘가 진짜) 문제 별 그림 뿌려주는 함수.
+	function createQuiz(qlist, stage){
+		console.log("cq의 stage"+stage);
+		
+		//stage별 분기 처리 필요.
+		switch(stage){
+		
+		case 1: //select 문제가 아니어서 지정된 화면을 보여줘야 하는 레벨1.
+			ques1();
+			
+			break;
+		
+		case 2: case 3: case 4:
+			
+			$.each(qlist, function(index, value){
+				
+				var species = value.animal_species;
+				var color = value.animal_color;
+				//테이블 안 칼럼들 이미지 변경.
+				$(imgselector(index+1)).attr("src", "/www/resources/image/"+species+color+".jpg");
+			});
+			
+			//배경 변경.
+			$('.questionTable').css({"background":imgpath("table_land.jpg"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
+			break;
+	
+		}
 	}
 	
 	
@@ -134,10 +165,6 @@ $(function(){
 		var stage = Number($('#currentLv').val())+1;
 		var lang = $('#currentLang').val();
 		
-		/*if(stage >20){
-			alert('가장 마지막 페이지입니다.');
-			return;
-		}*/
 		$.ajax({
 			url : "langcheck",
 			type : "post",
@@ -162,11 +189,13 @@ $(function(){
 				$('#qsdetail').text(obj.questext.qsdetail);
 				$('#qsExm').text(obj.questext.qsExm);
 				$('#currentLang').val(obj.questext.textLang);
-				$('#progresslv').css('width', stage+"0%");
+				$('#progresslv').css('width', (stage)*5+"%");
 				console.log(document.cookie);
 				
 				//화면 문제테이블 갱신
-				stageDisplay(stage);
+				qlist = obj.qlist;
+				createQuiz(qlist, obj.questext.lvstatus);
+				
 			},
 			error : function(err){
 				alert('가장 마지막 페이지입니다.');
@@ -200,11 +229,12 @@ $(function(){
 				$('#qsdetail').text(obj.questext.qsdetail);
 				$('#qsExm').text(obj.questext.qsExm);
 				$('#currentLang').val(obj.questext.textLang);
-				$('#progresslv').css('width', stage+"0%");
+				$('#progresslv').css('width', (stage)*5+"%");
 				console.log(document.cookie);
 				
 				//화면 문제테이블 갱신
-				stageDisplay(stage);
+				qlist = obj.qlist;
+				createQuiz(qlist, obj.questext.lvstatus);
 			},
 			error : function(err){
 				alert('첫 페이지입니다.');
@@ -234,11 +264,11 @@ $(function(){
 				$('#qsdetail').text(obj.questext.qsdetail);
 				$('#qsExm').text(obj.questext.qsExm);
 				$('#currentLang').val(obj.questext.textLang);
-				$('#progresslv').css('width', stage+"0%");
+				$('#progresslv').css('width', (stage)*5+"%");
 				
 				//화면 문제테이블 갱신
-				stageDisplay(stage);
-				
+				qlist = obj.qlist;
+				createQuiz(qlist, obj.questext.lvstatus);
 				
 				//화면전환 (다시 문제가 보이도록)
 				$('.level-menu').slideUp(250);

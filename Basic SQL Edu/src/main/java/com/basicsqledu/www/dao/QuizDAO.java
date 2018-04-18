@@ -58,10 +58,14 @@ public class QuizDAO
 				System.out.println("db에서 가져오나?"+ani);
 				}
 				break;
+			case 11:
+				break;
 			case 12: case 13: case 14:
 				ArrayList<Person> person = mapper.getPerson(questionNumber);
 				result.put("table_name","person_view");
 				result.put("table_value",person);
+				break;
+			case 15: case 16:
 				break;
 			case 17 : case 18: 
 				ArrayList<Robots> robots = mapper.getRobots(questionNumber);
@@ -142,7 +146,6 @@ public class QuizDAO
 					table[0][3] = "animal_color";
 					table[0][4] = "animal_habitat";
 					table[0][5] = "animal_feed";
-
 					int i = 1;
 					for (Animal animal : list)
 					{
