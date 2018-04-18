@@ -6,7 +6,6 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Stack;
-
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.slf4j.Logger;
