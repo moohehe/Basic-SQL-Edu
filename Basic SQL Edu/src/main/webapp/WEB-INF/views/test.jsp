@@ -120,6 +120,23 @@
 		border-radius: 3px;
 		border: 1px solid #aaaaaa;
 	}
+	.left_menu {
+		width:100%;
+		float:right;
+		margin-left:-400px;
+		height:100%;
+	}
+	.right_menu {
+		float:left;
+		width:400px;
+		height:100%;
+	}
+	.view_menu {
+		height:100%;
+	}
+	.type_menu {
+		height:30%;
+	}
 	.sqlAnswer {
 		position: absolute; top: 50%; 
 		width: 100%;
@@ -191,149 +208,23 @@
 </style>
 </head>
 <body>
-	testsets
-	
-	<!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
-	<div class="questionTable"> 
-		
-		<c:choose>
-			<c:when test="${qlist != null }">
-				<c:forEach var="animal" varStatus="status" items="${qlist}">
-					<div class="tcolumes strobe" tcolumes="${status.count}"> 
-						<img class="tableColumes" columesimg="${status.count}" src="<c:url value="/resources/image/bluebird2.png"/>">
-					</div>
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
-				<div class="tcolumes strobe" tcolumes="1"> 
-					<img class="tableColumes" columesimg="1" src="<c:url value="/resources/image/bluebird2.png"/>">
-				</div>	
-				
-				<div class="tcolumes" tcolumes="2"> 
-					<img class="tableColumes" columesimg="2" src="<c:url value="/resources/image/blackpenguin.jpg"/>">
-				</div>	
-				
-				<div class="tcolumes" tcolumes="3"> 
-					<img class="tableColumes" columesimg="3" src="<c:url value="/resources/image/girrafe.jpg"/>">
-				</div> 
-				<div class="tcolumes" tcolumes="4"> 
-					<img class="tableColumes" columesimg="4" src="<c:url value="/resources/image/girrafe.jpg"/>">
-				</div> 
-				<div class="tcolumes" tcolumes="5"> 
-					<img class="tableColumes"  columesimg="5" src="<c:url value="/resources/image/girrafe.jpg"/>">
-				</div> 
-			</c:otherwise>
-		</c:choose>
-		<br>
-			<div class="helpdiv helptext"> </div>
-			<div class="helpdiv helptext2"> </div>
-			<div class="helpdiv helptext3"> </div>
+<div>	
+<div class="left_menu">
+	<!-- 그림이 표시되는 부분 -->
+	<div class="view_menu">
+		<%@ include file="view_menu.jsp" %>
 	</div>
 	
-	
-	<!-- SQL 정답 입력 화면 DIV -->
-	<div class="sqlAnswer">
-	<div class="sqlAnswersheet">
-		<textarea style="width:480px;float:left;margin-right:-480px;font-family:monospace;white-space:pre;overflow:hidden;" disabled="disabled" class="lined"></textarea>
-		<textarea style="font-family:monospace;width:480px;float:right;" cols="149" rows="10" id="sql" onkeyup="getLineNumberAndColumnIndex(this);" onmouseup="this.onkeyup();">SELECT
-   *
-FROM
-   ANIMAL;</textarea><br>
-		<div align="right">
-		<button id="sqltest" onclick="javascript:sqlrun();" style="text-align: right;">Submit</button><br>
-		</div>
-	<div>
-		<span>Console</span>	
-		<textarea cols="149" rows="5" id="resultView"></textarea> 
+	<!-- 타이핑 파트 -->
+	<div class="type_menu">
+		<%@ include file="type_menu.jsp" %>
 	</div>
-	</div>
-	</div><!-- SQL 정답 입력 화면 DIV 종료 -->
+</div>
 
-
-
-
-
-	<!-- 우측 네비게이션 화면 관련 DIV -->	
-	<div class="navigation">
-	
-		<!-- 기본으로 보여지는 네비게이션 바 페이지 -->
-		<div class="wrap"> 
-			
-			<!-- 언어 선택 (영어, 한국어, 일본어) -->		
-			<div class="langcheck" >
-				<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
-				<button class="langbtn" data-num="1" > eng </button> 
-				<button class="langbtn" data-num="2" > kor </button> 
-				<button class="langbtn" data-num="3" > jpn </button> 
-			</div>
-			
-			<!-- 현재 레벨과  이전, 다음버튼 그리고 전체 스테이지 맵으로 이동 버튼-->
-			<div class="float-btnframe">
-			<div class="float-unit lvstat" id="LvInfo"> Level ${questext.lvstatus } of 20 </div>
-	
-			<button class="float-unit dropbtn">Stage</button>
-			<button class="float-unit btn nxtbtn" id="nextbtn" > ▶ </button>
-			<button class="float-unit btn" id="prevbtn" > ◀ </button>
-			<input id="currentLang" type="hidden" value="${questext.textLang }" >
-			</div>
-			<br>
-			
-			<!-- 진행 상태 표시 바 -->
-			<DIV class=progress-small> 
-			<DIV role=progressbar aria-valuenow=10 aria-valuemin=0 
-			class="progress-bar-small progress-bar-s-info" id="progresslv" style="width: ${questext.lvstatus *5}%" aria-valuemax=100> 
-			<!-- <SPAN class=sr-only>20% Complete</SPAN>  -->
-			</DIV><!-- Complete --> 
-			</DIV>
-			
-			
-			
-			
-			
-			
-			
-			<!-- 네이게이션 내부 text들 받아옴. -->
-			<div class="navicontext">
-				<p class="qs" id="qstext">${questext.qstext }</p><br>
-				<div id="qstype"> ${questext.qstype }</div> <br><br>
-			    <div id="qsdetail"> ${questext.qsdetail }</div> <br><br>
-				<p> Examples </p>
-				<div id="qsExm">${questext.qsExm }</div>
-			</div>
-		</div>	
-		
-		<!-- 피드백 게시판-->
-		<div class="contact">
-			<ul class="a">
-				<li><a href="board/writeForm">글쓰기</a></li>		
-				<li><a href="board/list">피드백 게시판</a></li>
-				<li><a href="board/successView">작성완료화면 테스트</a></li>
-			</ul>
-		</div>
-		
-		<!-- stage 버튼 누르면 나타나는 전체 스테이지 맵 화면 -->
-		 <div class="level-menu">
-		 	<div class="float-btnframe lvmemu" style="background: #6e6e6e">
-	        	<div class="float-unit choosinglv" style="background: #6e6e6e">Choose a level</div> 
-	       		<button class="float-unit closing dropbtn"> CLOSE </button>
-	        </div>
-				<br>
-				
-			<!-- 전체 문제(단계) 출력 -->
-	        <div class="dropdown-content">
-	        <c:forEach var="stages" varStatus="status" items="${stageList}">
-	        	<button class="stagebtn${status.count }"> ${status.count } </button> 
-	        	<button class="moveStagebtn" data-num="${status.count }"> Level ${stages.lvstatus } </button> <br>
-	        </c:forEach>
-			   
-		    </div>
-	      	<br>
-	      	
-	      </div>
-	
-
-		  
-	</div><!-- 우측 네비게이션 화면 관련 DIV 종료 -->	
-	
+<div class="right_menu">
+	<!-- Navigation Bar -->
+	<%@ include file="navigation.jsp" %>
+</div>
+</div>
 </body>
 </html>
