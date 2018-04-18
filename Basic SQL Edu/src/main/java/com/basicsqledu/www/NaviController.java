@@ -144,11 +144,8 @@ public class NaviController {
 		}
 		
 		
-<<<<<<< HEAD
 		//System.out.println(quizData.get("table_value"));
 		//System.out.println(quizData+"이게 데이터");
-=======
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 		
 		
 		
