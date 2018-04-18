@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.Stack;
 
 import javax.swing.plaf.synth.SynthSeparatorUI;
@@ -40,7 +39,6 @@ public class SQLCompiler
 
 	// index
 	private int i;
-	private int alterI;
 	
 	// data 관련 변수(DB 갔다옴)
 	private String[][] table;
@@ -390,6 +388,9 @@ public class SQLCompiler
 					// delete는 결국 row를 선택하는 것/ 결국 select구문이랑 거의 흡사하다.
 					// select * from table where !~~~~!;
 					// 즉, (delete = select *)
+					texts[0] = "delete";
+					texts[1] = "*";
+					result = getSelect();
 					break;
 				case "select":
 					map.put("cmd", "select");
@@ -828,18 +829,34 @@ public class SQLCompiler
 				if(content.equals("drop") || content.equals("change") || content.equals("add")
 						|| content.equals("modify") || content.equals("rename")){
 
+					
 					//함수만들자 걍,,
 					alterMap = alterCol(stage, content);
-
-					//2차원 배열에 해쉬맵 값 넣어주기
-					for(;alterI<alterMap.size();alterI++){
-						for(Entry<String, Object> entry : alterMap.entrySet()){
-							System.out.println("해쉬맵 키 : " + entry.getKey());
-							alterResult[0][alterI] = entry.getKey();
-							alterResult[1][alterI] = entry.getValue().toString();
-						}
-					}
 					
+					if(alterMap.get("drop") != null){
+						alterResult[0][0] = "drop";
+						alterResult[1][0] = alterMap.get("drop").toString();
+					}
+					if(alterMap.get("change1") != null){
+						alterResult[0][1] = "change1";
+						alterResult[1][1] = alterMap.get("change1").toString();
+					}
+					if(alterMap.get("change2") != null){
+						alterResult[0][2] = "change2";
+						alterResult[1][2] = alterMap.get("change2").toString();
+					}
+					if(alterMap.get("add") != null){
+						alterResult[0][3] = "add";
+						alterResult[1][3] = alterMap.get("add").toString();
+					}
+					if(alterMap.get("modify") != null){
+						alterResult[0][4] = "modify";
+						alterResult[1][4] = alterMap.get("modify").toString();
+					}
+					if(alterMap.get("rename") != null){
+						alterResult[0][5] = "rename";
+						alterResult[1][5] = alterMap.get("rename").toString();
+					}
 					
 					//값 찍어볼까
 					for(i=0;i<alterResult[0].length;i++){
@@ -928,13 +945,14 @@ public class SQLCompiler
 			break;
 		case "modify":
 			int count = StringUtils.countOccurrencesOf(col[1], "(");
-			if(count == 1 && col[1].equals("(") || col[1].startsWith("(")){
+			System.out.println("괄호의 갯수 : "+ count );
+			if(col[1].equals("(") || col[1].startsWith("(") && count == 1 ){
 				if((col[1]+col[2]).equals("(gender")){
 					//varchar(10) not null
 					for(String type : spDataType1){
-						if(type.equals("varchar") && (type+"(20)").equals(col[3]+col[4]+col[5]+col[6])){
+						if(type.equals("varchar") && (type+"(10)").equals(col[3]+col[4]+col[5]+col[6])){
 							for(String cons : constraint){
-								if(cons.equals("not null") && cons.equals(col[7] + col[8] )){
+								if(cons.equals("not null") && cons.equals(col[7] + col[8] )&& col[9].equals(")")){
 									alterMap.put("modify", true);
 									break;
 								}else{
@@ -960,8 +978,6 @@ public class SQLCompiler
 
 		return alterMap;
 	}
-
-
 
 
 	/**
