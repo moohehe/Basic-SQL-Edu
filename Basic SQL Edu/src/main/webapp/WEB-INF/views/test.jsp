@@ -120,6 +120,7 @@
 		border-radius: 3px;
 		border: 1px solid #aaaaaa;
 	}
+	
 	.left_menu {
 		width:100%;
 		float:right;
