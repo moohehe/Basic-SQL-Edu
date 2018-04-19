@@ -60,11 +60,6 @@
 		//쿠키에 있는 내용을 읽어서 어느 stage까지 풀었는지 확인 후 해당 문제 들고 들어와야 함.
 		
 		
-		
-		
-		
-		
-		
 		//테이블 이름 표시
 		$('.questionTable').hover(function(){
 			
@@ -111,6 +106,7 @@
 	
 </script>
 <style type="text/css">
+	
 	textarea{
 		width: 555px;
 		height: 270px;
@@ -120,17 +116,17 @@
 		border-radius: 3px;
 		border: 1px solid #aaaaaa;
 	}
-	
 	.left_menu {
+		float:left;
 		width:100%;
-		float:right;
-		margin-left:-400px;
-		height:100%;
+		height:50%;
 	}
 	.right_menu {
-		float:left;
-		width:400px;
+		position:absolute;
+  		width: 400px;
 		height:100%;
+  		float:left;
+  		right:0px;
 	}
 	.view_menu {
 		height:100%;
@@ -139,8 +135,7 @@
 		height:30%;
 	}
 	.sqlAnswer {
-		position: absolute; top: 50%; 
-		width: 100%;
+		width: 80%;
 		height: 40%;
 		border-top: 5px;
 		border-top-style: solid;
@@ -158,9 +153,8 @@
 		background-repeat: no-repeat;
 		background-position: center center;
 		background-size: full;
-		position: absolute; top: 10%; left: 10%;
-		width: 50%;
-		height: 30%;
+		width: 100%;
+		height: 100%;
 		border: 1px;
 		border-color: blue;
 		border-style: solid;
@@ -181,30 +175,30 @@
 		color: white;
 	}
 	.strobe {
-  transform-origin: bottom;
-  animation: strobeStart .5s ease-out, strobe 1s infinite;
-  animation-delay: 0s, .5s;
-}
+  		transform-origin: bottom;
+  		animation: strobeStart .5s ease-out, strobe 1s infinite;
+  		animation-delay: 0s, .5s;
+	}
 
-@keyframes strobeStart {
-  0% {
-    transform:  skew(0deg,0deg) scaleY(1) ;
-    animation-timing-function: ease-in;
-   }
-  40% {
-    transform:  skew(0deg,0deg) scaleY(.9);
-    animation-timing-function: ease-out;
-  }
-  100% { transform:   skew(4deg,0deg) scaleX(1); }
-}
+	@keyframes strobeStart {
+	  0% {
+	    transform:  skew(0deg,0deg) scaleY(1) ;
+	    animation-timing-function: ease-in;
+	   }
+	  40% {
+	    transform:  skew(0deg,0deg) scaleY(.9);
+	    animation-timing-function: ease-out;
+	  }
+	  100% { transform:   skew(4deg,0deg) scaleX(1); }
+	}
 
-@keyframes strobe {
-  0% { transform:   skew(4deg,0deg) scaleX(1); }
-  10% { transform:  skew(1deg,0deg) scaleY(.9) ; }
-  50% { transform:  skew(-4deg,0deg) scaleX(1); }
-  60% { transform:  skew(-1deg,0deg) scaleY(.9) ; }
-  100% {transform: skew(4deg,0deg) scaleX(1); }
-}
+	@keyframes strobe {
+	  0% { transform:   skew(4deg,0deg) scaleX(1); }
+	  10% { transform:  skew(1deg,0deg) scaleY(.9) ; }
+	  50% { transform:  skew(-4deg,0deg) scaleX(1); }
+	  60% { transform:  skew(-1deg,0deg) scaleY(.9) ; }
+	  100% {transform: skew(4deg,0deg) scaleX(1); }
+	}
 	
 </style>
 </head>

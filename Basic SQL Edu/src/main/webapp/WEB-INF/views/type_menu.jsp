@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<!-- SQL 정답 입력 화면 DIV -->
 	<div class="sqlAnswer">
 		<div class="sqlAnswersheet">
