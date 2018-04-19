@@ -3,7 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	<!-- 우측 네비게이션 화면 관련 DIV -->	
 	<div class="navigation">
-	
 		<!-- 기본으로 보여지는 네비게이션 바 페이지 -->
 		<div class="wrap"> 
 			
