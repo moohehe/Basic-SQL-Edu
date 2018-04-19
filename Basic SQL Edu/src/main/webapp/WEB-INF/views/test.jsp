@@ -181,13 +181,6 @@
 		color: white;
 	}
 	
-	.testingani {
-		transform-origin: bottom;
-		animation: anitest;
-		animation-delay: .5s;
-	}
-	@keyframes 
-	
 	.strobe {
   transform-origin: 50% 50%;
   animation: strobeStart .5s ease-out, strobe 1s infinite;
