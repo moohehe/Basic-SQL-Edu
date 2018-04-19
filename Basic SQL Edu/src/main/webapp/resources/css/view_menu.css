@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+	.questionTable {
+		background-image: url("<c:url value="/resources/image/table_land.jpg"/>");
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: full;
+		width: 100%;
+		height: 100%;
+		border: 1px;
+		border-color: blue;
+		border-style: solid;
+		color: black;
+	}
+	.tableColumes {
+		float: left;
+		width: auto; height: auto;
+    	max-width: 130px;
+    	max-height: 130px;
+	}
+	.helpdiv{
+		top: 80%;
+		position: absolute;
+		color: white;
+	}
+	
+	.strobe {
+  		transform-origin: bottom;
+  		animation: strobeStart .5s ease-out, strobe 1s infinite;
+  		animation-delay: 0s, .5s;
+	}
+	@keyframes strobeStart {
+	  0% {
+	    transform:  skew(0deg,0deg) scaleY(1) ;
+	    animation-timing-function: ease-in;
+	   }
+	  40% {
+	    transform:  skew(0deg,0deg) scaleY(.9);
+	    animation-timing-function: ease-out;
+	  }
+	  100% { transform:   skew(4deg,0deg) scaleX(1); }
+	}
+	@keyframes strobe {
+	  0% { transform:   skew(4deg,0deg) scaleX(1); }
+	  10% { transform:  skew(1deg,0deg) scaleY(.9) ; }
+	  50% { transform:  skew(-4deg,0deg) scaleX(1); }
+	  60% { transform:  skew(-1deg,0deg) scaleY(.9) ; }
+	  100% {transform: skew(4deg,0deg) scaleX(1); }
+	}

@@ -1,7 +1,3 @@
-/**
- * 
- */
-
 
 $(function(){
 	var fstage = $('#currentLv').val(); //현재 레벨(스테이지) 가져옴.
@@ -141,6 +137,7 @@ $(function(){
 	
 	//언어선택 버튼 눌렀을 경우의 처리.
 	$('.langbtn').on('click', function(){
+		console.log('누름');
 		var stage = $('#currentLv').val(); //현재 레벨(스테이지) 가져옴.
 		var lang = $(this).attr('data-num'); //어떤 언어인지 선택.
 		
@@ -290,11 +287,4 @@ $(function(){
 			
 
 });
-	
-
-
-
-
-
-
 

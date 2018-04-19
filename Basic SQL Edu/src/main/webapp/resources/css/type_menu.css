@@ -1,0 +1,15 @@
+@charset "UTF-8";
+.sqlAnswer {
+		width: 80%;
+		height: 40%;
+		border-top: 5px;
+		border-top-style: solid;
+		border-top-color: gray;
+	}
+	.sqlAnswersheet{
+		position: absolute;  
+		width: 72%;
+		border: 2px;
+		border-style: solid;
+		border-color: red;
+	}
