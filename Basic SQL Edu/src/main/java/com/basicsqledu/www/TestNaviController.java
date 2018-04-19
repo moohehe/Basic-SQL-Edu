@@ -33,9 +33,9 @@ import com.google.gson.Gson;
  * Handles requests for the application home page.
  */
 @Controller
-public class NaviController {
+public class TestNaviController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(NaviController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TestNaviController.class);
 	
 	@Autowired
 	QuestextDao dao;
@@ -47,43 +47,55 @@ public class NaviController {
 	/**
 	 * 초기 페이지로 들어오는 경우.
 	 */
-	@RequestMapping(value = "test2", method = RequestMethod.GET)
+	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public String test(Model model, HttpServletResponse response, HttpServletRequest request) {
 		Questext qt = new Questext();
 		int lang=0; //언어
 		int stage=0; //단계(레벨)
 		
-			
 		//사용자 배열 쿠키로 읽어오기.
 		Cookie cks[] = request.getCookies();
-		
 		if(cks != null && cks.length>1){ //이미 사용자 아이디가 하나 들어가므로 length의 초기는 1이다.
+			System.out.println("requestmapping= test에서 쿠키 읽어따!");
 			//쿠키 있으면 읽기
 			for(Cookie c : cks){
 				//저장된 현재 스테이지 정보가 있으면 이를 vo에 넣음.
 				
 				if(c.getName().equals("currentStage")){
-					stage = Integer.parseInt(c.getValue());
+					if(c.getValue() == null || c.getValue().equals("")){
+						stage = 1;
+						cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
+						cg.addCookie(response, "1");
+					}
+					else{
+						stage = Integer.parseInt(c.getValue());
+						System.out.println("쿠키에서 초기에 읽은 stage"+stage);
+					}
 					qt.setLvstatus(stage);
 				}else{
-					/*cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
+					cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 					cg.addCookie(response, "1");
-					stage = 1;
-					qt.setLvstatus(stage);*/
 				}
 				if(c.getName().equals("currentLang")){
-					lang = Integer.parseInt(c.getValue());
+					if(c.getValue() == null || c.getValue().equals("")){
+						lang = 2;
+						cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
+						cg.addCookie(response, "2");
+					}
+					else{
+						lang = Integer.parseInt(c.getValue());
+						System.out.println("쿠키에서 초기에 읽은 lang"+lang);
+					}
 					qt.setTextLang(lang);
 				}else{
-					/*cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
+					cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 					cg.addCookie(response, "2");
-					lang= 2;
-					qt.setTextLang(lang);*/
 				}
 			}
 			
 		}else{
 			//쿠키없으면 쿠키 생성
+			System.out.println("requestmapping= test에서 쿠키 없단다!");
 			
 			cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 			cg.addCookie(response, "1"); //일단 1부터 시작이므로 1을 넣어줌.
@@ -101,55 +113,14 @@ public class NaviController {
 				lang= 2;
 				qt.setLvstatus(stage);
 				qt.setTextLang(lang);
-				System.out.println("처음 홈 들어올때"+qt);
 		}
+		System.out.println("처음 홈 들어올때"+qt);
 		
 		
 		//DB에서 해당 문제 택스트 및 언어에 대한 정보를 읽어옴.
 		qt = dao.selectLang(qt);
 		//DB에서 문제 전체에 대한 정보를 불러옴. (얘는 stage 전체 단계에서 쓰임)
 		ArrayList<Questext> stageList = dao.selectStageAll(qt);
-		
-		
-		//문제 그림 관련 정보 읽어오기.
-		HashMap<String, Object> quizData = null;
-		
-		//지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 19, 20)
-		if(qt.getLvstatus() == 1 || qt.getLvstatus() == 11 || qt.getLvstatus() == 15 
-			|| qt.getLvstatus() == 16 || qt.getLvstatus() == 19 || qt.getLvstatus() == 20 ){
-			
-			
-			
-		}else{
-			//문제 뷰가 있는 애들만 해당 DAO의 함수에서 문제를 불러온다.
-			quizData = quizdao.getTable(qt.getLvstatus()); //Map으로 return
-			
-			if(quizData.get("table_name").equals("animal_view")){
-				
-				ArrayList<Animal> animalqlist = (ArrayList<Animal>) quizData.get("table_value");
-				model.addAttribute("qlist", animalqlist);
-				//jsp에서 꺼낼때에는 jpg파일명을 animal의 경우, species와 color를 합쳐놓을것.
-				
-			}
-			else if(quizData.get("table_name").equals("person_view")){
-				ArrayList<Person> personqlist = (ArrayList<Person>) quizData.get("table_value");
-				model.addAttribute("qlist", personqlist);
-				
-			}else if(quizData.get("table_name").equals("robots_view")){
-				ArrayList<Robots> robotsqlist = (ArrayList<Robots>) quizData.get("table_value");
-				model.addAttribute("qlist", robotsqlist);
-			}
-
-		
-			System.out.println(quizData.get("table_value"));
-			System.out.println(quizData+"이게 데이터");
-		
-		}
-		
-		
-		//System.out.println(quizData.get("table_value"));
-		//System.out.println(quizData+"이게 데이터");
-		
 		
 		
 		model.addAttribute("questext", qt);
@@ -160,7 +131,7 @@ public class NaviController {
 	
 	//언어 변환 버튼 및 이전/다음 버튼 누를때, 전체 스테이지 맵에서 이동할 때 동작(비동기식)
 	@ResponseBody
-	@RequestMapping(value = "langcheck2", method = RequestMethod.POST, produces = "application/text; charset=utf8")
+	@RequestMapping(value = "langcheck", method = RequestMethod.POST, produces = "application/text; charset=utf8")
 	public String langcheck(HttpServletRequest request,HttpServletResponse response, 
 			String lang, String stage, @RequestParam(defaultValue="non-pass")String compl,
 			@RequestParam(defaultValue = "2") int questionNumber) {
@@ -177,7 +148,27 @@ public class NaviController {
 			lang = "1";
 			stage = "1";
 		}
-		
+		/*//사용자 배열 쿠키로 읽어오기.
+				Cookie cks[] = request.getCookies();
+				if(cks != null && cks.length>1){ //이미 사용자 아이디가 하나 들어가므로 length의 초기는 1이다.
+					//쿠키 있으면 읽기
+					for(Cookie c : cks){
+						//저장된 현재 스테이지 정보가 있으면 이를 vo에 넣음.
+						
+						if(c.getName().equals("currentStage")){
+							stage = c.getValue();
+							qt.setLvstatus(Integer.parseInt(stage));
+						}
+						if(c.getName().equals("currentLang")){
+							lang = c.getValue();
+							qt.setTextLang(Integer.parseInt(lang));
+						}
+						if(c.getValue().equals("pass")){ 
+							//문제를 완료한 스테이지 쿠키만 들어옴.
+							naviContentMap.put(c.getName(),c.getValue()); //완료한 스테이지들 맵에 저장.
+						}
+					}
+				}*/
 		//여기로 올 때마다 쿠키의 현재 스테이지 값을 변경해주어야 한다.
 		
 		cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
@@ -203,16 +194,8 @@ public class NaviController {
 		
 		naviContentMap.put("questext", qt); //vo 맵에 저장 (text내용들, 언어선택, 현레벨status포함)
 
-		//사용자 배열 쿠키로 읽어오기.
-		Cookie cks[] = request.getCookies();
 		
-		for(Cookie c : cks){
-			if(c.getValue().equals("pass")){ 
-				//문제를 완료한 스테이지 쿠키만 들어옴.
-				naviContentMap.put(c.getName(),c.getValue()); //완료한 스테이지들 맵에 저장.
-			}
-		}
-		
+			
 		questionNumber = Integer.parseInt(stage);
 		
 		//DB에서 문제 그림 관련 정보를 가져옴.

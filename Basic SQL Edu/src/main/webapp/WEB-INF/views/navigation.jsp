@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 	<!-- 우측 네비게이션 화면 관련 DIV -->	
 	<div class="navigation">
 	
@@ -22,7 +22,7 @@
 			<button class="float-unit dropbtn">Stage</button>
 			<button class="float-unit btn nxtbtn" id="nextbtn" > ▶ </button>
 			<button class="float-unit btn" id="prevbtn" > ◀ </button>
-			<input id="currentLang" type="hidden" value="${questext.textLang }" >
+			<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
 			</div>
 			<br>
 			

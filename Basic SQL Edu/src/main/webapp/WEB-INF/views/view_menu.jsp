@@ -4,34 +4,26 @@
 <!-- 문제 출제 화면 DIV (테이블이 그림으로 보여지는 곳.) -->
 	<div class="questionTable"> 
 		
-		<c:choose>
-			<c:when test="${qlist != null }">
-				<c:forEach var="animal" varStatus="status" items="${qlist}">
-					<div class="tcolumes strobe" tcolumes="${status.count}"> 
-						<img class="tableColumes" columesimg="${status.count}" src="<c:url value="/resources/image/bluebird2.png"/>">
-					</div>
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
 				<div class="tcolumes strobe" tcolumes="1"> 
-					<img class="tableColumes" columesimg="1" src="<c:url value="/resources/image/bluebird2.png"/>">
+					<img class="tableColumes" columesimg="1" src="">
 				</div>	
-				
 				<div class="tcolumes" tcolumes="2"> 
-					<img class="tableColumes" columesimg="2" src="<c:url value="/resources/image/blackpenguin.jpg"/>">
+					<img class="tableColumes" columesimg="2" src="">
 				</div>	
 				
 				<div class="tcolumes" tcolumes="3"> 
-					<img class="tableColumes" columesimg="3" src="<c:url value="/resources/image/girrafe.jpg"/>">
+					<img class="tableColumes" columesimg="3" src="">
 				</div> 
 				<div class="tcolumes" tcolumes="4"> 
-					<img class="tableColumes" columesimg="4" src="<c:url value="/resources/image/girrafe.jpg"/>">
+					<img class="tableColumes" columesimg="4" src="">
 				</div> 
 				<div class="tcolumes" tcolumes="5"> 
-					<img class="tableColumes"  columesimg="5" src="<c:url value="/resources/image/girrafe.jpg"/>">
+					<img class="tableColumes"  columesimg="5" src="">
 				</div> 
-			</c:otherwise>
-		</c:choose>
+				<div class="tcolumes" tcolumes="6"> 
+					<img class="tableColumes"  columesimg="6" src="">
+				</div> 
+		
 		<br>
 			<div class="helpdiv helptext"> </div>
 			<div class="helpdiv helptext2"> </div>

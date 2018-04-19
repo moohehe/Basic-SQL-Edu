@@ -4,6 +4,8 @@
 
 
 $(function(){
+	var fstage = $('#currentLv').val(); //현재 레벨(스테이지) 가져옴.
+	var flang = $('#currentLang').val(); //어떤 언어인지 선택. 
 	
 	//arraylist 받을 변수 설정.
 	var qlist = [];
@@ -33,93 +35,97 @@ $(function(){
 
 	}
 	
-	//2번 문제
-	var ques2 = function(){
-		//배경 변경.
-		$('.questionTable').css({"background":imgpath("bgi.jpg"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
-		//테이블 안 칼럼들 이미지 변경.
-		$(imgselector(1)).attr("src", "/www/resources/image/bluebird2.png");
-		$(imgselector(2)).attr("src", "/www/resources/image/bluebird2.png");
-		$(imgselector(3)).attr("src", "/www/resources/image/bluebird2.png");
-		$(imgselector(4)).attr("src", "");
-		$(imgselector(5)).attr("src", "");
-	}
 	
-	//3번 문제
-	var ques3 = function(){
-		//배경 변경.
-		$('.questionTable').css({"background":imgpath("animal.png"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
-		//테이블 안 칼럼들 이미지 변경.
-		$(imgselector(1)).attr("src", "/www/resources/image/blackpenguin.jpg");
-		$(imgselector(2)).attr("src", "/www/resources/image/blackpenguin.jpg");
-		$(imgselector(3)).attr("src", "");
-		$(imgselector(4)).attr("src", "");
-		$(imgselector(5)).attr("src", "");
-	}
 	
-	//4번 문제
-	var ques4 = function(){
-		//배경 변경.
-		$('.questionTable').css({"background":imgpath("animal.png"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
-		//테이블 안 칼럼들 이미지 변경.
-		$(imgselector(1)).attr("src", "/www/resources/image/blackpenguin.jpg");
-		$(imgselector(2)).attr("src", "/www/resources/image/blackpenguin.jpg");
-		$(imgselector(3)).attr("src", "");
-		$(imgselector(4)).attr("src", "");
-		$(imgselector(5)).attr("src", "");
-	}
-	
-	//문제 번호(스테이지)가 들어오면 해당 문제(스테이지)에 해당하는  화면을 보여주는 함수. (이 함수는 추후 대체됨)
-	function stageDisplay(stage){
-		
-		switch(stage){
-			
-			case 1:
-				ques1();
-				break;
-			
-			case 2:
-				ques2();
-				break;
-				
-			case 3:
-				ques3();
-				break;
-			case 4:
-				ques4();
-				break;
-		
-		}
-		
-	}
 	//(얘가 진짜) 문제 별 그림 뿌려주는 함수.
 	function createQuiz(qlist, stage){
 		console.log("cq의 stage"+stage);
 		
 		//stage별 분기 처리 필요.
-		switch(stage){
+		switch(stage){ //지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 19, 20)
 		
-		case 1: //select 문제가 아니어서 지정된 화면을 보여줘야 하는 레벨1.
-			ques1();
-			
-			break;
-		
-		case 2: case 3: case 4:
-			
-			$.each(qlist, function(index, value){
+			case 1: //select 문제가 아니어서 지정된 화면을 보여줘야 하는 레벨1.
+				ques1();
 				
-				var species = value.animal_species;
-				var color = value.animal_color;
-				//테이블 안 칼럼들 이미지 변경.
-				$(imgselector(index+1)).attr("src", "/www/resources/image/"+species+color+".jpg");
-			});
-			
-			//배경 변경.
-			$('.questionTable').css({"background":imgpath("table_land.jpg"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
-			break;
-	
+				break;
+			//동물 select
+			case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 10:
+				
+				$.each(qlist, function(index, value){
+					
+					var species = value.animal_species;
+					var color = value.animal_color;
+					
+					//테이블 안 칼럼들 이미지 변경.
+					$(imgselector((index)+1)).attr("src", "/www/resources/image/"+species+color+".JPG");
+					
+				});
+				
+				//배경 변경.
+				$('.questionTable').css({"background":imgpath("table_land.jpg"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
+				break;
+				
+			case 9: //div가 3개만 나오는 문제라서 일단 따로 분류.
+				$.each(qlist, function(index, value){
+					var species = value.animal_species;
+					var color = value.animal_color;
+					
+					//테이블 안 칼럼들 이미지 변경.
+					$(imgselector((index)+1)).attr("src", "/www/resources/image/"+species+color+".JPG");
+					$(imgselector(4)).attr("src", "");
+					$(imgselector(5)).attr("src", "");
+				});
+				
+				//배경 변경.
+				$('.questionTable').css({"background":imgpath("table_land.jpg"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
+				break;
+				
+			case 11: //alter table 문제
+				break;
+			case 12: case 13: case 14: // 모두 person 문제테이블 활용.
+				break;
+			case 17: case 18: // robot 문제테이블 활용.
+				break;
+				
 		}
 	}
+	//처음 그려질 경우 DB를 갔다오는 Ajax. (나중에 Ajax는 함수화 가능하면 함수화 한다.)
+	$.ajax({
+		url : "langcheck",
+		type : "post",
+		data : {
+			stage : fstage,
+			lang : flang,
+			compl : "pass"
+		},
+		dataType : "json",
+		success : function(obj){
+			
+			//쿠키값에 따른 화면 갱신(완료표시를 위함)
+			$('.stagebtn'+$('#currentLv').val()).css('color', 'red');
+			
+			//화면 값 갱신
+			$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
+			$('#currentLv').val(obj.questext.lvstatus);
+			$('#qstext').text(obj.questext.qstext);
+			$('#qstype').text(obj.questext.qstype);
+			$('#qsdetail').text(obj.questext.qsdetail);
+			$('#qsExm').text(obj.questext.qsExm);
+			$('#currentLang').val(obj.questext.textLang);
+			$('#progresslv').css('width', (obj.questext.lvstatus)*5+"%");
+			console.log(document.cookie);
+			
+			//처음 화면 문제테이블 갱신
+			qlist = obj.qlist;
+			createQuiz(qlist, obj.questext.lvstatus);
+			
+		},
+		error : function(err){
+			alert('가장 마지막 페이지입니다.');
+		}
+	});
+	
+	
 	
 	
 	//stage(navigation-bar)버튼 눌렀을 때 숨겨놓은 div (전체 스테이지 맵) 보여주기/닫기

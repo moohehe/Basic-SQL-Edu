@@ -174,12 +174,12 @@
 		position: absolute;
 		color: white;
 	}
+	
 	.strobe {
   		transform-origin: bottom;
   		animation: strobeStart .5s ease-out, strobe 1s infinite;
   		animation-delay: 0s, .5s;
 	}
-
 	@keyframes strobeStart {
 	  0% {
 	    transform:  skew(0deg,0deg) scaleY(1) ;
@@ -191,7 +191,6 @@
 	  }
 	  100% { transform:   skew(4deg,0deg) scaleX(1); }
 	}
-
 	@keyframes strobe {
 	  0% { transform:   skew(4deg,0deg) scaleX(1); }
 	  10% { transform:  skew(1deg,0deg) scaleY(.9) ; }
@@ -203,6 +202,9 @@
 </style>
 </head>
 <body>
+				<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
+				<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
+
 <div>	
 <div class="left_menu">
 	<!-- 그림이 표시되는 부분 -->

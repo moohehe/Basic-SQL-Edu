@@ -387,8 +387,7 @@ public class SQLCompiler
 					// delete는 결국 row를 선택하는 것/ 결국 select구문이랑 거의 흡사하다.
 					// select * from table where !~~~~!;
 					// 즉, (delete = select *)
-					texts[0] = "select";
-					texts[1] = "*";
+					getDelete();
 					result = getSelect();
 					break;
 				case "select":
@@ -1126,6 +1125,23 @@ public class SQLCompiler
 		return result;
 	}
 
+	//delete --> select * 로 변환해서 select에 전달
+	private void getDelete(){
+		String[] delCh = new String[texts.length+1];
+		
+		delCh[0] = "select";
+		delCh[1] = "*";
+		
+		for(int i = 2;i<delCh.length;i++){
+			delCh[i] = texts[i-1];
+		}
+		
+		texts = new String[delCh.length];
+		texts = delCh;
+		
+		return;
+	}
+	
 	private String[][] getSelect() throws Exception
 	{ // return 값은 2차원 배열
 		i++;
