@@ -81,7 +81,7 @@
 				    	</div>
 				        <div class="dropdown-content">
 	        		</c:if>
-		        	<c:if test="${status.count == 20 }">
+		        	<c:if test="${status.count == 20}">
 				    	</ul>
 				    	</div>
 	        		</c:if>
