@@ -1,15 +1,154 @@
 @charset "UTF-8";
-.sqlAnswer {
-		width: 80%;
-		height: 40%;
-		border-top: 5px;
-		border-top-style: solid;
-		border-top-color: gray;
-	}
-	.sqlAnswersheet{
-		position: absolute;  
-		width: 72%;
-		border: 2px;
-		border-style: solid;
-		border-color: red;
-	}
+	
+	
+	
+	
+/* editor skin */
+textarea {
+	width: 270px;
+	height:200px;
+}
+.editor {
+  position: relative;
+  text-align: left;
+  width: 90%;
+  margin: 0 auto;
+  border: solid 10px rgba(0,0,0,.35);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.editor-pane {
+  float: left;
+  width: 50%;
+}
+
+.editor-pane:last-child {
+  border-right: solid 1px rgba(255,255,255,.03);
+  border-bottom: solid 1px rgba(255,255,255,.03);
+}
+
+.editor * {
+  font-family: menlo,monospace;
+  font-size: 14px;
+  line-height: 150%;
+  padding: 0;
+  margin: 0;
+}
+
+.editor .input-header {
+	height:50px;
+	font-size:30px;
+  text-align: left;
+  background: #4CAF50; 
+  padding : 5px 10px 10px 10px;
+  border-top: solid 1px rgba(255,255,255,.05);
+  border-bottom: solid 1px rgba(255,255,255,.05);
+  border-radius: 2px 2px 0 0;
+  color: white;
+}
+
+.markup {
+  line-height: 150%;
+  font-family: menlo;
+  z-index: 1;
+}
+
+.editor .file-window {
+  padding: 10px 10px 10px 46px;
+  position: relative;
+  min-height: 250px;
+}
+.editor .table-window {
+  padding: 10px 10px 10px 10px;
+  position: relative;
+  vertical-align: middle;
+}
+.editor .css-view {
+  background: #efefef;
+  color: #AAA;
+}
+
+.editor .table-name {
+	color:white;
+  float: right;
+  opacity: .5;
+}
+
+.editor .line-numbers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: menlo, monospace;
+  padding: 10px 10px;
+  height: 100%;
+  line-height: 150%;
+  text-align: right;
+}
+
+.css-view .line-numbers {
+  color: #999;
+  background: #DDD;
+}
+
+.html-view .line-numbers {
+  color: #666;
+  border-right: solid 1px #333;
+}
+
+.html-view .file-window {
+  background: rgba(0,0,0,.3);
+}
+
+.editor input {
+  font-family: menlo, monospace;
+  color: #333;
+  border: none;
+  width: calc(100% - 44px);
+  background: none  ;
+}
+
+.editor input.input-strobe {
+  background: rgba(62,203,255,.3);
+  -webkit-animation: input .5s infinite;
+  -moz-animation: input .5s infinite;
+
+}
+
+@-webkit-keyframes input {
+  50% { background:none ; }
+}
+
+@-moz-keyframes input {
+  50% { background:none ; }
+}
+
+.editor input:focus {
+  outline: none;
+  border-color: #555;
+}
+
+.result {
+  padding: 10px 0;
+  color: #BBB;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 30px;
+}
+
+
+
+.table_data {
+	width: 100%;
+}
+.table_data td {
+	text-align: center;
+	border: 1px solid #1f1f1f;
+	background-color:#efefef;
+	
+}
+.table_data th {
+	text-align: center;
+	border: 1px solid #1f1f1f;
+	background-color: #afaffa;
+}

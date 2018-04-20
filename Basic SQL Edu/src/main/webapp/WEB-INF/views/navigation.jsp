@@ -5,7 +5,7 @@
 	<div class="sidebar-fixed position-fixed navigation">
 		<!-- 기본으로 보여지는 네비게이션 바 페이지 -->
 		<div class="wrap"> 
-			
+			`
 			<!-- 현재 레벨과  이전, 다음버튼 그리고 전체 스테이지 맵으로 이동 버튼-->
 			<div class="float-btnframe">
 
