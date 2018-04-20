@@ -51,6 +51,8 @@
 	    padding:0px;
 	    marin:0px;
     }
+    div {
+     border: 1px solid cyan;}
 </style>
 </head>
 <body>
