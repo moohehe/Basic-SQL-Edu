@@ -283,6 +283,7 @@ $(function(){
 				alert('스테이지 이동 실패!');
 			}
 		});
+		return false;
 	});
 			
 

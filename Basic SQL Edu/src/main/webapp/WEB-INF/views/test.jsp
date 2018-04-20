@@ -18,20 +18,6 @@
 	<link href="<c:url value='/resources/css/mdb.css'   />" rel="stylesheet">
 	<link href="<c:url value='/resources/css/style.css' />" rel="stylesheet">
 
-    <!-- SCRIPTS -->
-    <!-- JQuery -->
-    <script type="text/javascript" src="/resources/js/jquery-3.2.1.min.js"></script>
-    <!-- Bootstrap tooltips -->
-    <script type="text/javascript" src="/resources/js/popper.min.js"></script>
-    <!-- Bootstrap core JavaScript -->
-    <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
-    <!-- MDB core JavaScript -->
-    <script type="text/javascript" src="/resources/js/mdb.min.js"></script>
-    <!-- Initializations -->
-    <script type="text/javascript">
-        // Animations initialization
-        new WOW().init();
-    </script>
 
 
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
@@ -39,6 +25,22 @@
 <script type="text/javascript" src="<c:url value="/resources/js/type_menu.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/view_menu.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-linenumbers.min.js"/>"></script>
+
+
+    <!-- SCRIPTS -->
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="<c:url value='/resources/js/popper.min.js'/> "></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="<c:url value='/resources/js/bootstrap.min.js' /> "></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="<c:url value='/resources/js/mdb.min.js' />" ></script>
+    <!-- Initializations -->
+    <script type="text/javascript">
+        // Animations initialization
+        new WOW().init();
+    </script>
+    
+    
 <style type="text/css">
 	html, body { 
 	    height: 100%; 

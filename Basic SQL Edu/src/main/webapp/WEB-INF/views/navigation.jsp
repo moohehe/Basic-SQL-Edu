@@ -6,26 +6,16 @@
 		<!-- 기본으로 보여지는 네비게이션 바 페이지 -->
 		<div class="wrap"> 
 			
-
-			
 			<!-- 현재 레벨과  이전, 다음버튼 그리고 전체 스테이지 맵으로 이동 버튼-->
 			<div class="float-btnframe">
-				<!-- 언어 선택 (영어, 한국어, 일본어) -->		
-				<div class="langcheck" >
-					<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
-					<div class="langbtn" data-num="1" > eng </div> 
-					<div class="langbtn" data-num="2" > kor </div> 
-					<div class="langbtn" data-num="3" > jpn </div> 
-				</div>
+
 				<div class="float-unit lvstat" id="LvInfo"> Level ${questext.lvstatus } of 20 </div>
 		
 				<div class="float-unit dropbtn">Stage</div>
-				<div class="float-unit btn nxtbtn" id="nextbtn" > ▶ </div>
-				<div class="float-unit btn" id="prevbtn" > ◀ </div>
+				<div class="float-unit btn" id="prevbtn" >◀</div>
+				<div class="float-unit btn nxtbtn" id="nextbtn" >▶</div>
 				<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
 				</div>
-				<br>
-				
 				<!-- 진행 상태 표시 바 -->
 				<DIV class=progress-small> 
 				<DIV role=progressbar aria-valuenow=10 aria-valuemin=0 
@@ -47,6 +37,14 @@
 			    <div id="qsdetail"> ${questext.qsdetail }</div> <br><br>
 				<p> Examples </p>
 				<div id="qsExm">${questext.qsExm }</div>
+				
+				<!-- 언어 선택 (영어, 한국어, 일본어) -->		
+				<div class="langcheck" >
+					<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
+					<div class="langbtn btn" data-num="1" > eng </div> 
+					<div class="langbtn btn" data-num="2" > kor </div> 
+					<div class="langbtn btn" data-num="3" > jpn </div> 
+				</div>
 			</div>
 		</div>	
 		
@@ -72,7 +70,7 @@
 		        		<ul class="vertical">
 		        	</c:if>
 			        	<li>
-			        	<a href="" class="li1 " data-num="${status.count }">
+			        	<a href="" class="li1 moveStagebtn" data-num="${status.count }">
 			        	 <span class="stagebtn${status.count }">√</span>
 			        	   Level ${stages.lvstatus } </a>
 			        	</li>
@@ -87,7 +85,6 @@
 	        		</c:if>
 		        </c:forEach>
 		    </div>
-	      	
 	      </div>
 	
 

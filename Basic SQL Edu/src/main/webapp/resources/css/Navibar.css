@@ -10,11 +10,11 @@
 .wrap { 
  width:100%; height:100%;
  background:white; 
- margin:0 auto;  
+ margin:0;  
  color:#000; 
  font-size:12px; 
  padding-left: 10px;
- padding-right: 15px;
+ padding-right: 10px;
  }
  
  /* stage 버튼을 눌렀을 경우 나타나는 화면을 감싼 DIV */
@@ -31,26 +31,32 @@
 /*stage버튼 누르면 나타나는 Choosing level 관련 css*/
 .choosinglv {
 	color: orange;
+	padding: 0 0 5px 5px;
 	font-size: 25pt;
 	font: bold;
 	margin-right: 20px;
 }
 /* 언어 변환 버튼 관련 DIV css*/
 .langcheck {
+	position:absolute;
+	bottom:0px; right:0px;
+	text-align: center;
 }
 .langbtn {
-	float:right;
-	font-size: 10px;
-	magin-left:5px;
-	background-color:yellow;
-	padding:2px;
+	color:white;
+	display:inline-block;
+	font-size: 15px;
+	background-color:#00e64d;
+	padding:5px;
 	margin:1px;
 }
 /*기본 네비게이션 화면 배치를 위한 부모css*/
 .float-btnframe {
 	background: #4CAF50;
- 		color: black;
- 		overflow: hidden;
+	color: black;
+	overflow: hidden;
+	height:60px;
+	width:390px;
 }
 
 /*기본 네비게이션 화면 배치를 위한 자식css*/
@@ -59,19 +65,22 @@
 	border: none;
 	color: white;
 	float: left;
+	height:60px;
 }
 .btn {
-	float: right;
-	font-size: 25px;
+	float:left;
+	font-size: 15px;
 	height:40px;
 }
 
 .navicontext {
+	width:390px;
+	height:100%;
+	background-color:#f2f2f2;
 	font-size: 17px;
-	padding-right: 10px; 
+	padding:0 0 10px 10px; 
 }
 .qs {
-	background-color: ;
 	font-size: 25px;
 }
 /* rgb(95,95,95) */
@@ -103,7 +112,7 @@
 
 /*진행 바 관련 css*/
 .progress-small { 
-overflow:hidden; height:7px; margin-bottom:0px; width:97%;
+overflow:hidden; height:7px; margin-bottom:0px; width:390px;
 background-color:gray; border-radius:0px; 
 -webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1); 
 box-shadow:inset 0 1px 2px rgba(0,0,0,.1); 
@@ -137,13 +146,6 @@ box-shadow:inset 0 -1px 0 rgba(0,0,0,.15);
     
 }
 .li1 li{
-	width:15%;
-    display: inline-block;
-    text-align: center;
-    text-decoration: none;
-}
-.li2 li {
-	width:85%;
     display: inline-block;
     text-align: center;
     text-decoration: none;
@@ -219,7 +221,7 @@ ul.vertical {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 195px;
+    width: 210px;
     background-color: #f1f1f1;
 }
 
