@@ -28,8 +28,15 @@
 				sql:str
 			}
 			, success: function(e) {
-				console.log(e);
+				console.log("정답유무: "+e.complete);
 				$('#resultView').val(e);
+				
+				
+				
+				
+				
+				
+				
 			}
 			, error : function(e) {
 				console.log('error:'+e);	
