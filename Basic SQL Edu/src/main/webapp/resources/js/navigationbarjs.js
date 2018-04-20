@@ -6,6 +6,7 @@ $(function(){
 	//arraylist 받을 변수 설정.
 	var qlist = [];
 	
+	
 	//배경 이미지 경로 함수 지정
 	var imgpath = function(file){
 		return "url(/www/resources/image/"+file+")";
