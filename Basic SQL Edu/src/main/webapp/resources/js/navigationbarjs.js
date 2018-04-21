@@ -6,6 +6,7 @@ $(function(){
 	//arraylist 받을 변수 설정.
 	var qlist = [];
 	
+	
 	//배경 이미지 경로 함수 지정
 	var imgpath = function(file){
 		return "url(/www/resources/image/"+file+")";
@@ -84,7 +85,9 @@ $(function(){
 				break;
 				
 		}
-	}
+	}//end of create quiz
+	
+	
 	//처음 그려질 경우 DB를 갔다오는 Ajax. (나중에 Ajax는 함수화 가능하면 함수화 한다.)
 	$.ajax({
 		url : "langcheck",

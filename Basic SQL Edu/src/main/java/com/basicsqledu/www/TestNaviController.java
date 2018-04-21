@@ -77,7 +77,7 @@ public class TestNaviController {
 					cg.addCookie(response, "1");
 				}
 				if(c.getName().equals("currentLang")){
-					if(c.getValue() == null || c.getValue().equals("")){
+					if(c.getValue() == null || c.getValue().equals("") || c.getValue().equals(" ")){
 						lang = 2;
 						cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 						cg.addCookie(response, "2");
