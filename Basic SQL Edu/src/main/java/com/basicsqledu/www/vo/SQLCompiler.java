@@ -106,7 +106,7 @@ public class SQLCompiler
 		}else if(questionNumber >11 && questionNumber<=16){
 			answerTable = new String[answerSize][5];
 		}else{
-			answerTable = new String[answerSize][5];
+			answerTable = new String[answerSize][5];	//robot
 		}
 		
 		answerTable = quizDAO.getAnswer(questionNumber, table_name);
