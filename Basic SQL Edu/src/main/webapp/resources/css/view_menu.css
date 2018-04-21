@@ -14,7 +14,7 @@
 		margin:auto;
 		position:relative;
 		text-align: center;
-	}
+	} 
 	.questionTable {
 		background-image: url("<c:url value="/resources/image/bg1.jpg"/>");
 		background-repeat: no-repeat;
