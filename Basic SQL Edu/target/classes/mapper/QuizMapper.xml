@@ -14,6 +14,18 @@
 			animal_view
 	</select>
 	
+	<select id="getPerson2" parameterType="String" resultType="person">
+		SELECT *
+		FROM
+			person_view
+	</select>
+	
+	<select id="getRobot2" parameterType="String" resultType="robots">
+		SELECT *
+		FROM
+			robot_view
+	</select>
+	
 	
 	<select id="getAnimal" parameterType="int" resultType="animal">
 		SELECT *	

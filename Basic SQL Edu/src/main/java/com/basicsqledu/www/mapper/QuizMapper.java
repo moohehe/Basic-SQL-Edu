@@ -12,5 +12,8 @@ public interface QuizMapper
 	public ArrayList<Animal> getAnimal(int questionNumber);
 	public ArrayList<Animal> getAnimal2(String table_name);
 	public ArrayList<Person> getPerson(int questionNumber);
+	public ArrayList<Person> getPerson2(String table_name);
 	public ArrayList<Robots> getRobots(int questionNumber);
+	public ArrayList<Robots> getRobot2(String table_name);
+
 }
