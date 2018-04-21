@@ -52,7 +52,7 @@ function sqlrun() {
 		type:"POST"
 		, url:"sqlCompiler"
 		, data:{
-			sql:str
+			sql:str 
 		}
 		, success: function(e) {
 			console.log(e);
