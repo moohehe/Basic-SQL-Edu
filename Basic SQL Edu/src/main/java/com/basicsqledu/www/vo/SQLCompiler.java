@@ -91,12 +91,32 @@ public class SQLCompiler
 		return questionNumber;
 	}
 
-	public void setQuestionNumber(int questionNumber)
+	public void setQuestionNumber(int questionNumber,String table_name)
 	{
-		answerTable = quizDAO.getAnswer(questionNumber, this.table_name);
+		
+		this.table_name = table_name;
+		System.out.println("문제 번호?? : " + questionNumber + "테이블 이름 뭐니 : " + table_name);
+		int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
+		
+		// questionNumber가 1~ 11까지는 animal
+				// questionNumber가 12~16은 PERSON
+				// questionNumber가 17~20은 ROBOT
+		if(questionNumber >1 && questionNumber<=11){
+			answerTable = new String[answerSize][6];
+		}else if(questionNumber >11 && questionNumber<=16){
+			answerTable = new String[answerSize][5];
+		}else{
+			answerTable = new String[answerSize][5];
+		}
+		
+		answerTable = quizDAO.getAnswer(questionNumber, table_name);
+		
 		this.questionNumber = questionNumber;
 	}
 
+	public String[][] getAnswerTable() {
+		return answerTable;
+	}
 
 	public void setText(String text)
 	{
@@ -466,13 +486,13 @@ public class SQLCompiler
 		{
 			map.put("result", result);
 		}
-		
+
 		//DB 정답 뷰 출력해보자
-		System.out.println("========== 테스트 정답 뷰 출력 ===========");
+		System.out.println("========== 테스트 정답 뷰 출력(SQLCompiler) ===========");
 		if(answerTable.length != 0){
-			for(int i = 0;i<answerTable.length;i++){
-				for(int k = 0;i<answerTable[k].length;k++){
-					System.out.print(answerTable[i][k] + "  ");
+			for(int j = 0;j<answerTable.length;j++){
+				for(int k = 0;k<answerTable[0].length;k++){
+					System.out.print(answerTable[j][k] + "  ");
 				}
 				System.out.println();
 			}

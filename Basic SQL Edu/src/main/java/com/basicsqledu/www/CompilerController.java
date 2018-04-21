@@ -42,7 +42,7 @@ public class CompilerController
 		// 1. sql 구문 입력 / 해석 
 		// 입력받은 sql 구문을 compiler 객체에 삽입
 		compiler.setText(sql);
-		compiler.setQuestionNumber(questionNumber);
+		compiler.setQuestionNumber(questionNumber, table_name);
 		
 		// DB 테이블 입력
 		HashMap<String, Object> map = quizDAO.getTable(questionNumber); // <- 여기 나중에 변수로 바꿔야됨!!!!!!!!!!!!!!!!!!!!!!!!!!

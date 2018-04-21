@@ -26,6 +26,7 @@ import com.basicsqledu.www.vo.Animal;
 import com.basicsqledu.www.vo.Person;
 import com.basicsqledu.www.vo.Questext;
 import com.basicsqledu.www.vo.Robots;
+import com.basicsqledu.www.vo.SQLCompiler;
 import com.google.gson.Gson;
 
 
@@ -41,6 +42,8 @@ public class TestNaviController {
 	QuestextDao dao;
 	@Autowired
 	QuizDAO quizdao;
+	@Autowired
+	private SQLCompiler compiler;
 	
 	CookieGenerator cg = new CookieGenerator();
 	
@@ -198,6 +201,15 @@ public class TestNaviController {
 			
 		questionNumber = Integer.parseInt(stage);
 		
+		String table_key = null;
+		if(questionNumber >1 && questionNumber<=11){
+			table_key = "animal_view";
+		}else if(questionNumber >11 && questionNumber<=16){
+			table_key = "person_view";
+		}else{
+			table_key = "robot_view";
+		}
+		
 		//DB에서 문제 그림 관련 정보를 가져옴.
 		//문제 그림 관련 정보 읽어오기.
 		HashMap<String, Object> quizData = null;
@@ -230,6 +242,22 @@ public class TestNaviController {
 				}
 
 		//System.out.println("qlist="+naviContentMap.get("qlist").toString());
+		
+				
+				
+		//정답 뷰 가져온후 화면으로 전달
+		compiler.setQuestionNumber(questionNumber, table_key);
+		String [][] temp = compiler.getAnswerTable();
+		ArrayList<String> anserView = new ArrayList<>();
+		
+		System.out.println("========== 테스트 정답 뷰 셋팅(TestNavi) ===========");
+		if(temp.length != 0){
+			for(int j= 1;j<temp[0].length;j++){
+				anserView.add(temp[j][0]);
+			}
+		}
+		
+		naviContentMap.put("ansList", anserView);
 		
 		//맵 변환 후 보내기.
 		Gson gson = new Gson();

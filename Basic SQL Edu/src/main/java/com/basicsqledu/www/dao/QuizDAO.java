@@ -264,7 +264,7 @@ public class QuizDAO
 
 		}
 
-
+		
 		return table;
 	}
 
@@ -277,29 +277,31 @@ public class QuizDAO
 
 		try{
 		switch (table_key) {
-		case "animal":
+		case "animal_view":
 			ArrayList<Animal> aniList = mapper.getAnswerAnimal(questionNumber);
 
-			col = 5; 
+			col = 6; 
 			row = aniList.size();
 			i = 1;
 			answerView = new String[row + 1][col];
 
-			answerView[0][0] = "animal_size";
-			answerView[0][1] = "animal_species";
-			answerView[0][2] = "animal_legs";
-			answerView[0][3] = "animal_color";
-			answerView[0][4] = "animal_habitat";
+			answerView[0][0] = "th_code";
+			answerView[0][1] = "animal_size";
+			answerView[0][2] = "animal_species";
+			answerView[0][3] = "animal_legs";
+			answerView[0][4] = "animal_color";
+			answerView[0][5] = "animal_habitat";
 
 			try{
 				for (Animal animal : aniList)
 				{
 					System.out.println(animal);
-					answerView[i][0] = animal.getAnimal_size();
-					answerView[i][1] = animal.getAnimal_species();
-					answerView[i][2] = animal.getAnimal_legs();
-					answerView[i][3] = animal.getAnimal_color();
-					answerView[i][4] = animal.getAnimal_habitat();
+					answerView[i][0] = animal.getTh_code();
+					answerView[i][1] = animal.getAnimal_size();
+					answerView[i][2] = animal.getAnimal_species();
+					answerView[i][3] = animal.getAnimal_legs();
+					answerView[i][4] = animal.getAnimal_color();
+					answerView[i][5] = animal.getAnimal_habitat();
 
 					i++;
 				}
@@ -308,56 +310,60 @@ public class QuizDAO
 			}
 
 			break;
-		case "person":
+		case "person_view":
 			ArrayList<Person> personList = mapper.getAnswerPerson(questionNumber);
 
-			col = 4; 
+			col = 5; 
 			row = personList.size();
 			i = 1;
 			answerView = new String[row + 1][col];
 			// 테이블 속성(attribute) 명칭 입력
 
-			answerView[0][0] = "hair_color";
-			answerView[0][1] = "job";
-			answerView[0][2] = "height";
-			answerView[0][3] = "gender";
+			answerView[0][0] = "th_code";
+			answerView[0][1] = "hair_color";
+			answerView[0][2] = "job";
+			answerView[0][3] = "height";
+			answerView[0][4] = "gender";
 
 			try{
 				for (Person person : personList)
 				{
 					System.out.println(person);
-					answerView[i][0] = person.getHair_color();
-					answerView[i][1] = person.getJob();
-					answerView[i][2] = person.getHeight();
-					answerView[i][3] = person.getGender();
+					answerView[i][0] = person.getTh_code();
+					answerView[i][1] = person.getHair_color();
+					answerView[i][2] = person.getJob();
+					answerView[i][3] = person.getHeight();
+					answerView[i][4] = person.getGender();
 					i++;
 				}
 			}catch(Exception e){
 				e.printStackTrace();
 			}
 			break;
-		case "robots":
+		case "robots_view":
 			ArrayList<Robots> robotList = mapper.getAnswerRobots(questionNumber);
 
-			col = 4; 
+			col = 5; 
 			row = robotList.size();
 			i = 1;
 			answerView = new String[row + 1][col];
 
 			// 테이블 속성(attribute) 명칭 입력
-			answerView[0][0] = "r_color";
-			answerView[0][1] = "r_size";
-			answerView[0][2] = "r_type";
-			answerView[0][3] = "weapon";
+			answerView[0][0] = "th_code";
+			answerView[0][1] = "r_color";
+			answerView[0][2] = "r_size";
+			answerView[0][3] = "r_type";
+			answerView[0][4] = "weapon";
 
 			try{
 				for (Robots robot : robotList)
 				{
 					System.out.println(robot);
-					answerView[i][0] = robot.getR_color();
-					answerView[i][1] = robot.getR_size();
-					answerView[i][2] = robot.getR_type();
-					answerView[i][3] = robot.getWeapon();
+					answerView[i][0] = robot.getTh_code();
+					answerView[i][1] = robot.getR_color();
+					answerView[i][2] = robot.getR_size();
+					answerView[i][3] = robot.getR_type();
+					answerView[i][4] = robot.getWeapon();
 					i++;
 				}
 			}catch(Exception e){
@@ -371,6 +377,15 @@ public class QuizDAO
 			return null;
 		}
 
+		System.out.println("========== 테스트 정답 뷰 출력(DAO) ===========");
+		if(answerView.length != 0){
+			for(int j = 0;j<answerView.length;j++){
+				for(int k = 0;k<answerView[0].length;k++){
+					System.out.print(answerView[j][k] + "  ");
+				}
+				System.out.println();
+			}
+		}
 		return answerView;
 	}
 
