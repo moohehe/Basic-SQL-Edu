@@ -23,27 +23,20 @@ public class SQLCompiler
 	@Autowired
 	QuizDAO quizDAO;
 
-	// 현재 questionNumber
-	private int questionNumber;
-
-	public int getQuestionNumber()
-	{
-		return questionNumber;
-	}
-
-	public void setQuestionNumber(int questionNumber)
-	{
-		this.questionNumber = questionNumber;
-	}
-
+	
 	// index
 	private int i;
+	
+	// 현재 questionNumber
+	private int questionNumber;
 	
 	// data 관련 변수(DB 갔다옴)
 	private String[][] table;
 	HashMap<String, Object> taaa = new HashMap<String, Object>();
 	private String table_name; // table name
 	private HashMap<String, Integer> table_columns; // String : columns_name /
+	private String[][] answerTable;		//DB에 저장되어있는 정답테이블 뷰
+	
 	// Integer : realdata_index
 
 	// SQL 구문 결과(내부에서 계산한 결과)
@@ -91,6 +84,38 @@ public class SQLCompiler
 	public String getText()
 	{
 		return text;
+	}
+	
+	public int getQuestionNumber()
+	{
+		return questionNumber;
+	}
+
+	public void setQuestionNumber(int questionNumber,String table_name)
+	{
+		
+		this.table_name = table_name;
+		System.out.println("문제 번호?? : " + questionNumber + "테이블 이름 뭐니 : " + table_name);
+		int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
+		
+		// questionNumber가 1~ 11까지는 animal
+				// questionNumber가 12~16은 PERSON
+				// questionNumber가 17~20은 ROBOT
+		if(questionNumber >1 && questionNumber<=11){
+			answerTable = new String[answerSize][6];
+		}else if(questionNumber >11 && questionNumber<=16){
+			answerTable = new String[answerSize][5];
+		}else{
+			answerTable = new String[answerSize][5];	//robot
+		}
+		
+		answerTable = quizDAO.getAnswer(questionNumber, table_name);
+		
+		this.questionNumber = questionNumber;
+	}
+
+	public String[][] getAnswerTable() {
+		return answerTable;
 	}
 
 	public void setText(String text)
@@ -317,6 +342,7 @@ public class SQLCompiler
 		return result;
 	}
 
+	
 	/**
 	 * 구문 분석기
 	 * 
@@ -460,6 +486,18 @@ public class SQLCompiler
 		{
 			map.put("result", result);
 		}
+
+		//DB 정답 뷰 출력해보자
+		System.out.println("========== 테스트 정답 뷰 출력(SQLCompiler) ===========");
+		if(answerTable.length != 0){
+			for(int j = 0;j<answerTable.length;j++){
+				for(int k = 0;k<answerTable[0].length;k++){
+					System.out.print(answerTable[j][k] + "  ");
+				}
+				System.out.println();
+			}
+		}
+		
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
 		System.out.println("End of getResult");
 		System.out.println("result=" + result);
