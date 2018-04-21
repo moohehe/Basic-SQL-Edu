@@ -30,13 +30,13 @@ $(function(){
 	var ques1 = function(){
 		
 		//배경(테이블) 이미지 변경.
-		$('.questionTable').css({"background":imgpath("table_land.jpg"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
+		$('.questionTable').css({"background":imgpath("table_land.png"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
 		//테이블 안 칼럼들 이미지 변경.
-		$(imgselector(1)).attr("src", "/www/resources/image/bluebird2.png");
-		$(imgselector(2)).attr("src", "/www/resources/image/blackpenguin.jpg");
-		$(imgselector(3)).attr("src", "/www/resources/image/girrafe.jpg");
-		$(imgselector(4)).attr("src", "/www/resources/image/girrafe.jpg");
-		$(imgselector(5)).attr("src", "/www/resources/image/girrafe.jpg");
+		$(imgselector(1)).attr("src", "/www/resources/image/birdblue.png");
+		$(imgselector(2)).attr("src", "/www/resources/image/penguinblack.png");
+		$(imgselector(3)).attr("src", "/www/resources/image/girrafeyellow.png");
+		$(imgselector(4)).attr("src", "/www/resources/image/girrafeyellow.png");
+		$(imgselector(5)).attr("src", "/www/resources/image/girrafeyellow.png");
 
 	}
 	
@@ -162,7 +162,7 @@ function createQuiz(qlist, stage){
 				var color = value.animal_color;
 				
 				//테이블 안 칼럼들 이미지 변경.
-				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+species+color+".JPG");
+				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+species+color+".png");
 				$(imgselector((index)+1)).attr("th_code", value.th_code);
 			});
 			
@@ -176,7 +176,7 @@ function createQuiz(qlist, stage){
 				var color = value.animal_color;
 				
 				//테이블 안 칼럼들 이미지 변경.
-				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+species+color+".JPG");
+				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+species+color+".png");
 				$(imgselector(4)).attr("src", "");
 				$(imgselector(5)).attr("src", "");
 			});

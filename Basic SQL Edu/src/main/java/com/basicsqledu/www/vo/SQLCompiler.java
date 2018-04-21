@@ -220,7 +220,7 @@ public class SQLCompiler
 		// Animal 타입의 데이터면
 		if (list.get(0) instanceof Animal)
 		{
-			int col = 6, row = list.size();
+			int col = 5, row = list.size();
 			table = new String[row + 1][col];
 			// 테이블 속성(attribute) 명칭 입력
 			table[0][0] = "animal_size";
@@ -228,7 +228,6 @@ public class SQLCompiler
 			table[0][2] = "animal_legs";
 			table[0][3] = "animal_color";
 			table[0][4] = "animal_habitat";
-			table[0][5] = "animal_feed";
 
 			int i = 1;
 			for (Object a : list)
@@ -1658,7 +1657,7 @@ public class SQLCompiler
 				String[][] temp_result = tables.get(0);
 				System.out.println("tables.size()="+tables.size()+" tables.get(0)="+tables.get(0));
 				System.out.println("temp_result=["+temp_result.length+"]["+temp_result[0].length+"]");
-				int k = 0;
+				int k = 0; // 참조하는 table 갯수
 				for (k = 1; k < table_names.size(); k++)
 				{
 					temp_result = getTempResultTable(temp_result, table_names.get(k - 1), tables.get(k),
@@ -1671,6 +1670,7 @@ public class SQLCompiler
 				System.out.println("columns.size()="+columns.size()+" ");
 				for (int n = 0; n < columns.size(); n++)
 				{
+					System.out.println("n"+n);
 					String col = columns.get(n);
 					System.out.println("("+n+") "+col + " k="+k);
 					if (col.equals("*"))
@@ -1684,6 +1684,7 @@ public class SQLCompiler
 								columns.add(temp_result[0][l]);
 								System.out.print(temp_result[0][l] +" ");
 							}
+							break;
 						}
 					} else if (col.contains("*"))
 					{
@@ -1775,6 +1776,8 @@ public class SQLCompiler
 					for (String col : columns)
 					{
 						logger.info("temp_table : {}, col : {}", temp_table[0][k], col);
+						logger.info("k : {}, col : {}",k, col);
+						logger.info("temp_table : {} ",temp_table[0][k]);
 						if (temp_table[0][k].equals(col))
 						{
 							cols[k] = 1;
