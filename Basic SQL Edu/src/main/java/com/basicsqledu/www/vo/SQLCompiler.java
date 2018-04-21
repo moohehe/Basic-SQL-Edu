@@ -1675,7 +1675,7 @@ public class SQLCompiler
 				String[][] temp_result = tables.get(0);
 				System.out.println("tables.size()="+tables.size()+" tables.get(0)="+tables.get(0));
 				System.out.println("temp_result=["+temp_result.length+"]["+temp_result[0].length+"]");
-				int k = 0;
+				int k = 0; // 참조하는 table 갯수
 				for (k = 1; k < table_names.size(); k++)
 				{
 					temp_result = getTempResultTable(temp_result, table_names.get(k - 1), tables.get(k),
@@ -1688,6 +1688,7 @@ public class SQLCompiler
 				System.out.println("columns.size()="+columns.size()+" ");
 				for (int n = 0; n < columns.size(); n++)
 				{
+					System.out.println("n"+n);
 					String col = columns.get(n);
 					System.out.println("("+n+") "+col + " k="+k);
 					if (col.equals("*"))
@@ -1793,6 +1794,8 @@ public class SQLCompiler
 					for (String col : columns)
 					{
 						logger.info("temp_table : {}, col : {}", temp_table[0][k], col);
+						logger.info("k : {}, col : {}",k, col);
+						logger.info("temp_table : {} ",temp_table[0][k]);
 						if (temp_table[0][k].equals(col))
 						{
 							cols[k] = 1;

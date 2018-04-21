@@ -17,6 +17,7 @@
 	<link href="<c:url value='/resources/css/bootstrap.css'   />" rel="stylesheet">
 	<link href="<c:url value='/resources/css/mdb.css'   />" rel="stylesheet">
 	<link href="<c:url value='/resources/css/style.css' />" rel="stylesheet">
+	<link href="<c:url value='/resources/css/animate.css' />" rel="stylesheet">
 
 
 
