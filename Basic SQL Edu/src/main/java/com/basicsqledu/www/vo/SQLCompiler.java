@@ -23,27 +23,20 @@ public class SQLCompiler
 	@Autowired
 	QuizDAO quizDAO;
 
-	// 현재 questionNumber
-	private int questionNumber;
-
-	public int getQuestionNumber()
-	{
-		return questionNumber;
-	}
-
-	public void setQuestionNumber(int questionNumber)
-	{
-		this.questionNumber = questionNumber;
-	}
-
+	
 	// index
 	private int i;
+	
+	// 현재 questionNumber
+	private int questionNumber;
 	
 	// data 관련 변수(DB 갔다옴)
 	private String[][] table;
 	HashMap<String, Object> taaa = new HashMap<String, Object>();
 	private String table_name; // table name
 	private HashMap<String, Integer> table_columns; // String : columns_name /
+	private String[][] answerTable;
+	
 	// Integer : realdata_index
 
 	// SQL 구문 결과(내부에서 계산한 결과)
@@ -92,6 +85,18 @@ public class SQLCompiler
 	{
 		return text;
 	}
+	
+	public int getQuestionNumber()
+	{
+		return questionNumber;
+	}
+
+	public void setQuestionNumber(int questionNumber)
+	{
+		answerTable = quizDAO.getAnswer(questionNumber, this.table_name);
+		this.questionNumber = questionNumber;
+	}
+
 
 	public void setText(String text)
 	{
@@ -318,6 +323,7 @@ public class SQLCompiler
 		return result;
 	}
 
+	
 	/**
 	 * 구문 분석기
 	 * 

@@ -9,6 +9,7 @@ import com.basicsqledu.www.vo.Robots;
 
 public interface QuizMapper
 {
+	//전체 데이터 뷰
 	public ArrayList<Animal> getAnimal(int questionNumber);
 	public ArrayList<Animal> getAnimal2(String table_name);
 	public ArrayList<Person> getPerson(int questionNumber);
@@ -16,4 +17,10 @@ public interface QuizMapper
 	public ArrayList<Robots> getRobots(int questionNumber);
 	public ArrayList<Robots> getRobot2(String table_name);
 
+	//정답 뷰
+	public ArrayList<Animal> getAnswerAnimal(int questionNumber);
+	public ArrayList<Person> getAnswerPerson(int questionNumber);
+	public ArrayList<Robots> getAnswerRobots(int questionNumber);
+
+	
 }

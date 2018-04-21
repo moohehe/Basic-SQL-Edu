@@ -45,4 +45,26 @@
 			q${value}_robot_view
 	</select>
 	
+	
+	<!-- 정답 뷰 가져오기 -->
+	<select id="getAnswerAnimal" parameterType="int" resultType="animal">
+		SELECT *
+		FROM
+			q${value}_view
+	</select>
+	<select id="getAnswerPerson" parameterType="int" resultType="person">
+		SELECT *
+		FROM
+			q${value}_view
+	</select>
+	<select id="getAnswerRobots" parameterType="int" resultType="robots">
+		SELECT *
+		FROM
+			q${value}_view
+	</select>
+	
+	
+	
+	
+	
 </mapper>
