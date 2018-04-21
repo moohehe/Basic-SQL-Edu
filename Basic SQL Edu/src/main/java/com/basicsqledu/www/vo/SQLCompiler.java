@@ -35,7 +35,7 @@ public class SQLCompiler
 	HashMap<String, Object> taaa = new HashMap<String, Object>();
 	private String table_name; // table name
 	private HashMap<String, Integer> table_columns; // String : columns_name /
-	private String[][] answerTable;
+	private String[][] answerTable;		//DB에 저장되어있는 정답테이블 뷰
 	
 	// Integer : realdata_index
 
@@ -225,7 +225,7 @@ public class SQLCompiler
 		// Animal 타입의 데이터면
 		if (list.get(0) instanceof Animal)
 		{
-			int col = 6, row = list.size();
+			int col = 5, row = list.size();
 			table = new String[row + 1][col];
 			// 테이블 속성(attribute) 명칭 입력
 			table[0][0] = "animal_size";
@@ -233,7 +233,6 @@ public class SQLCompiler
 			table[0][2] = "animal_legs";
 			table[0][3] = "animal_color";
 			table[0][4] = "animal_habitat";
-			table[0][5] = "animal_feed";
 
 			int i = 1;
 			for (Object a : list)
@@ -467,6 +466,18 @@ public class SQLCompiler
 		{
 			map.put("result", result);
 		}
+		
+		//DB 정답 뷰 출력해보자
+		System.out.println("========== 테스트 정답 뷰 출력 ===========");
+		if(answerTable.length != 0){
+			for(int i = 0;i<answerTable.length;i++){
+				for(int k = 0;i<answerTable[k].length;k++){
+					System.out.print(answerTable[i][k] + "  ");
+				}
+				System.out.println();
+			}
+		}
+		
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
 		System.out.println("End of getResult");
 		System.out.println("result=" + result);
@@ -1690,6 +1701,7 @@ public class SQLCompiler
 								columns.add(temp_result[0][l]);
 								System.out.print(temp_result[0][l] +" ");
 							}
+							break;
 						}
 					} else if (col.contains("*"))
 					{

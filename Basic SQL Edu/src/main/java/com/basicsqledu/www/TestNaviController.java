@@ -229,7 +229,7 @@ public class TestNaviController {
 				
 				}
 
-		System.out.println("qlist="+naviContentMap.get("qlist").toString());
+		//System.out.println("qlist="+naviContentMap.get("qlist").toString());
 		
 		//맵 변환 후 보내기.
 		Gson gson = new Gson();

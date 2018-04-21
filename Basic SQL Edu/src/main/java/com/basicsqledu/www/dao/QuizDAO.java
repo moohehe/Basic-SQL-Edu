@@ -137,7 +137,7 @@ public class QuizDAO
 				// Animal 타입의 데이터면
 				if (list.get(0) instanceof Animal)
 				{
-					int col = 6, row = list.size();
+					int col = 5, row = list.size();
 					table = new String[row + 1][col];
 					// 테이블 속성(attribute) 명칭 입력
 					table[0][0] = "animal_size";
@@ -275,11 +275,12 @@ public class QuizDAO
 		QuizMapper mapper = session.getMapper(QuizMapper.class);
 		int col,row,i;
 
+		try{
 		switch (table_key) {
 		case "animal":
 			ArrayList<Animal> aniList = mapper.getAnswerAnimal(questionNumber);
 
-			col = 6; 
+			col = 5; 
 			row = aniList.size();
 			i = 1;
 			answerView = new String[row + 1][col];
@@ -365,6 +366,9 @@ public class QuizDAO
 			break;
 		default:
 			break;
+		}
+		}catch(Exception e){
+			return null;
 		}
 
 		return answerView;
