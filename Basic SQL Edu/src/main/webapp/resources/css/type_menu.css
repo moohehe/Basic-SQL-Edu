@@ -152,3 +152,7 @@ textarea {
 	border: 1px solid #1f1f1f;
 	background-color: #afaffa;
 }
+.selected {
+	font-style: italic;
+	background-color:yellow;
+}

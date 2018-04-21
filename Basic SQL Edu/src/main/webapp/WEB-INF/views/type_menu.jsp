@@ -36,10 +36,11 @@
                                 <!-- Table head -->
                                 <thead class="blue lighten-4">
                                     <tr>
-                                        <th>#</th>
-                                        <th>Lorem</th>
-                                        <th>Ipsum</th>
-                                        <th>Dolor</th>
+                                        <th> </th>
+                                        <th> </th>
+                                        <th> </th>
+                                        <th> </th>
+                                        <th> </th>
                                     </tr>
                                 </thead>
                                 <!-- Table head -->
@@ -47,25 +48,55 @@
                                 <!-- Table body -->
                                 <tbody>
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Cell 1</td>
-                                        <td>Cell 2</td>
-                                        <td>Cell 3</td>
+                                        <th scope="row"></th>
+                                        <td th_code="1"></td>
+                                        <td th_code="1"></td>
+                                        <td th_code="1"></td>
+                                        <td th_code="1"></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">2</th>
-                                        <td>Cell 4</td>
-                                        <td>Cell 5</td>
-                                        <td>Cell 6</td>
+                                        <th scope="row"></th>
+                                        <td th_code="2"></td>
+                                        <td th_code="2"></td>
+                                        <td th_code="2"></td>
+                                        <td th_code="2"></td>
                                     </tr>
                                     <tr>
-                                        <th scope="row">3</th>
-                                        <td>Cell 7</td>
-                                        <td>Cell 8</td>
-                                        <td>Cell 9</td>
+                                        <th scope="row"></th>
+                                        <td th_code="3"></td>
+                                        <td th_code="3"></td>
+                                        <td th_code="3"></td>
+                                        <td th_code="3"></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td th_code="4"></td>
+                                        <td th_code="4"></td>
+                                        <td th_code="4"></td>
+                                        <td th_code="4"></td>
                                     </tr>
                                 </tbody>
                                 <!-- Table body -->
+                                <!-- <tbody>
+                                    <tr>
+                                        <th scope="row" class="cols" th_code="1">1</th>
+                                        <td class="cols" th_code="1">Cell 1</td>
+                                        <td class="cols" th_code="1">Cell 2</td>
+                                        <td class="cols" th_code="1">Cell 3</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="col" th_code="2">2</th>
+                                        <td class="cols" th_code="2">Cell 4</td>
+                                        <td class="cols" th_code="2">Cell 5</td>
+                                        <td class="cols" th_code="2">Cell 6</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="cols" th_code="3">3</th>
+                                        <td class="cols" th_code="3">Cell 7</td>
+                                        <td class="cols" th_code="3">Cell 8</td>
+                                        <td class="cols" th_code="3">Cell 9</td>
+                                    </tr>
+                                </tbody> -->
                             </table>
            	</div>
           </div>
