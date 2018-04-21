@@ -28,7 +28,6 @@ function setTableView(table) { // parameter는 2차원 배열이거나 arraylist
 			tags += "<th>size</th>";
 			tags += "</tr></thead>";
 		}
-<<<<<<< HEAD
 		tags += "<tbody><tr>";
 		//tags += "<td scope='row' th_code="+table[i].th_code+">"+table[i].rownum+"</td>";
 		tags += "<td th_code="+table[i].th_code+">"+table[i].animal_species+"</td>";
@@ -37,29 +36,6 @@ function setTableView(table) { // parameter는 2차원 배열이거나 arraylist
 		tags += "<td th_code="+table[i].th_code+">"+table[i].animal_legs+"</td>";
 		tags += "<td th_code="+table[i].th_code+">"+table[i].animal_size+"</td>";
 		tags += "</tr>";
-=======
-		$.ajax({
-			type:"POST"
-			, url:"sqlCompiler"
-			, data:{
-				sql:str
-			}
-			, success: function(e) {
-				console.log("정답유무: "+e.complete);
-				$('#resultView').val(e);
-				
-				
-				
-				
-				
-				
-				
-			}
-			, error : function(e) {
-				console.log('error:'+e);	
-			}
-		});
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 	}
 	tags += "</tbody></table>";
 	console.log(tags);
