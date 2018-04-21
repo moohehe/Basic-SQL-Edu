@@ -232,7 +232,7 @@ public class QuizDAO
 					return null;
 				}
 
-				// Person 타입의 데이터면
+				// Robot 타입의 데이터면
 				if (list.get(0) instanceof Robots)
 				{
 					int col = 4, row = list.size();

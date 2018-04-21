@@ -244,6 +244,52 @@ public class SQLCompiler
 			}
 
 		}
+		
+		// Person 타입의 데이터면
+		if (list.get(0) instanceof Person)
+		{
+			int col = 4, row = list.size();
+			table = new String[row + 1][col];
+			// 테이블 속성(attribute) 명칭 입력
+			table[0][0] = "hair_color";
+			table[0][1] = "job";
+			table[0][2] = "height";
+			table[0][3] = "gender";
+			int i = 1;
+			for (Object a : list)
+			{
+				Person person = (Person) a;
+				table[i][0] = person.getHair_color();
+				table[i][1] = person.getJob();
+				table[i][2] = person.getHeight();
+				table[i][3] = person.getGender();
+				i++;
+			}
+
+		}
+		
+		// Robot 타입의 데이터면
+		if (list.get(0) instanceof Robots)
+		{
+			int col = 4, row = list.size();
+			table = new String[row + 1][col];
+			// 테이블 속성(attribute) 명칭 입력
+			table[0][0] = "r_color";
+			table[0][1] = "r_size";
+			table[0][2] = "r_type";
+			table[0][3] = "weapon";
+			int i = 1;
+			for (Object a : list)
+			{
+				Robots robot = (Robots) a;
+				table[i][0] = robot.getR_color();
+				table[i][1] = robot.getR_size();
+				table[i][2] = robot.getR_type();
+				table[i][3] = robot.getWeapon();
+				i++;
+			}
+
+		}
 	}
 
 	public String getTable()
