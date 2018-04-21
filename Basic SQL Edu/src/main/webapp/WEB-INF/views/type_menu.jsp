@@ -4,7 +4,15 @@
 	<!-- SQL 정답 입력 화면 DIV -->
 	
 	<div class="editor">
-
+		<div class='success'>
+			<div class=''>SUCCESS!</div>
+			<button class='btn' onclick='javascript:successStage();'>Next</button>
+		</div>
+		<div class='fail'>
+			<div class=''>FAIL!</div>
+			<div class="errorMessage"></div>
+		</div>
+		
         <div class="editor-pane">
           <div class="input-header">
             <div class="table-name"><button class="float-unit btn" id="sqltest" onclick="javascript:sqlrun();" >Submit</button></div> SQL Editor
@@ -15,6 +23,7 @@
               1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10
             </div>
               <textarea class="input-strobe" id ="sql" type="text" placeholder="Type in a SQL query" style="resize: none;"></textarea>
+              
           </div>
         </div>
 
@@ -110,3 +119,4 @@
       
       
 				<textarea cols="149" rows="5" id="resultView"></textarea> 
+				

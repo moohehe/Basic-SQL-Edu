@@ -51,7 +51,6 @@ textarea {
 .markup {
   line-height: 150%;
   font-family: menlo;
-  z-index: 1;
 }
 
 .editor .file-window {
@@ -155,4 +154,38 @@ textarea {
 .selected {
 	font-style: italic;
 	background-color:yellow;
+}
+.success {
+	width:100%;
+	height:100%;
+	position:absolute;
+	background-color:white;
+	opacity: .7;
+  	z-index: 1;
+  	text-align: center;
+  	padding-top:20%;
+}
+.success div {
+	font-size:100px;
+}
+.success button {
+	font-family: Verdana,sans-serif;
+	margin-left:40%;
+	color:black;
+	font-size:20px;
+	height:70px;
+	width:20%;
+}
+.fail {
+	width:100%;
+	height:100%;
+	position:absolute;
+	background-color:white;
+	opacity: .7;
+  	z-index: 1;
+  	text-align: center;
+  	padding-top:20%;
+}
+.fail div {
+	font-size:30px;
 }

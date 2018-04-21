@@ -9,6 +9,11 @@ var imgselector;
 	
 
 $(function(){
+	$('.success').hide();
+	$('.fail').hide();
+	
+	
+	
 	fstage = $('#currentLv').val(); //현재 레벨(스테이지) 가져옴.
 	flang = $('#currentLang').val(); //어떤 언어인지 선택. 
 	
@@ -108,10 +113,7 @@ $(function(){
 	
 	//다음 버튼 동작
 	$('#nextbtn').on('click', function(){
-		var stage = Number($('#currentLv').val())+1;
-		var lang = $('#currentLang').val();
-		
-		getDataByAJAX(stage, lang);
+		nextStage();
 		return false;
 		
 	});
@@ -141,6 +143,15 @@ $(function(){
 
 });
 
+
+
+// move to Next Stage
+function nextStage() {
+	var stage = Number($('#currentLv').val())+1;
+	var lang = $('#currentLang').val();
+	
+	getDataByAJAX(stage, lang);
+}
 //(얘가 진짜) 문제 별 그림 뿌려주는 함수.
 function createQuiz(qlist, stage){
 	console.log("cq의 stage"+stage);
@@ -164,10 +175,11 @@ function createQuiz(qlist, stage){
 				//테이블 안 칼럼들 이미지 변경.
 				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+species+color+".png");
 				$(imgselector((index)+1)).attr("th_code", value.th_code);
+				addAnimation('rubberBand', value.th_code);
 			});
 			
 			//배경 변경.
-			$('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
+			$('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
 			break;
 			
 		case 9: //div가 3개만 나오는 문제라서 일단 따로 분류.
@@ -179,10 +191,11 @@ function createQuiz(qlist, stage){
 				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+species+color+".png");
 				$(imgselector(4)).attr("src", "");
 				$(imgselector(5)).attr("src", "");
+				addAnimation('rubberBand', value.th_code);
 			});
 			
 			//배경 변경.
-			$('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
+			$('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
 			break;
 			
 		case 11: //alter table 문제
@@ -236,4 +249,11 @@ function getDataByAJAX(stage, lang) {
 			alert('가장 마지막 페이지입니다.');
 		}
 	});
+}
+
+
+function addAnimation(x, th_code) {
+	$('img[th_code='+th_code+']').removeClass().addClass(x + ' animated tableColumes' ).one('tableColumes webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
+	    $(this).removeClass().addClass('animated tableColumes' );
+	  });
 }
