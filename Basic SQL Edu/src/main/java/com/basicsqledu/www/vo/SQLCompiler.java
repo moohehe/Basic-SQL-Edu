@@ -154,21 +154,21 @@ public class SQLCompiler
 					}
 					if (s.charAt(k) == '"')
 					{
-						setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+						setErrorMessage("Syntax Error: Please check out the usuage of '");
 						text = null;
 						return;
 					}
 				}
 				if (count != 2)
 				{
-					setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+					setErrorMessage("Syntax Error: Please check out the usuage of '");
 					texts = null;
 					return;
 				} else
 				{
 					if (!(s.charAt(0) == '\'' && s.charAt(s.length() - 1) == '\''))
 					{
-						setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+						setErrorMessage("Syntax Error: Please check out the usuage of '");
 						texts = null;
 						map.put("complete", false);
 						return;
@@ -186,21 +186,21 @@ public class SQLCompiler
 					}
 					if (s.charAt(k) == '\'')
 					{
-						setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+						setErrorMessage("Syntax Error: Please check out the usuage of \"");
 						texts = null;
 						return;
 					}
 				}
 				if (count != 2)
 				{
-					setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+					setErrorMessage("Syntax Error: Please check out the usuage of \"");
 					texts = null;
 					return;
 				} else
 				{
 					if (!(s.charAt(0) == '"' && s.charAt(s.length() - 1) == '"'))
 					{
-						setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+						setErrorMessage("Syntax Error: Please check out the usuage of \"");
 						texts = null;
 						map.put("complete", false);
 						return;
@@ -387,23 +387,23 @@ public class SQLCompiler
 
 				if (!lastWord.contains(";") || !(lastWord.indexOf(';') == (lastWord.length() - 1)))
 				{
-					setErrorMessage("문법 오류 : ; 뒤에는 문자가 올 수 없습니다.");
+					setErrorMessage("Grammatical Error: letters cannot be placed after ;");
 					return map;
 				}
 
 			} else
 			{
-				setErrorMessage("문법 오류 : ; 는 문장의 끝에 하나만 올 수 있습니다.");
+				setErrorMessage("Grammatical Error: ; must be used only once at the end of the sentence.");
 				return map;
 			}
 		} else
 		{
-			setErrorMessage("문법 오류 : ; 가 없습니다.");
+			setErrorMessage("Grammatical Error: ; is missing");
 			return map;
 		}
 		if (text.contains(" .") || text.contains(". "))
 		{
-			setErrorMessage("문법 오류 : '.'는 앞뒤에는 공백이 있으면 안됩니다.");
+			setErrorMessage("Grammatical Error: There must be no space before or after '.'");
 			return map;
 		}
 		// '*' 검사
@@ -414,7 +414,7 @@ public class SQLCompiler
 			{
 				if (current.length() != 1)
 				{
-					setErrorMessage("문법 오류 : *은 단독으로 사용하여야 합니다.");
+					setErrorMessage("Grammatical Error: * must be used alone.");
 					return map;
 				}
 			}
@@ -479,7 +479,7 @@ public class SQLCompiler
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			setErrorMessage(errorMessage + "\nselect구문 오류");
+			setErrorMessage(errorMessage + "\nselect Syntax error");
 			return map;
 		}
 
@@ -511,15 +511,20 @@ public class SQLCompiler
 		case 10: case 12: case 18:
 			//* 정답 뷰랑 비교해야되요
 			//ghfhfhfh
+			
 			for(int j=1;j<answerTable.length;j++){
 				index[j-1] = j;
 				String col = answerTable[0][j];
-				for(int k =0;k<result.length;k++){
+				
+				System.out.println("결과 값 2차원 행의 길이"+result.length + " 결과 값 2차원 열의 길이 : "+result[0].length);
+				
+				for(int k =0;k<result[0].length;k++){
 					if(col.equals(result[0][k])){
 						//1. 컬럼이 맞다!
 						corr++;
+						
 						//2. 2차원 배열 데이터들 한줄씩 비교!
-						for(int p = 1;p<answerTable[p].length-1;p++){
+						for(int p = 1;p<result[p].length-1;p++){
 							if(answerTable[p][index[j-1]].equals(result[p][k])){
 								ansCorrect = true;
 							}else{
@@ -542,6 +547,7 @@ public class SQLCompiler
 				map.put("success", 1);
 			}else{
 				map.put("success", -1);
+				setErrorMessage("Not correct Answer");
 			}
 			break;
 		case 12: case 18:
@@ -551,6 +557,7 @@ public class SQLCompiler
 				map.put("success", 1);
 			}else{
 				map.put("success", -1);
+				setErrorMessage("Not correct Answer");
 			}
 			break;
 		default:
@@ -559,6 +566,7 @@ public class SQLCompiler
 				map.put("success", 1);
 			}else{
 				map.put("success", -1);
+				setErrorMessage("Not correct Answer");
 			}
 			break;
 		}
@@ -612,7 +620,7 @@ public class SQLCompiler
 				} else
 				{
 					// <table>이 아니고 다른게 나옴
-					setErrorMessage("문법오류 : create 다음에는 table이 나와야 합니다.");
+					setErrorMessage("Grammatical Error: A 'table' must be shown after 'create'");
 					return null;
 
 				}
@@ -627,7 +635,7 @@ public class SQLCompiler
 				if (!(result_name.equals("animal") || result_name.equals("robot")))
 				{
 					// 안맞음
-					setErrorMessage("문법 오류 : table 다음에는 정확한 table_name이 나와야 합니다.");
+					setErrorMessage("Grammatical Error: An accurate table_name must be typed after 'table'");
 					return null;
 				} else
 				{
@@ -639,7 +647,7 @@ public class SQLCompiler
 					stage++;
 				}
 				else{
-					setErrorMessage("문법 오류 : 괄호를 열어주어야 합니다.");
+					setErrorMessage("Grammatical Error: The parenthesis is missing");
 					return null;
 
 				}
@@ -873,7 +881,7 @@ public class SQLCompiler
 			else{
 				//stage 5 이상
 				// 괄호로 시작하지 않거나 포함되지 않음
-				setErrorMessage("문법 오류 : 괄호로 감싸야함");
+				setErrorMessage("Grammatic Error : You need to encase with parenthesis.");
 				return null;
 			}
 		}
@@ -881,7 +889,7 @@ public class SQLCompiler
 			//전부완료
 			return new String[0][0];
 		}
-		setErrorMessage("문법 오류 : 컬럼의 형태가 잘못되었습니다");
+		setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
 		return null;
 	}
 
@@ -912,7 +920,7 @@ public class SQLCompiler
 				} else
 				{
 					// <table>이 아니고 다른게 나옴
-					setErrorMessage("문법 오류 : drop 다음에는 table이 나와야 합니다.");
+					setErrorMessage("Grammatic Error : You need to encase with parenthesis.");
 					return null;
 				}
 			}else if(stage == 2){
@@ -923,7 +931,7 @@ public class SQLCompiler
 				if (!(result_name.equals(table_name)))
 				{
 					// 안맞음
-					setErrorMessage("문법 오류 : table 다음에는 정확한 table_name이 나와야 합니다.");
+					setErrorMessage("Grammatical Error: An accurate table_name must be typed after 'table'");
 					return null;
 
 				} else{
@@ -959,7 +967,7 @@ public class SQLCompiler
 				if(content.equals("table")){
 					stage++;
 				}else{
-					setErrorMessage("문법 오류 : ALTER 뒤에는 TABLE이 와야 합니다.");
+					setErrorMessage("Grammatical Error: A 'table' must come after 'ALTER'");
 					return null;
 				}
 			}else if(stage == 2){
@@ -967,7 +975,7 @@ public class SQLCompiler
 				if(content.equals("animal")){
 					stage++;
 				}else{
-					setErrorMessage("문법 오류 : 정확한 테이블 이름이 나와야 합니다.");
+					setErrorMessage("Grammatical Error: An accurate table_name must be typed after 'table'");
 					return null;
 				}
 			}else if(stage == 3 ){
@@ -1144,7 +1152,7 @@ public class SQLCompiler
 				if(current.equals("into")){
 					stage ++;
 				}else{
-					setErrorMessage("문법 오류 : insert 뒤에는 반드시 into 가 와야 합니다.");
+					setErrorMessage("Grammatical Error: 'into' must come after 'insert'");
 					return null;
 				}
 			}else if(stage == 2){
@@ -1152,14 +1160,14 @@ public class SQLCompiler
 				if(current.equals("person") || current.equals("robot")){
 					stage ++;
 				}else{
-					setErrorMessage("문법 오류 : 정확한 테이블 명을 입력해 주세요");
+					setErrorMessage("Grammatical Error: Invalid table name.");
 					return null;	
 				}
 			}else if(stage == 3){
 				if(current.equals("(")){
 					stage ++;
 				}else{
-					setErrorMessage("문법 오류 : 테이블 이름 뒤에는 괄호를 열어주어야 합니다.");
+					setErrorMessage("Grammatical Error: Parenthesis is needed after the table_name");
 					return null;	
 				}
 			}else if(stage == 4){
@@ -1319,7 +1327,7 @@ public class SQLCompiler
 					bracket_level--;
 				} else if (c.equals(";"))
 				{
-					setErrorMessage("문법 에러 : 서브쿼리문이 끝나지 않았습니다.");
+					setErrorMessage("Grammatical Error : Incompleted subquery statement");
 				}
 				if (bracket_level == 0)
 				{
@@ -1373,7 +1381,7 @@ public class SQLCompiler
 			if (from_index == (texts.length - 1))
 			{
 
-				setErrorMessage("문법오류 : FROM 이후 구문이 없습니다.");
+				setErrorMessage("Grammatical Error : No syntax found after 'from'");
 				return null;
 			}
 		}
@@ -1419,7 +1427,7 @@ public class SQLCompiler
 					{
 						if (s.equals(current))
 						{
-							setErrorMessage("문법오류 : SELECT ~ FROM 사이의 값이 없습니다.");
+							setErrorMessage("Grammatical Error : No value has found in between Select ~ From");
 							return null;
 						}
 					}
@@ -1430,7 +1438,7 @@ public class SQLCompiler
 						if (current.equals(","))
 						{
 							System.out.println("index=" + i);
-							setErrorMessage("문법오류 : ,를 확인해주세요.");
+							setErrorMessage("Grammatical Error : Check the usuage of ','");
 							return null;
 						}
 					}
@@ -1441,7 +1449,7 @@ public class SQLCompiler
 						// ,가 두번 연속 나오면 안된다.
 						if (comma)
 						{
-							setErrorMessage("문법오류 : , 가 연속으로 입력되었습니다.");
+							setErrorMessage("Grammatical Error : Wrong usuage of ','");
 							System.out.println("i=" + i);
 							return null;
 						}
@@ -1476,7 +1484,7 @@ public class SQLCompiler
 					// stage1에서는 ','로 끝나면 안됨
 					if (comma && columns.size() != 1)
 					{
-						setErrorMessage("문법오류 : 컬럼 구문은 ,로 끝날 수 없습니다.");
+						setErrorMessage("Grammatical Error : ',' cannot be used at the end of column");
 						return null;
 					}
 				}
@@ -1527,7 +1535,7 @@ public class SQLCompiler
 				{
 					if (s.equals(current))
 					{
-						setErrorMessage("문법오류 : FROM 뒤에는 \"+s+\"가 올 수 없습니다.");
+						setErrorMessage("Grammatical Error : \"+s+\" cannot be placed after 'FROM'");
 						return null;
 					}
 				}
@@ -1563,7 +1571,7 @@ public class SQLCompiler
 							close_bracket = true; // 괄호가 닫김
 							if (from_comma && !bracket)
 							{ // 괄호가 닫겨있거나 from_comma가 없어야 함
-								setErrorMessage("문법 오류 : ','를 확인하세요.");
+								setErrorMessage("Grammatical Error : Check the usuage of ','");
 								return null;
 							}
 							from_comma = true;
@@ -1577,7 +1585,7 @@ public class SQLCompiler
 							if (bracket)
 							{
 								// (가 두번 연속 나온 상황
-								setErrorMessage("문법 오류 : '('는 두번연속 나올 수 없습니다.");
+								setErrorMessage("Grammatical Error : '(' cannot be placed two times at a row.");
 								return null;
 							}
 							bracket = true;
@@ -1591,14 +1599,14 @@ public class SQLCompiler
 							} else
 							{
 								// 괄호가 오픈되지 않았음.
-								setErrorMessage("문법 오류 : '('가 없습니다.");
+								setErrorMessage("Grammatical Error : '(' is missing.");
 								return null;
 							}
 							break;
 						case ";":
 							if (from_comma)
 							{
-								setErrorMessage("문법 오류 : ,로 끝날 수 없습니다.");
+								setErrorMessage("Grammatical Error : ',' cannot be placed at the end. ");
 								return null;
 							}
 							stage++;
@@ -1608,13 +1616,13 @@ public class SQLCompiler
 							String lastWord = texts[i - 2];
 							if (!from_comma && !bracket)
 							{
-								setErrorMessage("문법 오류 : ',' 혹은 '('가 없습니다.");
+								setErrorMessage("Grammatical Error : Either ',' or '(' is missing  ");
 								return null;
 							}
 							if (!lastWord.equals("("))
 							{
 								System.out.println("lastWord=" + lastWord);
-								setErrorMessage("문법 오류 : 서브쿼리문을 확인해주세요");
+								setErrorMessage("Grammatical Error : Check the subquery ");
 								return null;
 							}
 							// 서브쿼리에 가기전에 변수 정리
@@ -1628,7 +1636,7 @@ public class SQLCompiler
 							if (ta == null)
 							{
 								System.out.println("ta="+ta);
-								setErrorMessage("문법 오류 : 재귀함수select 구문이 틀렸습니다. ");
+								setErrorMessage("Grammatical Error : Recursive function 'select' is wrong. ");
 								return null;
 							}
 							tables.add(ta);
@@ -1642,11 +1650,11 @@ public class SQLCompiler
 								// 다음 단어는 무조건 일반 단어여야 한다.
 								for (String s : COMMAND2) { // COMMAND LIST에 있는 단어는 안됨
 									if (s.equals(current)) {
-										setErrorMessage("구문 오류 : 이 위치에 명령어가 올 수 없습니다.");
+										setErrorMessage("Grammatical Error : Keywords cannot be placed at this location.");
 										return null;
 									}
 								}
-								current = texts[++i];
+								current = texts[++i];	//히익
 							}
 							need_table_name = true; // table_name 을 columns에 추가하라
 							System.out.println("after subquery current="+current);
@@ -1656,13 +1664,13 @@ public class SQLCompiler
 							{ // ',' 이후에 첫번째 단어
 								table_name = current;
 								if (table_name.equals(";")) {
-									setErrorMessage("구문 오류 : table_name이 ';'일 수는 없습니다.");
+									setErrorMessage("Syntax Error : table_name cannot be ' ; ' ");
 									return null;
 								}
 								table_data = quizDAO.getTables(questionNumber, table_name);
 								if (table_data == null)
 								{
-									setErrorMessage("문법 오류 : table [" + table_name + "]이 존재하지 않습니다.");
+									setErrorMessage("Grammatical Error : table [" + table_name + "] does not exist.");
 									return null;
 								}
 								tables.add(table_data);
@@ -1688,7 +1696,7 @@ public class SQLCompiler
 
 									break out2;
 								}
-								setErrorMessage("문법 오류 : ','가 없습니다.");
+								setErrorMessage("Grammatical Error : ',' is missing.");
 								return null;
 							}
 							break;
@@ -1703,13 +1711,13 @@ public class SQLCompiler
 				// from_comma 로 끝날 경우
 				if (from_comma && !(tables.size() == 1))
 				{
-					setErrorMessage("문법 오류 : from 절은 ,(comma)로 끝날 수 없습니다.");
+					setErrorMessage("Grammatical Error : 'from' passage cannot be end with ','.");
 					return null;
 				}
 				// bracket이 open 된 채로 끝날 경우
 				if (bracket)
 				{
-					setErrorMessage("문법 오류 : ')'가 없습니다.");
+					setErrorMessage("Grammatical Error : ')' is missing.");
 					return null;
 				}
 				//
@@ -1793,7 +1801,7 @@ public class SQLCompiler
 					{
 						if (k == 1)
 						{
-							setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
+							setErrorMessage("Grammatical Error : Check the usuage of '*'.");
 							return null;
 						} else
 						{
@@ -1801,7 +1809,7 @@ public class SQLCompiler
 							String[] c = col.split(".*");
 							if (c.length != 2)
 							{
-								setErrorMessage("문법 오류 : '*'의 사용법을 확인해주세요");
+								setErrorMessage("Grammatical Error : Check the usuage of '*'.");
 								return null;
 							}
 
@@ -1970,14 +1978,14 @@ public class SQLCompiler
 								// level이 1이나 2로 끝나야 함. 아닐 경우에는 문제
 								if (!(keyword_level == 1 || keyword_level == 2))
 								{
-									setErrorMessage("문법 오류 : order by 구문은 ','로 끝날 수 없습니다.");
+									setErrorMessage("Grammatical Error : order by passage cannot be end with ','.");
 									return null;
 								}
 								break;
 							case ",":
 								if (keyword_level == 0)
 								{
-									setErrorMessage("문법 오류 : order by에서 ','의 사용법을 확인해주세요");
+									setErrorMessage("Grammatical Error : Invalid usuage of ',' in 'order by' passage.");
 									return null;
 								}
 								keyword_level = 0; // level 0
@@ -1986,7 +1994,7 @@ public class SQLCompiler
 							case "asc":
 								if (keyword_level != 1)
 								{
-									setErrorMessage("문법 오류 : order by 구문을 확인해주세요");
+									setErrorMessage("Grammatical Error : Check the 'order by' passage.");
 									return null;
 								}
 								bys.remove(bys.size() - 1);
@@ -2000,7 +2008,7 @@ public class SQLCompiler
 								keyword_level++; // level 1+
 								if (keyword_level > 1)
 								{
-									setErrorMessage("문법 오류 : order by 구문 확인해주세요");
+									setErrorMessage("Grammatical Error : Check the 'order by' passage.");
 									return null;
 								}
 								int col = -1;
@@ -2014,7 +2022,7 @@ public class SQLCompiler
 								}
 								if (col == -1)
 								{
-									setErrorMessage("문법 오류 : in order by " + current + " column을 찾을 수 없습니다.");
+									setErrorMessage("Grammatical Error : " + current + " column is missing in 'order by' passage.");
 									return null;
 								}
 								orders.add(col);
@@ -2097,7 +2105,7 @@ public class SQLCompiler
 					} else
 					{
 						// order by 구문이 틀렸기 때문에
-						setErrorMessage("group 다음에는 by가 와야합니다.");
+						setErrorMessage("'by' must be placed after 'group'");
 						return null;
 					}
 				}
@@ -2111,13 +2119,13 @@ public class SQLCompiler
 		System.out.println("columns.size()=" + columns.size() + ", tables.size()=" + tables.size());
 		if (columns.size() == 0 || tables.size() == 0)
 		{
-			setErrorMessage("문장 구성 요소가 부족합니다.");
+			setErrorMessage("Insufficient sentence components");
 			return null;
 		}
 		System.out.println("[selectResult]");
 		if (selectResult == null)
 		{
-			setErrorMessage("selectResult == null, 알 수 없는 오류로 종료됩니다.");
+			setErrorMessage("selectResult == null, Exited from the program due to unknown error");
 			return null;
 		}
 		logger.info("selectResult.length : {}, selectResult[0].length : {}", selectResult.length,
@@ -2139,7 +2147,7 @@ public class SQLCompiler
 		logger.info("start of getRows(), current : {}, i : {}", current, i);
 		if (current == null)
 		{
-			setErrorMessage("알 수 없는 오류로 종료되었습니다.");
+			setErrorMessage("Exited from the program due to unknown error");
 			return null;
 		}
 		if (current.equals(";"))
@@ -2179,13 +2187,13 @@ public class SQLCompiler
 					o = stack.peek();
 					if (!(o instanceof String))
 					{
-						setErrorMessage("문법 에러 : '('의 사용법에 문제가 있습니다.");
+						setErrorMessage("Grammatical Error : Wrong usuage of '('");
 						return null;
 					}
 					lastWord = (String) o;
 					if (!(lastWord.equals("") || lastWord.equals("and") || lastWord.equals("or")))
 					{
-						setErrorMessage("문법 오류 : '('의 사용 방법이 틀렸습니다.");
+						setErrorMessage("Grammatical Error : Wrong usuage of '('");
 						return null;
 					}
 					stack.push(current);
@@ -2195,13 +2203,13 @@ public class SQLCompiler
 					o = stack.pop();
 					if (!(o instanceof String))
 					{
-						setErrorMessage("문법 에러 : 문제가 있습니다.");
+						setErrorMessage("Grammatical Error : Serious problem has occured.");
 						return null;
 					}
 					lastWord = (String) o;
 					if (!lastWord.equals("("))
 					{
-						setErrorMessage("문법 오류 : '('가 없습니다.");
+						setErrorMessage("Grammatical Error : '(' is missing.");
 						return null;
 					}
 					break;
@@ -2210,7 +2218,7 @@ public class SQLCompiler
 					o = stack.peek();
 					if (!(o instanceof int[]))
 					{
-						setErrorMessage("문법 에러 : " + current + " 사용방법을 확인해주세요.");
+						setErrorMessage("Grammatical Error : Check the usuage of "+current);
 						return null;
 					}
 					stack.push(current);
@@ -2220,7 +2228,7 @@ public class SQLCompiler
 					o = stack.peek();
 					if (!(o instanceof String))
 					{
-						setErrorMessage("문법 오류 : between a and b 형태를 확인해주세요");
+						setErrorMessage("Grammatical Error : Check the shape of 'between a and b'");
 						return null;
 					}
 					lastWord = (String) o;
@@ -2228,7 +2236,7 @@ public class SQLCompiler
 					{
 						if (op.equals(lastWord))
 						{
-							setErrorMessage("문법 오류 : between a and b 형태를 확인해주세요");
+							setErrorMessage("Grammatical Error : Check the shape of 'between a and b'");
 							return null;
 						}
 					}
@@ -2239,13 +2247,13 @@ public class SQLCompiler
 					{
 						if (op.equals(a) || op.equals(b))
 						{
-							setErrorMessage("문법 오류 : between a and b 형태를 확인해주세요");
+							setErrorMessage("Grammatical Error : Check the shape of 'between a and b'");
 							return null;
 						}
 					}
 					if (!and.equals("and"))
 					{
-						setErrorMessage("문법 오류 : between a and b 문법을 확인해주세요");
+						setErrorMessage("Grammatical Error : Check the gramamar of 'between a and b'");
 						return null;
 					}
 					// c bt a and b
@@ -2258,7 +2266,7 @@ public class SQLCompiler
 					texts[--i] = a;
 					break;
 				case "like":
-					setErrorMessage("구문 에러 : like 구문은 지원하지 않습니다.");
+					setErrorMessage("Syntax Error : 'like' not supported");
 					return null;
 					// like 구문은 다시 생각해보자.
 				case "is":
@@ -2271,24 +2279,24 @@ public class SQLCompiler
 						current = texts[++i];
 						if (!current.equals("null"))
 						{
-							setErrorMessage("구문 오류 : is not null 구문으로 사용해주세요");
+							setErrorMessage("Syntax Error : use 'is not null'");
 						}
 						current = "isnotnull"; // is not null
 					} else
 					{
-						setErrorMessage("구문 오류 : null 사용이 잘못되었습니다.");
+						setErrorMessage("Syntax Error : Wrong usuage of 'null' value");
 						return null;
 					}
 					Object ob = stack.peek();
 					if (!(ob instanceof String))
 					{
-						setErrorMessage("구문 오류 : is 의 위치를 확인해주세요");
+						setErrorMessage("Syntax Error : Check the location of 'is'");
 						return null;
 					}
 					lastWord = (String) o;
 					if (!(lastWord.equals("and") || lastWord.equals("or") || lastWord.equals("")))
 					{
-						setErrorMessage("문법 오류  : where 구문을 체크해주세요");
+						setErrorMessage("Grammatical Error : Check the 'where' passage.");
 						return null;
 					}
 
@@ -2311,7 +2319,7 @@ public class SQLCompiler
 					o = stack.peek();
 					if (!(o instanceof String))
 					{
-						setErrorMessage("문법 에러 : " + current + "의 사용방법을 확인해주세요.");
+						setErrorMessage("Grammatical Error : Check the usuage of"+current);
 						return null;
 					}
 					lastWord = (String) o;
@@ -2320,13 +2328,13 @@ public class SQLCompiler
 					{
 						if (s.equals(lastWord))
 						{
-							setErrorMessage("문법 에러 : 연산자가 두번 연속 나올 수 없습니다.");
+							setErrorMessage("Grammatical Error : Operator cannot be used in a row");
 							return null;
 						}
 					}
 					if (lastWord.equals("("))
 					{
-						setErrorMessage("문법 에러 : 연산자 앞에 '('가 올 수 없습니다. ");
+						setErrorMessage("Grammatical Error : '(' cannot be located at the front of an operator");
 						return null;
 					}
 					stack.push(current);
@@ -2337,7 +2345,7 @@ public class SQLCompiler
 					{
 						if (op.equals(current))
 						{
-							setErrorMessage("문법 에러 : where 구문을 확인해주세요");
+							setErrorMessage("Grammatical Error : Check the 'where' passage.");
 							return null;
 						}
 					}
@@ -2345,7 +2353,7 @@ public class SQLCompiler
 					{
 						if (s.equals(current))
 						{
-							setErrorMessage("문법 에러 : where 구문을 확인해주세요");
+							setErrorMessage("Grammatical Error : Check the 'where' passage.");
 							return null;
 						}
 					}
@@ -2361,7 +2369,7 @@ public class SQLCompiler
 					{
 						if (s.equals(current))
 						{
-							setErrorMessage("문법 에러 : where 구문을 확인해주세요");
+							setErrorMessage("Grammatical Error : Check the 'where' passage.");
 							return null;
 						}
 					}
@@ -2372,7 +2380,7 @@ public class SQLCompiler
 					o = stack.peek();
 					if (!(o instanceof String))
 					{
-						setErrorMessage("문법 오류 : where문을 체크해주세요");
+						setErrorMessage("Grammatical Error : Check the 'where' passage.");
 						return null;
 					}
 					lastWord = (String) o;
@@ -2384,7 +2392,7 @@ public class SQLCompiler
 						stack.push(current);
 					} else
 					{
-						setErrorMessage("문법 오류  : where 구문을 체크해주세요");
+						setErrorMessage("Grammatical Error : Check the 'where' passage.");
 						return null;
 					}
 					break;
@@ -2417,7 +2425,7 @@ public class SQLCompiler
 			}
 			if (!(op.equals("and") || op.equals("or")))
 			{
-				setErrorMessage("문법 오류 : where 구문을 확인해주세요. and 나 or이 아닙니다.");
+				setErrorMessage("Grammatical Error : Check the 'where' passage. Should not be 'and' or 'or'");
 				return null;
 			}
 			Object o3 = stack.pop();
@@ -2464,7 +2472,7 @@ public class SQLCompiler
 		} catch (Exception e)
 		{
 			e.printStackTrace();
-			setErrorMessage("구문 오류 : where 절을 체크해주세요");
+			setErrorMessage("Grammatical Error : Check the 'where' passage.");
 			return null;
 		}
 		// System.out.println("end of getRows");
@@ -2543,7 +2551,7 @@ public class SQLCompiler
 			logger.info("b : {}", b);
 		} catch (Exception e)
 		{
-			setErrorMessage("문법 오류 : where문을 확인해주세요");
+			setErrorMessage("Grammatical Error : Check the 'where' passage.");
 			return null;
 		}
 
@@ -2615,7 +2623,7 @@ public class SQLCompiler
 					{
 						if (isStringToDouble(BB))
 						{
-							setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+							setErrorMessage("Syntax Error : Check the usuage of '''");
 							return null;
 						}
 						AA = AA.split("'")[1];
@@ -2633,7 +2641,7 @@ public class SQLCompiler
 					{
 						if (isStringToDouble(AA))
 						{
-							setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+							setErrorMessage("Syntax Error : Check the usuage of '\'");
 							return null;
 						}
 						BB = BB.split("'")[1];
@@ -2642,7 +2650,7 @@ public class SQLCompiler
 					{
 						if (isStringToDouble(AA))
 						{
-							setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+							setErrorMessage("Syntax Error : Check the usuage of '\'");
 							return null;
 						}
 						BB = BB.split("\"")[1];
@@ -2659,7 +2667,7 @@ public class SQLCompiler
 					{
 						if (isStringToDouble(BB))
 						{
-							setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+							setErrorMessage("Syntax Error : Check the usuage of '''");
 							return null;
 						}
 						AA = AA.split("'")[1];
@@ -2668,7 +2676,7 @@ public class SQLCompiler
 					{
 						if (isStringToDouble(BB))
 						{
-							setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+							setErrorMessage("Syntax Error : Check the usuage of '\'");
 							return null;
 						}
 						AA = AA.split("\"")[1];
@@ -2677,7 +2685,7 @@ public class SQLCompiler
 					{
 						if (isStringToDouble(AA))
 						{
-							setErrorMessage("구문 오류 : '의 사용법을 확인해주세요");
+							setErrorMessage("Syntax Error : Check the usuage of '''");
 							return null;
 						}
 						BB = BB.split("'")[1];
@@ -2686,7 +2694,7 @@ public class SQLCompiler
 					{
 						if (isStringToDouble(AA))
 						{
-							setErrorMessage("구문 오류 : \"의 사용법을 확인해주세요");
+							setErrorMessage("Syntax Error : Check the usuage of '\'");
 							return null;
 						}
 						BB = BB.split("\"")[1];
@@ -2715,7 +2723,7 @@ public class SQLCompiler
 			} // end of while
 		} catch (Exception e)
 		{
-			setErrorMessage("문법 오류 : " + op + "의 사용법을 확인해주세요");
+			setErrorMessage("Grammatical Error : Check the usuage of " +op);
 			return null;
 		}
 		logger.info("row : {} ", row);
