@@ -48,7 +48,7 @@
 	margin-right: 20px;
 }
 /* 언어 변환 버튼 관련 DIV css*/
-.langcheck {
+.langcheck { 
 	position:absolute;
 	bottom:40px; right:0px;
 	text-align: center;
