@@ -13,6 +13,16 @@ $(function(){
 	$('.success').hide();
 	$('.fail').hide();
 	
+	$('.menubtn').on('click',function() {
+		var menu = $(this).text();
+		if (menu == 'CONTACT US') {
+			location.href="contactus";
+		}
+		if (menu == 'CERTIFICATION') {
+			console.log('certification run');
+		}
+		return false;
+	});
 	
 	
 	fstage = $('#currentLv').val(); //현재 레벨(스테이지) 가져옴.

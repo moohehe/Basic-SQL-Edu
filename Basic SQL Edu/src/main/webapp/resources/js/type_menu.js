@@ -25,14 +25,35 @@ function setTableView(table) { // parameter는 2차원 배열이거나 arraylist
 	// 첫번째 줄
 	for (var i = 0; i < table.length; i++) {
 		if (i == 0 ) {
-			tags += "<tr>";
-			//tags += "<th></th>";
-			tags += "<th scope='row'>species</th>";
-			tags += "<th>color</th>";
-			tags += "<th>habitat</th>";
-			tags += "<th>legs</th>";
-			tags += "<th>size</th>";
-			tags += "</tr></thead>";
+			
+			//animal일 경우.
+				tags += "<tr>";
+				//tags += "<th></th>";
+				tags += "<th scope='row'>species</th>";
+				tags += "<th>color</th>";
+				tags += "<th>habitat</th>";
+				tags += "<th>legs</th>";
+				tags += "<th>size</th>";
+				tags += "</tr></thead>";
+			
+			/*//person일 경우.
+				tags += "<tr>";
+				//tags += "<th></th>";
+				tags += "<th scope='row'>hair_color</th>";
+				tags += "<th>height</th>";
+				tags += "<th>job</th>";
+				tags += "<th>gender</th>";
+				tags += "</tr></thead>";
+			
+			//robot일 경우.
+				tags += "<tr>";
+				//tags += "<th></th>";
+				tags += "<th scope='row'>r_type</th>";
+				tags += "<th>r_color</th>";
+				tags += "<th>r_size</th>";
+				tags += "<th>weapon</th>";
+				tags += "</tr></thead>";*/
+			
 		}
 		tags += "<tbody><tr>";
 		//tags += "<td scope='row' th_code="+table[i].th_code+">"+table[i].rownum+"</td>";
