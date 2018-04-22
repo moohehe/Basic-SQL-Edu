@@ -136,6 +136,8 @@ $(function(){
 		var lang = $('#currentLang').val();
 		
 		getDataByAJAX(stage, lang);
+		$('.level-menu').slideUp(450);
+		$('.wrap').show();
 		return false;
 	});
 			
@@ -200,8 +202,28 @@ function createQuiz(qlist, stage){
 		case 11: //alter table 문제
 			break;
 		case 12: case 13: case 14: // 모두 person 문제테이블 활용.
+			$.each(qlist, function(index, value){
+				var job = value.job;
+				var color = value.hair_color;
+				
+				//테이블 안 칼럼들 이미지 변경.
+				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+job+color+".png");
+				$(imgselector(4)).attr("src", "");
+				$(imgselector(5)).attr("src", "");
+				addAnimation('rubberBand', value.th_code);
+			});
 			break;
 		case 17: case 18: // robot 문제테이블 활용.
+			$.each(qlist, function(index, value){
+				var type = value.r_type;
+				var color = value.r_color;
+				
+				//테이블 안 칼럼들 이미지 변경.
+				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+type+color+".png");
+				$(imgselector(4)).attr("src", "");
+				$(imgselector(5)).attr("src", "");
+				addAnimation('rubberBand', value.th_code);
+			});
 			break;
 			
 	}
