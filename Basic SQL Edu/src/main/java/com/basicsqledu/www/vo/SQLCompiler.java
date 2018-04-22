@@ -98,6 +98,8 @@ public class SQLCompiler
 		System.out.println("문제 번호?? : " + questionNumber + "테이블 이름 뭐니 : " + table_name);
 		int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
 		
+		System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
+		
 		// questionNumber가 1~ 11까지는 animal
 				// questionNumber가 12~16은 PERSON
 				// questionNumber가 17~20은 ROBOT
@@ -497,6 +499,30 @@ public class SQLCompiler
 				System.out.println();
 			}
 		}
+		
+		switch (questionNumber) {
+		case 3:
+			//species [0][1] --> 정답 뷰
+			for(int i = 0;i<result.length;i++){
+				for(int j = 1;j<result[0].length;j++){
+					if(result[0][i].equals("animal_species")){
+						
+					}
+				}
+			}
+			break;
+		case 4:
+			//habitat [0][4] --> 정답 뷰
+			
+			break;
+		case 2:	case 5:	case 6: case 7: case 8: case 9:
+		case 10: case 12: case 13:	case 18:
+			//*
+			break;
+		default:
+			break;
+		}
+			
 		
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
 		System.out.println("End of getResult");
