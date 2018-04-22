@@ -3,11 +3,10 @@ function setTd() {
 	console.log('setTd run');
 	$('td').mouseover(function() {
 		var selected = $(this).attr('th_code');
-		console.log('th_code='+selected);
-		$('div .shadow[th_code="'+selected+'"]').show();
+		$('img[th_code='+selected+']').removeClass().addClass('tada infinite animated tableColumes' );
 	})
 	$('td').mouseout(function() {
-		$('div .shadow').hide();
+		$('img').removeClass().addClass('animated tableColumes' );
 	})
 }
 // table tag 만들기
@@ -62,4 +61,36 @@ function sqlrun() {
 			console.log('error:'+e);	
 		}
 	});
+}
+var editor_text;
+/* 입력한 sql 구문이 틀렸을 때 */
+function sql_fail(errorMessage) {
+	errorMessage = 'asdf';
+	console.log('fail run');
+	// 실패했을 경우에는 errorMessage를 div로 띄우고 (textarea 위에 겹쳐서)
+	// 이 div는 클릭하면 사라진다. fadeout()
+	// view_menu 쪽의 그림파일들을 순간적으로 boo-! 하는 느낌의 class를 입력한다. animation 효과 삽입
+	// 위 animation은 1번만 or 2~3초에 한번 정도 boo! 하고 2~3번정도만 반복한다.
+	$('.fail').fadeIn("slow");
+	$('.errorMessage').text(errorMessage);
+	$('.fail').on('click',function() {
+		$('.fail').fadeOut();
+	})
+}
+/* 정답일 경우 */
+function sql_success() {
+	console.log('success run');
+	// 성공했다는 메세지를 div로 띄우고
+	// Next 버튼을 만들고
+	// next 버튼을 누르면
+	// next 버튼+ success 메세지가 있는 div가 사라지고(fadeout)
+	// cookie에 문제 완료 데이터 삽입하고
+	// nextBtn에 있는 function 실행
+	// 
+	// 20스테이지를 모두 종료햇을 경우에는 인증서 발급 메뉴로 간다.
+	// 성공하면 view_menu 쪽의 그림파일에 class를 입력한다. (뛰어노는 듯한 기쁜 이미지 동작을 부여한다.)
+	$('.success').fadeIn("slow");
+}
+function successStage() {
+	
 }

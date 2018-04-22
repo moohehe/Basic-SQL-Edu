@@ -14,8 +14,8 @@
 
 
 	<!-- BootStrap -->
-	<link href="<c:url value='/resources/css/bootstrap.css'   />" rel="stylesheet">
-	<link href="<c:url value='/resources/css/mdb.css'   />" rel="stylesheet">
+	<link href="<c:url value='/resources/css/bootstrap.css' />" rel="stylesheet">
+	<link href="<c:url value='/resources/css/mdb.css' />" rel="stylesheet">
 	<link href="<c:url value='/resources/css/style.css' />" rel="stylesheet">
 	<link href="<c:url value='/resources/css/animate.css' />" rel="stylesheet">
 
@@ -52,12 +52,12 @@
 	    padding:0px;
 	    marin:0px;
     }
-    div {
-     border: 1px solid cyan;}
+/*     div {
+     border: 1px solid cyan;} */
 </style>
 </head>
 <body>
-	<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
+	<input id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
 	<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
 
 <div class="left_menu">
@@ -72,10 +72,17 @@
 	</div>
 </div>
 
-<div class="right_menu">
 	<!-- Navigation Bar -->
 	<%@ include file="navigation.jsp" %>
-</div>
-
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+<br><br><br><br><br>
+	<button onclick="javascript:sql_success();">success</button>
+	<button onclick="javascript:sql_fail();">fail</button>
 </body>
 </html>

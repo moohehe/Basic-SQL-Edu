@@ -2,7 +2,7 @@
 	.object_layout {
 	width:100%;
 		position: absolute;
-		bottom:0px;
+		bottom:10%;
 		right:auto;
 		left:auto;
 		/* height:150px; */
@@ -19,7 +19,7 @@
 		background-image: url("<c:url value="/resources/image/bg1.jpg"/>");
 		background-repeat: no-repeat;
 		background-position: center center;
-		background-size: full;
+		background-size: 100%;
 		width: 100%;
 		height: 100%;
 		border: 1px;
