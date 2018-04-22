@@ -377,15 +377,7 @@ public class QuizDAO
 			return null;
 		}
 
-		System.out.println("========== 테스트 정답 뷰 출력(DAO) ===========");
-		if(answerView.length != 0){
-			for(int j = 0;j<answerView.length;j++){
-				for(int k = 0;k<answerView[0].length;k++){
-					System.out.print(answerView[j][k] + "  ");
-				}
-				System.out.println();
-			}
-		}
+		
 		return answerView;
 	}
 

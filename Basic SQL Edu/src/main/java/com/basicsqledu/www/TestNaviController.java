@@ -213,9 +213,9 @@ public class TestNaviController {
 		//DB에서 문제 그림 관련 정보를 가져옴.
 		//문제 그림 관련 정보 읽어오기.
 		HashMap<String, Object> quizData = null;
-		//지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 19, 20)
-				if(qt.getLvstatus() == 1 || qt.getLvstatus() == 11 || qt.getLvstatus() == 15 
-					|| qt.getLvstatus() == 16 || qt.getLvstatus() == 19 || qt.getLvstatus() == 20 ){
+		//지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 17, 19, 20)
+				if(qt.getLvstatus() == 1 || qt.getLvstatus() == 11 || qt.getLvstatus() == 15
+					|| qt.getLvstatus() == 16 || qt.getLvstatus() == 17 || qt.getLvstatus() == 19 || qt.getLvstatus() == 20 ){
 					
 					
 				}else{
