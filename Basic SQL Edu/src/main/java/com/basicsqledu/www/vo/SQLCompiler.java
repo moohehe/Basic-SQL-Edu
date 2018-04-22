@@ -510,6 +510,7 @@ public class SQLCompiler
 		case 2:	case 3: case 4: case 5:	 case 6: case 7: case 8: case 9:
 		case 10: case 12: case 18:
 			//* 정답 뷰랑 비교해야되요
+			//ghfhfhfh
 			for(int j=1;j<answerTable.length;j++){
 				index[j-1] = j;
 				String col = answerTable[0][j];
