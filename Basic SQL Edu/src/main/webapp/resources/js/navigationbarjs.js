@@ -271,6 +271,7 @@ function getDataByAJAX(stage, lang) {
 			$('#currentLang').val(obj.questext.textLang);
 			$('#progresslv').css('width', (obj.questext.lvstatus)*5+"%");
 			console.log('cookie= '+document.cookie);
+			console.log('뾰로롱 lv=['+obj.questext.lvstatus+']');
 			
 			//처음 화면 문제테이블 갱신
 			qlist = obj.qlist;
@@ -278,7 +279,7 @@ function getDataByAJAX(stage, lang) {
 			console.log('뾰롱');
 			console.log(qlist);
 			createQuiz(qlist, anslist, obj.questext.lvstatus);
-			setTableView(qlist); // navi 이동후에 table_data에 값 입력하기
+			setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
 			setTd(); // mouserover event set
 			setView();
 		},

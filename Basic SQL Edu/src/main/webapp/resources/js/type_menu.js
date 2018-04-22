@@ -1,9 +1,20 @@
-function sql_check() {
-	var sql_text = $('textarea').val();
-	if (sql_text.split('\n').length > 10) {
-		
+var sql_text;
+$(function() {
+	sql_text = $('textarea').val();
+})
+function text_keypress() {
+	if (sql_text.length < 5) {
+		sql_text = "";
 	}
-	console.log(sql_text);
+	if (sql_text.split('\n').length <= 9) {
+		sql_text = $('textarea').val();
+	}
+}
+function text_keyup() {
+	if (sql_text.split('\n').length > 9) {
+		console.log('10줄 넘어감');
+		$('textarea').val(sql_text);
+	}
 }
 // table row - mouserover되면 view의 그림에 그림자 보여주기
 function setTd() {
@@ -17,52 +28,75 @@ function setTd() {
 	})
 }
 // table tag 만들기
-function setTableView(table) { // parameter는 2차원 배열이거나 arraylist임
+function setTableView(table, lv) { // parameter는 2차원 배열이거나 arraylist임
 	console.log('setTableView run');
 	console.log(table);
 	var table_data = $('#table_data');
 	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
+	
 	// 첫번째 줄
 	for (var i = 0; i < table.length; i++) {
 		if (i == 0 ) {
 			
-			//animal일 경우.
+			if (lv < 12 ) {
+				//animal일 경우.
 				tags += "<tr>";
 				//tags += "<th></th>";
-				tags += "<th scope='row'>species</th>";
-				tags += "<th>color</th>";
-				tags += "<th>habitat</th>";
-				tags += "<th>legs</th>";
-				tags += "<th>size</th>";
+				tags += "<th scope='row' class='t_head'>species</th>";
+				tags += "<th class='t_head'>color</th>";
+				tags += "<th class='t_head'>habitat</th>";
+				tags += "<th class='t_head'>legs</th>";
+				tags += "<th class='t_head'>size</th>";
 				tags += "</tr></thead>";
-			
-			/*//person일 경우.
+
+			}
+			else if (lv < 16) {
+				//person일 경우.
 				tags += "<tr>";
 				//tags += "<th></th>";
-				tags += "<th scope='row'>hair_color</th>";
-				tags += "<th>height</th>";
-				tags += "<th>job</th>";
-				tags += "<th>gender</th>";
+				tags += "<th scope='row' class='t_head'>hair_color</th>";
+				tags += "<th class='t_head'>height</th>";
+				tags += "<th class='t_head'>job</th>";
+				tags += "<th class='t_head'>gender</th>";
 				tags += "</tr></thead>";
-			
-			//robot일 경우.
+			}
+			else {
+				//robot일 경우.
 				tags += "<tr>";
 				//tags += "<th></th>";
-				tags += "<th scope='row'>r_type</th>";
-				tags += "<th>r_color</th>";
-				tags += "<th>r_size</th>";
-				tags += "<th>weapon</th>";
-				tags += "</tr></thead>";*/
-			
+				tags += "<th scope='row' class='t_head'>r_type</th>";
+				tags += "<th class='t_head'>r_color</th>";
+				tags += "<th class='t_head'>r_size</th>";
+				tags += "<th class='t_head'>weapon</th>";
+				tags += "</tr></thead>";
+			}
 		}
-		tags += "<tbody><tr>";
-		//tags += "<td scope='row' th_code="+table[i].th_code+">"+table[i].rownum+"</td>";
-		tags += "<td th_code="+table[i].th_code+">"+table[i].animal_species+"</td>";
-		tags += "<td th_code="+table[i].th_code+">"+table[i].animal_color+"</td>";
-		tags += "<td th_code="+table[i].th_code+">"+table[i].animal_habitat+"</td>";
-		tags += "<td th_code="+table[i].th_code+">"+table[i].animal_legs+"</td>";
-		tags += "<td th_code="+table[i].th_code+">"+table[i].animal_size+"</td>";
-		tags += "</tr>";
+		if (lv < 12 ) {
+			tags += "<tbody><tr>";
+			//tags += "<td scope='row' th_code="+table[i].th_code+">"+table[i].rownum+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].animal_species+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].animal_color+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].animal_habitat+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].animal_legs+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].animal_size+"</td>";
+			tags += "</tr>";
+		} else if (lv < 16) {
+			tags += "<tbody><tr>";
+			//tags += "<td scope='row' th_code="+table[i].th_code+">"+table[i].rownum+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].hair_color+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].job+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].height+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].gender+"</td>";
+			tags += "</tr>";
+		} else {
+			tags += "<tbody><tr>";
+			//tags += "<td scope='row' th_code="+table[i].th_code+">"+table[i].rownum+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].r_size+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].r_color+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].r_type+"</td>";
+			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].weapon+"</td>";
+			tags += "</tr>";
+		}
 	}
 	tags += "</tbody></table>";
 	console.log(tags);
@@ -99,7 +133,6 @@ function sqlrun() {
 var editor_text;
 /* 입력한 sql 구문이 틀렸을 때 */
 function sql_fail(errorMessage) {
-	errorMessage = 'asdf';
 	console.log('fail run');
 	// 실패했을 경우에는 errorMessage를 div로 띄우고 (textarea 위에 겹쳐서)
 	// 이 div는 클릭하면 사라진다. fadeout()
@@ -126,5 +159,6 @@ function sql_success() {
 	$('.success').fadeIn("slow");
 }
 function successStage() {
-	
+	nextStage();
+	$('.success').hide();
 }
