@@ -1,6 +1,6 @@
 package com.basicsqledu.www.util;
 
-/**
+/**d
  * 게시판 페이징 처리 클래스
  */
 public class PageNavigator {
