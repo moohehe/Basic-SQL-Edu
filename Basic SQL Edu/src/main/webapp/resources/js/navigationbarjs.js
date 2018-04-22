@@ -62,7 +62,6 @@ $(function(){
 		},
 		dataType : "json",
 		success : function(obj){
-			
 			//쿠키값에 따른 화면 갱신(완료표시를 위함)
 			$('.stagebtn'+$('#currentLv').val()).css('color', 'red');
 			

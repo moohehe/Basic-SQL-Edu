@@ -1,3 +1,4 @@
+
 // table row - mouserover되면 view의 그림에 그림자 보여주기
 function setTd() {
 	console.log('setTd run');
@@ -54,8 +55,13 @@ function sqlrun() {
 			sql:str 
 		}
 		, success: function(e) {
+			if (e.url != '') {
+				location.href(url);
+				return false;
+			}
 			console.log(e);
 			$('#resultView').val(e);
+			// data 로 맞췄다 틀렸다 표시할것
 		}
 		, error : function(e) {
 			console.log('error:'+e);	
