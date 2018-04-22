@@ -340,7 +340,7 @@ public class QuizDAO
 				e.printStackTrace();
 			}
 			break;
-		case "robots_view":
+		case "robot_view":
 			ArrayList<Robots> robotList = mapper.getAnswerRobots(questionNumber);
 
 			col = 5; 
