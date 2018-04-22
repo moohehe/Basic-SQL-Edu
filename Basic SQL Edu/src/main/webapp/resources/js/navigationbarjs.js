@@ -224,7 +224,7 @@ function createQuiz(qlist, anslist, stage){
 				
 				var r_type = value.r_type;
 				var color = value.r_color;
-				
+				console.log("로봇:"+ r_type + "로봇색:" + color);
 				//테이블 안 칼럼들 이미지 변경.
 				$(imgselector((index)+1)).attr("src", "/www/resources/image/"+r_type+color+".png");
 				$(imgselector((index)+1)).attr("th_code", value.th_code);

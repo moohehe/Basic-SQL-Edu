@@ -214,7 +214,7 @@ public class TestNaviController {
 		//문제 그림 관련 정보 읽어오기.
 		HashMap<String, Object> quizData = null;
 		//지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 17, 19, 20)
-				if(qt.getLvstatus() == 1 || qt.getLvstatus() == 11 || qt.getLvstatus() == 15
+				if(qt.getLvstatus() == 1 || qt.getLvstatus() == 11 || qt.getLvstatus() == 15 || qt.getLvstatus() == 18
 					|| qt.getLvstatus() == 16 || qt.getLvstatus() == 17 || qt.getLvstatus() == 19 || qt.getLvstatus() == 20 ){
 					
 					
