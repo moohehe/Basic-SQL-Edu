@@ -1,5 +1,6 @@
-function sql_text() {
+function sql_check() {
 	var sql_text = $('textarea').val();
+	
 	console.log(sql_text);
 }
 // table row - mouserover되면 view의 그림에 그림자 보여주기
