@@ -119,7 +119,7 @@ public class QuizDAO
 			{
 				logger.info("animal");
 				QuizMapper mapper = session.getMapper(QuizMapper.class);
-				String table_name = table_key+"_view";
+				String table_name ="q"+questionNumber+"_animal"+"_view";
 				// exam) q1_animal
 				// exam) q4_birds, q4_tigers, q4_animal
 				logger.info("table_name:'{}' ",table_name);
@@ -170,7 +170,7 @@ public class QuizDAO
 			{
 				logger.info("person");
 				QuizMapper mapper = session.getMapper(QuizMapper.class);
-				String table_name = table_key+"_view";
+				String table_name ="q"+questionNumber+"_person"+"_view";
 				// exam) q1_animal
 				// exam) q4_birds, q4_tigers, q4_animal
 				logger.info("table_name:'{}' ",table_name);
@@ -218,7 +218,7 @@ public class QuizDAO
 			{
 				logger.info("robot");
 				QuizMapper mapper = session.getMapper(QuizMapper.class);
-				String table_name = table_key+"_view";
+				String table_name ="q"+questionNumber+"_robot"+"_view";
 
 				logger.info("table_name:'{}' ",table_name);
 				ArrayList<Robots> list = mapper.getRobot2(table_name);

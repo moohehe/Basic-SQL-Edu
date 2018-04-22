@@ -101,8 +101,8 @@ public class SQLCompiler
 		System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
 		
 		// questionNumber가 1~ 11까지는 animal
-				// questionNumber가 12~16은 PERSON
-				// questionNumber가 17~20은 ROBOT
+		// questionNumber가 12~16은 PERSON
+		// questionNumber가 17~20은 ROBOT
 		if(questionNumber >1 && questionNumber<=11){
 			answerTable = new String[answerSize][6];
 		}else if(questionNumber >11 && questionNumber<=16){
@@ -500,29 +500,67 @@ public class SQLCompiler
 			}
 		}
 		
+		int corr = 0;
+		int [] index = new int[answerTable.length-1];
+		boolean ansCorrect= false;
 		switch (questionNumber) {
-		case 3:
-			//species [0][1] --> 정답 뷰
-			for(int i = 0;i<result.length;i++){
-				for(int j = 1;j<result[0].length;j++){
-					if(result[0][i].equals("animal_species")){
-						
+		case 13:
+			//* 서브쿼리 및 조인 문제 --> 사용자 2차원 배열은 컬럼앞에 테이블이름 붙어서 나와지나?
+			break;
+		case 2:	case 3: case 4: case 5:	 case 6: case 7: case 8: case 9:
+		case 10: case 12: case 18:
+			//* 정답 뷰랑 비교해야되요
+			for(int j=1;j<answerTable.length;j++){
+				index[j-1] = j;
+				String col = answerTable[0][j];
+				for(int k =0;k<result.length;k++){
+					if(col.equals(result[0][k])){
+						//1. 컬럼이 맞다!
+						corr++;
+						//2. 2차원 배열 데이터들 한줄씩 비교!
+						for(int p = 1;p<answerTable[p].length-1;p++){
+							if(answerTable[p][index[j-1]].equals(result[p][k])){
+								ansCorrect = true;
+							}else{
+								ansCorrect = false;
+							}
+						}
 					}
 				}
 			}
 			break;
-		case 4:
-			//habitat [0][4] --> 정답 뷰
-			
-			break;
-		case 2:	case 5:	case 6: case 7: case 8: case 9:
-		case 10: case 12: case 13:	case 18:
-			//*
-			break;
 		default:
 			break;
 		}
-			
+		
+		switch (questionNumber) {
+		case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+			// questionNumber가 1~ 11까지는 animal
+			if(corr == 5 && ansCorrect){
+				System.out.println("정답이다 !!");
+				map.put("success", 1);
+			}else{
+				map.put("success", -1);
+			}
+			break;
+		case 12: case 18:
+			// questionNumber가 12~16은 PERSON
+			// questionNumber가 17~20은 ROBOT
+			if(corr == 4 && ansCorrect){
+				map.put("success", 1);
+			}else{
+				map.put("success", -1);
+			}
+			break;
+		default:
+			//나머지 create, drop, insert, update, alter
+			if(result != null){
+				map.put("success", 1);
+			}else{
+				map.put("success", -1);
+			}
+			break;
+		}
 		
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
 		System.out.println("End of getResult");
