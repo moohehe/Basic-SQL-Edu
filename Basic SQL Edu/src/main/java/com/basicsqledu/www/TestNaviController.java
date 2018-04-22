@@ -239,28 +239,28 @@ public class TestNaviController {
 					}
 					//System.out.println(quizData.get("table_value"));
 				
+					//정답 뷰 가져온후 화면으로 전달
+					compiler.setQuestionNumber(questionNumber, table_key);
+					String [][] temp = compiler.getAnswerTable();
+					ArrayList<String> anserView = new ArrayList<>();
+					
+					System.out.println(temp.length);
+					System.out.println(temp[0].length);
+					
+					System.out.println("========== 테스트 정답 뷰 셋팅(TestNavi) ===========");
+					if(temp.length != 0){
+						for(int j= 1;j<temp.length;j++){
+							anserView.add(temp[j][0]);
+						}
+					}
+					naviContentMap.put("ansList", anserView);
+					
 				}
 
 		//System.out.println("qlist="+naviContentMap.get("qlist").toString());
-		
 				
 				
-		//정답 뷰 가져온후 화면으로 전달
-		compiler.setQuestionNumber(questionNumber, table_key);
-		String [][] temp = compiler.getAnswerTable();
-		ArrayList<String> anserView = new ArrayList<>();
 		
-		System.out.println(temp.length);
-		System.out.println(temp[0].length);
-		
-		System.out.println("========== 테스트 정답 뷰 셋팅(TestNavi) ===========");
-		if(temp.length != 0){
-			for(int j= 1;j<temp.length;j++){
-				anserView.add(temp[j][0]);
-			}
-		}
-		
-		naviContentMap.put("ansList", anserView);
 		
 		//맵 변환 후 보내기.
 		Gson gson = new Gson();
