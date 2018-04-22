@@ -1654,7 +1654,7 @@ public class SQLCompiler
 										return null;
 									}
 								}
-								current = texts[++i];
+								current = texts[++i];	//히익
 							}
 							need_table_name = true; // table_name 을 columns에 추가하라
 							System.out.println("after subquery current="+current);
