@@ -10,7 +10,12 @@
 
 
 <body>
-
+<style>
+	.centerdiv {
+	background-color:white;
+	opacity: 1;
+	}
+</style>
 <div class="centerdiv">
 <h1>[ 홈페이지 불편사항 ]</h1>
 

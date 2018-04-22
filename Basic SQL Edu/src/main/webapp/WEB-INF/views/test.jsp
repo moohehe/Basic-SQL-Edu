@@ -52,6 +52,15 @@
 	    padding:0px;
 	    marin:0px;
     }
+    .contactus {
+    	position:absolute;
+    	height:100%;
+    	width:100%;
+    	margin:0;
+    	z-index: 1;
+    	background-color:gray;
+    	opacity: .9;
+    }
 /*     div {
      border: 1px solid cyan;} */
 </style>
@@ -60,6 +69,9 @@
 	<input id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
 	<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
 
+<div class="contactus" >
+	<%@ include file="board/writeForm.jsp" %>
+</div>
 <div class="left_menu">
 	<!-- 그림이 표시되는 부분 -->
 	<div class="view_menu">

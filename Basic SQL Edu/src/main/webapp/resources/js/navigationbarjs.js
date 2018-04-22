@@ -12,11 +12,13 @@ var imgselector;
 $(function(){
 	$('.success').hide();
 	$('.fail').hide();
+	$('.contactus').hide();
 	
 	$('.menubtn').on('click',function() {
 		var menu = $(this).text();
 		if (menu == 'CONTACT US') {
-			location.href="contactus";
+			$('.navigation').hide();
+			$('.contactus').show();
 		}
 		if (menu == 'CERTIFICATION') {
 			console.log('certification run');
