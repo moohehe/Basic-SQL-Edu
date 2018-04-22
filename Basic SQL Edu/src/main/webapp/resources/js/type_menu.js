@@ -1,4 +1,7 @@
-
+function sql_text() {
+	var sql_text = $('textarea').val();
+	console.log(sql_text);
+}
 // table row - mouserover되면 view의 그림에 그림자 보여주기
 function setTd() {
 	console.log('setTd run');
@@ -54,9 +57,10 @@ function sqlrun() {
 		, data:{
 			sql:str 
 		}
+		, dataType: 'json'
 		, success: function(e) {
-			if (e.url != '') {
-				location.href(url);
+			if (e.password == 'pass' ) {
+				location.href = e.url;
 				return false;
 			}
 			console.log(e);

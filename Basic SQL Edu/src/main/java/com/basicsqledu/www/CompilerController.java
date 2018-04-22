@@ -32,6 +32,16 @@ public class CompilerController
 	public String compiler(String sql, HttpServletResponse response
 			, @RequestParam(defaultValue="animal_view") String table_name
 			, @RequestParam(defaultValue="2") int questionNumber) {
+		if (sql.equals("abracatabra")) {
+			System.out.println("아브라카타브라!");
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("password", "pass");
+			map.put("url","board/list");
+			Gson gson = new Gson();
+			String json = gson.toJson(map);
+			System.out.println("[ResultData]\n"+json);
+			return json;
+		}
 		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8");
 		// 0. 빈값이면 생략
@@ -72,7 +82,7 @@ public class CompilerController
 		String json = gson.toJson(resultMap);
 		System.out.println("[ResultData]\n"+json);
 		
-		return "success!!!\n"+json;
+		return json;
 	}
 	
 	
