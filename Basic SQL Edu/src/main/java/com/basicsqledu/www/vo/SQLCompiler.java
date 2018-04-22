@@ -511,15 +511,20 @@ public class SQLCompiler
 		case 10: case 12: case 18:
 			//* 정답 뷰랑 비교해야되요
 			//ghfhfhfh
+			
 			for(int j=1;j<answerTable.length;j++){
 				index[j-1] = j;
 				String col = answerTable[0][j];
-				for(int k =0;k<result.length;k++){
+				
+				System.out.println("결과 값 2차원 행의 길이"+result.length + " 결과 값 2차원 열의 길이 : "+result[0].length);
+				
+				for(int k =0;k<result[0].length;k++){
 					if(col.equals(result[0][k])){
 						//1. 컬럼이 맞다!
 						corr++;
+						
 						//2. 2차원 배열 데이터들 한줄씩 비교!
-						for(int p = 1;p<answerTable[p].length-1;p++){
+						for(int p = 1;p<result[p].length-1;p++){
 							if(answerTable[p][index[j-1]].equals(result[p][k])){
 								ansCorrect = true;
 							}else{
@@ -542,6 +547,7 @@ public class SQLCompiler
 				map.put("success", 1);
 			}else{
 				map.put("success", -1);
+				setErrorMessage("Not correct Answer");
 			}
 			break;
 		case 12: case 18:
@@ -551,6 +557,7 @@ public class SQLCompiler
 				map.put("success", 1);
 			}else{
 				map.put("success", -1);
+				setErrorMessage("Not correct Answer");
 			}
 			break;
 		default:
@@ -559,6 +566,7 @@ public class SQLCompiler
 				map.put("success", 1);
 			}else{
 				map.put("success", -1);
+				setErrorMessage("Not correct Answer");
 			}
 			break;
 		}
