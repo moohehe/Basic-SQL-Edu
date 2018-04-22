@@ -16,7 +16,6 @@ import com.basicsqledu.www.util.PageNavigator;
 import com.basicsqledu.www.vo.Feedback_Board;
 
 @Controller
-@RequestMapping(value="board")
 public class FeedbackController {
 	
 	@Autowired
@@ -52,7 +51,7 @@ public class FeedbackController {
 		return "board/list";
 	}
 	
-	@RequestMapping(value="writeForm",method=RequestMethod.GET)
+	@RequestMapping(value="contactus",method=RequestMethod.GET)
 	public String writeForm(){
 		return "board/writeForm";
 	}

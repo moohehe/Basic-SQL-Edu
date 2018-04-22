@@ -12,7 +12,7 @@
 				<div class="float-unit lvstat" id="LvInfo"> Level ${questext.lvstatus } of 20 </div>
 		
 				<div class="float-unit dropbtn">Stage</div>
-				<div class="float-unit btn" id="prevbtn" >◀</div>
+				<div class="float-unit btn prebtn" id="prevbtn" >◀</div>
 				<div class="float-unit btn nxtbtn" id="nextbtn" >▶</div>
 				<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
 				</div>
@@ -44,6 +44,10 @@
 					<div class="langbtn btn" data-num="1" > eng </div> 
 					<div class="langbtn btn" data-num="2" > kor </div> 
 					<div class="langbtn btn" data-num="3" > jpn </div> 
+				</div>
+				<div class="navi_bottom">
+					<div class="menubtn btn" id="contactus">CONTACT US</div>
+					<div class="menubtn btn" id="certification">CERTIFICATION</div>
 				</div>
 			</div>
 		</div>	
