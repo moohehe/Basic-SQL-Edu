@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 <title>[ 홈페이지 불편사항 ]</title>
 
 </head>
@@ -13,7 +13,10 @@
 <style>
 	.centerdiv {
 	background-color:white;
+<<<<<<< HEAD
+=======
 	opacity: 10;
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 	}
 </style>
 <div class="centerdiv">
