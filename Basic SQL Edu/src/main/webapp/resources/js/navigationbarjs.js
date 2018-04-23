@@ -164,8 +164,17 @@ function createQuiz(qlist, anslist, stage){
    
       case 1: //select 문제가 아니어서 지정된 화면을 보여줘야 하는 레벨1.
          
-         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
-         
+         $('.questionTable').css({"background":imgpath("create"+stage+".png"), 'background-repeat' : 'no-repeat', 'background-size':'100%','background-position':'center center'});
+         //칼럼들 지워놓음.
+   	  	for(var i=1; i<6; i++){
+       	 $(imgselector(i)).attr("src", "");
+        }
+   	  //테이블도 지워.
+   	  $('#table_data').html("Answer Example <br>create table animal( " +
+   	  		"<br> Animal_num number ○○○ <br> ,name varchar(40) ○○○<br>" +
+   	  		",color varchar(40) ○○○<br>" +
+   	  		",habitat varchar(40)○○○<br>" +
+   	  		",legs number ○○○<br>);");
          break;
       //동물 select
       case 2: case 3: case 5: case 6: case 7: case 8: case 10:
@@ -289,6 +298,13 @@ function createQuiz(qlist, anslist, stage){
             var r_type = value.r_type;
             var color = value.r_color;
             console.log("로봇:"+ r_type + "로봇색:" + color);
+            
+            if(stage == 17){
+            	 //칼럼들 지워놓음.
+          	  for(var i=1; i<6; i++){
+              	 $(imgselector(i)).attr("src", "");
+               }
+            }
             //테이블 안 칼럼들 이미지 변경.
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+r_type+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
@@ -304,6 +320,8 @@ function createQuiz(qlist, anslist, stage){
          
          //테이블 이름 변경
          $('#table_name').text("robot");
+       //배경 변경.
+         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
          break;
          
    }
