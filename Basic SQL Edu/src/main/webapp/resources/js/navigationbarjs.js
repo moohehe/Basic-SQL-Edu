@@ -26,7 +26,7 @@ $(function(){
 			});
 		}
 		else if (menu == 'CERTIFICATION') {
-			console.log('certification run');
+			console.log('certification run'); 
 		}
 		else if ($(this).hasClass('submitbtn')) {
 			// submit 실행
