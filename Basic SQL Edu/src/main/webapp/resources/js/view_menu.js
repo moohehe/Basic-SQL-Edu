@@ -1,4 +1,4 @@
-	//화면 처리. (문제 view menu 에서 mouser_over할때 처리)
+/*	//화면 처리. (문제 view menu 에서 mouser_over할때 처리)
 	$(function(){
 		$('.shadow').hide();
 		
@@ -33,7 +33,7 @@
 				$('.helptext2').text('');
 				$('.helptext3').text('');
 		});
-	});
+	});*/
 	
 function setView() { // type_menu.js의 setTd()와 동일함
 	console.log('setView run');

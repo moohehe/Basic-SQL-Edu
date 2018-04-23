@@ -22,10 +22,10 @@ function setTd() {
 	$('td').mouseover(function() {
 		var selected = $(this).attr('th_code');
 		$('img[th_code='+selected+']').removeClass().addClass('tada infinite animated tableColumes' );
-	})
+	});
 	$('td').mouseout(function() {
 		$('img').removeClass().addClass('animated tableColumes' );
-	})
+	});
 }
 // table tag 만들기
 function setTableView(table, lv) { // parameter는 2차원 배열이거나 arraylist임
@@ -142,7 +142,7 @@ function sql_fail(errorMessage) {
 	$('.errorMessage').text(errorMessage);
 	$('.fail').on('click',function() {
 		$('.fail').fadeOut();
-	})
+	});
 }
 /* 정답일 경우 */
 function sql_success() {
