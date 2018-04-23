@@ -244,6 +244,7 @@ function createQuiz(qlist, anslist, stage){
     	  //테이블도 지워.
     	  $('#table_data').html("Alter Table!!");
     	  
+    	  
          break;
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
          if(stage == 12){
