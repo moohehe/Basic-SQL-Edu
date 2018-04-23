@@ -142,7 +142,7 @@ function sql_fail(errorMessage) {
 	$('.errorMessage').text(errorMessage);
 	$('.fail').on('click',function() {
 		$('.fail').fadeOut();
-	})
+	});
 }
 /* 정답일 경우 */
 function sql_success() {
