@@ -52,25 +52,38 @@
 	    padding:0px;
 	    marin:0px;
     }
-    .contactus {
+    .contactus-bg {
     	position:absolute;
     	height:100%;
     	width:100%;
     	margin:0;
-    	z-index: 1;
+    	z-index: 2000;
     	background-color:gray;
     	opacity: .9;
     }
-/*     div {
+    .contactus {
+    	position:absolute; height:100%; width:100%;
+    	display:table-cell;text-align:center;vertical-align:middle;
+    	z-index: 3000;
+    }
+    .contactus-content {
+    	height:500px;
+    	width:500px;
+    	margin:0;
+    	display:inline-block;
+    }
+     /* div {
      border: 1px solid cyan;} */
 </style>
 </head>
 <body>
 	<input id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
 	<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
-
-<div class="contactus" >
-	<%@ include file="board/writeForm.jsp" %>
+<div class="contactus-bg"></div>
+<div class="contactus">
+	<div class="contactus-content">
+		<%@ include file="board/writeForm.jsp" %>
+	</div>
 </div>
 <div class="left_menu">
 	<!-- 그림이 표시되는 부분 -->

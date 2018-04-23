@@ -145,7 +145,7 @@
 /*진행 바 관련 css*/
 .progress-small { 
 overflow:hidden; height:7px; margin-bottom:0px; width:390px;
-background-color:#D5D5D5; border-radius:0px; 
+background-color:#cccccc; border-radius:0px; 
 -webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1); 
 box-shadow:inset 0 1px 2px rgba(0,0,0,.1); 
 }
