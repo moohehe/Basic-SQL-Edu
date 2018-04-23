@@ -10,7 +10,6 @@ var imgselector;
    
 
 $(function(){
-<<<<<<< HEAD
 	$('.success').hide();
 	$('.fail').hide();
 	$('.contactus').hide();
@@ -18,7 +17,7 @@ $(function(){
 	$('.menubtn').on('click',function() {
 		var menu = $(this).text();
 		if (menu == 'CONTACT US') {
-			$('.navigation').hide();
+			
 			$('.contactus').show();
 		}
 		if (menu == 'CERTIFICATION') {
@@ -57,52 +56,6 @@ $(function(){
 		$(imgselector(3)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(4)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(5)).attr("src", "/www/resources/image/girrafeyellow.png");
-=======
-   $('.success').hide();
-   $('.fail').hide();
-   
-   $('.menubtn').on('click',function() {
-      var menu = $(this).text();
-      if (menu == 'CONTACT US') {
-         location.href="contactus";
-      }
-      if (menu == 'CERTIFICATION') {
-         console.log('certification run');
-      }
-      return false;
-   });
-   
-   
-   fstage = $('#currentLv').val(); //현재 레벨(스테이지) 가져옴.
-   flang = $('#currentLang').val(); //어떤 언어인지 선택. 
-   
-   //arraylist 받을 변수 설정.
-   qlist = []; //문제 뷰
-   anslist=[];//정답 뷰
-   
-   
-   //배경 이미지 경로 함수 지정
-   imgpath = function(file){
-      return "url(/www/resources/image/"+file+")";
-   }
-   
-   //문제 테이블 안 칼럼 선택자 지정 함수
-   imgselector = function(imgcolumes){
-      return '[columesimg = "'+imgcolumes+'"]';
-   }
-   
-   //1번 문제 호출 innerHTML
-   var ques1 = function(){
-      
-      //배경(테이블) 이미지 변경.
-      $('.questionTable').css({"background":imgpath("table_land.png"), 'background-repeat' : 'no-repeat', 'background-position':'center center'});
-      //테이블 안 칼럼들 이미지 변경.
-      $(imgselector(1)).attr("src", "/www/resources/image/birdblue.png");
-      $(imgselector(2)).attr("src", "/www/resources/image/penguinblack.png");
-      $(imgselector(3)).attr("src", "/www/resources/image/girrafeyellow.png");
-      $(imgselector(4)).attr("src", "/www/resources/image/girrafeyellow.png");
-      $(imgselector(5)).attr("src", "/www/resources/image/girrafeyellow.png");
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 
    }
    
@@ -294,7 +247,6 @@ function createQuiz(qlist, anslist, stage){
 }
 
 function getDataByAJAX(stage, lang) {
-<<<<<<< HEAD
 	console.log('stage='+stage+' lang='+lang);
 	//처음 그려질 경우 DB를 갔다오는 Ajax. (나중에 Ajax는 함수화 가능하면 함수화 한다.)
 	$.ajax({
@@ -323,64 +275,20 @@ function getDataByAJAX(stage, lang) {
 			console.log('cookie= '+document.cookie);
 			console.log('뾰로롱 lv=['+obj.questext.lvstatus+']');
 			
-			//처음 화면 문제테이블 갱신
-			qlist = obj.qlist;
-			anslist = obj.ansList;
-			console.log('뾰롱');
-			console.log(qlist);
-			createQuiz(qlist, anslist, obj.questext.lvstatus);
-			setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
-			setTd(); // mouserover event set
-			setView();
+	         //처음 화면 문제테이블 갱신
+	         qlist = obj.qlist;
+	         anslist = obj.ansList;
+	         console.log('뾰롱');
+	         console.log(qlist);
+	         createQuiz(qlist, anslist, obj.questext.lvstatus);
+	         setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
+	         setTd(); // mouserover event set
+	         setView();
 		},
 		error : function(err){
 			alert('가장 마지막 페이지입니다.');
 		}
 	});
-=======
-   console.log('stage='+stage+' lang='+lang);
-   //처음 그려질 경우 DB를 갔다오는 Ajax. (나중에 Ajax는 함수화 가능하면 함수화 한다.)
-   $.ajax({
-      url : "langcheck",
-      type : "post",
-      data : {
-         stage : stage,
-         lang : lang,
-         compl : "pass"
-      },
-      dataType : "json",
-      success : function(obj){
-         console.log('ajax success');
-         //쿠키값에 따른 화면 갱신(완료표시를 위함)
-         $('.stagebtn'+$('#currentLv').val()).css('color', 'red');
-         
-         //화면 값 갱신
-         $('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
-         $('#currentLv').val(obj.questext.lvstatus);
-         $('#qstext').text(obj.questext.qstext);
-         $('#qstype').text(obj.questext.qstype);
-         $('#qsdetail').text(obj.questext.qsdetail);
-         $('#qsExm').text(obj.questext.qsExm);
-         $('#currentLang').val(obj.questext.textLang);
-         $('#progresslv').css('width', (obj.questext.lvstatus)*5+"%");
-         console.log('cookie= '+document.cookie);
-         console.log('뾰로롱 lv=['+obj.questext.lvstatus+']');
-         
-         //처음 화면 문제테이블 갱신
-         qlist = obj.qlist;
-         anslist = obj.ansList;
-         console.log('뾰롱');
-         console.log(qlist);
-         createQuiz(qlist, anslist, obj.questext.lvstatus);
-         setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
-         setTd(); // mouserover event set
-         setView();
-      },
-      error : function(err){
-         alert('가장 마지막 페이지입니다.');
-      }
-   });
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 }
 
 

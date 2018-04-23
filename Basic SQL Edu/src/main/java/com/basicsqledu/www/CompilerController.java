@@ -36,7 +36,7 @@ public class CompilerController
 			System.out.println("아브라카타브라!");
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("password", "pass");
-			map.put("url","board/list");
+			map.put("url","list");
 			Gson gson = new Gson();
 			String json = gson.toJson(map);
 			System.out.println("[ResultData]\n"+json);

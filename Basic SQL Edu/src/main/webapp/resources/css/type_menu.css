@@ -5,13 +5,13 @@
 	
 /* editor skin */
 textarea {
-	width: 270px;
-	height:200px;
+	width: 100%;
+	height:13rem;
 }
 .editor {
   position: relative;
   text-align: left;
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
   border-radius: 4px;
   overflow: hidden;
@@ -56,9 +56,10 @@ textarea {
 .editor .file-window {
   padding: 10px 10px 10px 46px;
   position: relative;
-  min-height: 250px;
+  min-height: 270px;
 }
 .editor .table-window {
+	height:100%;
   padding: 10px 10px 10px 10px;
   position: relative;
   vertical-align: middle;
@@ -191,12 +192,55 @@ textarea {
 	color:white;
 }
 tr th.t_head {
-	font-size:15px;
 	font-family: Verdana,sans-serif;
 }
 tr td.t_body {
-	font-size:15px;
 	font-family: Verdana,sans-serif;
-	padding-bottom: 0.5rem;
-	padding-top: 0.5rem;
+	padding-bottom: 0.4rem;
+	padding-top: 0.4rem;
+}
+.stripe {
+    background: #7f007f;
+    background: -webkit-linear-gradient(
+                        #cccccc       0, #cccccc  1.3rem,
+                        #ffffff  1.3rem, #ffffff  2.6rem,
+                        #cccccc  2.6rem, #cccccc  3.9rem,
+                        #ffffff  3.9rem, #ffffff  5.2rem,
+                        #cccccc  5.2rem, #cccccc  6.5rem,
+                        #ffffff  6.5rem, #ffffff  7.8rem,
+                        #cccccc  7.8rem, #cccccc  9.1rem,
+                        #ffffff  9.1rem, #ffffff 10.4rem,
+                        #cccccc 10.4rem, #cccccc 11.7rem,
+                        #ffffff 11.7rem, #ffffff 13.0rem,
+                        #cccccc 13.0rem, #cccccc 14.3rem,
+                        #ffffff 14.3rem, #ffffff 15.6rem,
+                        #cccccc 15.6rem, #cccccc 16.9rem);
+    /* background: -webkit-linear-gradient(
+                        #e90000      0, #e90000 16.67%,
+                        #ff7f00 16.67%, #ff7f00 33.33%,
+                        #ffe900 33.33%, #ffe900    50%,
+                        #007f2a    50%, #007f2a 66.67%,
+                        #003fff 66.67%, #003fff 83.33%,
+                        #7f007f 83.33%, #7f007f 100%);
+    background:    -moz-linear-gradient(
+                        #e90000      0, #e90000 16.67%,
+                        #ff7f00 16.67%, #ff7f00 33.33%,
+                        #ffe900 33.33%, #ffe900    50%,
+                        #007f2a    50%, #007f2a 66.67%,
+                        #003fff 66.67%, #003fff 83.33%,
+                        #7f007f 83.33%, #7f007f 100%);
+    background:      -o-linear-gradient(
+                        #e90000      0, #e90000 16.67%,
+                        #ff7f00 16.67%, #ff7f00 33.33%,
+                        #ffe900 33.33%, #ffe900    50%,
+                        #007f2a    50%, #007f2a 66.67%,
+                        #003fff 66.67%, #003fff 83.33%,
+                        #7f007f 83.33%, #7f007f 100%);
+    background:         linear-gradient(
+                        #e90000      0, #e90000 16.67%,
+                        #ff7f00 16.67%, #ff7f00 33.33%,
+                        #ffe900 33.33%, #ffe900    50%,
+                        #007f2a    50%, #007f2a 66.67%,
+                        #003fff 66.67%, #003fff 83.33%,
+                        #7f007f 83.33%, #7f007f 100%); */
 }
