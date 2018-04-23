@@ -217,7 +217,9 @@ function createQuiz(qlist, anslist, stage){
       case 11: //alter table 문제
          break;
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
-         
+         if(stage == 12){
+        	 $(imgselector(5)).attr("src", "");
+         }
          $.each(qlist, function(index, value){
             
             var job = value.job;
@@ -259,8 +261,7 @@ function getDataByAJAX(stage, lang) {
 		dataType : "json",
 		success : function(obj){
 			console.log('ajax success');
-			//쿠키값에 따른 화면 갱신(완료표시를 위함)
-			$('.stagebtn'+$('#currentLv').val()).css('color', 'red');
+			
 			
 			//화면 값 갱신
 			$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
