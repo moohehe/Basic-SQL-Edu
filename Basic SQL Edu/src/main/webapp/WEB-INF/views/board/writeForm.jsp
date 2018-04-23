@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 <title>[ 홈페이지 불편사항 ]</title>
 
 </head>
@@ -13,31 +13,31 @@
 <style>
 	.centerdiv {
 	background-color:white;
-	opacity: 10;
+	opacity: 1;
 	}
 </style>
 <div class="centerdiv">
-<h1>[ 홈페이지 불편사항 ]</h1>
+<h1>[ Contact US ]</h1>
 
 
-<form action="write" method="post">
+<form action="write" method="post" id="email">
 <table>
 
 	<tr>
-		<th>작성자</th>
+		<th style="border-bottom-color: ">작성자</th>
 		<td><input type="text" name="fb_user"></td>
 	</tr>
 	
 	<tr>
 		<th>이메일</th>
-		<td><input type="text" name="email" style="width:700px;">
+		<td><input type="text" name="email" style="width:300px;">
 		<br>
 		※ 이메일을 정확히 입력해주세요.
 		</td>
 	</tr>
 	<tr>
 		<th>제목</th>
-		<td><input type="text" name="title" style="width:700px;"></td>
+		<td><input type="text" name="title" style="width:300px;"></td>
 	</tr>
 	<tr>
 		<th>내용</th>
@@ -45,7 +45,8 @@
 	</tr>
 	<tr>
 		<td colspan="2" class="white center">
-		<input type="submit" value="보내기">
+		<div class="btn menubtn submitbtn">SUBMIT</div>
+		<div class="btn menubtn closebtn">CLOSE</div>
 		</td>
 	</tr>
 </table>
