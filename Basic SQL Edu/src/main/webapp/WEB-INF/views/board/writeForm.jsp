@@ -4,18 +4,15 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-<title>[ 홈페이지 불편사항 ]</title>
-
-</head>
-
-
-<body>
-<style>
+<style type="text/css">
 	.centerdiv {
 	background-color:white;
 	opacity: 1;
 	}
 </style>
+</head>
+<body>
+
 <div class="centerdiv">
 <h1>[ Contact US ]</h1>
 

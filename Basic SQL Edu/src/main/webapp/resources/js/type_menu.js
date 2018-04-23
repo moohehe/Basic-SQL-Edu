@@ -18,26 +18,29 @@ function text_keyup() {
 	}
 }
 // table row - mouseover되면 view의 그림에 그림자 보여주기
+var data = new Array();
+function setClass() {
+	for (var k = 0; k < 5 ; k++) {
+		data[k] = $('img[columesimg='+(k+1)+']').attr('class');
+		console.log('data['+k+']='+data[k]);
+	}
+}
 function setTd() {
-	var data = new Array();
+	var c_data;
 	console.log('setTd run');
+	var selected;
 	$('td').mouseover(function() {
 		console.log('mouseover');
-		for (var k = 0; k < 5 ; k++) {
-			data[k] = $('div[tcolumes='+(k+1)+']').attr('class');
-			console.log('data['+k+']='+data[k]);
-		}
-		var selected = $(this).attr('th_code');
+		$('div.tcolumes img').removeClass().addClass('tableColumes');
+		selected = $(this).attr('th_code');
 		$('img[th_code='+selected+']').removeClass().addClass('tada infinite animated tableColumes' );
-		//rubberBand animated tableColumes infinite flash
 	});
 	$('td').mouseout(function() {
-
 		console.log('mouseout');
-		$('img').removeClass();
+		$('div.tcolumes img').removeClass();
 		for (var k = 0; k < 5 ; k++) {
-			console.log('addClass='+data[k]);
-			$('div[tcolumes='+(k+1)+']').addClass(data[k]);
+			//console.log('addClass='+data[k]);
+			$('img[columesimg='+(k+1)+']').addClass(data[k]);
 		}
 	});
 }
@@ -145,7 +148,11 @@ function sqlrun() {
 			if (e.success == '1') {
 				// 맞춤.
 				sql_success();
-			} else {
+				if(e.goCerti == true){
+					//인증서 고
+					goCertify();
+				}
+			}else {
 				// 문제 틀림
 				sql_fail(e.errorMessage);
 			}
@@ -180,11 +187,17 @@ function sql_success() {
 	$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
 	// nextBtn에 있는 function 실행
 	// 
-	// 20스테이지를 모두 종료햇을 경우에는 인증서 발급 메뉴로 간다.
+	
 	// 성공하면 view_menu 쪽의 그림파일에 class를 입력한다. (뛰어노는 듯한 기쁜 이미지 동작을 부여한다.)
 	$('.success').fadeIn("slow");
 }
 function successStage() {
 	nextStage();
 	$('.success').hide();
+	$('textarea').val("");
+}
+
+// 20스테이지를 모두 종료햇을 경우에는 인증서 발급 메뉴로 간다.
+function goCertify(){
+	location.href("goCertify");
 }
