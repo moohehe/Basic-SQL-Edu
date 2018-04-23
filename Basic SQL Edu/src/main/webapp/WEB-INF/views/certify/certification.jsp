@@ -67,7 +67,7 @@ html, body {
 <body>
 <div class="certi">
 	<div id="btn1">
-		<button value="¿Ö¾Èº¸¿©ÁÜ¶ì¹ß" onclick="javascript:onClick()"></button>
+		<button value="¿Ö¾Èº¸¿©ÁÜ¶ß¹ß" onclick="javascript:onClick()"></button>
 	</div>
 </div>
 </body>
