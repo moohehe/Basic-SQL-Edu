@@ -19,30 +19,30 @@
 
 
 <form action="write" method="post" id="faq">
-<table>
+<table class="table">
 
-	<tr>
-		<th style="border-bottom-color: ">작성자</th>
-		<td><input type="text" name="fb_user"></td>
+	<tr class="tr">
+		<th class="th" style="border-bottom-color: ">작성자</th>
+		<td class="td"><input type="text" name="fb_user"></td>
 	</tr>
 	
-	<tr>
-		<th>이메일</th>
-		<td><input type="text" name="email" style="width:300px;">
+	<tr class="tr">
+		<th class="th">이메일</th>
+		<td class="td"><input type="text" name="email" style="width:300px;">
 		<br>
 		※ 이메일을 정확히 입력해주세요.
 		</td>
 	</tr>
-	<tr>
-		<th>제목</th>
-		<td><input type="text" name="title" style="width:300px;"></td>
+	<tr class="tr">
+		<th class="th">제목</th>
+		<td class="td"><input type="text" name="title" style="width:300px;"></td>
 	</tr>
-	<tr>
-		<th>내용</th>
-		<td><textarea rows="30" cols="100" name="content"></textarea></td>
+	<tr class="tr">
+		<th class="th">내용</th>
+		<td class="td"><textarea rows="30" cols="100" name="content"></textarea></td>
 	</tr>
-	<tr>
-		<td colspan="2" class="white center">
+	<tr class="tr">
+		<td colspan="2" class="white center td">
 		<div class="btn menubtn submitbtn">SUBMIT</div>
 		<div class="btn menubtn closebtn">CLOSE</div>
 		</td>
