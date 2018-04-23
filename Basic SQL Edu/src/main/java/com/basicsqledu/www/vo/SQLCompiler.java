@@ -353,7 +353,7 @@ public class SQLCompiler
 	/**
 	 * 구문 분석기
 	 * 
-	 * @return HashMap<String, Object> @"complete": true / false .. 문장의 오류가 있었는지
+	 * return HashMap<String, Object> @"complete": true / false .. 문장의 오류가 있었는지
 	 *         확인 @"errorMessage" : 오류 내용
 	 */
 	public HashMap<String, Object> getResult()

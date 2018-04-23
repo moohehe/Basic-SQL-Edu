@@ -23,7 +23,7 @@ img {
 }
 
 /* 게시판 관련 */
-table {
+table.table {
 	margin: auto;
 }
 
@@ -35,7 +35,7 @@ th.white {
 	background-color: #ffffff;
 }
 
-th {
+th.th{
 	width:90px;
 	height: 30px;
 	background-color: #cccccc;
@@ -47,7 +47,7 @@ th.white {
 	background-color: #ffffff;
 }
 
-td {
+td.td {
 	padding: 3px;
 	background-color: #eeeeee;
 	text-align: left;
@@ -118,11 +118,11 @@ td.replybutton {
 	background-color: #ffffff;
 }
 
-li{
+li.li{
 	display:inline-block;
 }
 
-ul{
+ul.ul{
 	text-align:center;
 	margin-left:auto;
 	margin-right:auto;

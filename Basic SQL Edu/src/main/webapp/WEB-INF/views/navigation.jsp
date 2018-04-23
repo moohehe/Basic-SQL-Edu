@@ -53,14 +53,6 @@
 			</div>
 		</div>	
 		
-		<!-- 피드백 게시판-->
-<!-- 		<div class="contact">
-			<ul class="a">
-				<li><a href="board/writeForm">글쓰기</a></li>		
-				<li><a href="board/list">피드백 게시판</a></li>
-				<li><a href="board/successView">작성완료화면 테스트</a></li>
-			</ul>
-		</div> -->
 		
 		<!-- stage 버튼 누르면 나타나는 전체 스테이지 맵 화면 -->
 		 <div class="level-menu">

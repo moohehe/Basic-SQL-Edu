@@ -60,11 +60,12 @@
     	z-index: 2000;
     	background-color:gray;
     	opacity: .9;
+    	
     }
     .contactus {
     	position:absolute; height:100%; width:100%;
     	display:table-cell;text-align:center;vertical-align:middle;
-    	z-index: 3000;
+    	z-index: 3000; padding-top: 10%;
     }
     .contactus-content {
     	height:500px;
