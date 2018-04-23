@@ -171,7 +171,7 @@ public class TestNaviController {
 							naviContentMap.put(c.getName(),c.getValue()); //완료한 스테이지들 맵에 저장.
 						}
 					}
-				}*/
+				}*/ 
 		//여기로 올 때마다 쿠키의 현재 스테이지 값을 변경해주어야 한다.
 		
 		cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)

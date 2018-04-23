@@ -78,12 +78,12 @@ public class CompilerController
 		
 		
 		// cookie에서 현재 문제 번호를 받아온 뒤에 그걸 이용해서 프린트
-				
-		System.out.println("쿠키에 현재 완료한 스테이지만 저장"+questionNumber);
-		cg.setCookieName("completeStage"+questionNumber);
-		cg.addCookie(response, "pass"); 
-		cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
-
+		if(resultMap.get("complete") == "1"){		
+			System.out.println("쿠키에 현재 완료한 스테이지만 저장"+questionNumber);
+			cg.setCookieName("completeStage"+questionNumber);
+			cg.addCookie(response, "pass"); 
+			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+		}
 		
 		
 		Gson gson = new Gson();
