@@ -64,7 +64,7 @@ public class CertifyController {
 
 	@RequestMapping(value = "gocertification", method=RequestMethod.GET)
 	public String gocertification(String user, Model model) {
-		System.out.println(user);
+		System.out.println(user);//흠
 		model.addAttribute(user);
 		return "certify/certification";
 	}
