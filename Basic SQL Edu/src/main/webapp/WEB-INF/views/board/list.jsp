@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
 <title>[ Feedback List ]</title>
 
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/default.css' />" />
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js" />"></script>
 <script type="text/javascript">
 
@@ -33,46 +32,46 @@
 
 <table style="margin: auto; text-align: center;"> 
 <c:forEach var="board" items="${boardlist }">
-	<tr>
+	<tr class="tr">
 		<th style="width:100px; ">등록번호</th>
 		<td colspan="2">${board.fb_no}</td>
 	</tr>	
-	<tr>		
-		<th>작성자</th>
-		<td>${board.fb_user}</td>
+	<tr class="tr">		
+		<th class="th">작성자</th>
+		<td class="td">${board.fb_user}</td>
 	</tr>
-	<tr>
-		<th>작성일</th>
-		<td>${board.fb_indate }</td>
+	<tr class="tr">
+		<th class="th">작성일</th>
+		<td class="td">${board.fb_indate }</td>
 	</tr>	
-	<tr>		
-		<th>이메일</th>
-		<td>${board.email}</td>
+	<tr class="tr">		
+		<th class="th">이메일</th>
+		<td class="td">${board.email}</td>
 	</tr>
-	<tr>
-		<th>제목</th>
-		<td class="left">${board.title}</td>	
+	<tr class="tr">
+		<th class="th">제목</th>
+		<td class="td left">${board.title}</td>	
 	</tr>	
-	<tr>							
-		<th>내용</th>
-		<td><pre>${board.content}</pre></td>	
+	<tr class="tr">						
+		<th class="th">내용</th>
+		<td class="td"><pre>${board.content}</pre></td>	
 	</tr>	
 	
-	<tr>
-		<th>메모</th>
-		<td class="left">
-		<form action="updateMemo" method="post">
-				<label><input type="radio" name="status"<c:if test="${board.status==0 }">checked="checked"</c:if>value="0"><span class="up">대기</span></label>
-				<label><input type="radio" name="status"<c:if test="${board.status==1 }">checked="checked"</c:if>value="1"><span class="up">완료</span></label>
-				<input type="hidden" name="fb_no" value="${board.fb_no }">
-				<br>
-				<textarea name="memo" rows="3" cols="80">${board.memo }</textarea>
-				<br>
-				<input type="submit" value="저장">
-		</form>
+	<tr class="tr">
+		<th class="th">메모</th>
+		<td class="td left">
+			<form action="updateMemo" method="post">
+					<label><input type="radio" name="status"<c:if test="${board.status==0 }">checked="checked"</c:if>value="0"><span class="up">대기</span></label>
+					<label><input type="radio" name="status"<c:if test="${board.status==1 }">checked="checked"</c:if>value="1"><span class="up">완료</span></label>
+					<input type="hidden" name="fb_no" value="${board.fb_no }">
+					<br>
+					<textarea name="memo" rows="3" cols="80">${board.memo }</textarea>
+					<br>
+					<input type="submit" value="저장">
+			</form>
 		</td>
 	</tr>
-	<td class="white">
+	<td class="td white">
 		<br/>
 	</td>
 	
