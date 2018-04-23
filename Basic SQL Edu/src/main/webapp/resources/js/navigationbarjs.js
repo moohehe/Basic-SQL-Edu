@@ -187,7 +187,7 @@ function createQuiz(qlist, anslist, stage){
          break;
       case 4: 
          $.each(qlist, function(index, value){
-            
+             
             var species = value.animal_species;
             var color = value.animal_color;
             
@@ -225,7 +225,6 @@ function createQuiz(qlist, anslist, stage){
          
          $.each(anslist, function(index, value){
             var th_code = value;
-            console.log("정답코드"+th_code);
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
