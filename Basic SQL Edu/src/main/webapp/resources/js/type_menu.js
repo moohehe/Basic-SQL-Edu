@@ -127,7 +127,7 @@ function sqlrun() {
 			if (e.success == '1') {
 				// 맞춤.
 				sql_success();
-			} else if (e.success == '-1') {
+			} else {
 				// 문제 틀림
 				sql_fail(e.errorMessage);
 			}
