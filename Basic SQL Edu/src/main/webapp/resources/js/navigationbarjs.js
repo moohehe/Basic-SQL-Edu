@@ -26,11 +26,12 @@ $(function(){
 			});
 		}
 		else if (menu == 'CERTIFICATION') {
-			console.log('certification run'); 
+			console.log('certification run');
 		}
 		else if ($(this).hasClass('submitbtn')) {
+			console.log('submitbtn run');
 			// submit 실행
-			$('#email').submit();
+			$('#faq').submit();
 		}
 		else// (menu == 'CLOSE') {
 		{	console.log('닫기');
