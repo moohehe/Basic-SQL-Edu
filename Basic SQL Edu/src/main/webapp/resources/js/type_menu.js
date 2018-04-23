@@ -105,6 +105,7 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 // server 로 데이터를 전송함.
 function sqlrun() {
 	var str = document.getElementById('sql').value;
+	var stage = $('#currentLv').val();
 	console.log(str);
 	if (str == '') {
 		return;
@@ -113,7 +114,8 @@ function sqlrun() {
 		type:"POST"
 		, url:"sqlCompiler"
 		, data:{
-			sql:str 
+			sql:str,
+			questionNumber:stage
 		}
 		, dataType: 'json'
 		, success: function(e) {
@@ -158,7 +160,8 @@ function sql_success() {
 	// Next 버튼을 만들고
 	// next 버튼을 누르면
 	// next 버튼+ success 메세지가 있는 div가 사라지고(fadeout)
-	// cookie에 문제 완료 데이터 삽입하고
+	// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
+	$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
 	// nextBtn에 있는 function 실행
 	// 
 	// 20스테이지를 모두 종료햇을 경우에는 인증서 발급 메뉴로 간다.
