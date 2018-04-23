@@ -3,15 +3,15 @@ $(function() {
 	sql_text = $('textarea').val();
 })
 function text_keypress() {
-	if (sql_text.length < 5) {
+	if ($('#sql').val().split('\n').length < 5) {
 		sql_text = "";
-	}
-	if (sql_text.split('\n').length <= 9) {
-		sql_text = $('textarea').val();
+	} 
+	if ($('#sql').val().split('\n').length <= 9) {
+		sql_text = $('#sql').val();
 	}
 }
 function text_keyup() {
-	if (sql_text.split('\n').length > 9) {
+	if ($('#sql').val().split('\n').length > 9) {
 		console.log('10줄 넘어감');
 		$('textarea').val(sql_text);
 	}
