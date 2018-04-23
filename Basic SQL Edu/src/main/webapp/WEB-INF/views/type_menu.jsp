@@ -43,7 +43,7 @@
 	           	</table> -->
 	           	<table class="table table-hover">
                                 <!-- Table head -->
-                                <thead class="blue lighten-4">
+                                <thead class="green lighten-4">
                                     <tr>
                                         <th> </th>
                                         <th> </th>

@@ -10,6 +10,8 @@
 		<typeAlias type="com.basicsqledu.www.vo.Robots" alias="robots"/>
 		<typeAlias type="com.basicsqledu.www.vo.Questext" alias="questext" />
 		<typeAlias type="com.basicsqledu.www.vo.Feedback_Board" alias="board" />
+		<typeAlias type="com.basicsqledu.www.vo.Certification" alias="cert" />
+		
 		
 		
 	</typeAliases>
@@ -18,6 +20,7 @@
 		<mapper resource="mapper/QuizMapper.xml" />
 		<mapper resource="mapper/QuestextMapper.xml" />
 		<mapper resource="mapper/FeedbackMapper.xml" />
+		<mapper resource="mapper/CertMapper.xml" />
 		
 	 </mappers>
 	

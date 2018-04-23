@@ -13,6 +13,10 @@
 <style>
 	.centerdiv {
 	background-color:white;
+<<<<<<< HEAD
+=======
+	opacity: 10;
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 	}
 </style>
 <div class="centerdiv">

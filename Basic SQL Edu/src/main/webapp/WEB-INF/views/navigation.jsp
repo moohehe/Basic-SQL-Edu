@@ -39,13 +39,13 @@
 				<div id="qsExm">${questext.qsExm }</div>
 				
 				<!-- 언어 선택 (영어, 한국어, 일본어) -->		
-				<div class="langcheck" >
+				<div class="langcheck" style="padding-bottom: 12%;">
 					<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
 					<div class="langbtn btn" data-num="1" > eng </div> 
 					<div class="langbtn btn" data-num="2" > kor </div> 
 					<div class="langbtn btn" data-num="3" > jpn </div> 
 				</div>
-				<div class="navi_bottom">
+				<div class="navi_bottom" style="padding-bottom: 10%">
 					<div class="menubtn btn" id="contactus">CONTACT US</div>
 					<div class="menubtn btn" id="certification">CERTIFICATION</div>
 				</div>
