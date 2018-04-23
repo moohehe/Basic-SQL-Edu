@@ -13,7 +13,12 @@
 .menubtn {
 	width:45%;
 	margin:0px;
-	background-color:black;
+	background-color:#2F9D27;
+}
+.menubtn:hover {
+    background-color: #ffcc33;
+    color: white ;
+    
 }
 
 
@@ -56,10 +61,15 @@
 .langbtn {
 	color:white;
 	display:inline-block;
+	text-align: center;
 	font-size: 15px;
-	background-color:#4CAF50;
+	background-color: #2F9D27;
 	padding:5px;
 	margin:1px;
+}
+.langbtn:hover {
+    background-color: #ffcc33;
+    color: white;
 }
 /*기본 네비게이션 화면 배치를 위한 부모css*/
 .float-btnframe {
