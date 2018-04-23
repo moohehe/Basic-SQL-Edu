@@ -5,7 +5,7 @@ $(function() {
 function text_keypress() {
 	if ($('#sql').val().split('\n').length < 5) {
 		sql_text = "";
-	}
+	} 
 	if ($('#sql').val().split('\n').length <= 9) {
 		sql_text = $('#sql').val();
 	}
