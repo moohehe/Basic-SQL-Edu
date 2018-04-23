@@ -504,11 +504,13 @@ public class SQLCompiler
 		int [] index = new int[answerTable.length-1];
 		boolean ansCorrect= false;
 		switch (questionNumber) {
-		case 13:
+		/*case 13:
 			//* 서브쿼리 및 조인 문제 --> 사용자 2차원 배열은 컬럼앞에 테이블이름 붙어서 나와지나?
-			break;
+			
+			
+			break;*/
 		case 2:	case 3: case 4: case 5:	 case 6: case 7: case 8: case 9:
-		case 10: case 12: case 18:
+		case 10: case 12:  case 13: case 18:
 			//* 정답 뷰랑 비교해야되요
 			//ghfhfhfh
 			
