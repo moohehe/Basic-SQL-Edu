@@ -104,7 +104,7 @@ public class TestNaviController {
 			cg.addCookie(response, "1"); //일단 1부터 시작이므로 1을 넣어줌.
 			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 			cg.addCookie(response, "2"); //일단 영어가 기본값.
-			cg.setCookieMaxAge(48*60*60); //유효시간 하루 설정.
+			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 		
 			for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
 				cg.setCookieName("completeStage"+i);
@@ -171,24 +171,18 @@ public class TestNaviController {
 							naviContentMap.put(c.getName(),c.getValue()); //완료한 스테이지들 맵에 저장.
 						}
 					}
-				}*/
+				}*/ 
 		//여기로 올 때마다 쿠키의 현재 스테이지 값을 변경해주어야 한다.
 		
 		cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 		cg.addCookie(response, stage); 
-		cg.setCookieMaxAge(24*60*60); //유효시간 하루 설정.
+		cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 		
-		if(compl.equals("pass")){
-			int cstage = Integer.parseInt(stage)-1;
-			cg.setCookieName("completeStage"+cstage);
-			cg.addCookie(response, "pass"); 
-			cg.setCookieMaxAge(24*60*60); //유효시간 하루 설정.
-		}
-		
+				
 		//현재 언어 값에 대한 변경(쿠키)
 		cg.setCookieName("currentLang");
 		cg.addCookie(response, lang);
-		cg.setCookieMaxAge(24*60*60); //유효시간 하루 설정.
+		cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 		
 		//DB에서 해당 언어의 문제관련 택스트들을 가져옴.
 		qt.setLvstatus(Integer.parseInt(stage));

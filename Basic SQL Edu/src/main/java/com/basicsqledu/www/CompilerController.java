@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.CookieGenerator;
 
 import com.basicsqledu.www.dao.QuizDAO;
 import com.basicsqledu.www.vo.SQLCompiler;
@@ -25,6 +26,7 @@ public class CompilerController
 	@Autowired
 	private SQLCompiler compiler;
 	
+	CookieGenerator cg = new CookieGenerator(); //쿠키 생성기. (완료한 문제 쿠키에 넣기 위함)
 	
 	@ResponseBody
 	@RequestMapping(value="sqlCompiler", method = RequestMethod.POST
@@ -59,7 +61,6 @@ public class CompilerController
 		ArrayList<Object> list = (ArrayList<Object>) map.get("table_value");
 		compiler.setTable(list);
 		
-		// cookie에서 현재 문제 번호를 받아온 뒤에 그걸 이용해서 프린트
 		
 		
 		// sql 구문 해석
@@ -74,8 +75,15 @@ public class CompilerController
 		}*/
 		// 오류가 없으면
 		// 데이터 테이블을 json으로 출력해서 보내준다. 그럼 그걸 받아서 js로 그림으로 출력함.
-
 		
+		
+		// cookie에서 현재 문제 번호를 받아온 뒤에 그걸 이용해서 프린트
+		if(resultMap.get("success") == "1"){		
+			System.out.println("쿠키에 현재 완료한 스테이지만 저장"+questionNumber);
+			cg.setCookieName("completeStage"+questionNumber);
+			cg.addCookie(response, "pass"); 
+			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+		}
 		
 		
 		Gson gson = new Gson();

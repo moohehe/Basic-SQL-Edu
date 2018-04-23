@@ -96,23 +96,28 @@ public class SQLCompiler
 
 		this.table_name = table_name;
 		System.out.println("문제 번호?? : " + questionNumber + "테이블 이름 뭐니 : " + table_name);
-		int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
-
-		System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
-
-		// questionNumber가 1~ 11까지는 animal
-		// questionNumber가 12~16은 PERSON
-		// questionNumber가 17~20은 ROBOT
-		if(questionNumber >1 && questionNumber<=11){
-			answerTable = new String[answerSize][6];
-		}else if(questionNumber >11 && questionNumber<=16){
-			answerTable = new String[answerSize][5];
+		
+		if(questionNumber == 1 || questionNumber == 11 || questionNumber == 15 || questionNumber == 16
+				|| questionNumber == 17 || questionNumber == 19 || questionNumber == 20 	){
+			//정답 뷰 필요없음
 		}else{
-			answerTable = new String[answerSize][5];	//robot
+			int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
+	
+			System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
+	
+			// questionNumber가 1~ 11까지는 animal
+			// questionNumber가 12~16은 PERSON
+			// questionNumber가 17~20은 ROBOT
+			if(questionNumber >1 && questionNumber<=11){
+				answerTable = new String[answerSize][6];
+			}else if(questionNumber >11 && questionNumber<=16){
+				answerTable = new String[answerSize][5];
+			}else{
+				answerTable = new String[answerSize][5];	//robot
+			}
+	
+			answerTable = quizDAO.getAnswer(questionNumber, table_name);
 		}
-
-		answerTable = quizDAO.getAnswer(questionNumber, table_name);
-
 		this.questionNumber = questionNumber;
 	}
 
