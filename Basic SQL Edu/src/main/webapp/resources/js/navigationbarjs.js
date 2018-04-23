@@ -17,7 +17,7 @@ $(function(){
 	$('.menubtn').on('click',function() {
 		var menu = $(this).text();
 		if (menu == 'CONTACT US') {
-			$('.navigation').hide();
+			
 			$('.contactus').show();
 		}
 		if (menu == 'CERTIFICATION') {
@@ -56,7 +56,11 @@ $(function(){
 		$(imgselector(3)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(4)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(5)).attr("src", "/www/resources/image/girrafeyellow.png");
+<<<<<<< HEAD
  
+=======
+
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
    }
    
    
@@ -275,21 +279,24 @@ function getDataByAJAX(stage, lang) {
 			console.log('cookie= '+document.cookie);
 			console.log('뾰로롱 lv=['+obj.questext.lvstatus+']');
 			
-			//처음 화면 문제테이블 갱신
-			qlist = obj.qlist;
-			anslist = obj.ansList;
-			console.log('뾰롱');
-			console.log(qlist);
-			createQuiz(qlist, anslist, obj.questext.lvstatus);
-			setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
-			setTd(); // mouserover event set
-			setView();
+	         //처음 화면 문제테이블 갱신
+	         qlist = obj.qlist;
+	         anslist = obj.ansList;
+	         console.log('뾰롱');
+	         console.log(qlist);
+	         createQuiz(qlist, anslist, obj.questext.lvstatus);
+	         setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
+	         setTd(); // mouserover event set
+	         setView();
 		},
 		error : function(err){
 			alert('가장 마지막 페이지입니다.');
 		}
 	});
+<<<<<<< HEAD
  
+=======
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 }
 
 
