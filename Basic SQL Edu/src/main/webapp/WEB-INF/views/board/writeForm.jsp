@@ -17,7 +17,7 @@
 <h1>[ Contact US ]</h1>
 
 
-<form action="write" method="post" id="email">
+<form action="write" method="post" id="faq">
 <table>
 
 	<tr>
