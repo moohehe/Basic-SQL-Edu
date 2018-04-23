@@ -56,11 +56,6 @@ $(function(){
 		$(imgselector(3)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(4)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(5)).attr("src", "/www/resources/image/girrafeyellow.png");
-<<<<<<< HEAD
- 
-=======
-
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
    }
    
    
@@ -293,10 +288,6 @@ function getDataByAJAX(stage, lang) {
 			alert('가장 마지막 페이지입니다.');
 		}
 	});
-<<<<<<< HEAD
- 
-=======
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 }
 
 
