@@ -25,8 +25,13 @@ $(function(){
 				$('.contactus-bg').hide();
 			});
 		}
-		if (menu == 'CERTIFICATION') {
+		else if (menu == 'CERTIFICATION') {
 			console.log('certification run');
+		}
+		else// (menu == 'CLOSE') {
+		{	console.log('닫기');
+			$('.contactus-bg').hide();
+			$('.contactus').hide();
 		}
 		return false;
 	});
@@ -272,6 +277,8 @@ function createQuiz(qlist, anslist, stage){
          break;
          
    }
+   // imgs - class 저장함.
+	setClass();
 }
 
 function getDataByAJAX(stage, lang) {

@@ -17,27 +17,29 @@ function text_keyup() {
 	}
 }
 // table row - mouseover되면 view의 그림에 그림자 보여주기
+var data = new Array();
+function setClass() {
+	for (var k = 0; k < 5 ; k++) {
+		data[k] = $('img[columesimg='+(k+1)+']').attr('class');
+		console.log('data['+k+']='+data[k]);
+	}
+}
 function setTd() {
-	var data = new Array();
 	var c_data;
 	console.log('setTd run');
 	var selected;
 	$('td').mouseover(function() {
 		console.log('mouseover');
-		for (var k = 0; k < 5 ; k++) {
-			data[k] = $('img[tcolumes='+(k+1)+']').attr('class');
-			$('img[tcolomes='+(k+1)+']').removeClass().addClass('tableColumes');
-		}
+		$('div.tcolumes img').removeClass().addClass('tableColumes');
 		selected = $(this).attr('th_code');
 		$('img[th_code='+selected+']').removeClass().addClass('tada infinite animated tableColumes' );
 	});
 	$('td').mouseout(function() {
-
 		console.log('mouseout');
-		/*$('img[th_code='+selected+']').removeClass().addClass(c_data);*/
+		$('div.tcolumes img').removeClass();
 		for (var k = 0; k < 5 ; k++) {
-			console.log('addClass='+data[k]);
-			$('img[tcolumes='+(k+1)+']').addClass(data[k]);
+			//console.log('addClass='+data[k]);
+			$('img[columesimg='+(k+1)+']').addClass(data[k]);
 		}
 	});
 }

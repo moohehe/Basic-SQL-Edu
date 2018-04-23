@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="../resources/css/default.css" />
+<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
 <title>[ 홈페이지 불편사항 ]</title>
 
 </head>
@@ -13,7 +13,6 @@
 <style>
 	.centerdiv {
 	background-color:white;
-	opacity: 1;
 	}
 </style>
 <div class="centerdiv">
