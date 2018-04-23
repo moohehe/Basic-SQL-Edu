@@ -23,20 +23,20 @@ public class SQLCompiler
 	@Autowired
 	QuizDAO quizDAO;
 
-	
+
 	// index
 	private int i;
-	
+
 	// 현재 questionNumber
 	private int questionNumber;
-	
+
 	// data 관련 변수(DB 갔다옴)
 	private String[][] table;
 	HashMap<String, Object> taaa = new HashMap<String, Object>();
 	private String table_name; // table name
 	private HashMap<String, Integer> table_columns; // String : columns_name /
 	private String[][] answerTable;		//DB에 저장되어있는 정답테이블 뷰
-	
+
 	// Integer : realdata_index
 
 	// SQL 구문 결과(내부에서 계산한 결과)
@@ -45,7 +45,7 @@ public class SQLCompiler
 	private String result_name;
 	private HashMap<String, Integer> result_columns;
 	private HashMap<String, Object> alterMap = new HashMap<>();
-	
+
 	HashMap<String, Object> map = new HashMap<String, Object>();
 	private String errorMessage = "";
 	private boolean grammar_error = false; // 구문 오류
@@ -85,7 +85,7 @@ public class SQLCompiler
 	{
 		return text;
 	}
-	
+
 	public int getQuestionNumber()
 	{
 		return questionNumber;
@@ -93,26 +93,31 @@ public class SQLCompiler
 
 	public void setQuestionNumber(int questionNumber,String table_name)
 	{
-		
+
 		this.table_name = table_name;
 		System.out.println("문제 번호?? : " + questionNumber + "테이블 이름 뭐니 : " + table_name);
-		int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
 		
-		System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
-		
-		// questionNumber가 1~ 11까지는 animal
-		// questionNumber가 12~16은 PERSON
-		// questionNumber가 17~20은 ROBOT
-		if(questionNumber >1 && questionNumber<=11){
-			answerTable = new String[answerSize][6];
-		}else if(questionNumber >11 && questionNumber<=16){
-			answerTable = new String[answerSize][5];
+		if(questionNumber == 1 || questionNumber == 11 || questionNumber == 15 || questionNumber == 16
+				|| questionNumber == 17 || questionNumber == 19 || questionNumber == 20 	){
+			//정답 뷰 필요없음
 		}else{
-			answerTable = new String[answerSize][5];	//robot
+			int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
+	
+			System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
+	
+			// questionNumber가 1~ 11까지는 animal
+			// questionNumber가 12~16은 PERSON
+			// questionNumber가 17~20은 ROBOT
+			if(questionNumber >1 && questionNumber<=11){
+				answerTable = new String[answerSize][6];
+			}else if(questionNumber >11 && questionNumber<=16){
+				answerTable = new String[answerSize][5];
+			}else{
+				answerTable = new String[answerSize][5];	//robot
+			}
+	
+			answerTable = quizDAO.getAnswer(questionNumber, table_name);
 		}
-		
-		answerTable = quizDAO.getAnswer(questionNumber, table_name);
-		
 		this.questionNumber = questionNumber;
 	}
 
@@ -270,7 +275,7 @@ public class SQLCompiler
 			}
 
 		}
-		
+
 		// Person 타입의 데이터면
 		if (list.get(0) instanceof Person)
 		{
@@ -293,7 +298,7 @@ public class SQLCompiler
 			}
 
 		}
-		
+
 		// Robot 타입의 데이터면
 		if (list.get(0) instanceof Robots)
 		{
@@ -344,7 +349,7 @@ public class SQLCompiler
 		return result;
 	}
 
-	
+
 	/**
 	 * 구문 분석기
 	 * 
@@ -432,7 +437,7 @@ public class SQLCompiler
 				if(i >=3 && current.equals("drop")){
 					continue;
 				}
-				
+
 				// select 인지 검사하기
 				switch (current)
 				{
@@ -499,78 +504,86 @@ public class SQLCompiler
 				System.out.println();
 			}
 		}
-		
+
+
 		int corr = 0;
 		int [] index = new int[answerTable.length-1];
 		boolean ansCorrect= false;
-		switch (questionNumber) {
-		case 13:
+
+		try{
+			switch (questionNumber) {
+			/*case 13:
 			//* 서브쿼리 및 조인 문제 --> 사용자 2차원 배열은 컬럼앞에 테이블이름 붙어서 나와지나?
-			break;
-		case 2:	case 3: case 4: case 5:	 case 6: case 7: case 8: case 9:
-		case 10: case 12: case 18:
-			//* 정답 뷰랑 비교해야되요
-			//ghfhfhfh
-			
-			for(int j=1;j<answerTable.length;j++){
-				index[j-1] = j;
-				String col = answerTable[0][j];
-				
-				System.out.println("결과 값 2차원 행의 길이"+result.length + " 결과 값 2차원 열의 길이 : "+result[0].length);
-				
-				for(int k =0;k<result[0].length;k++){
-					if(col.equals(result[0][k])){
-						//1. 컬럼이 맞다!
-						corr++;
-						
-						//2. 2차원 배열 데이터들 한줄씩 비교!
-						for(int p = 1;p<result[p].length-1;p++){
-							if(answerTable[p][index[j-1]].equals(result[p][k])){
-								ansCorrect = true;
-							}else{
-								ansCorrect = false;
+
+
+			break;*/
+			case 2:	case 3: case 4: case 5:	 case 6: case 7: case 8: case 9:
+			case 10: case 12:  case 13: case 18:
+				//* 정답 뷰랑 비교해야되요
+				//ghfhfhfh
+
+				for(int j=1;j<answerTable.length;j++){
+					index[j-1] = j;
+					String col = answerTable[0][j];
+
+					System.out.println("결과 값 2차원 행의 길이"+result.length + " 결과 값 2차원 열의 길이 : "+result[0].length);
+
+					for(int k =0;k<result[0].length;k++){
+						if(col.equals(result[0][k])){
+							//1. 컬럼이 맞다!
+							corr++;
+
+							//2. 2차원 배열 데이터들 한줄씩 비교!
+							for(int p = 1;p<result[p].length-1;p++){
+								if(answerTable[p][index[j-1]].equals(result[p][k])){
+									ansCorrect = true;
+								}else{
+									ansCorrect = false;
+								}
 							}
 						}
 					}
 				}
+				break;
+			default:
+				break;
 			}
-			break;
-		default:
-			break;
+
+			switch (questionNumber) {
+			case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
+				// questionNumber가 1~ 11까지는 animal
+				if(corr == 5 && ansCorrect){
+					System.out.println("정답이다 !!");
+					map.put("success", 1);
+				}else{
+					map.put("success", -1);
+					setErrorMessage("Not correct Answer");
+				}
+				break;
+			case 12: case 18:
+				// questionNumber가 12~16은 PERSON
+				// questionNumber가 17~20은 ROBOT
+				if(corr == 4 && ansCorrect){
+					map.put("success", 1);
+				}else{
+					map.put("success", -1);
+					setErrorMessage("Not correct Answer");
+				}
+				break;
+			default:
+				//나머지 create, drop, insert, update, alter
+				if(result != null){
+					map.put("success", 1);
+				}else{
+					map.put("success", -1);
+					setErrorMessage("Not correct Answer");
+				}
+				break;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
-		
-		switch (questionNumber) {
-		case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
-			// questionNumber가 1~ 11까지는 animal
-			if(corr == 5 && ansCorrect){
-				System.out.println("정답이다 !!");
-				map.put("success", 1);
-			}else{
-				map.put("success", -1);
-				setErrorMessage("Not correct Answer");
-			}
-			break;
-		case 12: case 18:
-			// questionNumber가 12~16은 PERSON
-			// questionNumber가 17~20은 ROBOT
-			if(corr == 4 && ansCorrect){
-				map.put("success", 1);
-			}else{
-				map.put("success", -1);
-				setErrorMessage("Not correct Answer");
-			}
-			break;
-		default:
-			//나머지 create, drop, insert, update, alter
-			if(result != null){
-				map.put("success", 1);
-			}else{
-				map.put("success", -1);
-				setErrorMessage("Not correct Answer");
-			}
-			break;
-		}
-		
+
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
 		System.out.println("End of getResult");
 		System.out.println("result=" + result);
@@ -983,10 +996,10 @@ public class SQLCompiler
 				if(content.equals("drop") || content.equals("change") || content.equals("add")
 						|| content.equals("modify") || content.equals("rename")){
 
-					
+
 					//함수만들자 걍,,
 					alterMap = alterCol(stage, content);
-					
+
 					if(alterMap.get("drop") != null){
 						alterResult[0][0] = "drop";
 						alterResult[1][0] = alterMap.get("drop").toString();
@@ -1011,7 +1024,7 @@ public class SQLCompiler
 						alterResult[0][5] = "rename";
 						alterResult[1][5] = alterMap.get("rename").toString();
 					}
-					
+
 					//값 찍어볼까
 					for(i=0;i<alterResult[0].length;i++){
 						for(int j = 0;j<alterResult.length;j++){
@@ -1284,20 +1297,20 @@ public class SQLCompiler
 	//delete --> select * 로 변환해서 select에 전달
 	private void getDelete(){
 		String[] delCh = new String[texts.length+1];
-		
+
 		delCh[0] = "select";
 		delCh[1] = "*";
-		
+
 		for(int i = 2;i<delCh.length;i++){
 			delCh[i] = texts[i-1];
 		}
-		
+
 		texts = new String[delCh.length];
 		texts = delCh;
-		
+
 		return;
 	}
-	
+
 	private String[][] getSelect() throws Exception
 	{ // return 값은 2차원 배열
 		i++;

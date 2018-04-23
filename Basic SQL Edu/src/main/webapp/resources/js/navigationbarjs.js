@@ -56,7 +56,6 @@ $(function(){
 		$(imgselector(3)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(4)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(5)).attr("src", "/www/resources/image/girrafeyellow.png");
-
    }
    
    
@@ -162,6 +161,9 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
+         //테이블 이름 변경
+         $('#table_name').text("animal");
+         
          
          //배경 변경.
          $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
@@ -218,7 +220,9 @@ function createQuiz(qlist, anslist, stage){
       case 11: //alter table 문제
          break;
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
-         
+         if(stage == 12){
+        	 $(imgselector(5)).attr("src", "");
+         }
          $.each(qlist, function(index, value){
             
             var job = value.job;
@@ -229,6 +233,10 @@ function createQuiz(qlist, anslist, stage){
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+job+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
          });
+         
+         //테이블 이름 변경
+         $('#table_name').text("person");
+         
          
          break;
       case 17: case 18: // robot 문제테이블 활용.
@@ -241,6 +249,9 @@ function createQuiz(qlist, anslist, stage){
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+r_type+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
          });
+         
+         //테이블 이름 변경
+         $('#table_name').text("robot");
          break;
          
    }
@@ -260,8 +271,7 @@ function getDataByAJAX(stage, lang) {
 		dataType : "json",
 		success : function(obj){
 			console.log('ajax success');
-			//쿠키값에 따른 화면 갱신(완료표시를 위함)
-			$('.stagebtn'+$('#currentLv').val()).css('color', 'red');
+			
 			
 			//화면 값 갱신
 			$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
