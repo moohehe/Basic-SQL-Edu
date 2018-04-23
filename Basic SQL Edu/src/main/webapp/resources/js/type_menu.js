@@ -141,7 +141,6 @@ function sqlrun() {
 			
 			
 			if(stage==11){
-				
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
 				if(answerrigt){ //(이 변수랑 아래 alterlv은 걍 만든거라 나중에 바꿀것.)
 					switch(alterlv){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
