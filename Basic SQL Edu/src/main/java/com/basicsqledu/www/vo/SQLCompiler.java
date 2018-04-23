@@ -41,7 +41,7 @@ public class SQLCompiler
 
 	// SQL 구문 결과(내부에서 계산한 결과)
 	private String[][] result;
-	private String[][] alterResult = new String[2][6];
+	private String[][] alterResult = new String[2][5];
 	private String result_name;
 	private HashMap<String, Integer> result_columns;
 	private HashMap<String, Object> alterMap = new HashMap<>();
@@ -96,15 +96,15 @@ public class SQLCompiler
 
 		this.table_name = table_name;
 		System.out.println("문제 번호?? : " + questionNumber + "테이블 이름 뭐니 : " + table_name);
-		
+
 		if(questionNumber == 1 || questionNumber == 11 || questionNumber == 15 || questionNumber == 16
 				|| questionNumber == 17 || questionNumber == 19 || questionNumber == 20 	){
 			//정답 뷰 필요없음
 		}else{
 			int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
-	
+
 			System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
-	
+
 			// questionNumber가 1~ 11까지는 animal
 			// questionNumber가 12~16은 PERSON
 			// questionNumber가 17~20은 ROBOT
@@ -115,7 +115,7 @@ public class SQLCompiler
 			}else{
 				answerTable = new String[answerSize][5];	//robot
 			}
-	
+
 			answerTable = quizDAO.getAnswer(questionNumber, table_name);
 		}
 		this.questionNumber = questionNumber;
@@ -494,7 +494,7 @@ public class SQLCompiler
 			map.put("result", result);
 		}
 
-		//DB 정답 뷰 출력해보자
+		/*		//DB 정답 뷰 출력해보자
 		System.out.println("========== 테스트 정답 뷰 출력(SQLCompiler) ===========");
 		if(answerTable.length != 0){
 			for(int j = 0;j<answerTable.length;j++){
@@ -504,7 +504,7 @@ public class SQLCompiler
 				System.out.println();
 			}
 		}
-
+		 */
 
 		int corr = 0;
 		int [] index = new int[answerTable.length-1];
@@ -1004,25 +1004,21 @@ public class SQLCompiler
 						alterResult[0][0] = "drop";
 						alterResult[1][0] = alterMap.get("drop").toString();
 					}
-					if(alterMap.get("change1") != null){
+					if(alterMap.get("change") != null){
 						alterResult[0][1] = "change1";
 						alterResult[1][1] = alterMap.get("change1").toString();
 					}
-					if(alterMap.get("change2") != null){
-						alterResult[0][2] = "change2";
-						alterResult[1][2] = alterMap.get("change2").toString();
-					}
 					if(alterMap.get("add") != null){
-						alterResult[0][3] = "add";
-						alterResult[1][3] = alterMap.get("add").toString();
+						alterResult[0][2] = "add";
+						alterResult[1][2] = alterMap.get("add").toString();
 					}
 					if(alterMap.get("modify") != null){
-						alterResult[0][4] = "modify";
-						alterResult[1][4] = alterMap.get("modify").toString();
+						alterResult[0][3] = "modify";
+						alterResult[1][3] = alterMap.get("modify").toString();
 					}
 					if(alterMap.get("rename") != null){
-						alterResult[0][5] = "rename";
-						alterResult[1][5] = alterMap.get("rename").toString();
+						alterResult[0][4] = "rename";
+						alterResult[1][4] = alterMap.get("rename").toString();
 					}
 
 					//값 찍어볼까
@@ -1073,25 +1069,14 @@ public class SQLCompiler
 			break;
 		case "change":
 			//color
-			if(col[1].equals("color") && col[2].equals("haircolor")){
+			if(col[1].equals("color") && col[2].equals("hair_color")){
 				col[3] = col[3]+col[4]+col[5]+col[6];
 				for(String type: spDataType1){
 					if(type.equals("varchar") && (type+"(20)").equals(col[3])){
-						alterMap.put("change1", true);
+						alterMap.put("change", true);
 						break;
 					}else{
-						alterMap.put("change1", false);
-					}
-				}
-				//habitat
-			}else if(col[1].equals("habitat") && col[2].equals("job")){
-				col[3] = col[3]+col[4]+col[5]+col[6];
-				for(String type: spDataType1){
-					if(type.equals("varchar") && (type+"(20)").equals(col[3])){
-						alterMap.put("change2", true);
-						break;
-					}else{
-						alterMap.put("change2", false);
+						alterMap.put("change", false);
 					}
 				}
 			}

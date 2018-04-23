@@ -3,6 +3,8 @@ package com.basicsqledu.www;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class CompilerController
 	@RequestMapping(value="sqlCompiler", method = RequestMethod.POST
 			, produces = "application/text; charset=utf8")
 	public String compiler(String sql, HttpServletResponse response
+			, HttpServletRequest request
 			, @RequestParam(defaultValue="animal_view") String table_name
 			, @RequestParam(defaultValue="2") int questionNumber) {
 		if (sql.equals("abracatabra")) {
@@ -85,6 +88,24 @@ public class CompilerController
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 		}
 		
+		//20번 문제가 정답
+		if(questionNumber == 20 && resultMap.get("success") == "1"){
+			//쿠키 검사
+			
+			int k = 0;
+			Cookie [] cok = request.getCookies();
+			for(int i = 1 ; i<= questionNumber; i++){
+				if(cok[i].getName().equals("completeStage" + i)){
+					if(cok[i].getValue().equals("pass")){
+						k++;
+					}
+				}
+			}
+			if(k == 20){
+				//인증서 가자
+				map.put("goCerti", true);
+			}
+		}
 		
 		Gson gson = new Gson();
 		String json = gson.toJson(resultMap);
