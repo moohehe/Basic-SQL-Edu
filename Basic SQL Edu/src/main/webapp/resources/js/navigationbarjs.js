@@ -28,6 +28,10 @@ $(function(){
 		else if (menu == 'CERTIFICATION') {
 			console.log('certification run');
 		}
+		else if ($(this).hasClass('submitbtn')) {
+			// submit 실행
+			$('#email').submit();
+		}
 		else// (menu == 'CLOSE') {
 		{	console.log('닫기');
 			$('.contactus-bg').hide();
