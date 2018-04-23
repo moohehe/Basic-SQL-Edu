@@ -244,7 +244,7 @@ function createQuiz(qlist, anslist, stage){
          
       case 11: //alter table 문제
     	  //배경 변경.
-    	  $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
+    	  $('.questionTable').css({"background":imgpath("alter"+1+".png"), 'background-size':'auto', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
          
     	  //칼럼들 지워놓음.
     	  for(var i=1; i<6; i++){
@@ -252,6 +252,7 @@ function createQuiz(qlist, anslist, stage){
          }
     	  //테이블도 지워.
     	  $('#table_data').html("Alter Table!!");
+    	  
     	  
          break;
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
