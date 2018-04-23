@@ -138,23 +138,43 @@ function sqlrun() {
 		}
 		, dataType: 'json'
 		, success: function(e) {
-			console.log(e);
-			if (e.password == 'pass' ) {
-				location.href = e.url;
-				return false;
-			}
-			$('#resultView').val(e);
-			// data 로 맞췄다 틀렸다 표시할것
-			if (e.success == '1') {
-				// 맞춤.
-				sql_success();
-				if(e.goCerti == true){
-					//인증서 고
-					goCertify();
+			
+			
+			if(stage==11){
+				
+				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
+				if(answerrigt){ //(이 변수랑 아래 alterlv은 걍 만든거라 나중에 바꿀것.)
+					switch(alterlv){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
+					case 2:
+						break;
+					case 3:
+						break;
+					case 4:
+						break;
+					case 5:
+						break;
+					
+					}
 				}
-			}else {
-				// 문제 틀림
-				sql_fail(e.errorMessage);
+			}else{ //11번 alter문제를 제외하고는 모두 아래 로직을 따라간다.
+				console.log(e);
+				if (e.password == 'pass' ) {
+					location.href = e.url;
+					return false;
+				}
+				$('#resultView').val(e);
+				// data 로 맞췄다 틀렸다 표시할것
+				if (e.success == '1') {
+					// 맞춤.
+					sql_success();
+					if(e.goCerti == true){
+						//인증서 고
+						goCertify();
+					}
+				}else {
+					// 문제 틀림
+					sql_fail(e.errorMessage);
+				}
 			}
 		}
 		, error : function(e) {
