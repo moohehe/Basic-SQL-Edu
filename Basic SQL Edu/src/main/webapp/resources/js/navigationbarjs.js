@@ -161,6 +161,9 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
+         //테이블 이름 변경
+         $('#table_name').text("animal");
+         
          
          //배경 변경.
          $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
@@ -231,6 +234,10 @@ function createQuiz(qlist, anslist, stage){
             $(imgselector((index)+1)).attr("th_code", value.th_code);
          });
          
+         //테이블 이름 변경
+         $('#table_name').text("person");
+         
+         
          break;
       case 17: case 18: // robot 문제테이블 활용.
          $.each(qlist, function(index, value){
@@ -242,6 +249,9 @@ function createQuiz(qlist, anslist, stage){
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+r_type+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
          });
+         
+         //테이블 이름 변경
+         $('#table_name').text("robot");
          break;
          
    }
