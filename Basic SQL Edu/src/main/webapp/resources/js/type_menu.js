@@ -106,6 +106,7 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 function sqlrun() {
 	var str = document.getElementById('sql').value;
 	var stage = $('#currentLv').val();
+	var table_name =  $('#table_name').text()+"_view";
 	console.log(str);
 	if (str == '') {
 		return;
@@ -115,6 +116,7 @@ function sqlrun() {
 		, url:"sqlCompiler"
 		, data:{
 			sql:str,
+			table_name: table_name,
 			questionNumber:stage
 		}
 		, dataType: 'json'
