@@ -8,6 +8,7 @@
 	.centerdiv {
 	background-color:white;
 	opacity: 1;
+	font-family: Verdana,sans-serif;
 	}
 </style>
 </head>
