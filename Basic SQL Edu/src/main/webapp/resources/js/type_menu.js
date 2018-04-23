@@ -119,13 +119,20 @@ function sqlrun() {
 		}
 		, dataType: 'json'
 		, success: function(e) {
+			console.log(e);
 			if (e.password == 'pass' ) {
 				location.href = e.url;
 				return false;
 			}
-			console.log(e);
 			$('#resultView').val(e);
 			// data 로 맞췄다 틀렸다 표시할것
+			if (e.success == '1') {
+				// 맞춤.
+				sql_success();
+			} else {
+				// 문제 틀림
+				sql_fail(e.errorMessage);
+			}
 		}
 		, error : function(e) {
 			console.log('error:'+e);	
