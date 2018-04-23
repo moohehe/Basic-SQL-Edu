@@ -56,7 +56,6 @@ $(function(){
 		$(imgselector(3)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(4)).attr("src", "/www/resources/image/girrafeyellow.png");
 		$(imgselector(5)).attr("src", "/www/resources/image/girrafeyellow.png");
-
    }
    
    
