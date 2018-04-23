@@ -236,7 +236,8 @@ function createQuiz(qlist, anslist, stage){
       case 11: //alter table 문제
     	  //배경 변경.
     	  $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
-         //칼럼들 지워놓음.
+         
+    	  //칼럼들 지워놓음.
     	  for(var i=1; i<6; i++){
         	 $(imgselector(i)).attr("src", "");
          }
