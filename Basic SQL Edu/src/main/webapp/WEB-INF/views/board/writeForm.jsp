@@ -13,7 +13,7 @@
 <style>
 	.centerdiv {
 	background-color:white;
-	opacity: 1;
+	opacity: 10;
 	}
 </style>
 <div class="centerdiv">

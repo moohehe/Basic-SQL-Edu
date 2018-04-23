@@ -15,7 +15,7 @@
 		
         <div class="editor-pane">
           <div class="input-header">
-            <div class="table-name"><button class="float-unit btn" id="sqltest" onclick="javascript:sqlrun();" >Submit</button></div> SQL Editor
+            <div class="table-name"><div class="float-unit btn submitbtn" id="sqltest" onclick="javascript:sqlrun();" >Submit</div></div> SQL Editor
 				
           </div>
           <div class="file-window css-view">
@@ -43,7 +43,7 @@
 	           	</table> -->
 	           	<table class="table table-hover">
                                 <!-- Table head -->
-                                <thead class="blue lighten-4">
+                                <thead class="green lighten-4">
                                     <tr>
                                         <th> </th>
                                         <th> </th>

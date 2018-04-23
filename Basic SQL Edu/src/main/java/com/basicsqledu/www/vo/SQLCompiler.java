@@ -494,7 +494,7 @@ public class SQLCompiler
 			map.put("result", result);
 		}
 
-		/*		//DB 정답 뷰 출력해보자
+		/*//DB 정답 뷰 출력해보자
 		System.out.println("========== 테스트 정답 뷰 출력(SQLCompiler) ===========");
 		if(answerTable.length != 0){
 			for(int j = 0;j<answerTable.length;j++){
@@ -505,7 +505,7 @@ public class SQLCompiler
 			}
 		}
 		 */
-
+		
 		int corr = 0;
 		int [] index = new int[answerTable.length-1];
 		boolean ansCorrect= false;
@@ -514,7 +514,6 @@ public class SQLCompiler
 			switch (questionNumber) {
 			/*case 13:
 			//* 서브쿼리 및 조인 문제 --> 사용자 2차원 배열은 컬럼앞에 테이블이름 붙어서 나와지나?
-
 
 			break;*/
 			case 2:	case 3: case 4: case 5:	 case 6: case 7: case 8: case 9:

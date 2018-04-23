@@ -14,17 +14,31 @@ function text_keyup() {
 	if ($('#sql').val().split('\n').length > 9) {
 		console.log('10줄 넘어감');
 		$('textarea').val(sql_text);
+		
 	}
 }
-// table row - mouserover되면 view의 그림에 그림자 보여주기
+// table row - mouseover되면 view의 그림에 그림자 보여주기
 function setTd() {
+	var data = new Array();
 	console.log('setTd run');
 	$('td').mouseover(function() {
+		console.log('mouseover');
+		for (var k = 0; k < 5 ; k++) {
+			data[k] = $('div[tcolumes='+(k+1)+']').attr('class');
+			console.log('data['+k+']='+data[k]);
+		}
 		var selected = $(this).attr('th_code');
 		$('img[th_code='+selected+']').removeClass().addClass('tada infinite animated tableColumes' );
+		//rubberBand animated tableColumes infinite flash
 	});
 	$('td').mouseout(function() {
-		$('img').removeClass().addClass('animated tableColumes' );
+
+		console.log('mouseout');
+		$('img').removeClass();
+		for (var k = 0; k < 5 ; k++) {
+			console.log('addClass='+data[k]);
+			$('div[tcolumes='+(k+1)+']').addClass(data[k]);
+		}
 	});
 }
 // table tag 만들기

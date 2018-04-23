@@ -64,6 +64,7 @@ textarea {
   position: relative;
   vertical-align: middle;
   background-color:#efefef;
+  min-height:270px;
 }
 .editor .css-view {
   background: #efefef;
@@ -243,4 +244,10 @@ tr td.t_body {
                         #007f2a    50%, #007f2a 66.67%,
                         #003fff 66.67%, #003fff 83.33%,
                         #7f007f 83.33%, #7f007f 100%); */
+}
+.submitbtn {
+	padding-top:10px;
+	background-color:#003311;
+	font-family:Verdana,sans-serif;
+	color:white;
 }
