@@ -53,7 +53,7 @@ function onClick(){
 }
 html, body {
     height: 95%;
-    background-image: url("resources/image/certification.png");
+    background-image: url("resources/image/certi.png");
     background-repeat: no-repeat;
     background-position: 50% 50%;
     background-attachment: fixed;

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -19,10 +20,8 @@ public class CertifyController {
 
 	@RequestMapping(value = "goCertify", method=RequestMethod.GET)
 	public String getTable() {
-		return "certify/certification";
+		return "certify/certifyForm";
 	}
-
-
 
 	@RequestMapping(value = "certify", method=RequestMethod.POST)
 	public String certify(String cert_name, String cert_email) {
@@ -55,11 +54,20 @@ public class CertifyController {
 		certify.setCert_user(cert);
 		certify.setCert_email(cert_email);
 		
+		System.out.println(certify);
 		
 		certDAO.insertCert(certify);
 		
-		
-		return "redirect:certification?"+certify.getCert_user();
+		return "redirect:gocertification?user="+cert_name;
 	}
+	
+
+	@RequestMapping(value = "gocertification", method=RequestMethod.GET)
+	public String gocertification(String user, Model model) {
+		System.out.println(user);
+		model.addAttribute(user);
+		return "certify/certification";
+	}
+	
 
 }

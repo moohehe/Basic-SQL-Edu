@@ -5,7 +5,7 @@
 
 
 <!-- 게시판 처리 SQL -->
-<mapper namespace="com.basicsqledu.www.mapper.QuizMapper">
+<mapper namespace="com.basicsqledu.www.mapper.CertMapper">
 
 	<insert id="insertCert" parameterType="cert">
 	insert into	certification(
