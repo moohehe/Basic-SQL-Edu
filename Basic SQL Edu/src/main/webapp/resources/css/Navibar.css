@@ -57,7 +57,7 @@
 	color:white;
 	display:inline-block;
 	font-size: 15px;
-	background-color:#00e64d;
+	background-color:#4CAF50;
 	padding:5px;
 	margin:1px;
 }
@@ -136,7 +136,7 @@
 /*진행 바 관련 css*/
 .progress-small { 
 overflow:hidden; height:7px; margin-bottom:0px; width:390px;
-background-color:gray; border-radius:0px; 
+background-color:#cccccc; border-radius:0px; 
 -webkit-box-shadow:inset 0 1px 2px rgba(0,0,0,.1); 
 box-shadow:inset 0 1px 2px rgba(0,0,0,.1); 
 }
@@ -154,7 +154,7 @@ box-shadow:inset 0 -1px 0 rgba(0,0,0,.15);
 -webkit-transition:width .6s ease; transition:width .6s ease; 
 } 
 /*진행 바 관련 css*/
-.progress-bar-s-info {background-color: #ff9900;} 
+.progress-bar-s-info {background-color: #ffcc33;} 
 
 .lvmemu {
 	border-bottom: 1px solid;
