@@ -494,7 +494,7 @@ public class SQLCompiler
 			map.put("result", result);
 		}
 
-		//DB 정답 뷰 출력해보자
+		/*//DB 정답 뷰 출력해보자
 		System.out.println("========== 테스트 정답 뷰 출력(SQLCompiler) ===========");
 		if(answerTable.length != 0){
 			for(int j = 0;j<answerTable.length;j++){
@@ -503,7 +503,7 @@ public class SQLCompiler
 				}
 				System.out.println();
 			}
-		}
+		}*/
 
 
 		int corr = 0;

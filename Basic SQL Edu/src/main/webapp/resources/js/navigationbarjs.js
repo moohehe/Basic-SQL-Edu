@@ -208,7 +208,7 @@ function createQuiz(qlist, anslist, stage){
          
          $.each(anslist, function(index, value){
             var th_code = value;
-            
+            console.log("정답코드"+th_code);
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
@@ -218,10 +218,20 @@ function createQuiz(qlist, anslist, stage){
          break;
          
       case 11: //alter table 문제
+    	  //배경 변경.
+    	  $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
+         //칼럼들 지워놓음.
+    	  for(var i=1; i<6; i++){
+        	 $(imgselector(i)).attr("src", "");
+         }
+    	  //테이블도 지워.
+    	  $('#table_data').html("Alter Table!!");
+    	  
          break;
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
          if(stage == 12){
         	 $(imgselector(5)).attr("src", "");
+        	 
          }
          $.each(qlist, function(index, value){
             
@@ -232,11 +242,17 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 이미지 변경.
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+job+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
+            addAnimation('rubberBand', value.th_code);
          });
-         
+         //정답 리스트 돌기.
+         $.each(anslist, function(index, value){
+             var th_code = value;
+             console.log("정답코드"+th_code);
+             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
+             $('img[th_code="'+th_code+'"]').addClass('animated 2s flash');
+          });
          //테이블 이름 변경
          $('#table_name').text("person");
-         
          
          break;
       case 17: case 18: // robot 문제테이블 활용.
@@ -248,7 +264,15 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 이미지 변경.
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+r_type+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
+            addAnimation('rubberBand', value.th_code);
          });
+         //정답 리스트 돌기.
+         $.each(anslist, function(index, value){
+             var th_code = value;
+             console.log("정답코드"+th_code);
+             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
+             $('img[th_code="'+th_code+'"]').addClass('animated 2s flash');
+          });
          
          //테이블 이름 변경
          $('#table_name').text("robot");
