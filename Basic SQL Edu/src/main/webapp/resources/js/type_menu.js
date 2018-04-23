@@ -19,24 +19,25 @@ function text_keyup() {
 // table row - mouseover되면 view의 그림에 그림자 보여주기
 function setTd() {
 	var data = new Array();
+	var c_data;
 	console.log('setTd run');
+	var selected;
 	$('td').mouseover(function() {
 		console.log('mouseover');
 		for (var k = 0; k < 5 ; k++) {
-			data[k] = $('div[tcolumes='+(k+1)+']').attr('class');
-			console.log('data['+k+']='+data[k]);
+			data[k] = $('img[tcolumes='+(k+1)+']').attr('class');
+			$('img[tcolomes='+(k+1)+']').removeClass().addClass('tableColumes');
 		}
-		var selected = $(this).attr('th_code');
+		selected = $(this).attr('th_code');
 		$('img[th_code='+selected+']').removeClass().addClass('tada infinite animated tableColumes' );
-		//rubberBand animated tableColumes infinite flash
 	});
 	$('td').mouseout(function() {
 
 		console.log('mouseout');
-		$('img').removeClass();
+		/*$('img[th_code='+selected+']').removeClass().addClass(c_data);*/
 		for (var k = 0; k < 5 ; k++) {
 			console.log('addClass='+data[k]);
-			$('div[tcolumes='+(k+1)+']').addClass(data[k]);
+			$('img[tcolumes='+(k+1)+']').addClass(data[k]);
 		}
 	});
 }
