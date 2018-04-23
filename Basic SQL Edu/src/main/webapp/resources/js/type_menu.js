@@ -14,6 +14,7 @@ function text_keyup() {
 	if ($('#sql').val().split('\n').length > 9) {
 		console.log('10줄 넘어감');
 		$('textarea').val(sql_text);
+		
 	}
 }
 // table row - mouseover되면 view의 그림에 그림자 보여주기
