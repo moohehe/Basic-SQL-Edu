@@ -13,20 +13,37 @@ $(function(){
 	$('.success').hide();
 	$('.fail').hide();
 	$('.contactus').hide();
+	$('.contactus-bg').hide();
 	
 	$('.menubtn').on('click',function() {
 		var menu = $(this).text();
 		if (menu == 'CONTACT US') {
-			
+			$('.contactus-bg').show();
 			$('.contactus').show();
+			$('.contactus-bg').on('click',function() {
+				$('.contactus').hide();
+				$('.contactus-bg').hide();
+			});
 		}
 		if (menu == 'CERTIFICATION') {
 			console.log('certification run');
 		}
 		return false;
 	});
-	
-	
+	$('.btn').on('mouseover',function() {
+		var btn_name = $(this).text();
+		console.log('btn_name'+btn_name);
+		if (btn_name == 'SUBMIT') {
+			
+		} else {
+			
+		}
+	});
+
+	$('.btn').on('mouseout',function() {
+		var btn_name = $(this).text();
+		console.log('mouserout='+btn_name);
+	});
 	fstage = $('#currentLv').val(); //현재 레벨(스테이지) 가져옴.
 	flang = $('#currentLang').val(); //어떤 언어인지 선택. 
 	
