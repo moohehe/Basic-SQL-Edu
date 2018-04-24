@@ -300,15 +300,17 @@ function createQuiz(qlist, anslist, stage){
             console.log("로봇:"+ r_type + "로봇색:" + color);
             
             if(stage == 17){
-            	 //칼럼들 지워놓음.
-          	  for(var i=1; i<6; i++){
-              	 $(imgselector(i)).attr("src", "");
-               }
-            }
+              	 //칼럼들 지워놓음.
+            	  for(var i=1; i<6; i++){
+                	 $(imgselector(i)).attr("src", "");
+                 }
+              }
+            
             //테이블 안 칼럼들 이미지 변경.
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+r_type+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
             addAnimation('rubberBand', value.th_code);
+            
          });
          //정답 리스트 돌기.
          $.each(anslist, function(index, value){
