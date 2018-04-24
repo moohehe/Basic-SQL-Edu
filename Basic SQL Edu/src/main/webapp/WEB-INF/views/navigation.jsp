@@ -48,6 +48,7 @@
 				<div class="navi_bottom" style="padding-bottom: 10%">
 					<div class="menubtn btn" id="contactus">CONTACT US</div>
 					<div class="menubtn btn" id="certification">CERTIFICATION</div>
+					<a href="goCertify">임시 수료증 고고싱</a>
 				</div>
 			</div>
 		</div>	

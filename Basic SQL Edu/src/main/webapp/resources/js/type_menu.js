@@ -72,8 +72,8 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 				tags += "<tr>";
 				//tags += "<th></th>";
 				tags += "<th scope='row' class='t_head'>hair_color</th>";
-				tags += "<th class='t_head'>height</th>";
 				tags += "<th class='t_head'>job</th>";
+				tags += "<th class='t_head'>height</th>";
 				tags += "<th class='t_head'>gender</th>";
 				tags += "</tr></thead>";
 			}
@@ -81,9 +81,9 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 				//robot일 경우.
 				tags += "<tr>";
 				//tags += "<th></th>";
-				tags += "<th scope='row' class='t_head'>r_type</th>";
+				tags += "<th scope='row' class='t_head'>r_size</th>";
 				tags += "<th class='t_head'>r_color</th>";
-				tags += "<th class='t_head'>r_size</th>";
+				tags += "<th class='t_head'>r_type</th>";
 				tags += "<th class='t_head'>weapon</th>";
 				tags += "</tr></thead>";
 			}
