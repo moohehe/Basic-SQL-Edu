@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html>
+<head>
 <title>Everybody's SQL</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,6 +39,18 @@ body, h1, h2, h3, h4, h5, h6 {
 	opacity: 1
 }
 </style>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$('#goTest').on('click', function(){
+	 var language = $('#langop').val(); //사용자가 select Box에서 선택한 언어.	
+	 $(location).attr('href', "test?langop="+language);
+		
+	});
+});
+</script>
+</head>
 <!-- Header with image -->
 <body class="bgimg w3-display-container w3-grayscale-min">
 	<header>
@@ -61,14 +75,14 @@ body, h1, h2, h3, h4, h5, h6 {
 			<div class="w3-display-middle w3-center" style="margin-top: 20%;">
 				<div style="">
 					<p style="font-size: 30px; font-weight: bold;">
-						<a href="test" class="w3-btn w3-button w3-yellow">W E L C O M E</a>
+						<button id="goTest" class="w3-btn w3-button w3-yellow" > Enter</button>						
 					</p>
-
-					<span class="w3-text-purple w3-tag" style="font-size: 20px"><b>Select
-							Language</b></span> <select name="lang" style="font-size: 20px;">
-						<option value="jp">일본어</option>
-						<option value="eng">영어</option>
-						<option value="default" selected>한국어</option>
+					<span class="w3-text-purple w3-tag" style="font-size: 20px">
+					<b>Select Language</b></span> 
+					<select id="langop" name="lang" style="font-size: 20px;">
+						<option value="3" >일본어</option>
+						<option value="1">영어</option>
+						<option value="2" selected>한국어</option>
 					</select>
 				</div>
 			</div>
