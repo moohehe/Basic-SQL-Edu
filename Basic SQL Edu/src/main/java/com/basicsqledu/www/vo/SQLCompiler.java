@@ -506,7 +506,7 @@ public class SQLCompiler
 		}
 		 */
 		
-		boolean ansCorrect= false;
+		boolean ansCorrect= false;	//푸시중
 		int corr = 0;
 		
 		try{
