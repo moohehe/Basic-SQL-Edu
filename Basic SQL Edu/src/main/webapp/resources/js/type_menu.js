@@ -146,7 +146,6 @@ function sqlrun() {
 					if(e.drop == 'true'){
 						console.log("dddd");
 						step++;
-					}
 					if(e.change == 'true'){
 						step++
 					}
@@ -165,6 +164,8 @@ function sqlrun() {
 					case 1:
 						//한문제 맞췄을 때의 그림 보여주기
 						alert("히죽");
+						 //배경 변경.
+				    	  $('.questionTable').css({"background":imgpath("alter"+2+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 						break;
 					case 2:
 						//두문제 맞췄을 때의 그림 보여주기
