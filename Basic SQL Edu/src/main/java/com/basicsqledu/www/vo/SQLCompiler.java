@@ -506,11 +506,11 @@ public class SQLCompiler
 		}
 		 */
 		
-		int corr = 0;
-		int [] index = new int[answerTable.length-1];
-		boolean ansCorrect= false;
 
 		try{
+			int corr = 0;
+			int [] index = new int[answerTable.length-1];
+			boolean ansCorrect= false;
 			switch (questionNumber) {
 			/*case 13:
 			//* 서브쿼리 및 조인 문제 --> 사용자 2차원 배열은 컬럼앞에 테이블이름 붙어서 나와지나?
