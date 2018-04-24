@@ -8,7 +8,7 @@
 <title>[ 감사합니다 ]</title>
 </head>
 <body>
-<div class="centerdiv">
+<div class="centerdiv" style="text-align: center;">
 <br><br><br><br><br><br><br>
 
 <h1>
@@ -20,7 +20,7 @@ Thank you.
 <h3>
 보내주신 의견을 참고하여 사이트에 적극반영 하도록 노력하겠습니다.
 </h3>
-<a href="../board/list">피드백 게시판으로 이동</a>
+<a href="./test">돌아가기</a>
 </div>
 </body>
 </html>

@@ -14,10 +14,10 @@ function text_keyup() {
 	if ($('#sql').val().split('\n').length > 9) {
 		console.log('10줄 넘어감');
 		$('textarea').val(sql_text);
-		
+
 	}
 }
-// table row - mouseover되면 view의 그림에 그림자 보여주기
+//table row - mouseover되면 view의 그림에 그림자 보여주기
 var data = new Array();
 function setClass() {
 	for (var k = 0; k < 5 ; k++) {
@@ -44,17 +44,17 @@ function setTd() {
 		}
 	});
 }
-// table tag 만들기
+//table tag 만들기
 function setTableView(table, lv) { // parameter는 2차원 배열이거나 arraylist임
 	console.log('setTableView run');
 	console.log(table);
 	var table_data = $('#table_data');
 	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
-	
+
 	// 첫번째 줄
 	for (var i = 0; i < table.length; i++) {
 		if (i == 0 ) {
-			
+
 			if (lv < 12 ) {
 				//animal일 경우.
 				tags += "<tr>";
@@ -119,7 +119,7 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 	console.log(tags);
 	table_data.html(tags);
 }
-// server 로 데이터를 전송함.
+//server 로 데이터를 전송함.
 function sqlrun() {
 	var str = document.getElementById('sql').value;
 	var stage = $('#currentLv').val();
@@ -130,30 +130,63 @@ function sqlrun() {
 	}
 	$.ajax({
 		type:"POST"
-		, url:"sqlCompiler"
-		, data:{
-			sql:str,
-			table_name: table_name,
-			questionNumber:stage
-		}
-		, dataType: 'json'
+			, url:"sqlCompiler"
+				, data:{
+					sql:str,
+					table_name: table_name,
+					questionNumber:stage
+				}
+	, dataType: 'json'
 		, success: function(e) {
-			
-			
+
 			if(stage==11){
+				var step = 0;
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
-				if(answerrigt){ //(이 변수랑 아래 alterlv은 걍 만든거라 나중에 바꿀것.)
-					switch(alterlv){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
+				try{
+					if(e.drop == true){
+						step++;
+					}
+					if(e.change == true){
+						step++
+					}
+					if(e.add == true){
+						step++;
+					}
+					if(e.modify == true){
+						step++;
+					}
+					if(e.rename == true){
+						step++;
+					}
+
+					switch(step){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
+					case 1:
+						//한문제 맞췄을 때의 그림 보여주기
+						alert("히죽");
+						break;
 					case 2:
+						//두문제 맞췄을 때의 그림 보여주기
+
 						break;
 					case 3:
+						//세문제 맞췄을 때의 그림 보여주기
+
 						break;
 					case 4:
+						//네문제 맞췄을 때의 그림 보여주기
+
 						break;
 					case 5:
+						if(e.alterComplete == true){
+							sql_success();
+						}
 						break;
-					
+					default :	//실패
+						sql_fail(e.errorMessage);
+						break;
 					}
+				}catch(Exception){
+					sql_fail(e.errorMessage);
 				}
 			}else{ //11번 alter문제를 제외하고는 모두 아래 로직을 따라간다.
 				console.log(e);
@@ -176,9 +209,9 @@ function sqlrun() {
 				}
 			}
 		}
-		, error : function(e) {
-			console.log('error:'+e);	
-		}
+	, error : function(e) {
+		console.log('error:'+e);	
+	}
 	});
 }
 var editor_text;
@@ -206,7 +239,7 @@ function sql_success() {
 	$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
 	// nextBtn에 있는 function 실행
 	// 
-	
+
 	// 성공하면 view_menu 쪽의 그림파일에 class를 입력한다. (뛰어노는 듯한 기쁜 이미지 동작을 부여한다.)
 	$('.success').fadeIn("slow");
 }
@@ -216,7 +249,7 @@ function successStage() {
 	$('textarea').val("");
 }
 
-// 20스테이지를 모두 종료햇을 경우에는 인증서 발급 메뉴로 간다.
+//20스테이지를 모두 종료햇을 경우에는 인증서 발급 메뉴로 간다.
 function goCertify(){
 	location.href("goCertify");
 }

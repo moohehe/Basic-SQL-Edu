@@ -24,7 +24,7 @@
 }
 #titles:after
 {
-	position: absolute;
+	position: absolute ;
 	content: ' ';
 	left: 0;
 	right: 0;
