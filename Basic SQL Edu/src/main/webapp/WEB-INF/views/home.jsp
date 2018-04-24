@@ -80,9 +80,10 @@ $(function(){
 					<span class="w3-text-purple w3-tag" style="font-size: 20px">
 					<b>Select Language</b></span> 
 					<select id="langop" name="lang" style="font-size: 20px;">
-						<option value="3" >일본어</option>
-						<option value="1">영어</option>
-						<option value="2" selected>한국어</option>
+						
+						<option value="1" <c:if test="${selectedLang == 1}">selected</c:if>> 영어</option>
+						<option value="2" <c:if test="${selectedLang == 2}">selected</c:if>> 한국어</option>
+						<option value="3" <c:if test="${selectedLang == 3}">selected</c:if>> 일본어</option>
 					</select>
 				</div>
 			</div>

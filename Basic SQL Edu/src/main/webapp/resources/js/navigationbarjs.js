@@ -138,8 +138,8 @@ $(function(){
       var lang = $('#currentLang').val();
       
       getDataByAJAX(stage, lang);
-      $('.level-menu').slideUp(450);
-      $('.wrap').show();
+     /* $('.level-menu').slideUp(4500);
+      $('.wrap').show();*/
       return false;
    });
          
@@ -254,15 +254,56 @@ function createQuiz(qlist, anslist, stage){
          
       case 11: //alter table 문제
     	  //배경 변경.
-    	  $('.questionTable').css({"background":imgpath("alter"+1+".png"), 'background-size':'auto', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+    	  $('.questionTable').css({"background":imgpath("alter"+1+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
          
     	  //칼럼들 지워놓음.
     	  for(var i=1; i<6; i++){
         	 $(imgselector(i)).attr("src", "");
          }
-    	  //테이블도 지워.
-    	  $('#table_data').html("Alter Table!!");
+    	  // 테이블 부분에 문제 출제가 필요하다.
+    	//테이블 변경.
+  		$('#table_data').html("");
+
+    	  /*그냥 이미지로 할까 했는데 애매해서 일단 주석처리 후, innerHtml로 테이블 걍 만듦.
+    	   * var tags = '<img src="/www/resources/image/altertable.png">'
+    	  $('#table_data').html(tags);*/
+    	  	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
     	  
+    		tags += "<tr>";
+			tags += "<th scope='row' class='t_head'>QuizNo.</th>";
+			tags += "<th class='t_head'>KeyWord</th>";
+			tags += "<th class='t_head'>Description</th>";
+			tags += "</tr></thead>";
+    		
+			tags += "<tbody><tr>";
+			tags += "<td class='t_body'>1</td>";
+			tags += "<td class='t_body'>Drop</td>";
+			tags += "<td class='t_body'>Delete ‘legs’ column</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>2</td>";
+			tags += "<td class='t_body'>Change</td>";
+			tags += "<td class='t_body'>Change ‘color’ column to ‘hair_color’ and add datatype ‘varchar(20)’</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>3</td>";
+			tags += "<td class='t_body'>Add</td>";
+			tags += "<td class='t_body'>Add column ‘gender’ And add datatype ‘varchar(20)’</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>4</td>";
+			tags += "<td class='t_body'>Modify</td>";
+			tags += "<td class='t_body'>Change ‘gender’ column’s datatype to ‘varchar(10)’ and add constraint ’not null’</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>5</td>";
+			tags += "<td class='t_body'>Rename</td>";
+			tags += "<td class='t_body'>Change table name to ‘person’</td>";
+			tags += "</tr>";
+
+			tags += "</tbody></table>";
+    		
+			$('#table_data').html(tags);
     	  
          break;
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
@@ -290,8 +331,16 @@ function createQuiz(qlist, anslist, stage){
           });
          //테이블 이름 변경
          $('#table_name').text("person");
+         //배경 변경.
+         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
          
          break;
+         
+      case 15:
+    	  break;
+      case 16:
+    	  break;
+    	  
       case 17: case 18: // robot 문제테이블 활용.
          $.each(qlist, function(index, value){
             
@@ -299,17 +348,18 @@ function createQuiz(qlist, anslist, stage){
             var color = value.r_color;
             console.log("로봇:"+ r_type + "로봇색:" + color);
             
-            if(stage == 17){
-              	 //칼럼들 지워놓음.
-            	  for(var i=1; i<6; i++){
-                	 $(imgselector(i)).attr("src", "");
-                 }
-              }
             
             //테이블 안 칼럼들 이미지 변경.
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+r_type+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
             addAnimation('rubberBand', value.th_code);
+            
+            if(stage == 17){
+            	//칼럼들 지워놓음.
+            	for(var i=1; i<6; i++){
+            		$(imgselector(i)).attr("src", "");
+            	}
+            }
             
          });
          //정답 리스트 돌기.

@@ -52,6 +52,11 @@ public class TestNaviController {
 	 */
 	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public String test(Model model, HttpServletResponse response, HttpServletRequest request) {
+		
+		String langop = (String) request.getParameter("langop"); //home에서 넘어온 언어선택 값.
+
+		
+		
 		Questext qt = new Questext();
 		int lang=0; //언어
 		int stage=0; //단계(레벨)
@@ -81,18 +86,17 @@ public class TestNaviController {
 				}
 				if(c.getName().equals("currentLang")){
 					if(c.getValue() == null || c.getValue().equals("") || c.getValue().equals(" ")){
-						lang = 2;
 						cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
-						cg.addCookie(response, "2");
+						cg.addCookie(response, langop);
 					}
 					else{
 						lang = Integer.parseInt(c.getValue());
 						System.out.println("쿠키에서 초기에 읽은 lang"+lang);
 					}
-					qt.setTextLang(lang);
+					qt.setTextLang(Integer.parseInt(langop));
 				}else{
 					cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
-					cg.addCookie(response, "2");
+					cg.addCookie(response, langop);
 				}
 			}
 			
@@ -103,7 +107,7 @@ public class TestNaviController {
 			cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 			cg.addCookie(response, "1"); //일단 1부터 시작이므로 1을 넣어줌.
 			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
-			cg.addCookie(response, "2"); //일단 영어가 기본값.
+			cg.addCookie(response, langop); //홈에서 받아온 값을 넣어준다.(쿠키가 없으므로)
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 		
 			for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
@@ -113,12 +117,12 @@ public class TestNaviController {
 		
 			//아무 값이 없는 경우, 기본 영어와 레벨1을 넣는다.
 				stage = 1;
-				lang= 2;
+				//lang= 2;
 				qt.setLvstatus(stage);
-				qt.setTextLang(lang);
+				qt.setTextLang(Integer.parseInt(langop));
 		}
-		System.out.println("처음 홈 들어올때"+qt);
 		
+		System.out.println("처음 홈 들어올때"+qt);
 		
 		//DB에서 해당 문제 택스트 및 언어에 대한 정보를 읽어옴.
 		qt = dao.selectLang(qt);
