@@ -101,7 +101,7 @@ $(function(){
       $('.level-menu').slideUp(450);
       $('.wrap').show();
    });
-   
+    
    //언어선택 버튼 눌렀을 경우의 처리.
    $('.langbtn').on('click', function(){
       console.log('누름');
