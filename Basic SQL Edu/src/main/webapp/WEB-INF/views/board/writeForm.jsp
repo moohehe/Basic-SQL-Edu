@@ -23,27 +23,28 @@
 
 	<tr class="tr">
 		<th class="th" style="border-bottom-color: ">작성자</th>
-		<td class="td"><input type="text" name="fb_user"></td>
+		<td class="td"><input type="text" name="fb_user" required="required"></td>
 	</tr>
 	
 	<tr class="tr">
 		<th class="th">이메일</th>
-		<td class="td"><input type="text" name="email" style="width:300px;">
+		<td class="td"><input type="email" name="email" style="width:300px;" required="required">
 		<br>
 		※ 이메일을 정확히 입력해주세요.
 		</td>
 	</tr>
 	<tr class="tr">
 		<th class="th">제목</th>
-		<td class="td"><input type="text" name="title" style="width:300px;"></td>
+		<td class="td"><input type="text" name="title" style="width:300px;" required="required"></td>
 	</tr>
 	<tr class="tr">
 		<th class="th">내용</th>
-		<td class="td"><textarea rows="30" cols="100" name="content"></textarea></td>
+		<td class="td"><textarea rows="30" cols="100" name="content" required="required"></textarea></td>
 	</tr>
 	<tr class="tr">
 		<td colspan="2" class="white center td">
-		<div class="btn menubtn submitbtn">SUBMIT</div>
+		<!-- <div class="btn menubtn submitbtn">SUBMIT</div> -->
+		<input type="submit" class="btn menubtn submitbtn" value="SUBMIT">  
 		<div class="btn menubtn closebtn">CLOSE</div>
 		</td>
 	</tr>

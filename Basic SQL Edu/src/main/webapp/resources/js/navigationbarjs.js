@@ -31,6 +31,10 @@ $(function(){
 		else if ($(this).hasClass('submitbtn')) {
 			console.log('submitbtn run');
 			// submit 실행
+			if ($('intput[name="fb_user"]').val().length == 0 ) {
+				return false;
+			}
+			if ($('input[name="'))
 			$('#faq').submit();
 		}
 		else// (menu == 'CLOSE') {
