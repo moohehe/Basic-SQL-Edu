@@ -90,6 +90,32 @@ public class CompilerController
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 		}
 		
+		int alterStep = 0;
+		//Alter문제 처리
+		if(questionNumber == 11){
+			String [][] alterArr = null;
+			try{
+				alterArr = (String[][])(resultMap.get("result"));
+				
+				//배열 검사
+				for(int i = 0;i<alterArr.length;i++){
+					if(alterArr[i][1].equals("true")){
+						resultMap.put(alterArr[i][0], alterArr[i][1]);
+						alterStep++;
+					}
+					
+				}
+			}catch(Exception e){
+				resultMap.put("alterComplete", false);
+			}
+			
+			if(alterStep == 5){
+				resultMap.put("alterComplete", true);
+			}
+			
+		}
+		
+		
 		//20번 문제가 정답
 		if(questionNumber == 20 && resultMap.get("success") == "1"){
 			//쿠키 검사
