@@ -96,11 +96,12 @@ public class CompilerController
 			String [][] alterArr = null;
 			try{
 				alterArr = (String[][])(resultMap.get("result"));
+				System.out.println("알터 좀 나와라 씨벙" + alterArr[0][0]);
 				
 				//배열 검사
 				for(int i = 0;i<alterArr.length;i++){
-					if(alterArr[i][1].equals("true")){
-						resultMap.put(alterArr[i][0], alterArr[i][1]);
+					if(alterArr[1][i].equals("true")){
+						resultMap.put(alterArr[0][i], alterArr[1][i]);
 						alterStep++;
 					}
 					

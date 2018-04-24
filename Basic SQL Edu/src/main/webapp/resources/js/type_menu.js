@@ -138,27 +138,29 @@ function sqlrun() {
 				}
 	, dataType: 'json'
 		, success: function(e) {
-
+			
 			if(stage==11){
 				var step = 0;
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
 				try{
-					if(e.drop == true){
+					if(e.drop == 'true'){
+						console.log("dddd");
 						step++;
 					}
-					if(e.change == true){
+					if(e.change == 'true'){
 						step++
 					}
-					if(e.add == true){
+					if(e.add == 'true'){
 						step++;
 					}
-					if(e.modify == true){
+					if(e.modify == 'true'){
 						step++;
 					}
-					if(e.rename == true){
+					if(e.rename == 'true'){
 						step++;
 					}
 
+					console.log("뭐냐" + step);
 					switch(step){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
 					case 1:
 						//한문제 맞췄을 때의 그림 보여주기
