@@ -144,7 +144,8 @@ function sqlrun() {
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
 				try{
 					if(e.drop == true){
-						step++;
+						alert("drop 문제 맞춤.");
+						++step;
 					}
 					if(e.change == true){
 						step++
@@ -163,6 +164,8 @@ function sqlrun() {
 					case 1:
 						//한문제 맞췄을 때의 그림 보여주기
 						alert("히죽");
+						 //배경 변경.
+				    	  $('.questionTable').css({"background":imgpath("alter"+2+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 						break;
 					case 2:
 						//두문제 맞췄을 때의 그림 보여주기
