@@ -40,7 +40,7 @@
 	            	<tr class="col" columnsimg="3"><td>d</td><td>e</td><td>f</td></tr>
 	            	<tr class="col" columnsimg="4"><td>g</td><td>h</td><td>j</td></tr>
 	            	<tr class="col" columnsimg="5"><td>i</td><td>k</td><td>l</td></tr>
-	           	</table> -->
+	           	</table> --> 
 	           	<table class="table table-hover">
                                 <!-- Table head -->
                                 <thead class="green lighten-4">
