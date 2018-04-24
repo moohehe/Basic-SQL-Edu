@@ -506,11 +506,10 @@ public class SQLCompiler
 		}
 		 */
 		
-
+		boolean ansCorrect= false;	//푸시중
+		int corr = 0;
+		
 		try{
-			int corr = 0;
-			int [] index = new int[answerTable.length-1];
-			boolean ansCorrect= false;
 			switch (questionNumber) {
 			/*case 13:
 			//* 서브쿼리 및 조인 문제 --> 사용자 2차원 배열은 컬럼앞에 테이블이름 붙어서 나와지나?
@@ -520,7 +519,7 @@ public class SQLCompiler
 			case 10: case 12:  case 13: case 18:
 				//* 정답 뷰랑 비교해야되요
 				//ghfhfhfh
-
+				int [] index = new int[answerTable.length-1];
 				for(int j=1;j<answerTable.length;j++){
 					index[j-1] = j;
 					String col = answerTable[0][j];
@@ -1004,7 +1003,7 @@ public class SQLCompiler
 						alterResult[1][0] = alterMap.get("drop").toString();
 					}
 					if(alterMap.get("change") != null){
-						alterResult[0][1] = "change1";
+						alterResult[0][1] = "change";
 						alterResult[1][1] = alterMap.get("change1").toString();
 					}
 					if(alterMap.get("add") != null){

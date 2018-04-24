@@ -142,8 +142,8 @@ $(function(){
       var lang = $('#currentLang').val();
       
       getDataByAJAX(stage, lang);
-     /* $('.level-menu').slideUp(4500);
-      $('.wrap').show();*/
+      $('.level-menu').slideUp(4500);
+      $('.wrap').show();
       return false;
    });
          
@@ -341,8 +341,12 @@ function createQuiz(qlist, anslist, stage){
          break;
          
       case 15:
+    	//배경 변경.
+          $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
     	  break;
       case 16:
+    	//배경 변경.
+          $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
     	  break;
     	  
       case 17: case 18: // robot 문제테이블 활용.
