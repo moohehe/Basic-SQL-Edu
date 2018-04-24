@@ -51,11 +51,8 @@ public class TestNaviController {
 	 * 초기 페이지로 들어오는 경우.
 	 */
 	@RequestMapping(value = "test", method = RequestMethod.GET)
-	public String test(Model model, HttpServletResponse response, HttpServletRequest request) {
-		
-		String langop = (String) request.getParameter("langop"); //home에서 넘어온 언어선택 값.
-
-		
+	public String test(Model model, HttpServletResponse response, HttpServletRequest request, 
+			@RequestParam(defaultValue="1") String langop) {
 		
 		Questext qt = new Questext();
 		int lang=0; //언어
