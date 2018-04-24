@@ -246,7 +246,8 @@ tr td.t_body {
                         #7f007f 83.33%, #7f007f 100%); */
 }
 .submitbtn {
-	padding-top:10px;
+	font-size:1.5rem;
+	padding-top:15px;
 	background-color:#003311;
 	font-family:Verdana,sans-serif;
 	color:white;

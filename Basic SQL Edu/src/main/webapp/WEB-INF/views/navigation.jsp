@@ -37,18 +37,21 @@
 			    <div id="qsdetail"> ${questext.qsdetail }</div> <br><br>
 				<p> Examples </p>
 				<div id="qsExm">${questext.qsExm }</div>
-				
+				<div style="background-color:red;">				
+					<a href="goCertify">임시 수료증 고고싱</a>
+					<button onclick="javascript:sql_success();">success</button>
+					<button onclick="javascript:sql_fail();">fail</button>
+				</div>
 				<!-- 언어 선택 (영어, 한국어, 일본어) -->		
-				<div class="langcheck" style="padding-bottom: 12%;">
+				<div class="langcheck" >
 					<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
 					<div class="langbtn btn" data-num="1" > eng </div> 
 					<div class="langbtn btn" data-num="2" > kor </div> 
 					<div class="langbtn btn" data-num="3" > jpn </div> 
 				</div>
-				<div class="navi_bottom" style="padding-bottom: 10%">
+				<div class="navi_bottom">
 					<div class="menubtn btn" id="contactus">CONTACT US</div>
 					<div class="menubtn btn" id="certification">CERTIFICATION</div>
-					<a href="goCertify">임시 수료증 고고싱</a>
 				</div>
 			</div>
 		</div>	

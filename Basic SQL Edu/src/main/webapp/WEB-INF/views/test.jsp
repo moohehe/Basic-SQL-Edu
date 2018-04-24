@@ -108,7 +108,6 @@
 <br><br><br><br><br>
 <br><br><br><br><br>
 <br><br><br><br><br>
-	<button onclick="javascript:sql_success();">success</button>
-	<button onclick="javascript:sql_fail();">fail</button>
+
 </body>
 </html>
