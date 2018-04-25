@@ -101,7 +101,13 @@ public class SQLCompiler
 				|| questionNumber == 17 || questionNumber == 19 || questionNumber == 20 	){
 			//정답 뷰 필요없음
 		}else{
-			int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
+			int answerSize = -1;
+			try {
+				answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
+			} catch (Exception e) {
+				setErrorMessage("Syntax Error: Table name is not found");
+				return;
+			}
 
 			System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
 

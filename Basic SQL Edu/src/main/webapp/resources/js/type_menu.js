@@ -205,10 +205,13 @@ function sqlrun() {
 						//인증서 고
 						goCertify();
 					}
-				}else {
+				} else if (!e.complete) {
+					// 틀림
+					sql_fail(e.errorMessage);
+				} else {
 					// 문제 틀림
 					sql_fail(e.errorMessage);
-				}
+				} 
 			}
 		}
 	, error : function(e) {
