@@ -205,8 +205,8 @@ function createQuiz(qlist, anslist, stage){
          $('#table_name').text("animal");
          
          
-         //배경 변경.
-         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
+         //배경 변경
+         changeBackimg(stage);
          break;
       case 4: 
          $.each(qlist, function(index, value){
@@ -230,7 +230,7 @@ function createQuiz(qlist, anslist, stage){
          });
          
          //배경 변경.
-         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
+         changeBackimg(stage);
          break;
          
       case 9: //div가 3개만 나오는 문제라서 일단 따로 분류.
@@ -253,7 +253,7 @@ function createQuiz(qlist, anslist, stage){
          });
 
          //배경 변경.
-         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
+         changeBackimg(stage);
          break;
          
       case 11: //alter table 문제
@@ -336,15 +336,18 @@ function createQuiz(qlist, anslist, stage){
          //테이블 이름 변경
          $('#table_name').text("person");
          //배경 변경.
-         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
-         
+         changeBackimg(stage); 
          break;
          
       case 15:
     	//배경 변경.
-          $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+    	  changeBackimg(stage); 
     	  break;
       case 16:
+    	//칼럼들 지워놓음.
+   	  	for(var i=1; i<6; i++){
+       	 $(imgselector(i)).attr("src", "");
+        }
     	//배경 변경.
           $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
     	  break;
@@ -381,7 +384,7 @@ function createQuiz(qlist, anslist, stage){
          //테이블 이름 변경
          $('#table_name').text("robot");
        //배경 변경.
-         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
+         changeBackimg(stage);
          break;
          
    }
@@ -438,4 +441,8 @@ function addAnimation(x, th_code) {
    $('img[th_code='+th_code+']').removeClass().addClass(x + ' animated tableColumes' ).one('tableColumes webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
        $(this).removeClass().addClass('animated tableColumes' );
      });
+}
+function changeBackimg(stage){
+	//배경 변경.
+    $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 }
