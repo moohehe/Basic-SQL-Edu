@@ -163,6 +163,9 @@ function nextStage() {
 function createQuiz(qlist, anslist, stage){
    console.log("cq의 stage"+stage);
    
+   
+   // stage 11에 들어갈때만 height 속성을 고정값으로 지정하기 위해서 매번 초기화한다.
+   $('div.css-view').css('height','');
    //stage별 분기 처리 필요.
    switch(stage){ //지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 19, 20)
    
@@ -308,7 +311,8 @@ function createQuiz(qlist, anslist, stage){
 			tags += "</tbody></table>";
     		
 			$('#table_data').html(tags);
-    	  
+
+			$('div.css-view').css('height','658px');
          break;
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
          if(stage == 12){
@@ -337,7 +341,7 @@ function createQuiz(qlist, anslist, stage){
          $('#table_name').text("person");
          //배경 변경.
          $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
-         
+			
          break;
          
       case 15:
