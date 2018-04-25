@@ -217,7 +217,8 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
-         
+         //테이블 이름 변경
+         $('#table_name').text("[table_name : ANIMAL]");
          //배경변경
          changeBackimg(stage);
          break;
@@ -240,7 +241,8 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
-
+         //테이블 이름 변경
+         $('#table_name').text("[table_name : ANIMAL]");
          //배경변경
          changeBackimg(stage);
          break;
@@ -336,11 +338,13 @@ function createQuiz(qlist, anslist, stage){
         }
    	  	//배경변경
           changeBackimg(stage);
+        //테이블 이름 변경
+          $('#table_name').text("[table_name : PERSON]");
     	  break;
       case 16:
     	//배경 변경.
           $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-    	  break;
+          break;
     	  
       case 17: case 18: // robot 문제테이블 활용.
          $.each(qlist, function(index, value){
@@ -425,7 +429,6 @@ function getDataByAJAX(stage, lang) {
 		}
 	});
 }
-
 
 function addAnimation(x, th_code) {
    $('img[th_code='+th_code+']').removeClass().addClass(x + ' animated tableColumes' ).one('tableColumes webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
