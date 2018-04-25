@@ -86,7 +86,7 @@
                                     </tr>
                                 </tbody>
                                 <!-- Table body -->
-                                <!-- <tbody>
+                                <!-- <tbody> 
                                     <tr>
                                         <th scope="row" class="cols" th_code="1">1</th>
                                         <td class="cols" th_code="1">Cell 1</td>

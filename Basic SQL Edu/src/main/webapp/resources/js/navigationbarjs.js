@@ -163,6 +163,9 @@ function nextStage() {
 function createQuiz(qlist, anslist, stage){
    console.log("cq의 stage"+stage);
    
+   
+   // stage 11에 들어갈때만 height 속성을 고정값으로 지정하기 위해서 매번 초기화한다.
+   $('div.css-view').css('height','');
    //stage별 분기 처리 필요.
    switch(stage){ //지금 현재 없는 문제 뷰. (1번, 11번, 15, 16, 19, 20)
    
@@ -205,8 +208,8 @@ function createQuiz(qlist, anslist, stage){
          $('#table_name').text("animal");
          
          
-         //배경 변경
-         changeBackimg(stage);
+         //배경 변경.
+         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
          break;
       case 4: 
          $.each(qlist, function(index, value){
@@ -230,7 +233,7 @@ function createQuiz(qlist, anslist, stage){
          });
          
          //배경 변경.
-         changeBackimg(stage);
+         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
          break;
          
       case 9: //div가 3개만 나오는 문제라서 일단 따로 분류.
@@ -253,7 +256,7 @@ function createQuiz(qlist, anslist, stage){
          });
 
          //배경 변경.
-         changeBackimg(stage);
+         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
          break;
          
       case 11: //alter table 문제
@@ -308,7 +311,8 @@ function createQuiz(qlist, anslist, stage){
 			tags += "</tbody></table>";
     		
 			$('#table_data').html(tags);
-    	  
+
+			$('div.css-view').css('height','658px');
          break;
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
          if(stage == 12){
@@ -336,18 +340,15 @@ function createQuiz(qlist, anslist, stage){
          //테이블 이름 변경
          $('#table_name').text("person");
          //배경 변경.
-         changeBackimg(stage); 
+         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
+			
          break;
          
       case 15:
     	//배경 변경.
-    	  changeBackimg(stage); 
+          $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
     	  break;
       case 16:
-    	//칼럼들 지워놓음.
-   	  	for(var i=1; i<6; i++){
-       	 $(imgselector(i)).attr("src", "");
-        }
     	//배경 변경.
           $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
     	  break;
@@ -384,7 +385,7 @@ function createQuiz(qlist, anslist, stage){
          //테이블 이름 변경
          $('#table_name').text("robot");
        //배경 변경.
-         changeBackimg(stage);
+         $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-position':'bottom'});
          break;
          
    }
@@ -441,8 +442,4 @@ function addAnimation(x, th_code) {
    $('img[th_code='+th_code+']').removeClass().addClass(x + ' animated tableColumes' ).one('tableColumes webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
        $(this).removeClass().addClass('animated tableColumes' );
      });
-}
-function changeBackimg(stage){
-	//배경 변경.
-    $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 }

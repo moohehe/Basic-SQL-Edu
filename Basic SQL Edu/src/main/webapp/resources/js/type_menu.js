@@ -138,7 +138,6 @@ function sqlrun() {
 				}
 	, dataType: 'json'
 		, success: function(e) {
-			
 			if(stage==11){
 				var step = 0;
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
