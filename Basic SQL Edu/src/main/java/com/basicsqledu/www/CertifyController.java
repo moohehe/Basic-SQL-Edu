@@ -3,6 +3,8 @@ package com.basicsqledu.www;
 
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,7 +16,8 @@ import com.basicsqledu.www.vo.Certification;
 
 @Controller
 public class CertifyController {
-	
+	private static final Logger logger = LoggerFactory.getLogger(CertifyController.class);
+
 	@Autowired
 	CertDAO certDAO;
 
@@ -31,6 +34,12 @@ public class CertifyController {
 		String plusNumStr = "1";
 		Random random = new Random();
 		int result = 0;
+		
+		
+		if(cert_email == null || !(cert_email.equals(""))){
+			return "certify/certifyForm";
+		}
+		
 		
 		//난수 생성
 		for (int i = 0; i < 8; i++) {
@@ -62,8 +71,9 @@ public class CertifyController {
 	}
 	
 
-	@RequestMapping(value = "gocertification", method=RequestMethod.GET)
+	@RequestMapping(value = "gocertification", method=RequestMethod.GET, produces = "application/text; charset=utf8")
 	public String gocertification(String cert_no, String user, String email, Model model) {
+		logger.info("String user:{}",user);
 		Certification cert = new Certification();
 		
 		cert.setCert_user(cert_no);

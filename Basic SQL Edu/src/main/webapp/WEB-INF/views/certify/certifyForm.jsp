@@ -13,7 +13,7 @@
 		<p>이름 입력하삼</p>
 		<input type="text" id="cert_name" name="cert_name">
 		<p>email 입력하삼</p>
-		<input type="email" id="cert_email" name="cert_email">
+		<input type="email" id="cert_email" name="cert_email" required="required">
 		
 		<input type="submit" value="수료증 출력!"></input>
 	</form>
