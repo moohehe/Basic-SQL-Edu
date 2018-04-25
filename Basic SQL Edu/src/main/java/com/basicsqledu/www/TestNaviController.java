@@ -264,5 +264,69 @@ public class TestNaviController {
 		return json;
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="cookieCtrl", method=RequestMethod.POST)
+	public String cookieCtrl(HttpServletRequest request,HttpServletResponse response, 
+			String lang, String stage, String cookieCon){
+		//jsp로 보낼 데이터를 모두 담은 해쉬맵 생성. (전체내용포함된 VO, 완료한 스테이지 등)
+				HashMap<String, Object> naviContentMap = new HashMap<String, Object>();
+				//DB에서 온 데이터 담을 vo생성.
+				Questext qt = new Questext();
+				
+				if(cookieCon.equals("complete")){
+					
+					for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
+						cg.setCookieName("completeStage"+i);
+						cg.addCookie(response, "pass");
+					}
+					
+					cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
+					cg.addCookie(response, "20"); 
+					cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+							
+					//현재 언어 값에 대한 변경(쿠키)
+					cg.setCookieName("currentLang");
+					cg.addCookie(response, lang);
+					cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+					
+					//DB에서 해당 언어의 문제관련 택스트들을 가져옴.
+					qt.setLvstatus(2);
+					qt.setTextLang(Integer.parseInt(lang));
+					qt = dao.selectLang(qt);
+					
+				}else{//쿠키 전체 초기화할 경우.
+					
+					for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
+						cg.setCookieName("completeStage"+i);
+						cg.addCookie(response, "non-pass");
+					}
+					cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
+					cg.addCookie(response, "1"); 
+					cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+							
+					//현재 언어 값에 대한 변경(쿠키)
+					cg.setCookieName("currentLang");
+					cg.addCookie(response, lang);
+					cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+					
+					//DB에서 해당 언어의 문제관련 택스트들을 가져옴.
+					qt.setLvstatus(1);
+					qt.setTextLang(Integer.parseInt(lang));
+					qt = dao.selectLang(qt);
+				}
+				
+				
+				
+				
+				naviContentMap.put("questext", qt); 
+			
+		
+		//맵 변환 후 보내기.
+				Gson gson = new Gson();
+				String json = gson.toJson(naviContentMap);
+				
+				return json;
+	}
+	
 	
 }
