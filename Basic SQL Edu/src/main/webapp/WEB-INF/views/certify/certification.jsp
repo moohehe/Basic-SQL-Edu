@@ -55,7 +55,7 @@ image {
  	height:842px;
  	position:relative;
 	
- 	float:left; /* optional */
+ 	float:left; /* optionalgg */
 
 }
 .image .text1 {
