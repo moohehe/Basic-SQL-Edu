@@ -9,12 +9,15 @@
 <script type="text/javascript" src="<c:url value="/resources/js/bluebird.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/html2canvas.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jspdf.min.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 <script type="text/javascript">
 function onClick(){
 	
 	document.getElementById("btn1").style.display="none";
+	
+	var element = $('img');
 	// 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
-	html2canvas(document.body, {
+	html2canvas(element, {
 	  onrendered: function(canvas) {
 	 
 	    // 캔버스를 이미지로 변환
@@ -47,28 +50,31 @@ function onClick(){
 }
 </script>
 <style type="text/css">
-* {
-    margin: 0px;
-    padding: 0px;
+
+img .bg{
+	min-height: 100%;
+	min-width : 1024px;
+	width: 100%;
+	height: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
 }
-html, body {
-    height: 95%;
-    background-image: url("resources/image/certi.png");
-    background-repeat: no-repeat;
-    background-position: 50% 50%;
-    background-attachment: fixed;
-    background-size: cover;
+@media screen and (max-width: 1024px){
+	img.bg{
+	left:50%;
+	margin-left: -512px;
+	}
 }
-.certi {
-    height: 95%; 
+div#container{
+position: relative;
 }
 </style>
 </head>
 <body>
-<div class="certi">
-	<div id="btn1">
-		<button value="왜안보여줌뜨발" onclick="javascript:onClick()"></button>
-	</div>
+<img class = "bg" alt="" src="resources/image/certi.png">
+<div id="container">
 </div>
+<button id = "btn1" value="왜안보여줌뜨발" onclick="javascript:onClick()"></button>
 </body>
 </html>
