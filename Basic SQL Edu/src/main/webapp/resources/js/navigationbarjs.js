@@ -192,7 +192,7 @@ function createQuiz(qlist, anslist, stage){
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
          //테이블 이름 변경
-         $('#table_name').text("animal");
+         $('#table_name').text("[table_name : ANIMAL]");
          //배경변경
          changeBackimg(stage);
          
@@ -324,7 +324,7 @@ function createQuiz(qlist, anslist, stage){
              $('img[th_code="'+th_code+'"]').addClass('animated 2s flash');
           });
          //테이블 이름 변경
-         $('#table_name').text("person");
+         $('#table_name').text("[table_name : PERSON]");
          //배경변경
          changeBackimg(stage);
          break;
@@ -372,7 +372,7 @@ function createQuiz(qlist, anslist, stage){
           });
          
          //테이블 이름 변경
-         $('#table_name').text("robot");
+         $('#table_name').text("[table_name : ROBOT]");
          //배경 변경.
          changeBackimg(stage);
          break;
