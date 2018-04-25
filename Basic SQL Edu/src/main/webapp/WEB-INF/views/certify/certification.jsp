@@ -75,6 +75,6 @@ position: relative;
 <img class = "bg" alt="" src="resources/image/certi.png">
 <div id="container">
 </div>
-<button id = "btn1" value="¿Ö¾Èº¸¿©ÁÜ¶ß¹ß" onclick="javascript:onClick()"></button>
+<button id = "btn1" value="Ãâ·Â" onclick="javascript:onClick()"></button>
 </body>
 </html>
