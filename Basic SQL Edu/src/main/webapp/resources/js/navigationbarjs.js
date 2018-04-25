@@ -158,7 +158,7 @@ function createQuiz(qlist, anslist, stage){
    
       case 1: //select 문제가 아니어서 지정된 화면을 보여줘야 하는 레벨1.
          
-         $('.questionTable').css({"background":imgpath("create"+stage+".png"), 'background-repeat' : 'no-repeat', 'background-size':'contain','background-position':'center center'});
+         $('.questionTable').css({"background":imgpath("create"+stage+".png"), 'background-repeat' : 'no-repeat', 'background-size':'100%','background-position':'center center'});
          //칼럼들 지워놓음.
    	  	for(var i=1; i<6; i++){
        	 $(imgselector(i)).attr("src", "");
@@ -169,7 +169,6 @@ function createQuiz(qlist, anslist, stage){
    	  		",color varchar(40) ○○○<br>" +
    	  		",habitat varchar(40)○○○<br>" +
    	  		",legs number ○○○<br>);");
-   	  $('#table_data').css('text-align','justify');
          break;
       //동물 select
       case 2: case 3: case 5: case 6: case 7: case 8: case 10:
@@ -193,7 +192,7 @@ function createQuiz(qlist, anslist, stage){
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
          //테이블 이름 변경
-         $('#table_name').text("animal"+stage);
+         $('#table_name').text("[table_name : ANIMAL]");
          //배경변경
          changeBackimg(stage);
          
@@ -218,8 +217,7 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
-         //테이블 이름 변경
-         $('#table_name').text("animal"+stage);
+         
          //배경변경
          changeBackimg(stage);
          break;
@@ -242,8 +240,7 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
-         //테이블 이름 변경
-         $('#table_name').text("animal"+stage);
+
          //배경변경
          changeBackimg(stage);
          break;
@@ -327,7 +324,7 @@ function createQuiz(qlist, anslist, stage){
              $('img[th_code="'+th_code+'"]').addClass('animated 2s flash');
           });
          //테이블 이름 변경
-         $('#table_name').text("person"+stage);
+         $('#table_name').text("[table_name : PERSON]");
          //배경변경
          changeBackimg(stage);
          break;
@@ -337,8 +334,6 @@ function createQuiz(qlist, anslist, stage){
    	  	for(var i=1; i<6; i++){
        	 $(imgselector(i)).attr("src", "");
         }
-   	  	//테이블 이름 변경
-        $('#table_name').text("person"+stage);
    	  	//배경변경
           changeBackimg(stage);
     	  break;
@@ -377,19 +372,11 @@ function createQuiz(qlist, anslist, stage){
           });
          
          //테이블 이름 변경
-         $('#table_name').text("robot"+stage);
+         $('#table_name').text("[table_name : ROBOT]");
          //배경 변경.
+         changeBackimg(stage);
          break;
-      case 19:
-    	  break;
-      case 20:
-	    	//칼럼들 지워놓음.
-	      	for(var i=1; i<6; i++){
-	      		$(imgselector(i)).attr("src", "");
-	      	}
-	      	 //배경 변경.
-	          $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-    	  break;
+         
    }
    // imgs - class 저장함.
 	setClass();

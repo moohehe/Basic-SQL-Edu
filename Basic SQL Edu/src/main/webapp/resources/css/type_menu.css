@@ -37,10 +37,11 @@ textarea {
 }
 
 .editor .input-header {
-	height:50px;
+	height:100%;
 	font-size:30px;
   text-align: left;
   background: #4CAF50; 
+  vertical-align:middle;
   padding : 5px 10px 10px 10px;
   border-top: solid 1px rgba(255,255,255,.05);
   border-bottom: solid 1px rgba(255,255,255,.05);
@@ -72,9 +73,25 @@ textarea {
 }
 
 .editor .table-name {
+	height:60px;
+	vertical-align:middle;
+	padding:10px 10px 10px 10px;
+	margin-top:0px;
+	font-family: Verdana,sans-serif;
 	color:white;
-  float: right;
-  opacity: .5;
+ 	float: right;
+}
+.editor .submitbtn-div {
+	height:61px;
+	vertical-align:middle;
+	margin-top:0px;
+	font-family: Verdana,sans-serif;
+	color:white;
+ 	float: right;
+}
+/*stage버튼 관련 css*/
+.submitbtn:hover, .submitbtn:focus {
+    background-color: #3e8e41;
 }
 
 .editor .line-numbers {
@@ -216,39 +233,19 @@ tr td.t_body {
                         #cccccc 13.0rem, #cccccc 14.3rem,
                         #ffffff 14.3rem, #ffffff 15.6rem,
                         #cccccc 15.6rem, #cccccc 16.9rem);
-    /* background: -webkit-linear-gradient(
-                        #e90000      0, #e90000 16.67%,
-                        #ff7f00 16.67%, #ff7f00 33.33%,
-                        #ffe900 33.33%, #ffe900    50%,
-                        #007f2a    50%, #007f2a 66.67%,
-                        #003fff 66.67%, #003fff 83.33%,
-                        #7f007f 83.33%, #7f007f 100%);
-    background:    -moz-linear-gradient(
-                        #e90000      0, #e90000 16.67%,
-                        #ff7f00 16.67%, #ff7f00 33.33%,
-                        #ffe900 33.33%, #ffe900    50%,
-                        #007f2a    50%, #007f2a 66.67%,
-                        #003fff 66.67%, #003fff 83.33%,
-                        #7f007f 83.33%, #7f007f 100%);
-    background:      -o-linear-gradient(
-                        #e90000      0, #e90000 16.67%,
-                        #ff7f00 16.67%, #ff7f00 33.33%,
-                        #ffe900 33.33%, #ffe900    50%,
-                        #007f2a    50%, #007f2a 66.67%,
-                        #003fff 66.67%, #003fff 83.33%,
-                        #7f007f 83.33%, #7f007f 100%);
-    background:         linear-gradient(
-                        #e90000      0, #e90000 16.67%,
-                        #ff7f00 16.67%, #ff7f00 33.33%,
-                        #ffe900 33.33%, #ffe900    50%,
-                        #007f2a    50%, #007f2a 66.67%,
-                        #003fff 66.67%, #003fff 83.33%,
-                        #7f007f 83.33%, #7f007f 100%); */
 }
 .submitbtn {
+	margin-top:-5px;
+	padding:15px 10px 10px 10px;
+	vertical-align:middle;
+	margin-left:0.375rem;
+	margin-right:0.375rem;
+	height:100%;
 	font-size:1.5rem;
-	padding-top:15px;
-	background-color:#003311;
 	font-family:Verdana,sans-serif;
 	color:white;
+    background-color: #ffcc33;
+    font-size: 16px;
+    cursor: pointer;
+    text-transform: uppercase;
 }

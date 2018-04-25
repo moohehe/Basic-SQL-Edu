@@ -19,6 +19,19 @@
 			)	
 	</insert>
 	
+	<select id="selectCert" parameterType="cert" resultType="cert">
+	select
+		cert_no
+		,cert_user
+		,cert_email
+	from
+		certification
+	where
+		cert_email = #{cert_email}
+	and
+		cert_user = #{cert_user}
+	</select>
+	
 	
 	
 </mapper>

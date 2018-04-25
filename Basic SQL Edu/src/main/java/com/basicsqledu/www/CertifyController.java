@@ -58,14 +58,21 @@ public class CertifyController {
 		
 		certDAO.insertCert(certify);
 		
-		return "redirect:gocertification?user="+cert_name;
+		return "redirect:gocertification?user="+cert_name + "&email="+cert_email + "&cert_no="+certify.getCert_user();
 	}
 	
 
 	@RequestMapping(value = "gocertification", method=RequestMethod.GET)
-	public String gocertification(String user, Model model) {
-		System.out.println(user);//흠
-		model.addAttribute(user);
+	public String gocertification(String cert_no, String user, String email, Model model) {
+		Certification cert = new Certification();
+		
+		cert.setCert_user(cert_no);
+		cert.setCert_email(email);
+		cert = certDAO.selectCert(cert);
+		
+		model.addAttribute("cert",cert);
+		model.addAttribute("user",user);
+		System.out.println("cert : " + cert + "/ user : " + user);
 		return "certify/certification";
 	}
 	
