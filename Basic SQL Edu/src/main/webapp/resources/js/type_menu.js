@@ -210,6 +210,18 @@ function sqlrun() {
 					sql_fail(e.errorMessage);
 				}
 			}
+			
+			//쿠키 확인
+			var confirmCookie = 0;
+			var cookieName = "completeStage";
+			for(var i=1; i<document.cookie.length; i++){
+				if(getCookie(cookieName+i) == "pass"){
+					confirmCookie++;
+				}
+			}
+			if(confirmCookie == 20){
+				console.log("쿠키성공!");
+			}
 		}
 	, error : function(e) {
 		console.log('error:'+e);	
@@ -254,4 +266,20 @@ function successStage() {
 //20스테이지를 모두 종료햇을 경우에는 인증서 발급 메뉴로 간다.
 function goCertify(){
 	location.href("goCertify");
+}
+
+//쿠키 정보 읽기 - 다 했는지 확인.
+// 쿠키 가져오기
+function getCookie(cName) {
+    cName = cName + '=';
+    var cookieData = document.cookie;
+    var start = cookieData.indexOf(cName);
+    var cValue = '';
+    if(start != -1){
+        start += cName.length;
+        var end = cookieData.indexOf(';', start);
+        if(end == -1)end = cookieData.length;
+        cValue = cookieData.substring(start, end);
+    }
+    return unescape(cValue);
 }

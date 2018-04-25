@@ -217,7 +217,8 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
-         
+         //테이블 이름 변경
+         $('#table_name').text("[table_name : ANIMAL]");
          //배경변경
          changeBackimg(stage);
          break;
@@ -240,7 +241,8 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 중 정답 이미지에만 애니메이션 동작시키기.
             $('img[th_code="'+th_code+'"]').addClass('animated infinite flash');
          });
-
+         //테이블 이름 변경
+         $('#table_name').text("[table_name : ANIMAL]");
          //배경변경
          changeBackimg(stage);
          break;
@@ -336,11 +338,13 @@ function createQuiz(qlist, anslist, stage){
         }
    	  	//배경변경
           changeBackimg(stage);
+        //테이블 이름 변경
+          $('#table_name').text("[table_name : PERSON]");
     	  break;
       case 16:
     	//배경 변경.
           $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-    	  break;
+          break;
     	  
       case 17: case 18: // robot 문제테이블 활용.
          $.each(qlist, function(index, value){
@@ -397,7 +401,6 @@ function getDataByAJAX(stage, lang) {
 		success : function(obj){
 			console.log('ajax success');
 			
-			
 			//화면 값 갱신
 			$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
 			$('#currentLv').val(obj.questext.lvstatus);
@@ -426,7 +429,6 @@ function getDataByAJAX(stage, lang) {
 	});
 }
 
-
 function addAnimation(x, th_code) {
    $('img[th_code='+th_code+']').removeClass().addClass(x + ' animated tableColumes' ).one('tableColumes webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function(){
        $(this).removeClass().addClass('animated tableColumes' );
@@ -437,3 +439,93 @@ function changeBackimg(stage){
 	//배경 변경.
     $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'100%', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 }
+
+
+//쿠키 전체 삭제
+function delAllCookie(){
+	$.ajax({
+		url : "cookieCtrl",
+		type : "post",
+		data : {
+			stage : 1,
+			lang : 2,
+			cookieCon: "delete"
+		},
+		dataType : "json",
+		success : function(obj){
+			console.log('ajax success');
+			
+			//화면 값 갱신
+			$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
+			$('#currentLv').val(obj.questext.lvstatus);
+			$('#qstext').text(obj.questext.qstext);
+			$('#qstype').text(obj.questext.qstype);
+			$('#qsdetail').text(obj.questext.qsdetail);
+			$('#qsExm').text(obj.questext.qsExm);
+			$('#currentLang').val(obj.questext.textLang);
+			$('#progresslv').css('width', (obj.questext.lvstatus)*5+"%");
+			console.log('cookie= '+document.cookie);
+			console.log('뾰로롱 lv=['+obj.questext.lvstatus+']');
+			
+	         //처음 화면 문제테이블 갱신
+	         qlist = obj.qlist;
+	         anslist = obj.ansList;
+	         console.log('뾰롱');
+	         console.log(qlist);
+	         createQuiz(qlist, anslist, obj.questext.lvstatus);
+	         setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
+	         setTd(); // mouserover event set
+	         setView();
+	         console.log('cookie= '+document.cookie);
+		},
+		error : function(err){
+			alert('가장 마지막 페이지입니다.');
+		}
+	});
+}
+//쿠키 전체 완료
+function ComAllCookie(){
+	$.ajax({
+		url : "cookieCtrl",
+		type : "post",
+		data : {
+			stage : 2,
+			lang : 2,
+			cookieCon: "complete"
+		},
+		dataType : "json",
+		success : function(obj){
+			console.log('ajax success');
+			
+			//화면 값 갱신
+			$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
+			$('#currentLv').val(obj.questext.lvstatus);
+			$('#qstext').text(obj.questext.qstext);
+			$('#qstype').text(obj.questext.qstype);
+			$('#qsdetail').text(obj.questext.qsdetail);
+			$('#qsExm').text(obj.questext.qsExm);
+			$('#currentLang').val(obj.questext.textLang);
+			$('#progresslv').css('width', (obj.questext.lvstatus)*5+"%");
+			console.log('cookie= '+document.cookie);
+			console.log('뾰로롱 lv=['+obj.questext.lvstatus+']');
+			
+	         //처음 화면 문제테이블 갱신
+	         qlist = obj.qlist;
+	         anslist = obj.ansList;
+	         console.log('뾰롱');
+	         console.log(qlist);
+	         createQuiz(qlist, anslist, obj.questext.lvstatus);
+	         setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
+	         setTd(); // mouserover event set
+	         setView();
+	         console.log('cookie= '+document.cookie);
+		},
+		error : function(err){
+			alert('가장 마지막 페이지입니다.');
+		}
+	});
+}
+
+
+
+
