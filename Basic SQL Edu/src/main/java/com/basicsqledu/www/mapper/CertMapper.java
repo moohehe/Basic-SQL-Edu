@@ -5,4 +5,6 @@ import com.basicsqledu.www.vo.Certification;
 public interface CertMapper {
 
 	public int insertCert(Certification certify);
+	
+	public Certification selectCert(Certification cert);
 }

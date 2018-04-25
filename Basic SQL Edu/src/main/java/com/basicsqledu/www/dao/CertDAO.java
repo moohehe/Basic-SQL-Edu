@@ -31,5 +31,18 @@ public class CertDAO
 
 		return i;
 	}
+	public Certification selectCert(Certification cert){
+		Certification sel_cert = null;
+		CertMapper mapper = null;
+		try
+		{
+			mapper = session.getMapper(CertMapper.class);
+			sel_cert = mapper.selectCert(cert);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return sel_cert;
+	}
 
 }

@@ -15,7 +15,7 @@ function onClick(){
 	
 	document.getElementById("btn1").style.display="none";
 	
-	var element = $('img');
+	var element = $('.image');
 	// 현재 document.body의 html을 A4 크기에 맞춰 PDF로 변환
 	html2canvas(element, {
 	  onrendered: function(canvas) {
@@ -50,6 +50,37 @@ function onClick(){
 }
 </script>
 <style type="text/css">
+image {
+ 	width:595px;
+ 	height:842px;
+ 	position:relative;
+	
+ 	float:left; /* optional */
+
+}
+.image .text1 {
+
+ position:absolute;
+
+ top:250px; /* in conjunction with left property, decides the text position */
+
+ left:274px;
+
+ width:200px; /* optional, though better have one */
+
+}
+
+.image .text2 {
+
+ position:absolute;
+
+ top:753px; /* in conjunction with left property, decides the text position */
+
+ left:410px;
+
+ width:200px; /* optional, though better have one */
+
+}
 
 img .bg{
 	min-height: 100%;
@@ -69,12 +100,33 @@ img .bg{
 div#container{
 position: relative;
 }
+
+@page {
+  size: A4;
+  margin: 0;
+}
+@media print {
+  .image{
+    width: 210mm;
+    height: 297mm;
+  }
+
 </style>
 </head>
 <body>
-<img class = "bg" alt="" src="resources/image/certi.png">
+<div class="image">
+	<img class = "bg" alt="" src="resources/image/certi.png">
+	<div class = "text1">
+		<h3>${user }</h3>
+	</div>
+	<div class="text2">
+		<h4>${cert.cert_user }</h4>
+	</div>
+</div>
+
 <div id="container">
 </div>
+
 <button id = "btn1" value="출력" onclick="javascript:onClick()"></button>
 </body>
 </html>
