@@ -14,7 +14,7 @@
 .menubtn {
 	width:45%;
 	margin:0px;
-	background-color:#2F9D27;
+	background-color:black;
 }
 .menubtn:hover {
     background-color: #ffcc33;
@@ -64,7 +64,7 @@
 	display:inline-block;
 	text-align: center;
 	font-size: 15px;
-	background-color: #2F9D27;
+	background-color: black;
 	padding:5px;
 	margin:1px;
 }
@@ -76,7 +76,7 @@
 .float-btnframe {
 	vertical-align:middle;
 	font-family: Verdana,sans-serif;
-	background: #4CAF50;
+	background: #0087cf;
 	color: black;
 	overflow: hidden;
 	height:60px;
@@ -88,7 +88,7 @@
 .float-unit {
 	vertical-align:middle;
 	font-family: Verdana,sans-serif;
-	background-color: #4CAF50;
+	background-color: #0087cf;
 	border: none;
 	color: white;
 	float: left;
@@ -129,7 +129,7 @@
 		
 /* Dropdown Button */
 .dropbtn {
-    background-color: #ffcc33;
+    background-color: #616161!important;	
     color: white;
     padding: 16px;
     font-size: 16px;

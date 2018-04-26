@@ -3,12 +3,9 @@ package com.basicsqledu.www;
 
 import java.util.Random;
 
-<<<<<<< HEAD
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-=======
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,14 +19,8 @@ import com.basicsqledu.www.vo.Certification;
 
 @Controller
 public class CertifyController {
-<<<<<<< HEAD
-
-	private static final Logger logger = LoggerFactory.getLogger(CertifyController.class);
-	
-=======
 	private static final Logger logger = LoggerFactory.getLogger(CertifyController.class);
 
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 	@Autowired
 	CertDAO certDAO;
 

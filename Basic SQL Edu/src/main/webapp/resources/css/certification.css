@@ -10,7 +10,10 @@
 .certi-form p {
 	margin:10px;
 }
-.boddy {
+body {
+	text-align:center;
+}
+body .boddy {
 	width:100%;
 	height:100%;
 	vertical-align: middle;
@@ -72,11 +75,10 @@ div .certi-submit {
 .boddy .certi-form {
 	display:inline-block;
 }
+.boddy-form {
+	position:relative;
+}
 .xbtn {
-	position:absolute;
-	height:50px;
-	width:50px;
-	bottom:0px;
-	background : white url("/resources/image/xbtn.png") no-repeat center center;
-	
+	font-size:15px;
+	font-family: Verdana,sans-serif;
 }

@@ -19,8 +19,7 @@
 
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 </head>
-<body>
-<<<<<<< HEAD
+<body style="text-align:center;">
 <div class="bodyy">
 	<div class="certi-form">
 		<div class="topp" style="height:25px;"></div>
@@ -62,17 +61,21 @@
 			<br><br><br>
 			<input class="btn certi-submit" type="submit" value="SUBMIT"></input>
 		</form>
+		<div class="xbtn"><br>
+		<c:choose>
+					<c:when test="${lang == 1 }">
+					* ATTENTION : ONLY 1 CHANCE!
+					</c:when>
+					<c:when test="${lang == 2 }">
+					* 주의 : 한번만 입력하실 수 있습니다.
+					</c:when>
+					<c:when test="${lang == 3 }">
+					* 注意 : 一度だけ入力できます。
+					</c:when>
+		</c:choose>
+		</div>
 	</div>
-	<div class="xbtn"></div>
 </div>
-=======
-
-	<form action="certify" method="post">
-		<p>�̸� �Է��ϻ�</p>
-		<input type="text" id="cert_name" name="cert_name">
-		<p>email �Է��ϻ�</p>
-		<input type="email" id="cert_email" name="cert_email" required="required">
->>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 		
 
 </body>
