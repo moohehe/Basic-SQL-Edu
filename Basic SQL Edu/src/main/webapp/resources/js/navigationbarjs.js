@@ -391,8 +391,8 @@ function createQuiz(qlist, anslist, stage){
       	for(var i=1; i<6; i++){
       		$(imgselector(i)).attr("src", "");
       	}
-    	//배경변경
-          changeBackimg(stage);
+      //배경 변경.
+        $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
     	  break;
          
    }
