@@ -595,7 +595,7 @@ public class SQLCompiler
 
 	/**
 	 * 
-	 * DB 정답 테이블에서 정답을 꺼내와야함!!!!
+	 * DB 정답 테이블에서 정답을 꺼내와야함!!!!!!
 	 *
 	 *
 	 * 지금 정답 1 : create table robot(
