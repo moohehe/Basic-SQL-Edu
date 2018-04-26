@@ -584,7 +584,7 @@ public class SQLCompiler
 				break;
 			}
 		}catch (Exception e) {
-			e.printStackTrace();
+			setErrorMessage("Not correct Answer");
 		}
 
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
