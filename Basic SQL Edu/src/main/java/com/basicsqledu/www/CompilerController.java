@@ -49,6 +49,16 @@ public class CompilerController
 			System.out.println("[ResultData]\n"+json);
 			return json;
 		}
+		
+		//테이블 이름 변경하기
+		if(table_name.equals("[table_name : ANIMAL]_view")){
+			table_name = "animal_view";
+		}else if(table_name.equals("[table_name : PERSON]_view")){
+			table_name = "person_view";
+		}else if(table_name.equals("[table_name : ROBOT]_view")){
+			table_name = "robot_view";
+		}
+		
 		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8");
 		// 0. 빈값이면 생략
