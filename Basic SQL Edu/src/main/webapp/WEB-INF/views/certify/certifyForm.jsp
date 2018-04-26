@@ -20,6 +20,7 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 </head>
 <body>
+<<<<<<< HEAD
 <div class="bodyy">
 	<div class="certi-form">
 		<div class="topp" style="height:25px;"></div>
@@ -64,6 +65,14 @@
 	</div>
 	<div class="xbtn"></div>
 </div>
+=======
+
+	<form action="certify" method="post">
+		<p>이름 입력하삼</p>
+		<input type="text" id="cert_name" name="cert_name">
+		<p>email 입력하삼</p>
+		<input type="email" id="cert_email" name="cert_email" required="required">
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 		
 
 </body>

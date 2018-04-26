@@ -117,7 +117,7 @@ position: relative;
 <div class="image">
 	<img class = "bg" alt="" src="resources/image/certi.png">
 	<div class = "text1">
-		<h3>${user }</h3>
+		<h3>${cert.cert_email }</h3>
 	</div>
 	<div class="text2">
 		<h4>${cert.cert_user }</h4>
