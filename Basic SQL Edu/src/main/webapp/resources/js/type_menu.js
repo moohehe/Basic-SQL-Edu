@@ -232,7 +232,7 @@ function sqlrun() {
 				}
 			}
 			if(confirmCookie == 20){
-				console.log("쿠키성공!");
+				console.log("문제 모두 풀기 성공!");
 			}
 		}
 	, error : function(e) {
