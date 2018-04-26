@@ -483,22 +483,30 @@ function delAllCookie(){
 		}
 	});
 }
-//쿠키 전체 완료
+//쿠키 전체 완료상태로 바꿈
 function ComAllCookie(){
 	$.ajax({
 		url : "cookieCtrl",
 		type : "post",
 		data : {
-			stage : 2,
-			lang : 2,
+			stage : 20,
+			lang : $('#currentLang').val(),
 			cookieCon: "complete"
 		},
 		dataType : "json",
 		success : function(obj){
 			console.log('ajax success');
+			console.log('cookiectrl='+obj);
 			
+		  var stage = 20;
+		  var lang = $('#currentLang').val();
+		  
+		  getDataByAJAX(stage, lang);
+		  $('.level-menu').slideUp(4500);
+		  $('.wrap').show();
+		  return false;
 			//화면 값 갱신
-			$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
+			/*$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
 			$('#currentLv').val(obj.questext.lvstatus);
 			$('#qstext').text(obj.questext.qstext);
 			$('#qstype').text(obj.questext.qstype);
@@ -518,7 +526,7 @@ function ComAllCookie(){
 	         setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
 	         setTd(); // mouserover event set
 	         setView();
-	         console.log('cookie= '+document.cookie);
+	         console.log('cookie= '+document.cookie);*/
 		},
 		error : function(err){
 			alert('가장 마지막 페이지입니다.');
