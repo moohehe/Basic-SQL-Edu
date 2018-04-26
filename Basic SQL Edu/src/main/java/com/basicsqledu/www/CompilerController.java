@@ -51,11 +51,11 @@ public class CompilerController
 		}
 		
 		//테이블 이름 변경하기
-		if(table_name.equals("[table_name : ANIMAL]_view")){
+		if(table_name.toLowerCase().contains("animal")){
 			table_name = "animal_view";
-		}else if(table_name.equals("[table_name : PERSON]_view")){
+		}else if(table_name.toLowerCase().contains("person")){
 			table_name = "person_view";
-		}else if(table_name.equals("[table_name : ROBOT]_view")){
+		}else if(table_name.toLowerCase().contains("robot")){
 			table_name = "robot_view";
 		}
 		
