@@ -158,17 +158,53 @@ function createQuiz(qlist, anslist, stage){
    
       case 1: //select 문제가 아니어서 지정된 화면을 보여줘야 하는 레벨1.
          
-         $('.questionTable').css({"background":imgpath("create"+stage+".png"), 'background-repeat' : 'no-repeat', 'background-size':'100%','background-position':'center center'});
          //칼럼들 지워놓음.
    	  	for(var i=1; i<6; i++){
        	 $(imgselector(i)).attr("src", "");
         }
-   	  //테이블도 지워.
-   	  $('#table_data').html("Answer Example <br>create table animal( " +
-   	  		"<br> Animal_num number ○○○ <br> ,name varchar(40) ○○○<br>" +
-   	  		",color varchar(40) ○○○<br>" +
-   	  		",habitat varchar(40)○○○<br>" +
-   	  		",legs number ○○○<br>);");
+   	//배경변경
+  	  $('.questionTable').css({"background":imgpath("bg1.png"), 'background-size':'100%', 'background-repeat' : 'no-repeat', 'background-position':'center'});
+   	//테이블 변경.
+  		$('#table_data').html("");
+
+    	  	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
+    	  
+    		tags += "<tr>";
+			tags += "<th scope='row' class='t_head'>Column</th>";
+			tags += "<th class='t_head'>DataType</th>";
+			tags += "<th class='t_head'>Constraint</th>";
+			tags += "</tr></thead>";
+    		
+			tags += "<tbody><tr>";
+			tags += "<td class='t_body'>Animal_num</td>";
+			tags += "<td class='t_body'>Number</td>";
+			tags += "<td class='t_body'>Primary key</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>Name</td>";
+			tags += "<td class='t_body'>varchar(40)</td>";
+			tags += "<td class='t_body'>Unique</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>Color</td>";
+			tags += "<td class='t_body'>varchar(40)</td>";
+			tags += "<td class='t_body'>Not null</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>Habitat</td>";
+			tags += "<td class='t_body'>varchar(40)</td>";
+			tags += "<td class='t_body'>Foreign Key</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>Legs</td>";
+			tags += "<td class='t_body'>Number</td>";
+			tags += "<td class='t_body'>Not null</td>";
+			tags += "</tr>";
+
+			tags += "</tbody></table>";
+    		
+			$('#table_data').html(tags);
+
          break;
       //동물 select
       case 2: case 3: case 5: case 6: case 7: case 8: case 10:
@@ -259,9 +295,6 @@ function createQuiz(qlist, anslist, stage){
     	//테이블 변경.
   		$('#table_data').html("");
 
-    	  /*그냥 이미지로 할까 했는데 애매해서 일단 주석처리 후, innerHtml로 테이블 걍 만듦.
-    	   * var tags = '<img src="/www/resources/image/altertable.png">'
-    	  $('#table_data').html(tags);*/
     	  	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
     	  
     		tags += "<tr>";
@@ -359,7 +392,8 @@ function createQuiz(qlist, anslist, stage){
             $(imgselector((index)+1)).attr("th_code", value.th_code);
             addAnimation('rubberBand', value.th_code);
             
-            if(stage == 17){
+            if(stage == 17){ //문제 17일 경우.
+            
             	//칼럼들 지워놓음.
             	for(var i=1; i<6; i++){
             		$(imgselector(i)).attr("src", "");
@@ -382,7 +416,13 @@ function createQuiz(qlist, anslist, stage){
          break;
          
       case 19:
-    	  
+    	//칼럼들 지워놓음.
+        	for(var i=1; i<6; i++){
+        		$(imgselector(i)).attr("src", "");
+        	}
+        	
+        	 //배경 변경.
+            changeBackimg(stage);
     	  break;
     	  
     	  
@@ -391,9 +431,11 @@ function createQuiz(qlist, anslist, stage){
       	for(var i=1; i<6; i++){
       		$(imgselector(i)).attr("src", "");
       	}
+      //테이블 변경.
+  		$('#table_data').html("");
       //배경 변경.
-        $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-    	  break;
+        $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-color':'black','background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+        break;
          
    }
    // imgs - class 저장함.
