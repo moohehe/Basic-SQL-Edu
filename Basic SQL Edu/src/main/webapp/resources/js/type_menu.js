@@ -265,9 +265,15 @@ function sql_success() {
 	$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
 	// nextBtn에 있는 function 실행
 	// 
-
+	
 	// 성공하면 view_menu 쪽의 그림파일에 class를 입력한다. (뛰어노는 듯한 기쁜 이미지 동작을 부여한다.)
+
+	// 아래 문장은 지울것. 아직 개발중이라 넣은거
 	$('.success').fadeIn("slow");
+	/*if ($('#LvInfo').text() == 'Level 20 of 20') {				// 이 fucntion은 지울것
+		console.log('스테이지 20');
+		location.href="goCertify";	// 이 fucntion은 지울것
+	}*/								// 이 fucntion은 지울것
 }
 function successStage() {
 	nextStage();

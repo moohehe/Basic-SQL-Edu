@@ -22,23 +22,23 @@
 <table class="table">
 
 	<tr class="tr">
-		<th class="th" style="border-bottom-color: ">작성자</th>
+		<th class="th" style="border-bottom-color: ">name</th>
 		<td class="td"><input type="text" name="fb_user" required="required"></td>
 	</tr>
 	
 	<tr class="tr">
-		<th class="th">이메일</th>
+		<th class="th">email</th>
 		<td class="td"><input type="email" name="email" style="width:300px;" required="required">
 		<br>
-		※ 이메일을 정확히 입력해주세요.
+		※ check e-mail address.
 		</td>
 	</tr>
 	<tr class="tr">
-		<th class="th">제목</th>
+		<th class="th">Title</th>
 		<td class="td"><input type="text" name="title" style="width:300px;" required="required"></td>
 	</tr>
 	<tr class="tr">
-		<th class="th">내용</th>
+		<th class="th">Content</th>
 		<td class="td"><textarea rows="30" cols="100" name="content" required="required"></textarea></td>
 	</tr>
 	<tr class="tr">

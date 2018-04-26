@@ -3,6 +3,12 @@ package com.basicsqledu.www;
 
 import java.util.Random;
 
+<<<<<<< HEAD
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+
+=======
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +22,35 @@ import com.basicsqledu.www.vo.Certification;
 
 @Controller
 public class CertifyController {
+<<<<<<< HEAD
+
+	private static final Logger logger = LoggerFactory.getLogger(CertifyController.class);
+	
+=======
 	private static final Logger logger = LoggerFactory.getLogger(CertifyController.class);
 
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 	@Autowired
 	CertDAO certDAO;
 
 	@RequestMapping(value = "goCertify", method=RequestMethod.GET)
-	public String getTable() {
+	public String getTable(HttpServletRequest request, Model model) {
+		logger.info("start of Certfiform");
+		// 기본 언어는 1로 세팅함
+		model.addAttribute("lang",1);
+		Cookie cg[] = request.getCookies();
+		for (Cookie c : cg) {
+			if(c.getName().equals("currentLang")){
+				try {
+					int lang = Integer.valueOf(c.getValue());
+					// 언어 설정이 되어있으면 그 언어로 세팅
+					model.addAttribute("lang", lang);
+				} catch (Exception e) {
+					model.addAttribute("lang",1);
+				}
+			}
+		}
+		
 		return "certify/certifyForm";
 	}
 
