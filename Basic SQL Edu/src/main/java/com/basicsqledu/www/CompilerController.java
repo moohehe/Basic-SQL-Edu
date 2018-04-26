@@ -130,8 +130,8 @@ public class CompilerController
 		}
 		
 		
-		//20번 문제가 정답
-		if(questionNumber == 20 && resultMap.get("success") == "1"){
+		//20번 문제가 정답 == commit
+		if(questionNumber == 20 && sql.equals("commit")){
 			//쿠키 검사
 			
 			int k = 0;
@@ -144,7 +144,7 @@ public class CompilerController
 				}
 			}
 			if(k == 20){
-				//인증서 가자
+				//인증서 가자 gg
 				System.out.println("20 stage 전부 클리어함");
 				map.put("end", true);
 				map.put("url", "goCertify");

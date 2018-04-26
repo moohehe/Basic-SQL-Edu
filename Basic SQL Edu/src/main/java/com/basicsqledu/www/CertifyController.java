@@ -19,7 +19,13 @@ import com.basicsqledu.www.vo.Certification;
 
 @Controller
 public class CertifyController {
+<<<<<<< HEAD
 	private static final Logger logger = LoggerFactory.getLogger(CertifyController.class);
+=======
+
+	private static final Logger logger = LoggerFactory.getLogger(CertifyController.class);
+	
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 
 	@Autowired
 	CertDAO certDAO;
