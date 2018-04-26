@@ -5,7 +5,7 @@
 	text-align: center;
 }
 a:link {
-	color:#000000;
+	color:#0000ff;
 	text-decoration: none;
 }
 a:visited {
@@ -13,7 +13,7 @@ a:visited {
 	text-decoration: none;
 }
 a:hover {
-	color:#ff0000;
+	color:#0080ff;
 	text-decoration: underline;
 }
 
@@ -38,7 +38,7 @@ th.white {
 th.th{
 	width:90px;
 	height: 30px;
-	background-color: #cccccc;
+	background-color: rgba(121, 216, 99, 0.98);
 	text-align: center;
 	font-weight: bold;
 }
