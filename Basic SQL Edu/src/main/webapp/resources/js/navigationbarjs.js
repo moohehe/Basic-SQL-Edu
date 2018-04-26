@@ -381,6 +381,20 @@ function createQuiz(qlist, anslist, stage){
          changeBackimg(stage);
          break;
          
+      case 19:
+    	  
+    	  break;
+    	  
+    	  
+      case 20:
+    	//칼럼들 지워놓음.
+      	for(var i=1; i<6; i++){
+      		$(imgselector(i)).attr("src", "");
+      	}
+    	//배경변경
+          changeBackimg(stage);
+    	  break;
+         
    }
    // imgs - class 저장함.
 	setClass();
