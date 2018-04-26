@@ -9,6 +9,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ import com.google.gson.Gson;
 @Controller
 public class CompilerController
 {
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	@Autowired
 	private QuizDAO quizDAO;
 	@Autowired
@@ -49,6 +52,16 @@ public class CompilerController
 			System.out.println("[ResultData]\n"+json);
 			return json;
 		}
+		
+		//테이블 이름 변경하기
+		if(table_name.toLowerCase().contains("animal")){
+			table_name = "animal_view";
+		}else if(table_name.toLowerCase().contains("person")){
+			table_name = "person_view";
+		}else if(table_name.toLowerCase().contains("robot")){
+			table_name = "robot_view";
+		}
+		
 		// setup UTF-8
 		response.setContentType("text/html;charset=UTF-8");
 		// 0. 빈값이면 생략
@@ -117,8 +130,8 @@ public class CompilerController
 		}
 		
 		
-		//20번 문제가 정답
-		if(questionNumber == 20 && resultMap.get("success") == "1"){
+		//20번 문제가 정답 == commit
+		if(questionNumber == 20 && sql.equals("commit")){
 			//쿠키 검사
 			
 			int k = 0;
@@ -131,8 +144,10 @@ public class CompilerController
 				}
 			}
 			if(k == 20){
-				//인증서 가자
-				map.put("goCerti", true);
+				//인증서 가자 gg
+				System.out.println("20 stage 전부 클리어함");
+				map.put("end", true);
+				map.put("url", "goCertify");
 			}
 		}
 		

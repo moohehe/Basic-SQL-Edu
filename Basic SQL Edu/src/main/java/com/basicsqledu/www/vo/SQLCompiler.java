@@ -101,8 +101,13 @@ public class SQLCompiler
 				|| questionNumber == 17 || questionNumber == 19 || questionNumber == 20 	){
 			//정답 뷰 필요없음
 		}else{
-			int answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
-
+			int answerSize = -1;
+			try {
+				answerSize= (quizDAO.getAnswer(questionNumber, table_name)).length;
+			} catch (Exception e) {
+				setErrorMessage("Syntax Error: Table name is not found");
+				return;
+			}
 			System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
 
 			// questionNumber가 1~ 11까지는 animal
@@ -505,10 +510,10 @@ public class SQLCompiler
 			}
 		}
 		 */
-		
+
 		boolean ansCorrect= false;	//푸시중
 		int corr = 0;
-		
+
 		try{
 			switch (questionNumber) {
 			/*case 13:
@@ -579,7 +584,7 @@ public class SQLCompiler
 				break;
 			}
 		}catch (Exception e) {
-			e.printStackTrace();
+			setErrorMessage("Not correct Answer");
 		}
 
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
@@ -590,7 +595,7 @@ public class SQLCompiler
 
 	/**
 	 * 
-	 * DB 정답 테이블에서 정답을 꺼내와야함!!
+	 * DB 정답 테이블에서 정답을 꺼내와야함!!!!!!
 	 *
 	 *
 	 * 지금 정답 1 : create table robot(
@@ -692,6 +697,8 @@ public class SQLCompiler
 					//콤마 갯수 계산
 					if(comma != 4) {
 						faa = false;
+						setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+						return null;
 					}
 
 
@@ -742,147 +749,210 @@ public class SQLCompiler
 				 * */ 
 				faa = false;
 
-				//동물 create
-				if(result_name.equals("animal")){
-					//첫번째 컬럼 (animal_num number primary key)
-					if(createResult[0].equals("animal_num")){
-						for(String dt : spDataType1){
-							if(dt.equals("number") && dt.equals(createResult[1])){
-								for(String ct : constraint){
-									if(ct.equals("primary key") && ct.equals(createResult[2] + " " + createResult[3]) && createResult[4].equals(",")){
-										faa = true;
-										System.out.println("[ 동물 : 첫번째 컬럼 검사 완료 ]");
+				try{
+					//동물 create
+					if(result_name.equals("animal")){
+						//첫번째 컬럼 (animal_num number primary key)
+						if(createResult[0].equals("animal_num")){
+							for(String dt : spDataType1){
+								if(dt.equals("number") && dt.equals(createResult[1])){
+									for(String ct : constraint){
+										if(ct.equals("primary key") && ct.equals(createResult[2] + " " + createResult[3]) && createResult[4].equals(",")){
+											faa = true;
+											System.out.println("[ 동물 : 첫번째 컬럼 검사 완료 ]");
+											break;
+										}else{
+											faa = false;
+											setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+										}
+									}
+									if(faa){
 										break;
-									}else{
-										faa = false;
 									}
 								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
-					}
-					//두번째 컬럼(name varchar(40) unique)
-					if(createResult[5].equals("name")){
-						for(String dt : spDataType1){
-							if(dt.equals("varchar")) { 
-								dt += "(40)";
-								if(dt.equals(createResult[6] + "("+createResult[7]+")")){
-									for(String ct : constraint){
-										if(ct.equals("unique") && ct.equals(createResult[8]) && createResult[9].equals(",")){
-											faa = true;
-											System.out.println("[ 동물 : 두번째 컬럼 검사 완료 ]");
+						//두번째 컬럼(name varchar(40) unique)
+						if(createResult[5].equals("name")){
+							for(String dt : spDataType1){
+								if(dt.equals("varchar")) { 
+									dt += "(40)";
+									if(dt.equals(createResult[6] + "("+createResult[7]+")")){
+										for(String ct : constraint){
+											if(ct.equals("unique") && ct.equals(createResult[8]) && createResult[9].equals(",")){
+												faa = true;
+												System.out.println("[ 동물 : 두번째 컬럼 검사 완료 ]");
+												break;
+											}else{
+												faa = false;
+												setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+											}
+										}
+										if(faa){
 											break;
-										}else{
-											faa = false;
 										}
 									}
 								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
-					}
-					//세번째 컬럼(color varchar(40) not null)
-					if(createResult[10].equals("color")){
-						for(String dt : spDataType1){
-							if(dt.equals("varchar")){
-								dt += "(40)";
-								if(dt.equals(createResult[11] + "("+createResult[12]+")")){
-									for(String ct : constraint){
-										if(ct.equals("not null") && ct.equals(createResult[13]+ " " + createResult[14] ) && createResult[15].equals(",")){
-											faa = true;
-											System.out.println("[ 동물 : 세번째 컬럼 검사 완료 ]");
+						//세번째 컬럼(color varchar(40) not null)
+						if(createResult[10].equals("color")){
+							for(String dt : spDataType1){
+								if(dt.equals("varchar")){
+									dt += "(40)";
+									if(dt.equals(createResult[11] + "("+createResult[12]+")")){
+										for(String ct : constraint){
+											if(ct.equals("not null") && ct.equals(createResult[13]+ " " + createResult[14] ) && createResult[15].equals(",")){
+												faa = true;
+												System.out.println("[ 동물 : 세번째 컬럼 검사 완료 ]");
+												break;
+											}else{
+												faa = false;
+												setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+											}
+										}
+										if(faa){
 											break;
-										}else{
-											faa = false;
 										}
 									}
 								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
-					}
-					//네번째 컬럼(habitat varchar(40) foreign key)
-					if(createResult[16].equals("habitat")){
-						for(String dt : spDataType1){
-							if(dt.equals("varchar")){
-								dt += "(40)";
-								if(dt.equals(createResult[17]+"("+createResult[18]+")")){
-									for(String ct : constraint){
-										if(ct.equals("foreign key") && ct.equals(createResult[19]+ " " + createResult[20] ) && createResult[21].equals(",")){
-											faa = true;
-											System.out.println("[ 동물 : 네번째 컬럼 검사 완료 ]");
+						//네번째 컬럼(habitat varchar(40) foreign key)
+						if(createResult[16].equals("habitat")){
+							for(String dt : spDataType1){
+								if(dt.equals("varchar")){
+									dt += "(40)";
+									if(dt.equals(createResult[17]+"("+createResult[18]+")")){
+										for(String ct : constraint){
+											if(ct.equals("foreign key") && ct.equals(createResult[19]+ " " + createResult[20] ) && createResult[21].equals(",")){
+												faa = true;
+												System.out.println("[ 동물 : 네번째 컬럼 검사 완료 ]");
+												break;
+											}else{
+												faa = false;
+												setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+											}
+										}
+										if(faa){
 											break;
-										}else{
-											faa = false;
 										}
 									}
 								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
-					}
-					//다섯번째 컬럼(legs number)
-					if(createResult[22].equals("legs")){
-						for(String dt : spDataType1){
-							if(dt.equals("number") && dt.equals(createResult[23])){
-								faa = true;
-								System.out.println("[ 동물 : 다섯번째 컬럼 검사 완료 ]");
-								break;
-							}else{
-								faa = false;
+						//다섯번째 컬럼(legs number)
+						if(createResult[22].equals("legs")){
+							for(String dt : spDataType1){
+								if(dt.equals("number") && dt.equals(createResult[23])){
+									faa = true;
+									System.out.println("[ 동물 : 다섯번째 컬럼 검사 완료 ]");
+									break;
+								}else{
+									faa = false;
+									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
-					}
-				} else if(result_name.equals("robot")){
-					//로봇 create
-					//첫번째 컬럼
-					if(createResult[0].equals("r_color")){
-						for(String dt : spDataType1){
-							if(dt.equals("varchar") && (dt+"(50)").equals(createResult[1]+"("+createResult[2]+")") && createResult[3].equals(",")){
-								faa = true;
-								System.out.println("[ 로봇 : 첫번째 컬럼 검사 완료 ]");
-								break;
-							}else{
-								faa = false;
+					} else if(result_name.equals("robot")){
+						//로봇 create
+						//첫번째 컬럼
+						if(createResult[0].equals("r_color")){
+							for(String dt : spDataType1){
+								if(dt.equals("varchar") && (dt+"(50)").equals(createResult[1]+"("+createResult[2]+")") && createResult[3].equals(",")){
+									faa = true;
+									System.out.println("[ 로봇 : 첫번째 컬럼 검사 완료 ]");
+									break;
+								}else{
+									faa = false;
+									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
-					}
-					//두번째 컬럼
-					if(createResult[4].equals("r_size")){
-						for(String dt : spDataType1){
-							if(dt.equals("varchar") && (dt+"(50)").equals(createResult[5]+"("+createResult[6]+")") && createResult[7].equals(",")){
-								faa = true;
-								System.out.println("[ 로봇 : 두번째 컬럼 검사 완료 ]");
-								break;
-							}else{
-								faa = false;
+						//두번째 컬럼
+						if(createResult[4].equals("r_size")){
+							for(String dt : spDataType1){
+								if(dt.equals("varchar") && (dt+"(50)").equals(createResult[5]+"("+createResult[6]+")") && createResult[7].equals(",")){
+									faa = true;
+									System.out.println("[ 로봇 : 두번째 컬럼 검사 완료 ]");
+									break;
+								}else{
+									faa = false;
+									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
-					}
-					//세번째 컬럼
-					if(createResult[8].equals("r_type")){
-						for(String dt : spDataType1){
-							if(dt.equals("varchar") && (dt+"(50)").equals(createResult[9]+"("+createResult[10]+")") && createResult[11].equals(",")){
-								faa = true;
-								System.out.println("[ 로봇 : 세번째 컬럼 검사 완료 ]");
-								break;
-							}else{
-								faa = false;
+						//세번째 컬럼
+						if(createResult[8].equals("r_type")){
+							for(String dt : spDataType1){
+								if(dt.equals("varchar") && (dt+"(50)").equals(createResult[9]+"("+createResult[10]+")") && createResult[11].equals(",")){
+									faa = true;
+									System.out.println("[ 로봇 : 세번째 컬럼 검사 완료 ]");
+									break;
+								}else{
+									faa = false;
+									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
-					}
-					//네번째 컬럼
-					if(createResult[12].equals("weapon")){
-						for(String dt : spDataType1){
-							if(dt.equals("varchar") && (dt+"(50)").equals(createResult[13]+"("+createResult[14]+")")){
-								faa = true;
-								System.out.println("[ 로봇 : 네번째 컬럼 검사 완료 ]");
-								break;
-							}else{
-								faa = false;
+						//네번째 컬럼
+						if(createResult[12].equals("weapon")){
+							for(String dt : spDataType1){
+								if(dt.equals("varchar") && (dt+"(50)").equals(createResult[13]+"("+createResult[14]+")")){
+									faa = true;
+									System.out.println("[ 로봇 : 네번째 컬럼 검사 완료 ]");
+									break;
+								}else{
+									faa = false;
+									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+								}
 							}
+						}else{
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
 						}
 					}
+				}catch(Exception e){
+					e.printStackTrace();
+					setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+					return null;
 				}
 
 				//컬럼명들이 맞으면 반복문 종료
-				if(faa = true){
+				if(faa){
 					break;
 				}
 				// 4-2. 컬럼의 데이터 형태
@@ -900,6 +970,7 @@ public class SQLCompiler
 			//전부완료
 			return new String[0][0];
 		}
+		
 		setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
 		return null;
 	}

@@ -39,10 +39,10 @@
 				<div id="qsExm">${questext.qsExm }</div>
 				<div style="background-color:red;">				
 					<a href="goCertify">임시 수료증 고고싱</a>
-					<button onclick="javascript:sql_success();">success</button>
-					<button onclick="javascript:sql_fail();">fail</button>
-					<button onclick="javascript:delAllCookie();"> 쿠키삭제</button>
-					<button onclick="javascript:ComAllCookie();"> 쿠키완료</button>
+					<button onclick="javascript:sql_success();"	>success</button>
+					<button onclick="javascript:sql_fail();"	>fail</button>
+					<button onclick="javascript:delAllCookie();">쿠키삭제</button>
+					<button onclick="javascript:ComAllCookie();">쿠키완료</button>
 				</div>
 				<!-- 언어 선택 (영어, 한국어, 일본어) -->		
 				<div class="langcheck" >

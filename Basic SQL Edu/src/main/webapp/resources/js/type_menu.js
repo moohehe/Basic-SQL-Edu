@@ -50,7 +50,10 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 	console.log(table);
 	var table_data = $('#table_data');
 	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
-
+	if (table == null) {
+		table_data.html("");
+		return;
+	}
 	// 첫번째 줄
 	for (var i = 0; i < table.length; i++) {
 		if (i == 0 ) {
@@ -138,6 +141,9 @@ function sqlrun() {
 				}
 	, dataType: 'json'
 		, success: function(e) {
+			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
+				location.href = e.link;
+			}
 			if(stage==11){
 				var step = 0;
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
@@ -190,6 +196,9 @@ function sqlrun() {
 				}catch(Exception){
 					sql_fail(e.errorMessage);
 				}
+			} else if (stage == 20 ) {
+				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
+				
 			}else{ //11번 alter문제를 제외하고는 모두 아래 로직을 따라간다.
 				console.log(e);
 				if (e.password == 'pass' ) {
@@ -205,10 +214,13 @@ function sqlrun() {
 						//인증서 고
 						goCertify();
 					}
-				}else {
+				} else if (!e.complete) {
+					// 틀림
+					sql_fail(e.errorMessage);
+				} else {
 					// 문제 틀림
 					sql_fail(e.errorMessage);
-				}
+				} 
 			}
 			
 			//쿠키 확인
@@ -253,9 +265,15 @@ function sql_success() {
 	$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
 	// nextBtn에 있는 function 실행
 	// 
-
+	
 	// 성공하면 view_menu 쪽의 그림파일에 class를 입력한다. (뛰어노는 듯한 기쁜 이미지 동작을 부여한다.)
+
+	// 아래 문장은 지울것. 아직 개발중이라 넣은거
 	$('.success').fadeIn("slow");
+	/*if ($('#LvInfo').text() == 'Level 20 of 20') {				// 이 fucntion은 지울것
+		console.log('스테이지 20');
+		location.href="goCertify";	// 이 fucntion은 지울것
+	}*/								// 이 fucntion은 지울것
 }
 function successStage() {
 	nextStage();

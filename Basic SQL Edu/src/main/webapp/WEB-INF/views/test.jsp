@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title></title>
+<title>Basic SQL Edu</title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/Navibar.css"/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/mainPage.css"/>"/>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/view_menu.css"/>"/>

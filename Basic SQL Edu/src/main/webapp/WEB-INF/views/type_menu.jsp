@@ -9,7 +9,7 @@
 			<button class='btn' onclick='javascript:successStage();'>Next</button>
 		</div>
 		<div class='fail'>
-			<div class=''>FAIL!</div>
+			<div class='fail-msg'>FAIL!</div>
 			<div class="errorMessage"></div>
 		</div>
 		
