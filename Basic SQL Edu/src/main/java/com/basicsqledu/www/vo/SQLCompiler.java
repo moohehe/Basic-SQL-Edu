@@ -764,8 +764,10 @@ public class SQLCompiler
 										}else{
 											faa = false;
 											setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-											return null;
 										}
+									}
+									if(faa){
+										break;
 									}
 								}
 							}
@@ -788,8 +790,10 @@ public class SQLCompiler
 											}else{
 												faa = false;
 												setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-												return null;
 											}
+										}
+										if(faa){
+											break;
 										}
 									}
 								}
@@ -813,8 +817,10 @@ public class SQLCompiler
 											}else{
 												faa = false;
 												setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-												return null;
 											}
+										}
+										if(faa){
+											break;
 										}
 									}
 								}
@@ -838,8 +844,10 @@ public class SQLCompiler
 											}else{
 												faa = false;
 												setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-												return null;
 											}
+										}
+										if(faa){
+											break;
 										}
 									}
 								}
@@ -859,7 +867,6 @@ public class SQLCompiler
 								}else{
 									faa = false;
 									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-									return null;
 								}
 							}
 						}else{
@@ -879,7 +886,6 @@ public class SQLCompiler
 								}else{
 									faa = false;
 									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-									return null;
 								}
 							}
 						}else{
@@ -897,7 +903,6 @@ public class SQLCompiler
 								}else{
 									faa = false;
 									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-									return null;
 								}
 							}
 						}else{
@@ -915,7 +920,6 @@ public class SQLCompiler
 								}else{
 									faa = false;
 									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-									return null;
 								}
 							}
 						}else{
@@ -933,7 +937,6 @@ public class SQLCompiler
 								}else{
 									faa = false;
 									setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-									return null;
 								}
 							}
 						}else{
