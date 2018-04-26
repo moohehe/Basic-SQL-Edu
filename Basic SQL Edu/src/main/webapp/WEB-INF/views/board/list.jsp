@@ -4,7 +4,14 @@
 <html>
 <head>
 <title>[ Feedback List ]</title>
-
+<style type="text/css">
+.bgimg {
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	background-image: url("resources/image/feedback2.jpg");
+	min-height: 100%;
+}
+</style>
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/default.css' />" />
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js" />"></script>
 <script type="text/javascript">
@@ -25,10 +32,10 @@
 	
 </script>
 </head>
-<body>
+<body class=bgimg>
 
 <div class="centerdiv">
-<h1>[ Feedback List ]</h1>
+<h1><img alt="" src="resources/image/feedbackt.png"></h1>
 
 <table style="margin: auto; text-align: center;"> 
 <c:forEach var="board" items="${boardlist }">
@@ -71,7 +78,7 @@
 			</form>
 		</td>
 	</tr>
-	<td class="td white">
+	<td>
 		<br/>
 	</td>
 	

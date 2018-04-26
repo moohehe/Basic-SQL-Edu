@@ -42,9 +42,8 @@
 		<td class="td"><textarea rows="30" cols="100" name="content" required="required"></textarea></td>
 	</tr>
 	<tr class="tr">
-		<td colspan="2" class="white center td">
-		<!-- <div class="btn menubtn submitbtn">SUBMIT</div> -->
-		<input type="submit" class="btn menubtn submitbtn" value="SUBMIT">  
+		<td colspan="3" class="white center td">		
+		<div><input type="submit" class="btn menubtn submitbtn" value="SUBMIT"></div>  
 		<div class="btn menubtn closebtn">CLOSE</div>
 		</td>
 	</tr>
