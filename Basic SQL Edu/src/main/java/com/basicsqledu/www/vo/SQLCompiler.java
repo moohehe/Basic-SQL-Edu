@@ -108,7 +108,6 @@ public class SQLCompiler
 				setErrorMessage("Syntax Error: Table name is not found");
 				return;
 			}
-			
 			System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
 
 			// questionNumber가 1~ 11까지는 animal
