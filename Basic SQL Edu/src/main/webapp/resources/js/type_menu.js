@@ -1,4 +1,5 @@
 var sql_text;
+var alterStep = 0;
 $(function() {
 	sql_text = $('textarea').val();
 })
@@ -145,43 +146,45 @@ function sqlrun() {
 				location.href = e.link;
 			}
 			if(stage==11){
-				var step = 0;
-				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
+				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
+				
 				try{
 					if(e.drop == 'true'){
 						console.log("dddd");
-						step++;
+						alterStep++;
 					}
 					if(e.change == 'true'){
-						step++
+						alterStep++;
 					}
 					if(e.add == 'true'){
-						step++;
+						alterStep++;
 					}
 					if(e.modify == 'true'){
-						step++;
+						alterStep++;
 					}
 					if(e.rename == 'true'){
-						step++;
+						alterStep++;
 					}
 
-					console.log("뭐냐" + step);
-					switch(step){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
+					console.log("뭐냐" + alterStep);
+					switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
 					case 1:
 						//한문제 맞췄을 때의 그림 보여주기
-						alert("히죽");
+						alert("1단계 그림 변경");
 						 //배경 변경.
 						break;
 					case 2:
 						//두문제 맞췄을 때의 그림 보여주기
-
+						alert("2단계 그림 변경");
 						break;
 					case 3:
 						//세문제 맞췄을 때의 그림 보여주기
+						alert("3단계 그림 변경");
 
 						break;
 					case 4:
 						//네문제 맞췄을 때의 그림 보여주기
+						alert("4단계 그림 변경");
 
 						break;
 					case 5:

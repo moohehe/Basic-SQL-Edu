@@ -108,17 +108,15 @@ public class SQLCompiler
 				setErrorMessage("Syntax Error: Table name is not found");
 				return;
 			}
-			System.out.println(" 정답 배열의 열의 길이 : "+ answerSize);
+			System.out.println(" 정답 배열의 행의 크기 : "+ answerSize);
 
 			// questionNumber가 1~ 11까지는 animal
 			// questionNumber가 12~16은 PERSON
 			// questionNumber가 17~20은 ROBOT
 			if(questionNumber >1 && questionNumber<=11){
 				answerTable = new String[answerSize][6];
-			}else if(questionNumber >11 && questionNumber<=16){
-				answerTable = new String[answerSize][5];
 			}else{
-				answerTable = new String[answerSize][5];	//robot
+				answerTable = new String[answerSize][5];
 			}
 
 			answerTable = quizDAO.getAnswer(questionNumber, table_name);
@@ -499,17 +497,6 @@ public class SQLCompiler
 			map.put("result", result);
 		}
 
-		/*//DB 정답 뷰 출력해보자
-		System.out.println("========== 테스트 정답 뷰 출력(SQLCompiler) ===========");
-		if(answerTable.length != 0){
-			for(int j = 0;j<answerTable.length;j++){
-				for(int k = 0;k<answerTable[0].length;k++){
-					System.out.print(answerTable[j][k] + "  ");
-				}
-				System.out.println();
-			}
-		}
-		 */
 
 		boolean ansCorrect= false;	//푸시중
 		int corr = 0;
@@ -523,13 +510,25 @@ public class SQLCompiler
 			case 2:	case 3: case 4: case 5:	 case 6: case 7: case 8: case 9:
 			case 10: case 12:  case 13: case 18:
 				//* 정답 뷰랑 비교해야되요
-				//ghfhfhfh
-				int [] index = new int[answerTable.length-1];
-				for(int j=1;j<answerTable.length;j++){
+				//DB 정답 뷰 출력해보자
+				System.out.println("========== 테스트 정답 뷰 출력(SQLCompiler) ===========");
+				if(answerTable.length != 0){
+					for(int j = 0;j<answerTable.length;j++){
+						for(int k = 0;k<answerTable[0].length;k++){
+							System.out.print(answerTable[j][k] + "  ");
+						}
+						System.out.println();
+					}
+				}
+				
+				
+				int [] index = new int[answerTable[0].length-1];
+				for(int j=1;j<answerTable[0].length;j++){
 					index[j-1] = j;
 					String col = answerTable[0][j];
 
 					System.out.println("결과 값 2차원 행의 길이"+result.length + " 결과 값 2차원 열의 길이 : "+result[0].length);
+					System.out.println("정답 값 2차원 행의 길이"+answerTable.length + " 정답 값 2차원 열의 길이 : "+answerTable[0].length);
 
 					for(int k =0;k<result[0].length;k++){
 						if(col.equals(result[0][k])){
@@ -537,9 +536,10 @@ public class SQLCompiler
 							corr++;
 
 							//2. 2차원 배열 데이터들 한줄씩 비교!
-							for(int p = 1;p<result[p].length-1;p++){
+							for(int p = 1;p<=result[0].length-1;p++){
 								if(answerTable[p][index[j-1]].equals(result[p][k])){
 									ansCorrect = true;
+									break;
 								}else{
 									ansCorrect = false;
 								}
@@ -547,7 +547,6 @@ public class SQLCompiler
 						}
 					}
 				}
-				break;
 			default:
 				break;
 			}
@@ -1031,7 +1030,6 @@ public class SQLCompiler
 	/**
 	 * Alter table animal drop legs;
 	 * Alter table animal change color haircolor varchar(20);
-	 * Alter table animal change habitat job varchar(20);
 	 * Alter table animal add gender varchar(20);
 	 * Alter table animal modify(gender varchar(10) not null);
 	 * Alter table animal rename person;
@@ -1075,7 +1073,7 @@ public class SQLCompiler
 					}
 					if(alterMap.get("change") != null){
 						alterResult[0][1] = "change";
-						alterResult[1][1] = alterMap.get("change1").toString();
+						alterResult[1][1] = alterMap.get("change").toString();
 					}
 					if(alterMap.get("add") != null){
 						alterResult[0][2] = "add";
@@ -1148,6 +1146,8 @@ public class SQLCompiler
 						alterMap.put("change", false);
 					}
 				}
+			}else{
+				alterMap.put("change", false);
 			}
 			break;
 		case "add":
@@ -1167,13 +1167,13 @@ public class SQLCompiler
 		case "modify":
 			int count = StringUtils.countOccurrencesOf(col[1], "(");
 			System.out.println("괄호의 갯수 : "+ count );
-			if(col[1].equals("(") || col[1].startsWith("(") && count == 1 ){
+			if((col[1].equals("(") || col[1].startsWith("(")) && count == 1 ){
 				if((col[1]+col[2]).equals("(gender")){
 					//varchar(10) not null
 					for(String type : spDataType1){
 						if(type.equals("varchar") && (type+"(10)").equals(col[3]+col[4]+col[5]+col[6])){
 							for(String cons : constraint){
-								if(cons.equals("not null") && cons.equals(col[7] + col[8] )&& col[9].equals(")")){
+								if(cons.equals("not null") && cons.equals(col[7] +" "+col[8] )&& col[9].equals(")")){
 									alterMap.put("modify", true);
 									break;
 								}else{
