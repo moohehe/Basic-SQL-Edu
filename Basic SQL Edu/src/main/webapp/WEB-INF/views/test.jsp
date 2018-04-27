@@ -76,7 +76,6 @@
     }
     .block {
     	width:100%;
-/*     	height:0px; */
     }
 	@media ( min-height: 768px ) {
 	  .block { height:0px }
