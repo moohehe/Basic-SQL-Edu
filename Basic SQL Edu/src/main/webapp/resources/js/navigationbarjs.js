@@ -150,6 +150,10 @@ function nextStage() {
 function createQuiz(qlist, anslist, stage){
    console.log("cq의 stage"+stage);
    
+   //칼럼 지우기.
+	  for(var i=1; i<6; i++){
+ 	 $(imgselector(i)).attr("src", "");
+  }
    
    // stage 11에 들어갈때만 height 속성을 고정값으로 지정하기 위해서 매번 초기화한다.
    $('div.css-view').css('height','');
@@ -282,7 +286,7 @@ function createQuiz(qlist, anslist, stage){
          //배경변경
          changeBackimg(stage);
          break;
-         
+          
       case 11: //alter table 문제
     	  //배경 변경.
     	  $('.questionTable').css({"background":imgpath("alter"+1+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
@@ -335,6 +339,7 @@ function createQuiz(qlist, anslist, stage){
 
 			$('div.css-view').css('height','658px');
          break;
+         
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
          if(stage == 12){
         	 $(imgselector(5)).attr("src", "");
@@ -349,6 +354,7 @@ function createQuiz(qlist, anslist, stage){
             //테이블 안 칼럼들 이미지 변경.
             $(imgselector((index)+1)).attr("src", "/www/resources/image/"+job+color+".png");
             $(imgselector((index)+1)).attr("th_code", value.th_code);
+            //애니메이션 동작.
             addAnimation('rubberBand', value.th_code);
          });
          //정답 리스트 돌기.
@@ -444,6 +450,8 @@ function createQuiz(qlist, anslist, stage){
 
 function getDataByAJAX(stage, lang) {
 	console.log('stage='+stage+' lang='+lang);
+	document.getElementById('sql').value = "";
+	
 	//처음 그려질 경우 DB를 갔다오는 Ajax. (나중에 Ajax는 함수화 가능하면 함수화 한다.)
 	$.ajax({
 		url : "langcheck",

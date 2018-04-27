@@ -1,4 +1,6 @@
 var sql_text;
+var alterStep = 0;
+
 $(function() {
 	sql_text = $('textarea').val();
 })
@@ -144,45 +146,48 @@ function sqlrun() {
 			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
 				location.href = e.link;
 			}
+			
 			if(stage==11){
-				var step = 0;
-				//정답이 맞는 게 확인된 경우, 바꾸어 준다.
+				console.log(e.result[1][1]);
+				
+				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
 				try{
-					if(e.drop == 'true'){
+					if(e.result[1][0] == 'true'){
 						console.log("dddd");
-						step++;
-					}
-					if(e.change == 'true'){
-						step++
-					}
-					if(e.add == 'true'){
-						step++;
-					}
-					if(e.modify == 'true'){
-						step++;
-					}
-					if(e.rename == 'true'){
-						step++;
+						alterStep++;
+					}else
+					if(e.result[1][1] == 'true'){
+						alert("나와라");
+						alterStep++;
+					}else
+					if(e.result[1][2] == 'true'){
+						alterStep++;
+					}else
+					if(e.result[1][3] == 'true'){
+						alterStep++;
+					}else
+					if(e.result[1][4] == 'true'){
+						alterStep++;
 					}
 
-					console.log("뭐냐" + step);
-					switch(step){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
+					console.log("뭐냐" + alterStep);
+					switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
 					case 1:
 						//한문제 맞췄을 때의 그림 보여주기
-						alert("히죽");
+						alert("1단계 그림 변경");
 						 //배경 변경.
 						break;
 					case 2:
 						//두문제 맞췄을 때의 그림 보여주기
-
+						alert("2단계 그림 변경");
 						break;
 					case 3:
 						//세문제 맞췄을 때의 그림 보여주기
-
+						alert("3단계 그림 변경");
 						break;
 					case 4:
 						//네문제 맞췄을 때의 그림 보여주기
-
+						alert("4단계 그림 변경");
 						break;
 					case 5:
 						if(e.alterComplete == true){
@@ -196,7 +201,12 @@ function sqlrun() {
 				}catch(Exception){
 					sql_fail(e.errorMessage);
 				}
-			} else if (stage == 20 ) {
+			}else if(stage == 15){ //insert person scientist
+				//테이블 안 칼럼들 이미지 변경.
+	            $('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/scientistwhite.png");
+				
+			}else if (stage == 20 ) {
+			
 				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
 				
 			}else{ //11번 alter문제를 제외하고는 모두 아래 로직을 따라간다.
