@@ -286,7 +286,7 @@ function createQuiz(qlist, anslist, stage){
          //배경변경
          changeBackimg(stage);
          break;
-         
+          
       case 11: //alter table 문제
     	  //배경 변경.
     	  $('.questionTable').css({"background":imgpath("alter"+1+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
