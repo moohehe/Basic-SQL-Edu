@@ -24,4 +24,6 @@ public interface FeedbackMapper {
 
 	public void updateMemo(Feedback_Board board);
 
+	public int updateStatus(Feedback_Board board);
+
 }

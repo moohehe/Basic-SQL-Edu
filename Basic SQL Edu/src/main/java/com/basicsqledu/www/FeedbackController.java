@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.basicsqledu.www.dao.FeedbackDAO;
@@ -33,7 +34,7 @@ public class FeedbackController {
 			@RequestParam(value="page", defaultValue="1")int page,
 			@RequestParam(value="searchText", defaultValue="")String searchText,
 			Model model){
-		
+		logger.info("start of list, page : {}, searchText : {}",page,searchText);
 		HashMap<String, Object> searchMap = new HashMap<>();
 		searchMap.put("searchSelect", searchSelect);
 		searchMap.put("searchText", searchText);		
@@ -50,7 +51,7 @@ public class FeedbackController {
 		model.addAttribute("boardlist", boardlist);
 		model.addAttribute("navi", navi);
 		model.addAttribute("searchText", searchText);
-		
+		model.addAttribute("total",total);
 		return "board/list";
 	}
 	
@@ -89,5 +90,13 @@ public class FeedbackController {
 		
 		return "redirect:list?fb_no="+board.getFb_no();
 	}
-	
+	@ResponseBody
+	@RequestMapping(value = "updateState",method=RequestMethod.POST)
+	public int updateStatus(Feedback_Board board) {
+		logger.info("start of updateState, board: {}",board);
+		int result = 0;
+		result = dao.updateStatus(board);
+		
+		return result;
+	}
 }

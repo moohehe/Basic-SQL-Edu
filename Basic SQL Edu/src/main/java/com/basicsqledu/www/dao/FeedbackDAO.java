@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.basicsqledu.www.mapper.FeedbackMapper;
+import com.basicsqledu.www.util.PageNavigator;
 import com.basicsqledu.www.vo.Feedback_Board;
 
 @Repository
 public class FeedbackDAO {
 	@Autowired
 	SqlSession sqlSession;
+	
 	
 	public int insertBoard(Feedback_Board board)
 	{
@@ -33,7 +35,14 @@ public class FeedbackDAO {
 		ArrayList<Feedback_Board> boardlist = null;
 		FeedbackMapper mapper = sqlSession.getMapper(FeedbackMapper.class);
 		
+		// page 네비게이터 생성
+		
+				
+		
+		
 		RowBounds rb = new RowBounds(startRecord, countPerPage);
+		
+		
 		
 		try{
 			boardlist = mapper.selectBoardAll(searchMap, rb);
@@ -81,6 +90,19 @@ public class FeedbackDAO {
 			e.printStackTrace();
 		}
 			
+	}
+
+	public int updateStatus(Feedback_Board board) {
+		int result = 0;
+		FeedbackMapper mapper = sqlSession.getMapper(FeedbackMapper.class);
+		
+		try{
+			result = mapper.updateStatus(board);
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	
