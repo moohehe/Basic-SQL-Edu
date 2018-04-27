@@ -444,6 +444,8 @@ function createQuiz(qlist, anslist, stage){
 
 function getDataByAJAX(stage, lang) {
 	console.log('stage='+stage+' lang='+lang);
+	document.getElementById('sql').value = "";
+	
 	//처음 그려질 경우 DB를 갔다오는 Ajax. (나중에 Ajax는 함수화 가능하면 함수화 한다.)
 	$.ajax({
 		url : "langcheck",
