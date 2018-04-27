@@ -11,6 +11,11 @@
 <script type="text/javascript" src="<c:url value="/resources/js/jspdf.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 <script type="text/javascript">
+$(function(){
+	onClick();
+});
+
+
 function onClick(){
 	
 	document.getElementById("btn1").style.display="none";
@@ -50,7 +55,13 @@ function onClick(){
 }
 </script>
 <style type="text/css">
-image {
+.center{position:absolute; top:10%; left:33%; width:90%; height:90%; margin:-50px 0 0 -50px;
+
+}
+body{
+	background-image: url("resources/image/bg.png");
+}
+.image {
  	width:595px;
  	height:842px;
  	position:relative;
@@ -62,9 +73,9 @@ image {
 
  position:absolute;
 
- top:250px; /* in conjunction with left property, decides the text position */
+ top:247px; /* in conjunction with left property, decides the text position */
 
- left:274px;
+ left:215px;
 
  width:200px; /* optional, though better have one */
 
@@ -74,7 +85,7 @@ image {
 
  position:absolute;
 
- top:753px; /* in conjunction with left property, decides the text position */
+ top:745px; /* in conjunction with left property, decides the text position */
 
  left:410px;
 
@@ -110,23 +121,25 @@ position: relative;
     width: 210mm;
     height: 297mm;
   }
+  
 
 </style>
 </head>
 <body>
-<div class="image">
-	<img class = "bg" alt="" src="resources/image/certi.png">
-	<div class = "text1">
-		<h3>${cert.cert_email }</h3>
+<div class = "center">
+	<div class="image">
+		<img class = "bg" alt="" src="resources/image/certi.png">
+		<div class = "text1">
+			<h3>${cert.cert_email }</h3>
+		</div>
+		<div class="text2">
+			<h4>${cert.cert_user }</h4>
+		</div>
 	</div>
-	<div class="text2">
-		<h4>${cert.cert_user }</h4>
+	
+	<div id="container">
 	</div>
 </div>
-
-<div id="container">
-</div>
-
 <button id = "btn1" value="Ãâ·Â" onclick="javascript:onClick()"></button>
 </body>
 </html>
