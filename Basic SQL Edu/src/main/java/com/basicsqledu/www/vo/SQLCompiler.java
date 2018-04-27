@@ -2940,7 +2940,7 @@ public class SQLCompiler
 	public String getErrorMessage()
 	{
 		return errorMessage;
-	}
+	} 
 
 	public void setErrorMessage(String errorMessage)
 	{
