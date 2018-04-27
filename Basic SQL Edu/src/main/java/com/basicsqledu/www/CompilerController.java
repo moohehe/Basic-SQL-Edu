@@ -103,8 +103,9 @@ public class CompilerController
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 		}
 		
-		int alterStep = 0;
+		
 		//Alter문제 처리
+		int alterStep = 0;
 		if(questionNumber == 11){
 			String [][] alterArr = null;
 			try{

@@ -1,6 +1,8 @@
 var sql_text;
 var alterStep = 0;
 
+
+
 $(function() {
 	sql_text = $('textarea').val();
 })
@@ -146,11 +148,12 @@ function sqlrun() {
 			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
 				location.href = e.link;
 			}
-			
+			 
 			if(stage==11){
 				console.log(e.result[1][1]);
 				
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
+<<<<<<< HEAD
 				if(e.result[1][0] == 'true'){
 					console.log("dddd");
 					alterStep++;
@@ -168,7 +171,27 @@ function sqlrun() {
 				if(e.result[1][4] == 'true'){
 					alterStep++;
 				}
+=======
+				try{
+					if(e.result[1][0] == 'true'){
+						console.log("dddd");
+						alterStep++;
+					}else
+					if(e.result[1][1] == 'true'){
+						alterStep++;
+					}else
+					if(e.result[1][2] == 'true'){
+						alterStep++;
+					}else
+					if(e.result[1][3] == 'true'){
+						alterStep++;
+					}else
+					if(e.result[1][4] == 'true'){
+						alterStep++;
+					}
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 
+<<<<<<< HEAD
 				console.log("뭐냐" + alterStep);
 				switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
 				case 1:
@@ -191,6 +214,44 @@ function sqlrun() {
 				case 5:
 					if(e.alterComplete == true){
 						sql_success();
+=======
+					switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
+					//한문제 맞췄을 때의 그림 보여주기
+					case 1:
+						//textarea 초기화
+				    	  $('#sql').val(" ");
+						//배경 변경.
+				    	  $('.questionTable').css({"background":"url(/www/resources/image/alter2.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+						
+				    	  break;
+					case 2:
+						//textarea 초기화
+				    	  $('#sql').val(" ");
+						//배경 변경.
+				    	  $('.questionTable').css({"background":"url(/www/resources/image/alter3.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+						break;
+					case 3:
+						//textarea 초기화
+				    	  $('#sql').val(" ");
+						//배경 변경.
+				    	  $('.questionTable').css({"background":"url(/www/resources/image/alter4.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+						break;
+					case 4:
+						//textarea 초기화
+				    	  $('#sql').val(" ");
+						//배경 변경.
+				    	  $('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+						break;
+					case 5:
+						
+						if(e.alterComplete == true){
+							sql_success();
+						}
+						break;
+					default :	//실패
+						sql_fail(e.errorMessage);
+						break;
+>>>>>>> branch 'master' of https://github.com/moohehe/Basic-SQL-Edu.git
 					}
 					break;
 				default :	//실패
@@ -306,4 +367,9 @@ function getCookie(cName) {
         cValue = cookieData.substring(start, end);
     }
     return unescape(cValue);
+}
+
+//배경 이미지 경로 함수 지정
+function imgpath(file){
+	return "url(/www/resources/image/"+file+")";
 }
