@@ -151,26 +151,19 @@ function sqlrun() {
 
 			if(stage==11){
 				console.log(e.result[1][1]);
-
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
 				if(e.result[1][0] == 'true'){
-					console.log("dddd");
 					alterStep++;
-				}else
-					if(e.result[1][1] == 'true'){
-						alert("나와라");
-						alterStep++;
-					}else
-						if(e.result[1][2] == 'true'){
-							alterStep++;
-						}else
-							if(e.result[1][3] == 'true'){
-								alterStep++;
-							}else
-								if(e.result[1][4] == 'true'){
-									alterStep++;
-								}
-
+				}else if(e.result[1][1] == 'true'){
+					alterStep++;
+				}else if(e.result[1][2] == 'true'){
+					alterStep++;
+				}else if(e.result[1][3] == 'true'){
+					alterStep++;
+				}else if(e.result[1][4] == 'true'){
+					alterStep++;
+				}
+				console.log("뭐냐" + alterStep);
 				switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
 				//한문제 맞췄을 때의 그림 보여주기
 				case 1:
@@ -199,7 +192,6 @@ function sqlrun() {
 					$('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 					break;
 				case 5:
-
 					if(e.alterComplete == true){
 						sql_success();
 					}
@@ -207,6 +199,43 @@ function sqlrun() {
 				default :	//실패
 					sql_fail(e.errorMessage);
 				break;
+						switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
+						//한문제 맞췄을 때의 그림 보여주기
+						case 1:
+							//textarea 초기화
+					    	  $('#sql').val(" ");
+							//배경 변경.
+					    	  $('.questionTable').css({"background":"url(/www/resources/image/alter2.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+							
+					    	  break;
+						case 2:
+							//textarea 초기화
+					    	  $('#sql').val(" ");
+							//배경 변경.
+					    	  $('.questionTable').css({"background":"url(/www/resources/image/alter3.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+							break;
+						case 3:
+							//textarea 초기화
+					    	  $('#sql').val(" ");
+							//배경 변경.
+					    	  $('.questionTable').css({"background":"url(/www/resources/image/alter4.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+							break;
+						case 4:
+							//textarea 초기화
+					    	  $('#sql').val(" ");
+							//배경 변경.
+					    	  $('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+							break;
+						case 5:
+							
+							if(e.alterComplete == true){
+								sql_success();
+							}
+							break;
+						default :	//실패
+							sql_fail(e.errorMessage);
+						break;
+						}
 				}
 			}else if(stage == 15){ //insert person scientist
 				//테이블 안 칼럼들 이미지 변경.
@@ -252,9 +281,9 @@ function sqlrun() {
 				console.log("문제 모두 풀기 성공!");
 			}
 		}
-	, error : function(e) {
-		console.log('error:'+e);	
-	}
+		, error : function(e) {
+			console.log('error:'+e);	
+		}
 	});
 }
 var editor_text;
