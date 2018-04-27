@@ -370,8 +370,11 @@ public class SQLCompiler
 			map.put("complete", false);
 			return map;
 		}
+		//맵 초기화
 		map.put("complete", true);
 		setErrorMessage(null);
+		map.put("success", "-1");
+		map.put("cmd", null);
 
 		System.out.println("1. 세미콜론 문법 체크");
 		// 1. 세미콜론 문법 체크
@@ -586,6 +589,7 @@ public class SQLCompiler
 			setErrorMessage("Not correct Answer");
 		}
 
+		try{
 		//문제 별로 cmd가 맞는지체크
 		switch (map.get("cmd").toString()) {
 		case "create":
@@ -619,8 +623,9 @@ public class SQLCompiler
 			}
 			break;
 		case "select":
-			if(!(questionNumber >= 2 && questionNumber<=10)
-				|| !(questionNumber>=12 && questionNumber<=13)){
+			if(!((questionNumber >= 2 && questionNumber<=10)
+				|| (questionNumber>=12 && questionNumber<=13))){
+				System.out.println("여기 찍히냐?");
 				setErrorMessage("Not correct Answer");
 				map.put("success", -1);
 			}
@@ -633,6 +638,10 @@ public class SQLCompiler
 			break;
 		default:
 			break;
+		}
+		}catch (Exception e) {
+			setErrorMessage("Not correct Answer");
+			map.put("success", -1);
 		}
 		
 		
