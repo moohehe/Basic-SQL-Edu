@@ -180,12 +180,10 @@ function sqlrun() {
 					case 3:
 						//세문제 맞췄을 때의 그림 보여주기
 						alert("3단계 그림 변경");
-
 						break;
 					case 4:
 						//네문제 맞췄을 때의 그림 보여주기
 						alert("4단계 그림 변경");
-
 						break;
 					case 5:
 						if(e.alterComplete == true){
