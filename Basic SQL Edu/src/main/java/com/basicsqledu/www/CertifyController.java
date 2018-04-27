@@ -47,45 +47,56 @@ public class CertifyController {
 
 	@RequestMapping(value = "certify", method=RequestMethod.POST)
 	public String certify(String cert_name, String cert_email) {
+		logger.info("cert_name:{}, cert_email:{}",cert_name, cert_email);
 		//일련 번호 생성하고 넣자
 		String cert;
 		String numStr = "1";
 		String plusNumStr = "1";
 		Random random = new Random();
 		int result = 0;
-		
+		Certification certify = new Certification();
 		
 		if(cert_email == null || !(cert_email.equals(""))){
 			return "certify/certifyForm";
 		}
-		
-		
-		//난수 생성
-		for (int i = 0; i < 8; i++) {
-			numStr += "0";
-
-			if (i != 8 - 1) {
-				plusNumStr += "0";
+		int count = 0;
+		int count2 = 0;
+		while(count2 == 0) {
+			//난수 생성
+			for (int i = 0; i < 8; i++) {
+				numStr += "0";
+	
+				if (i != 8 - 1) {
+					plusNumStr += "0";
+				}
+			}
+	
+			result = random.nextInt(Integer.parseInt(numStr)) + Integer.parseInt(plusNumStr);
+	
+			if (result > Integer.parseInt(numStr)) {
+				result = result - Integer.parseInt(plusNumStr);
+			}
+	
+			cert = "BSE"+result;		//일련 번호 생성
+			
+			//DB 갔다오자
+			
+			certify.setCert_user(cert);
+			certify.setCert_email(cert_email);
+			
+			System.out.println(certify);
+			
+			count2 = certDAO.insertCert(certify);
+			count++;
+			if (count > 10 ) {
+				count2 = 0;
+				break;
 			}
 		}
-
-		result = random.nextInt(Integer.parseInt(numStr)) + Integer.parseInt(plusNumStr);
-
-		if (result > Integer.parseInt(numStr)) {
-			result = result - Integer.parseInt(plusNumStr);
+		if (certify == null || count == 0 ) {
+			logger.info("erorr : DB에 업데이트가 안됨");
+			return "redirect:goCertify";
 		}
-
-		cert = "BSE"+result;		//일련 번호 생성
-		
-		//DB 갔다오자
-		Certification certify = new Certification();
-		certify.setCert_user(cert);
-		certify.setCert_email(cert_email);
-		
-		System.out.println(certify);
-		
-		certDAO.insertCert(certify);
-		
 		return "redirect:gocertification?user="+cert_name + "&email="+cert_email + "&cert_no="+certify.getCert_user();
 	}
 	

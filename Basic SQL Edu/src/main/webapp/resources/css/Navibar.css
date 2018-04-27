@@ -81,6 +81,7 @@
 	overflow: hidden;
 	height:60px;
 	width:390px;
+	padding-left:20px;
 }
 
 
@@ -106,7 +107,7 @@
 	height:100%;
 	background-color:#f2f2f2;
 	font-size: 17px;
-	padding:0 0 10px 10px; 
+	padding:10px 0 30px 30px; 
 }
 .qs {
 	font-size: 25px;
@@ -588,3 +589,7 @@ a.btnsmall:active,a.btnsmall:hover {color:#4CAF50;background-color:#ffffff}
 .w3-warning{background-color:#ffdddd;border-left:6px solid #f44336}
 .w3-info{background-color:#ddffdd;border-left:6px solid #4CAF50}
 hr[id^="ez-insert-after-placeholder"] {margin-top: 0;}
+
+.navicontext p {
+	font-family: 
+}

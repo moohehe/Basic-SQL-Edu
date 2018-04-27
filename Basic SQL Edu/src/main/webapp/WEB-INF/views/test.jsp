@@ -4,6 +4,7 @@
 <!DOCTYPE html >
 <html>
 <head>
+<meta name="viewport" content="height=device-height, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Basic SQL Edu</title>
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/Navibar.css"/>"/>
@@ -73,11 +74,22 @@
     	margin:0;
     	display:inline-block;
     }
-     /* div {
-     border: 1px solid cyan;} */
+    .block {
+    	width:100%;
+    }
+	@media ( min-height: 768px ) {
+	  .block { height:0px }
+	}
+	@media ( min-height: 900px ) {
+	  .block { height:50px }
+	}
+	@media ( min-height: 1000px ) {
+		.block { height:100px }
+	}
+	
 </style>
 </head>
-<body>
+<body style="background-color:#cccccc;">
 	<input id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
 	<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
 <div class="contactus-bg"></div>
@@ -89,25 +101,19 @@
 <div class="left_menu">
 	<!-- 그림이 표시되는 부분 -->
 	<div class="view_menu">
+		<div class="block test-title" >    ◈BASIC SQL EDU</div>
 		<%@ include file="view_menu.jsp" %>
 	</div>
 	
 	<!-- 타이핑 파트 -->
 	<div class="type_menu">
+		<div class="block"></div>
 		<%@ include file="type_menu.jsp" %>
 	</div>
 </div>
 
 	<!-- Navigation Bar -->
 	<%@ include file="navigation.jsp" %>
-<br><br><br><br><br>
-<br><br><br><br><br>
-<br><br><br><br><br>
-<br><br><br><br><br>
-<br><br><br><br><br>
-<br><br><br><br><br>
-<br><br><br><br><br>
-<br><br><br><br><br>
 
 </body>
 </html>

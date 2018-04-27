@@ -16,18 +16,28 @@
 		text-align: center;
 		max-width:18%;
 	} 
-	.questionTable {
+	.view_menu {
+		text-align: center;
+	}
+	.view_menu .test-title {
+		background-color:#0087cf;
+		font-size : 10px;
+	}
+	.view_menu .questionTable {
 		background-image: url("<c:url value="/resources/image/bg1.jpg"/>");
 		background-repeat: no-repeat;
 		background-position: center center;
-		background-size: 100%;
-		width: 100%;
+		background-size: 90%;
+		width: 90%;
 		height: 100%;
-		border: 1px;
-		border-color: blue;
-		border-style: solid;
 		color: black;
 		position:relative;
+		display:inline-block;
+		border:10px solid #616161;
+		border-radius:10px;
+		border-bottom-left-radius:0px;
+		border-bottom-right-radius:0px;
+		border-bottom:0px;
 	}
 	.tableColumes {
 		position:relative;
