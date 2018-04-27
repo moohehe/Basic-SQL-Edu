@@ -73,8 +73,6 @@ function pagingFormSubmit(currentPage){
 	var page = document.getElementById("page");
 	page.value = currentPage;
 	var temp = $('#searchText').val();
-	alert('page='+currentPage + ' searchWord='+temp);
-	
 	form.submit();
 }
 
@@ -127,7 +125,7 @@ function pagingFormSubmit(currentPage){
 						<div class="clearfix"></div>
 	
 					<div class="clearfix">
-						<form action="updateMemo" method="post">
+						<form style="width:100%;" action="updateMemo" method="post">
 							<div class="skills">
 							<label>
 							<span  style="width:90%; <c:if test="${board.status == 0 }">background-color:black;</c:if> " class="up" fb_no="${board.fb_no }" status="0">대기</span>
@@ -136,8 +134,8 @@ function pagingFormSubmit(currentPage){
 							<span  style="width:90%; <c:if test='${board.status == 1 }'>background-color:black;</c:if> " class="up" fb_no="${board.fb_no }" status="1">완료</span>
 							</label>
 							</div>
-							<input type="hidden" name="status" fb_no="${board.fb_no }" value="${board.status }">
-							<input type="hidden" name="fb_no" value="${board.fb_no }">
+							<input style="width:100%" type="hidden" name="status" fb_no="${board.fb_no }" value="${board.status }">
+							<input style="width:100%" type="hidden" name="fb_no" value="${board.fb_no }">
 							<br>
 							<textarea name="memo" rows="3" cols="80">${board.memo }</textarea>
 							<br>

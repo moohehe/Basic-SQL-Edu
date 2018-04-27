@@ -81,14 +81,13 @@ public class FeedbackController {
 	//메모 등록 부분
 	@RequestMapping(value="updateMemo", method=RequestMethod.POST)
 	public String updateMemo(Feedback_Board board){
-		
-		System.out.println("메모 입력 실패");
+		logger.info("start of updateMemo board : {}",board);
 		
 		System.out.println(board);
 		
 		dao.updateMemo(board);
 		
-		return "redirect:list?fb_no="+board.getFb_no();
+		return "redirect:list";
 	}
 	@ResponseBody
 	@RequestMapping(value = "updateState",method=RequestMethod.POST)
@@ -96,7 +95,9 @@ public class FeedbackController {
 		logger.info("start of updateState, board: {}",board);
 		int result = 0;
 		result = dao.updateStatus(board);
-		
+		if (result == 0 ) {
+			logger.info("updateState Fail");
+		}
 		return result;
 	}
 }
