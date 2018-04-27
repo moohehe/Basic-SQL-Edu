@@ -196,7 +196,12 @@ function sqlrun() {
 				}catch(Exception){
 					sql_fail(e.errorMessage);
 				}
-			} else if (stage == 20 ) {
+			}else if(stage == 15){ //insert person scientist
+				//테이블 안 칼럼들 이미지 변경.
+	            $('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/scientistwhite.png");
+				
+			}else if (stage == 20 ) {
+			
 				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
 				
 			}else{ //11번 alter문제를 제외하고는 모두 아래 로직을 따라간다.
