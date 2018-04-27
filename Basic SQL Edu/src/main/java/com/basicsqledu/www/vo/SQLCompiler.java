@@ -586,6 +586,56 @@ public class SQLCompiler
 			setErrorMessage("Not correct Answer");
 		}
 
+		//문제 별로 cmd가 맞는지체크
+		switch (map.get("cmd").toString()) {
+		case "create":
+			if(!(questionNumber == 1 || questionNumber == 16)){
+				setErrorMessage("Not correct Answer");
+				map.put("success", -1);
+			}
+			break;
+		case "drop":
+			if(!(questionNumber == 19)){
+				setErrorMessage("Not correct Answer");
+				map.put("success", -1);
+			}
+			break;
+		case "alter":
+			if(!(questionNumber == 11)){
+				setErrorMessage("Not correct Answer");
+				map.put("success", -1);
+			}
+			break;
+		case "insert":
+			if(!(questionNumber == 15 || questionNumber == 17)){
+				setErrorMessage("Not correct Answer");
+				map.put("success", -1);
+			}
+			break;
+		case "update":
+			if(!(questionNumber == 14)){
+				setErrorMessage("Not correct Answer");
+				map.put("success", -1);
+			}
+			break;
+		case "select":
+			if(!(questionNumber >= 2 && questionNumber<=10)
+				|| !(questionNumber>=12 && questionNumber<=13)){
+				setErrorMessage("Not correct Answer");
+				map.put("success", -1);
+			}
+			break;
+		case "delete":
+			if(!(questionNumber == 18)){
+				setErrorMessage("Not correct Answer");
+				map.put("success", -1);
+			}
+			break;
+		default:
+			break;
+		}
+		
+		
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
 		System.out.println("End of getResult");
 		System.out.println("result=" + result);
