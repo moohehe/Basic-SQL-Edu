@@ -1,6 +1,8 @@
 var sql_text;
 var alterStep = 0;
 
+
+
 $(function() {
 	sql_text = $('textarea').val();
 })
@@ -146,7 +148,7 @@ function sqlrun() {
 			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
 				location.href = e.link;
 			}
-			
+			 
 			if(stage==11){
 				console.log(e.result[1][1]);
 				
@@ -157,7 +159,6 @@ function sqlrun() {
 						alterStep++;
 					}else
 					if(e.result[1][1] == 'true'){
-						alert("나와라");
 						alterStep++;
 					}else
 					if(e.result[1][2] == 'true'){
@@ -170,26 +171,35 @@ function sqlrun() {
 						alterStep++;
 					}
 
-					console.log("뭐냐" + alterStep);
 					switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
+					//한문제 맞췄을 때의 그림 보여주기
 					case 1:
-						//한문제 맞췄을 때의 그림 보여주기
-						alert("1단계 그림 변경");
-						 //배경 변경.
-						break;
+						//textarea 초기화
+				    	  $('#sql').val(" ");
+						//배경 변경.
+				    	  $('.questionTable').css({"background":"url(/www/resources/image/alter2.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+						
+				    	  break;
 					case 2:
-						//두문제 맞췄을 때의 그림 보여주기
-						alert("2단계 그림 변경");
+						//textarea 초기화
+				    	  $('#sql').val(" ");
+						//배경 변경.
+				    	  $('.questionTable').css({"background":"url(/www/resources/image/alter3.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 						break;
 					case 3:
-						//세문제 맞췄을 때의 그림 보여주기
-						alert("3단계 그림 변경");
+						//textarea 초기화
+				    	  $('#sql').val(" ");
+						//배경 변경.
+				    	  $('.questionTable').css({"background":"url(/www/resources/image/alter4.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 						break;
 					case 4:
-						//네문제 맞췄을 때의 그림 보여주기
-						alert("4단계 그림 변경");
+						//textarea 초기화
+				    	  $('#sql').val(" ");
+						//배경 변경.
+				    	  $('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 						break;
 					case 5:
+						
 						if(e.alterComplete == true){
 							sql_success();
 						}
@@ -310,4 +320,9 @@ function getCookie(cName) {
         cValue = cookieData.substring(start, end);
     }
     return unescape(cValue);
+}
+
+//배경 이미지 경로 함수 지정
+function imgpath(file){
+	return "url(/www/resources/image/"+file+")";
 }
