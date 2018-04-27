@@ -431,7 +431,6 @@ function createQuiz(qlist, anslist, stage){
             $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-color':'black','background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
     	  break;
     	  
-    	  
       case 20:
     	//칼럼들 지워놓음.
       	for(var i=1; i<6; i++){
