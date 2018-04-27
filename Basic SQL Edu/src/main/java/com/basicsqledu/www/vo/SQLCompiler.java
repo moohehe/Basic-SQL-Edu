@@ -24,7 +24,7 @@ public class SQLCompiler
 	QuizDAO quizDAO;
 
 
-	// index
+	// index  
 	private int i;
 
 	// 현재 questionNumber
