@@ -1030,7 +1030,6 @@ public class SQLCompiler
 	/**
 	 * Alter table animal drop legs;
 	 * Alter table animal change color haircolor varchar(20);
-	 * Alter table animal change habitat job varchar(20);
 	 * Alter table animal add gender varchar(20);
 	 * Alter table animal modify(gender varchar(10) not null);
 	 * Alter table animal rename person;
@@ -1074,7 +1073,7 @@ public class SQLCompiler
 					}
 					if(alterMap.get("change") != null){
 						alterResult[0][1] = "change";
-						alterResult[1][1] = alterMap.get("change1").toString();
+						alterResult[1][1] = alterMap.get("change").toString();
 					}
 					if(alterMap.get("add") != null){
 						alterResult[0][2] = "add";
@@ -1147,6 +1146,8 @@ public class SQLCompiler
 						alterMap.put("change", false);
 					}
 				}
+			}else{
+				alterMap.put("change", false);
 			}
 			break;
 		case "add":
@@ -1166,13 +1167,13 @@ public class SQLCompiler
 		case "modify":
 			int count = StringUtils.countOccurrencesOf(col[1], "(");
 			System.out.println("괄호의 갯수 : "+ count );
-			if(col[1].equals("(") || col[1].startsWith("(") && count == 1 ){
+			if((col[1].equals("(") || col[1].startsWith("(")) && count == 1 ){
 				if((col[1]+col[2]).equals("(gender")){
 					//varchar(10) not null
 					for(String type : spDataType1){
 						if(type.equals("varchar") && (type+"(10)").equals(col[3]+col[4]+col[5]+col[6])){
 							for(String cons : constraint){
-								if(cons.equals("not null") && cons.equals(col[7] + col[8] )&& col[9].equals(")")){
+								if(cons.equals("not null") && cons.equals(col[7] +" "+col[8] )&& col[9].equals(")")){
 									alterMap.put("modify", true);
 									break;
 								}else{
