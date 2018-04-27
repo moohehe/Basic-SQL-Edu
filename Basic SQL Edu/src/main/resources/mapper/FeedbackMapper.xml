@@ -21,11 +21,17 @@
 			)				
 	</insert>
 
-	<select id="selectBoardAll" resultType="board">
+	<select id="selectBoardAll" parameterType="map" resultType="board">
 		select			
 			*		
 		from
 			board2
+		<if test="searchText != null">
+		where
+			title like '%' || #{searchText} || '%'
+				OR
+			content like '%' || #{searchText} || '%'
+		</if>
 		order by
 			fb_no desc
 	</select>
@@ -60,4 +66,12 @@
 		fb_no = #{fb_no}
 	</update>
 
+	<update id="updateStatus" parameterType="board">
+	update
+		board2
+	set
+		status = #{status}
+	where
+		fb_no = #{fb_no}		
+	</update>
 </mapper>

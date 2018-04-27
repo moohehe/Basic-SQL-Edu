@@ -55,9 +55,9 @@
 			<p class="content_name">名前</p>
 		</c:when>
 	</c:choose>
-			<input class="content_input_form" type="text" id="cert_name" name="cert_name" placeholder="Your name">
+			<input class="content_input_form" type="text" id="cert_name" name="cert_name" placeholder="Your name" required="required">
 			<p class="content_name">E-MAIL</p>
-			<input class="content_input_form" type="email" id="cert_email" name="cert_email" placeholder="ilovesql@basicsqledu.com">
+			<input class="content_input_form" type="email" id="cert_email" name="cert_email" placeholder="ilovesql@basicsqledu.com" required="required">
 			<br><br><br>
 			<input class="btn certi-submit" type="submit" value="SUBMIT"></input>
 		</form>
