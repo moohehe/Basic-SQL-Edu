@@ -1,5 +1,6 @@
 var sql_text;
 var alterStep = 0;
+
 $(function() {
 	sql_text = $('textarea').val();
 })
@@ -145,24 +146,27 @@ function sqlrun() {
 			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
 				location.href = e.link;
 			}
+			
 			if(stage==11){
-				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
+				console.log(e.result[1][1]);
 				
+				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
 				try{
-					if(e.drop == 'true'){
+					if(e.result[1][0] == 'true'){
 						console.log("dddd");
 						alterStep++;
-					}
-					if(e.change == 'true'){
+					}else
+					if(e.result[1][1] == 'true'){
+						alert("나와라");
 						alterStep++;
-					}
-					if(e.add == 'true'){
+					}else
+					if(e.result[1][2] == 'true'){
 						alterStep++;
-					}
-					if(e.modify == 'true'){
+					}else
+					if(e.result[1][3] == 'true'){
 						alterStep++;
-					}
-					if(e.rename == 'true'){
+					}else
+					if(e.result[1][4] == 'true'){
 						alterStep++;
 					}
 

@@ -112,7 +112,7 @@ public class CompilerController
 				System.out.println("알터 좀 나와라 씨벙" + alterArr[0][0]);
 				
 				//배열 검사
-				for(int i = 0;i<alterArr.length;i++){
+				for(int i = 0;i<alterArr[0].length;i++){
 					if(alterArr[1][i].equals("true")){
 						resultMap.put(alterArr[0][i], alterArr[1][i]);
 						alterStep++;

@@ -1029,7 +1029,7 @@ public class SQLCompiler
 
 	/**
 	 * Alter table animal drop legs;
-	 * Alter table animal change color haircolor varchar(20);
+	 * Alter table animal change color hair_color varchar(20);
 	 * Alter table animal add gender varchar(20);
 	 * Alter table animal modify(gender varchar(10) not null);
 	 * Alter table animal rename person;
