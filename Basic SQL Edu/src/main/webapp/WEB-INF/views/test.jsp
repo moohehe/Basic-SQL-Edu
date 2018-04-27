@@ -52,6 +52,7 @@
 	    position: relative;
 	    padding:0px;
 	    marin:0px;
+	    background:url('resources/image/bg.png');
     }
     .contactus-bg {
     	position:absolute;
@@ -77,19 +78,19 @@
     .block {
     	width:100%;
     }
-	@media ( min-height: 768px ) {
+	@media ( min-height: 600px ) {
 	  .block { height:0px }
 	}
-	@media ( min-height: 900px ) {
-	  .block { height:50px }
+	@media ( min-height: 700px ) {
+	  .block { height:60px }
 	}
-	@media ( min-height: 1000px ) {
+/* 	@media ( min-height: 800px ) {
 		.block { height:100px }
-	}
+	} */
 	
 </style>
 </head>
-<body style="background-color:#cccccc;">
+<body>
 	<input id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
 	<input id="currentLang" type="hidden" value="${questext.textLang }" ></input>
 <div class="contactus-bg"></div>

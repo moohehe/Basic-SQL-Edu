@@ -20,7 +20,7 @@
           </div>
           <div class="file-window css-view">
             <div class="line-numbers">
-              1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10
+              1<br>2<br>3<br>4<br>5<br>6
             </div>
               <textarea class="input-strobe stripe" id ="sql" type="text" placeholder="Type in a SQL query" style="resize: none;" onkeyup="javascript:text_keyup();" onkeypress="javascript:text_keypress();"></textarea>
               

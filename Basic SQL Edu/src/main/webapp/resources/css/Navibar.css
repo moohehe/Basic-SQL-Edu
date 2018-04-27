@@ -17,7 +17,7 @@
 	background-color:black;
 }
 .menubtn:hover {
-    background-color: #ffcc33;
+    background-color: #ff9900;
     color: white ;
     
 }
@@ -30,8 +30,6 @@
  margin:0;  
  color:#000; 
  font-size:12px; 
- padding-left: 10px;
- padding-right: 10px;
  }
  
  /* stage 버튼을 눌렀을 경우 나타나는 화면을 감싼 DIV */
@@ -68,8 +66,16 @@
 	padding:5px;
 	margin:1px;
 }
-.langbtn:hover {
-    background-color: #ffcc33;
+.langbtn[data-num="1"]:hover {
+    background-color: #0033cc;
+    color: white;
+}
+.langbtn[data-num="2"]:hover {
+    background-color: #009933;
+    color: white;
+}
+.langbtn[data-num="3"]:hover {
+    background-color: #ff3300;
     color: white;
 }
 /*기본 네비게이션 화면 배치를 위한 부모css*/
@@ -107,7 +113,7 @@
 	height:100%;
 	background-color:#f2f2f2;
 	font-size: 17px;
-	padding:10px 0 30px 30px; 
+	padding:10px 20px 30px 20px; 
 }
 .qs {
 	font-size: 25px;
@@ -130,7 +136,7 @@
 		
 /* Dropdown Button */
 .dropbtn {
-    background-color: #616161!important;	
+    background-color: #616161;	
     color: white;
     padding: 16px;
     font-size: 16px;
@@ -142,7 +148,7 @@
 
 /*stage버튼 관련 css*/
 .dropbtn:hover, .dropbtn:focus {
-    background-color: #3e8e41;
+    background-color: #404040;
 }
 
 /*진행 바 관련 css*/

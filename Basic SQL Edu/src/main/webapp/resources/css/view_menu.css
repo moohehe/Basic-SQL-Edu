@@ -21,7 +21,14 @@
 	}
 	.view_menu .test-title {
 		background-color:#0087cf;
-		font-size : 10px;
+    	font-size:35px;
+    	text-align:left;
+    	padding-left:60px;
+		font-family: Verdana,sans-serif;
+		color:white;
+		-moz-box-shadow: 10px 10px 10px 20red;
+		-webkit-box-shadow: 10px 10px 10px 20grey;
+		box-shadow: 10px 10px 10px 20grey;
 	}
 	.view_menu .questionTable {
 		background-image: url("<c:url value="/resources/image/bg1.jpg"/>");
