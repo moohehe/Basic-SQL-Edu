@@ -75,7 +75,7 @@ body{
 
  top:247px; /* in conjunction with left property, decides the text position */
 
- left:215px;
+ left:215px; 
 
  width:200px; /* optional, though better have one */
 
