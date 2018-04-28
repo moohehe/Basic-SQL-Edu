@@ -146,7 +146,8 @@ function sqlrun() {
 	, dataType: 'json'
 		, success: function(e) {
 			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
-				location.href = e.link;
+				location.href = e.url;
+				return;
 			}
  
 			if(stage==11){
@@ -205,10 +206,9 @@ function sqlrun() {
 				$('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/scientistwhite.png");
 
 			}else if (stage == 20 ) {
-
 				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
-				if(e.end == true){
-					goCertify();
+				if(e.end != true){
+					sql_fail('Please complete all questions');
 				}
 			}else{ //11번 , 15, 20alter문제를 제외하고는 모두 아래 로직을 따라간다.
 				console.log('dafd'+e);

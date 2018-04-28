@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,9 +40,10 @@ public class CompilerController
 	@RequestMapping(value="sqlCompiler", method = RequestMethod.POST
 			, produces = "application/text; charset=utf8")
 	public String compiler(String sql, HttpServletResponse response
-			, HttpServletRequest request
+			, HttpServletRequest request, HttpSession session
 			, @RequestParam(defaultValue="animal_view") String table_name
 			, @RequestParam(defaultValue="2") int questionNumber) {
+		sql = sql.toLowerCase();
 		if (sql.equals("abracatabra")) {
 			System.out.println("아브라카타브라!");
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -54,27 +56,49 @@ public class CompilerController
 		}
 		
 		//20번 문제가 정답 == commit
-		if(questionNumber == 20 && sql.equals("commit;")){
+		if(questionNumber == 20 && (sql.equals("commit;") || sql.equals("rollback;"))){
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			
+			System.out.println("20번 쿠키 및 커밋 검사");
 			//쿠키 검사
 			int k = 0;
 			Cookie [] cok = request.getCookies();
-			for(int i = 1 ; i<= questionNumber; i++){
-				if(cok[i].getName().equals("completeStage" + i)){
-					if(cok[i].getValue().equals("pass")){
-						k++;
-					}
+			System.out.println("쿠키 문제번호 뭐니 : " + questionNumber);
+			
+			int [] cook = new int[20];
+			for(Cookie c : cok){
+				if(c.getValue().equals("pass")){
+					int temp = Integer.valueOf(c.getName().replace("completeStage",""));
+					cook[temp-1] = 1;
 				}
 			}
-			if(k == 20){
+			
+			for(int i : cook){
+				if(i == 1){
+					k++;
+				}
+			}
+			
+			System.out.println("k="+k);
+			if(k >= 19){
 				//인증서 가자 gg
 				System.out.println("20 stage 전부 클리어함");
 				map.put("end", true);
-				map.put("url", "goCertify");
+				if(sql.equals("commit;")){
+					map.put("url", "goCertify");
+				}else{
+					map.put("url", "/www");
+					session.setAttribute("certiBtn", true);
+				}
 			}else{
 				map.put("end", false);
+				map.put("errorMessage", "Please complete all questions");
 			}
+			
+			Gson gson = new Gson();
+			String json = gson.toJson(map);
+			System.out.println("[ResultData]\n"+json);
+			
+			return json;
 		}
 		
 		//테이블 이름 변경하기
