@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Stack;
+
+import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.slf4j.Logger;
@@ -114,7 +116,11 @@ public class SQLCompiler
 			// questionNumber가 12~16은 PERSON
 			// questionNumber가 17~20은 ROBOT
 			if(questionNumber >1 && questionNumber<=11){
-				answerTable = new String[answerSize][6];
+				if(questionNumber == 3 || questionNumber== 4){
+					answerTable = new String[answerSize][2];
+				}else{
+					answerTable = new String[answerSize][6];
+				}
 			}else{
 				answerTable = new String[answerSize][5];
 			}
@@ -515,9 +521,23 @@ public class SQLCompiler
 		}
 
 
-		boolean ansCorrect= false;	//푸시중
+		/**
+		 * 
+		 * 정답 뷰의 2차원 배열과 사용자가 입력한 2차원 배열과의 체크
+		 * 
+		 * */
+		boolean ansCorrect= false;
 		int corr = 0;
 
+		//3번 4번 유효성 검사 -->  사용자 2차원 배열의 크기
+		if(questionNumber == 3 || questionNumber == 4){
+			if(result[0].length > 2){
+				map.put("success", -1);
+				setErrorMessage	("Not correct Answer");
+				return map;
+			}
+		}
+		
 		try{
 			switch (questionNumber) {
 			/*case 13:
@@ -546,19 +566,19 @@ public class SQLCompiler
 
 					System.out.println("결과 값 2차원 행의 길이"+result.length + " 결과 값 2차원 열의 길이 : "+result[0].length);
 					System.out.println("정답 값 2차원 행의 길이"+answerTable.length + " 정답 값 2차원 열의 길이 : "+answerTable[0].length);
-
+				
 					for(int k =0;k<result[0].length;k++){
 						if(col.equals(result[0][k])){
 							//1. 컬럼이 맞다!
 							corr++;
 
 							//2. 2차원 배열 데이터들 한줄씩 비교!
-							for(int p = 1;p<=result[0].length-1;p++){
+							for(int p = 1;p<=result.length-1;p++){
 								if(answerTable[p][index[j-1]].equals(result[p][k])){
 									ansCorrect = true;
-									break;
 								}else{
 									ansCorrect = false;
+									break;
 								}
 							}
 						}
@@ -567,11 +587,16 @@ public class SQLCompiler
 			default:
 				break;
 			}
-
+			
+			System.out.println("정답인 컬럼의 개수 : " + corr);
+			System.out.println("정답 bool : " + ansCorrect);
 			switch (questionNumber) {
 			case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
 				// questionNumber가 1~ 11까지는 animal
 				if(corr == 5 && ansCorrect){
+					System.out.println("정답이다 !!");
+					map.put("success", 1);
+				}else if((questionNumber == 3 || questionNumber == 4) && corr == 1 && ansCorrect){
 					System.out.println("정답이다 !!");
 					map.put("success", 1);
 				}else{
