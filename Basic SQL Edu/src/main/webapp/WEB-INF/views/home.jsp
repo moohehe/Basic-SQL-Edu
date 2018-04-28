@@ -104,7 +104,7 @@ $(function(){
 		</div>
 	</div>
 	
-		<input type="hidden" id="certiBtn" value="${certiBtn}">
-		<input type="hidden" id="url" value="${url}">
+	<input type="hidden" id="certiBtn" value="${certiBtn}">
+	<input type="hidden" id="url" value="${url}">
 </body>
 </html>
