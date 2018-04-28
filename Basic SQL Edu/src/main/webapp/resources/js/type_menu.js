@@ -143,15 +143,14 @@ function sqlrun() {
 					table_name: table_name,
 					questionNumber:stage
 				}
-		, dataType: 'json'
+	, dataType: 'json'
 		, success: function(e) {
 			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
 				location.href = e.link;
 			}
-			 
+ 
 			if(stage==11){
 				console.log(e.result[1][1]);
-				 
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
 				if(e.result[1][0] == 'true'){
 					alterStep++;
@@ -166,35 +165,40 @@ function sqlrun() {
 				}
 				console.log("뭐냐" + alterStep);
 				switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
-	            //한문제 맞췄을 때의 그림 보여주기
-	            case 1:
-	               //textarea 초기화
-	               $('#sql').val(" ");
-	               //배경 변경.
-	               $('.questionTable').css({"background":"url(/www/resources/image/alter2.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+				//한문제 맞췄을 때의 그림 보여주기
+				case 1:
+					//textarea 초기화
+					$('#sql').val(" ");
+					//배경 변경.
+					$('.questionTable').css({"background":"url(/www/resources/image/alter2.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
 
-	               break;
-	            case 2:
-	               //textarea 초기화
-	               $('#sql').val(" ");
-	               //배경 변경.
-	               $('.questionTable').css({"background":"url(/www/resources/image/alter3.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-	               break;
-	            case 3:
-	               //textarea 초기화
-	               $('#sql').val(" ");
-	               //배경 변경.
-	               $('.questionTable').css({"background":"url(/www/resources/image/alter4.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-	               break;
-	            case 4:
-	               //textarea 초기화
-	               $('#sql').val(" ");
-	               //배경 변경.
-	               $('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-	               break;
-	            case 5:
+					break;
+				case 2:
+					//textarea 초기화
+					$('#sql').val(" ");
+					//배경 변경.
+					$('.questionTable').css({"background":"url(/www/resources/image/alter3.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+					break;
+				case 3:
+					//textarea 초기화
+					$('#sql').val(" ");
+					//배경 변경.
+					$('.questionTable').css({"background":"url(/www/resources/image/alter4.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+					break;
+				case 4:
+					//textarea 초기화
+					$('#sql').val(" ");
+					//배경 변경.
+					$('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+					break;
+				case 5:
 					if(e.alterComplete == true){
 						sql_success();
+					}
+					break;
+				default :	//실패
+					sql_fail(e.errorMessage);
+				break;
 						switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
 						//한문제 맞췄을 때의 그림 보여주기
 						case 1:
@@ -233,15 +237,14 @@ function sqlrun() {
 						break;
 						}
 				}
-				}
 			}else if(stage == 15){ //insert person scientist
 				//테이블 안 칼럼들 이미지 변경.
-	            $('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/scientistwhite.png");
-				
+				$('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/scientistwhite.png");
+
 			}else if (stage == 20 ) {
-			
+
 				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
-				
+
 			}else{ //11번 alter문제를 제외하고는 모두 아래 로직을 따라간다.
 				console.log('dafd'+e);
 				if (e.password == 'pass' ) {
@@ -265,7 +268,7 @@ function sqlrun() {
 				// 문제 틀림
 				sql_fail(e.errorMessage);
 			} 
-			
+
 			//쿠키 확인
 			var confirmCookie = 0;
 			var cookieName = "completeStage";
@@ -312,19 +315,13 @@ function sql_success() {
 	$('img:not(.rubberBand)').fadeOut("slow");
 	$('img:not(.rubberBand)').removeClass('infinite');
 	$('img:not(.rubberBand)').addClass('bounceOutUp');
-	setTimeout(1000, function() {
+	setTimeout(1500, function() {
 		$('img:not(.rubberBand)').hide();
 	});
 
-	
 	// 성공하면 view_menu 쪽의 그림파일에 class를 입력한다. (뛰어노는 듯한 기쁜 이미지 동작을 부여한다.)
 
-	// 아래 문장은 지울것. 아직 개발중이라 넣은거
 	$('.success').fadeIn("slow");
-	/*if ($('#LvInfo').text() == 'Level 20 of 20') {				// 이 fucntion은 지울것
-		console.log('스테이지 20');
-		location.href="goCertify";	// 이 fucntion은 지울것
-	}*/								// 이 fucntion은 지울것
 }
 function successStage() {
 	nextStage();
@@ -338,19 +335,19 @@ function goCertify(){
 }
 
 //쿠키 정보 읽기 - 다 했는지 확인.
-// 쿠키 가져오기
+//쿠키 가져오기
 function getCookie(cName) {
-    cName = cName + '=';
-    var cookieData = document.cookie;
-    var start = cookieData.indexOf(cName);
-    var cValue = '';
-    if(start != -1){
-        start += cName.length;
-        var end = cookieData.indexOf(';', start);
-        if(end == -1)end = cookieData.length;
-        cValue = cookieData.substring(start, end);
-    }
-    return unescape(cValue);
+	cName = cName + '=';
+	var cookieData = document.cookie;
+	var start = cookieData.indexOf(cName);
+	var cValue = '';
+	if(start != -1){
+		start += cName.length;
+		var end = cookieData.indexOf(';', start);
+		if(end == -1)end = cookieData.length;
+		cValue = cookieData.substring(start, end);
+	}
+	return unescape(cValue);
 }
 
 //배경 이미지 경로 함수 지정

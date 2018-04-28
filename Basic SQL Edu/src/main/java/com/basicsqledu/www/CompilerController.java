@@ -96,7 +96,7 @@ public class CompilerController
 		
 		
 		// cookie에서 현재 문제 번호를 받아온 뒤에 그걸 이용해서 프린트
-		if(resultMap.get("success") == "1"){		
+		if((int)resultMap.get("success") == 1){		
 			System.out.println("쿠키에 현재 완료한 스테이지만 저장"+questionNumber);
 			cg.setCookieName("completeStage"+questionNumber);
 			cg.addCookie(response, "pass"); 
