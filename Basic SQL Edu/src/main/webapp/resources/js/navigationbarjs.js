@@ -211,7 +211,8 @@ function createQuiz(qlist, anslist, stage){
 
 			tags += "</tbody></table>";
     		
-			$('#table_data').html("tags");
+			$('#table_data').html(tags);
+			//$('.table-window').html(tags);
          break;
       //동물 select
       case 2: case 3: case 5: case 6: case 7: case 8: case 10:
@@ -340,7 +341,6 @@ function createQuiz(qlist, anslist, stage){
     		
 			$('#table_data').html(tags);
 
-			$('div.css-view').css('height','658px');
          break;
          
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
