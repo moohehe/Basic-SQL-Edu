@@ -216,6 +216,7 @@ public class SQLCompiler
 				}
 			}
 		}
+
 		texts = new String[temp.size()];
 		for (int k = 0; k < temp.size(); k++)
 		{
@@ -426,6 +427,18 @@ public class SQLCompiler
 				if (current.length() != 1)
 				{
 					setErrorMessage("Grammatical Error: * must be used alone.");
+					return map;
+				}
+			}
+		}
+
+		//문제 9번 desc 체크
+		if(questionNumber == 9){
+			for(String str : texts){
+				if(str.contains("desc")){
+					setErrorMessage("Please check out the Sort criteria");
+					map.put("success", -1);
+					map.put("complete", false);
 					return map;
 				}
 			}
@@ -1414,7 +1427,8 @@ public class SQLCompiler
 		System.out.println("======= 업데이트 문 시작 ========");
 		int i = 0;
 		int stage = 1;							//현재 단계별 진행상황
-
+		boolean col1 = false;
+		
 		for (i = stage; i < texts.length; i++)
 		{
 			String current = texts[stage];
@@ -1464,7 +1478,7 @@ public class SQLCompiler
 				if(current.equals("\'red\'") ){
 					stage++;
 				}else if((strTemp[0]+strTemp[1]).equals("'red")
-					|| (strTemp[0]+strTemp[1]).equals("'red'")){
+						|| (strTemp[0]+strTemp[1]).equals("'red'")){
 					stage++;
 					i++;
 				}else if((strTemp[0]+strTemp[1]+strTemp[2]).equals("'red'")){
@@ -1474,7 +1488,7 @@ public class SQLCompiler
 					setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
 					return null;
 				}
-				
+
 			}else if(stage == 6){
 				if(current.equals("where")){
 					stage++;
@@ -1485,32 +1499,96 @@ public class SQLCompiler
 			}else if(stage == 7){
 				//where 이하 문
 				//update person set hair_color = ‘red’ where hair_color=‘black’ and job=‘nurse’;
-				String temp[] = new String[texts.length - stage-1];
+				String temp[] = new String[texts.length - stage-2];
+				
 				for(int j = stage; j< texts.length;j++){
 					temp[stage-7] = texts[j];
 				}
-				
+
+
 				//임시 값 찍기
 				for(String str : temp){
 					System.out.println(str);
 				}
+
 				
 				if(temp[0].equals("hair_color")){
+					//머리색부터 시작하는 경우
 					if(temp[1].equals("=")){
-						if(temp[2].equals("\'black\'") || (temp[2]+temp[3]).equals("\'black\'")){
-							
+						if(temp[2].equals("\'black\'") && temp[3].equals("and")
+								&& temp[4].equals("job") && temp[5].equals("=")){
+							if(temp[6].equals("\'nurse\'") || (temp[6]+temp[7]).equals("\'nurse\'")
+									|| (temp[6]+temp[7]+temp[8]).equals("\'nurse\'")){
+								col1 = true;
+							}else{
+								col1 = false;
+							}
+						}else if((temp[2]+temp[3]).equals("\'black\'")&& temp[4].equals("and")
+								&& temp[5].equals("job") && temp[6].equals("=")){
+
+							if(temp[7].equals("\'nurse\'") || (temp[8]+temp[9]).equals("\'nurse\'")
+									|| (temp[7]+temp[8]+temp[9]).equals("\'nurse\'")){
+								col1 = true;
+							}else{
+								col1 = false;
+							}
+						}
+					}else if((temp[2]+temp[3]+temp[4]).equals("\'black\'") && temp[5].equals("and")
+							&& temp[6].equals("job") && temp[7].equals("=")){
+
+						if(temp[8].equals("\'nurse\'") || (temp[8]+temp[9]).equals("\'nurse\'")
+								|| (temp[8]+temp[9]+temp[10]).equals("\'nurse\'")){
+							col1 = true;
+						}else{
+							col1 = false;
 						}
 					}
 				}else if(temp[0].equals("job")){
-					
+					//job 부터 시작할경우
+					if(temp[1].equals("=")){
+						if(temp[2].equals("\'nurse\'") && temp[3].equals("and")		//nurse
+								&& temp[4].equals("hair_color") && temp[5].equals("=")){
+
+							if(temp[6].equals("\'black\'") || (temp[6]+temp[7]).equals("\'black\'")
+									|| (temp[6]+temp[7]+temp[8]).equals("\'black\'")){	//black
+								col1 = true;
+							}else{
+								col1 = false;
+							}
+						}else if((temp[2]+temp[3]).equals("\'nurse\'")&& temp[4].equals("and")	//nurse
+								&& temp[5].equals("hair_color") && temp[6].equals("=")){		//hair_color
+
+							if(temp[7].equals("\'black\'") || (temp[8]+temp[9]).equals("\'black\'")	//black
+									|| (temp[7]+temp[8]+temp[9]).equals("\'black\'")){
+								col1 = true;
+							}else{
+								col1 = false;
+							}
+						}
+					}else if((temp[2]+temp[3]+temp[4]).equals("\'nurese\'") && temp[5].equals("and")	//nurese
+							&& temp[6].equals("hair_color") && temp[7].equals("=")){			//hair_color
+
+						if(temp[8].equals("\'black\'") || (temp[8]+temp[9]).equals("\'black\'")		//black
+								|| (temp[8]+temp[9]+temp[10]).equals("\'black\'")){
+							col1 = true;
+						}else{
+							col1 = false;
+						}
+					}
 				}
 				
-				
-				
+				if(temp[temp.length-1].equals(";")){
+					col1 = true;
+				}else{
+					col1 = false;
+				}
 			}
 
 		}
-
+		
+		if(col1){
+			return new String[0][0];
+		}
 		return null;
 	}
 
