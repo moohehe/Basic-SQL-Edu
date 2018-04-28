@@ -53,6 +53,30 @@ public class CompilerController
 			return json;
 		}
 		
+		//20번 문제가 정답 == commit
+		if(questionNumber == 20 && sql.equals("commit;")){
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			//쿠키 검사
+			int k = 0;
+			Cookie [] cok = request.getCookies();
+			for(int i = 1 ; i<= questionNumber; i++){
+				if(cok[i].getName().equals("completeStage" + i)){
+					if(cok[i].getValue().equals("pass")){
+						k++;
+					}
+				}
+			}
+			if(k == 20){
+				//인증서 가자 gg
+				System.out.println("20 stage 전부 클리어함");
+				map.put("end", true);
+				map.put("url", "goCertify");
+			}else{
+				map.put("end", false);
+			}
+		}
+		
 		//테이블 이름 변경하기
 		if(table_name.toLowerCase().contains("animal")){
 			table_name = "animal_view";
@@ -95,15 +119,6 @@ public class CompilerController
 		// 데이터 테이블을 json으로 출력해서 보내준다. 그럼 그걸 받아서 js로 그림으로 출력함.
 		
 		
-		// cookie에서 현재 문제 번호를 받아온 뒤에 그걸 이용해서 프린트
-		if(resultMap.get("success") == "1"){		
-			System.out.println("쿠키에 현재 완료한 스테이지만 저장"+questionNumber);
-			cg.setCookieName("completeStage"+questionNumber);
-			cg.addCookie(response, "pass"); 
-			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
-		}
-		
-		
 		//Alter문제 처리
 		int alterStep = 0;
 		if(questionNumber == 11){
@@ -130,29 +145,25 @@ public class CompilerController
 			
 		}
 		
-		
-		//20번 문제가 정답 == commit
-		if(questionNumber == 20 && sql.equals("commit")){
-			//쿠키 검사
-			
-			int k = 0;
-			Cookie [] cok = request.getCookies();
-			for(int i = 1 ; i<= questionNumber; i++){
-				if(cok[i].getName().equals("completeStage" + i)){
-					if(cok[i].getValue().equals("pass")){
-						k++;
-					}
-				}
+		// cookie에서 현재 문제 번호를 받아온 뒤에 그걸 이용해서 프린트
+		System.out.println("쿠키 성공 : " + (int)resultMap.get("success"));
+		//alter 문은 5개 다 완성 됫을때만 실행해야댐
+		if(questionNumber != 11){
+			if(((int)resultMap.get("success")) == 1){		
+				System.out.println("쿠키에 현재 완료한 스테이지만 저장"+questionNumber);
+				cg.setCookieName("completeStage"+questionNumber);
+				cg.addCookie(response, "pass"); 
+				cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 			}
-			if(k == 20){
-				//인증서 가자 gg
-				System.out.println("20 stage 전부 클리어함");
-				map.put("end", true);
-				map.put("url", "goCertify");
-			}else{
-				map.put("end", false);
+		}else{
+			//11일때
+			if(alterStep == 5 && ((int)resultMap.get("success")) == 1){
+				cg.setCookieName("completeStage"+questionNumber);
+				cg.addCookie(response, "pass"); 
+				cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 			}
 		}
+		
 		
 		//resultMap에 무엇이 들었나?(확인용)
 		  Set<String> keySet = map.keySet();

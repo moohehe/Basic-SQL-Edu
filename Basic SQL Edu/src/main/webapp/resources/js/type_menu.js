@@ -199,43 +199,6 @@ function sqlrun() {
 				default :	//실패
 					sql_fail(e.errorMessage);
 				break;
-						switch(alterStep){ //alter의 단계를 확인하여 그림을 바꾸어 줌.
-						//한문제 맞췄을 때의 그림 보여주기
-						case 1:
-							//textarea 초기화
-					    	  $('#sql').val(" ");
-							//배경 변경.
-					    	  $('.questionTable').css({"background":"url(/www/resources/image/alter2.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-							
-					    	  break;
-						case 2:
-							//textarea 초기화
-					    	  $('#sql').val(" ");
-							//배경 변경.
-					    	  $('.questionTable').css({"background":"url(/www/resources/image/alter3.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-							break;
-						case 3:
-							//textarea 초기화
-					    	  $('#sql').val(" ");
-							//배경 변경.
-					    	  $('.questionTable').css({"background":"url(/www/resources/image/alter4.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-							break;
-						case 4:
-							//textarea 초기화
-					    	  $('#sql').val(" ");
-							//배경 변경.
-					    	  $('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-							break;
-						case 5:
-							
-							if(e.alterComplete == true){
-								sql_success();
-							}
-							break;
-						default :	//실패
-							sql_fail(e.errorMessage);
-						break;
-						}
 				}
 			}else if(stage == 15){ //insert person scientist
 				//테이블 안 칼럼들 이미지 변경.
@@ -247,7 +210,7 @@ function sqlrun() {
 				if(e.end == true){
 					goCertify();
 				}
-			}else{ //11번 alter문제를 제외하고는 모두 아래 로직을 따라간다.
+			}else{ //11번 , 15, 20alter문제를 제외하고는 모두 아래 로직을 따라간다.
 				console.log('dafd'+e);
 				if (e.password == 'pass' ) {
 					location.href = e.url;

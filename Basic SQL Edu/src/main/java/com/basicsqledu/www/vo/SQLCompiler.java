@@ -258,11 +258,11 @@ public class SQLCompiler
 			int col = 5, row = list.size();
 			table = new String[row + 1][col];
 			// 테이블 속성(attribute) 명칭 입력
-			table[0][0] = "animal_size";
-			table[0][1] = "animal_species";
-			table[0][2] = "animal_legs";
-			table[0][3] = "animal_color";
-			table[0][4] = "animal_habitat";
+			table[0][0] = "size";
+			table[0][1] = "species";
+			table[0][2] = "legs";
+			table[0][3] = "color";
+			table[0][4] = "habitat";
 
 			int i = 1;
 			for (Object a : list)
@@ -373,7 +373,7 @@ public class SQLCompiler
 		//맵 초기화
 		map.put("complete", true);
 		setErrorMessage(null);
-		map.put("success", "-1");
+		map.put("success", -1);
 		map.put("cmd", null);
 
 		System.out.println("1. 세미콜론 문법 체크");
@@ -465,6 +465,7 @@ public class SQLCompiler
 					break;
 				case "update":
 					map.put("cmd", "update");
+					result = getUpdate();
 					break;
 				case "delete":
 					map.put("cmd", "delete");
@@ -523,8 +524,8 @@ public class SQLCompiler
 						System.out.println();
 					}
 				}
-				
-				
+
+
 				int [] index = new int[answerTable[0].length-1];
 				for(int j=1;j<answerTable[0].length;j++){
 					index[j-1] = j;
@@ -562,7 +563,8 @@ public class SQLCompiler
 					map.put("success", 1);
 				}else{
 					map.put("success", -1);
-					setErrorMessage("Not correct Answer");
+					setErrorMessage
+					("Not correct Answer");
 				}
 				break;
 			case 12: case 18:
@@ -590,61 +592,61 @@ public class SQLCompiler
 		}
 
 		try{
-		//문제 별로 cmd가 맞는지체크
-		switch (map.get("cmd").toString()) {
-		case "create":
-			if(!(questionNumber == 1 || questionNumber == 16)){
-				setErrorMessage("Not correct Answer");
-				map.put("success", -1);
+			//문제 별로 cmd가 맞는지체크
+			switch (map.get("cmd").toString()) {
+			case "create":
+				if(!(questionNumber == 1 || questionNumber == 16)){
+					setErrorMessage("Not correct Answer");
+					map.put("success", -1);
+				}
+				break;
+			case "drop":
+				if(!(questionNumber == 19)){
+					setErrorMessage("Not correct Answer");
+					map.put("success", -1);
+				}
+				break;
+			case "alter":
+				if(!(questionNumber == 11)){
+					setErrorMessage("Not correct Answer");
+					map.put("success", -1);
+				}
+				break;
+			case "insert":
+				if(!(questionNumber == 15 || questionNumber == 17)){
+					setErrorMessage("Not correct Answer");
+					map.put("success", -1);
+				}
+				break;
+			case "update":
+				if(!(questionNumber == 14)){
+					setErrorMessage("Not correct Answer");
+					map.put("success", -1);
+				}
+				break;
+			case "select":
+				if(!((questionNumber >= 2 && questionNumber<=10)
+						|| (questionNumber>=12 && questionNumber<=13))){
+					System.out.println("여기 찍히냐?");
+					setErrorMessage("Not correct Answer");
+					map.put("success", -1);
+				}
+				break;
+			case "delete":
+				if(!(questionNumber == 18)){
+					setErrorMessage("Not correct Answer");
+					map.put("success", -1);
+				}
+				break;
+			default:
+				break;
 			}
-			break;
-		case "drop":
-			if(!(questionNumber == 19)){
-				setErrorMessage("Not correct Answer");
-				map.put("success", -1);
-			}
-			break;
-		case "alter":
-			if(!(questionNumber == 11)){
-				setErrorMessage("Not correct Answer");
-				map.put("success", -1);
-			}
-			break;
-		case "insert":
-			if(!(questionNumber == 15 || questionNumber == 17)){
-				setErrorMessage("Not correct Answer");
-				map.put("success", -1);
-			}
-			break;
-		case "update":
-			if(!(questionNumber == 14)){
-				setErrorMessage("Not correct Answer");
-				map.put("success", -1);
-			}
-			break;
-		case "select":
-			if(!((questionNumber >= 2 && questionNumber<=10)
-				|| (questionNumber>=12 && questionNumber<=13))){
-				System.out.println("여기 찍히냐?");
-				setErrorMessage("Not correct Answer");
-				map.put("success", -1);
-			}
-			break;
-		case "delete":
-			if(!(questionNumber == 18)){
-				setErrorMessage("Not correct Answer");
-				map.put("success", -1);
-			}
-			break;
-		default:
-			break;
-		}
 		}catch (Exception e) {
 			setErrorMessage("Not correct Answer");
 			map.put("success", -1);
 		}
-		
-		
+
+
 		// 정답 데이터와 result를 비교해서 맞다/틀리다 표기해서 map에 추가
 		System.out.println("End of getResult");
 		System.out.println("result=" + result);
@@ -1028,7 +1030,7 @@ public class SQLCompiler
 			//전부완료
 			return new String[0][0];
 		}
-		
+
 		setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
 		return null;
 	}
@@ -1406,6 +1408,75 @@ public class SQLCompiler
 		}
 		return result;
 	}
+
+	// update person set hair_color = ‘red’ where hair_color=‘black’ and job=‘nurse’;
+	private String[][] getUpdate(){
+
+		int i = 0;
+		int stage = 1;							//현재 단계별 진행상황
+
+		for (i = stage; i < texts.length; i++)
+		{
+			String current = texts[stage];
+
+			if (stage == 1)
+			{// stage == 1
+				// 1. update <테이블 이름>이 나와야하지
+				if (current.equals("person"))
+				{
+					stage++;
+				} else
+				{
+					// <table>이 아니고 다른게 나옴
+					setErrorMessage("Grammatic Error : You need to encase with parenthesis.");
+					return null;
+				}
+			}else if(stage == 2){
+				//2. drop table <set>이 나와야 함
+				if (current.equals("set"))
+				{
+					stage++;
+
+				}else{
+					// 안맞음
+					setErrorMessage("Grammatical Error: An accurate table_name must be typed after 'table'");
+					return null;
+				}
+			}else if(stage == 3){
+				if(current.equals("hair_color")){
+					stage++;
+				}
+			}else if(stage == 4){
+				if(current.equals("=")){
+					stage++;
+				}
+			}else if(stage == 5){
+				if(current.equals("'red'")){
+					stage++;
+				}
+			}else if(stage == 6){
+				if(current.equals("where")){
+					stage++;
+				}
+			}else if(stage == 7){
+				//where 이하 문
+				
+				
+			}
+
+		}
+
+		return null;
+	}
+
+
+
+
+
+
+
+
+
 
 	//delete --> select * 로 변환해서 select에 전달
 	private void getDelete(){

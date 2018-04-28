@@ -140,11 +140,11 @@ public class QuizDAO
 					int col = 5, row = list.size();
 					table = new String[row + 1][col];
 					// 테이블 속성(attribute) 명칭 입력
-					table[0][0] = "animal_size";
-					table[0][1] = "animal_species";
-					table[0][2] = "animal_legs";
-					table[0][3] = "animal_color";
-					table[0][4] = "animal_habitat";
+					table[0][0] = "size";
+					table[0][1] = "species";
+					table[0][2] = "legs";
+					table[0][3] = "color";
+					table[0][4] = "habitat";
 					int i = 1;
 					for (Animal animal : list)
 					{
@@ -286,11 +286,11 @@ public class QuizDAO
 			answerView = new String[row + 1][col];
 
 			answerView[0][0] = "th_code";
-			answerView[0][1] = "animal_size";
-			answerView[0][2] = "animal_species";
-			answerView[0][3] = "animal_legs";
-			answerView[0][4] = "animal_color";
-			answerView[0][5] = "animal_habitat";
+			answerView[0][1] = "size";
+			answerView[0][2] = "species";
+			answerView[0][3] = "legs";
+			answerView[0][4] = "color";
+			answerView[0][5] = "habitat";
 
 			try{
 				for (Animal animal : aniList)
