@@ -16,6 +16,7 @@ function text_keypress() {
 }
 function text_keyup() {
 	if ($('#sql').val().split('\n').length > 9) {
+		console.log('10줄 넘어감');
 		$('textarea').val(sql_text);
 
 	}
