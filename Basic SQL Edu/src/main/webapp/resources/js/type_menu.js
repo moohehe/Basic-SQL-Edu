@@ -137,13 +137,13 @@ function sqlrun() {
 	}
 	$.ajax({
 		type:"POST"
-			, url:"sqlCompiler"
-				, data:{
-					sql:str,
-					table_name: table_name,
-					questionNumber:stage
-				}
-	, dataType: 'json'
+		, url:"sqlCompiler"
+		, data:{
+			sql:str,
+			table_name: table_name,
+			questionNumber:stage
+		}
+		, dataType: 'json'
 		, success: function(e) {
 			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
 				location.href = e.link;

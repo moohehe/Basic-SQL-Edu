@@ -14,8 +14,10 @@
 
 
 <!-- web font -->
-<link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css?family=Hammersmith+One" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding" rel="stylesheet">
+<link href="https://fonts.googleapis.com/earlyaccess/sawarabimincho.css" rel="stylesheet" />
 
 
 	<!-- BootStrap -->
