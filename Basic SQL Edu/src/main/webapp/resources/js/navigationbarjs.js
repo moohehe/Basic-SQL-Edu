@@ -148,12 +148,16 @@ function nextStage() {
 }
 //(얘가 진짜) 문제 별 그림 뿌려주는 함수.
 function createQuiz(qlist, anslist, stage){
+	// img 전부 복구
+	$('img').show();
+	$('img').fadeIn();
+	
    console.log("cq의 stage"+stage);
    
    //칼럼 지우기.
 	  for(var i=1; i<6; i++){
- 	 $(imgselector(i)).attr("src", "");
-  }
+		  $(imgselector(i)).attr("src", "");
+	  }
    
    // stage 11에 들어갈때만 height 속성을 고정값으로 지정하기 위해서 매번 초기화한다.
    $('div.css-view').css('height','');
@@ -207,8 +211,7 @@ function createQuiz(qlist, anslist, stage){
 
 			tags += "</tbody></table>";
     		
-			$('.table-window #table_data').html(tags);
-
+			$('#table_data').html(tags);
          break;
       //동물 select
       case 2: case 3: case 5: case 6: case 7: case 8: case 10:
