@@ -119,6 +119,7 @@ public class CompilerController
 		// 데이터 테이블을 json으로 출력해서 보내준다. 그럼 그걸 받아서 js로 그림으로 출력함.
 		
 		
+		// cookie에서 현재 문제 번호를 받아온 뒤에 그걸 이용해서 프린트
 		//Alter문제 처리
 		int alterStep = 0;
 		if(questionNumber == 11){

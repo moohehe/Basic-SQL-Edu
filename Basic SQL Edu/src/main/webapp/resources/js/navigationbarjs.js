@@ -207,7 +207,7 @@ function createQuiz(qlist, anslist, stage){
 
 			tags += "</tbody></table>";
     		
-			$('#table_data').html(tags);
+			$('.table-window #table_data').html(tags);
 
          break;
       //동물 select
