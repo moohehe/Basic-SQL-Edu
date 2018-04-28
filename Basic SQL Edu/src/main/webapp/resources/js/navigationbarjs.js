@@ -89,7 +89,7 @@ $(function(){
    });
    
    $('.closing').click(function(){
-      $('.level-menu').slideUp(450);
+      /*$('.level-menu').slideUp(450);*/
       $('.wrap').show();
    });
     
@@ -476,6 +476,24 @@ function getDataByAJAX(stage, lang) {
 			$('#qsExm').text(obj.questext.qsExm);
 			$('#currentLang').val(obj.questext.textLang);
 			$('#progresslv').css('width', (obj.questext.lvstatus)*5+"%");
+			
+			// navigation question description font-family 변경
+			$('.qs').removeClass('qs-kor qs-jp qs-eng');
+			$('.qs-detail').removeClass('qs-kor qs-jp qs-eng');
+			$('.qsExm').removeClass('qs-kor qs-jp qs-eng');
+			if (lang == 1) {
+				$('.qs').addClass('qs-eng');
+				$('.qs-detail').addClass('qs-eng');
+				$('.qsExm').addClass('qs-eng');
+			} else if ( lang == 2 ) {
+				$('.qs').addClass('qs-kor');
+				$('.qs-detail').addClass('qs-kor');
+				$('.qsExm').addClass('qs-kor');
+			} else if ( lang == 3 ) {
+				$('.qs').addClass('qs-jp');
+				$('.qs-detail').addClass('qs-jp');
+				$('.qsExm').addClass('qs-jp');
+			}
 			console.log('cookie= '+document.cookie);
 			console.log('뾰로롱 lv=['+obj.questext.lvstatus+']');
 			
@@ -571,28 +589,6 @@ function ComAllCookie(){
 		  $('.level-menu').slideUp(4500);
 		  $('.wrap').show();
 		  return false;
-			//화면 값 갱신
-			/*$('#LvInfo').text("Level "+obj.questext.lvstatus+" of 20"); 
-			$('#currentLv').val(obj.questext.lvstatus);
-			$('#qstext').text(obj.questext.qstext);
-			$('#qstype').text(obj.questext.qstype);
-			$('#qsdetail').text(obj.questext.qsdetail);
-			$('#qsExm').text(obj.questext.qsExm);
-			$('#currentLang').val(obj.questext.textLang);
-			$('#progresslv').css('width', (obj.questext.lvstatus)*5+"%");
-			console.log('cookie= '+document.cookie);
-			console.log('뾰로롱 lv=['+obj.questext.lvstatus+']');
-			
-	         //처음 화면 문제테이블 갱신
-	         qlist = obj.qlist;
-	         anslist = obj.ansList;
-	         console.log('뾰롱');
-	         console.log(qlist);
-	         createQuiz(qlist, anslist, obj.questext.lvstatus);
-	         setTableView(qlist, obj.questext.lvstatus); // navi 이동후에 table_data에 값 입력하기
-	         setTd(); // mouserover event set
-	         setView();
-	         console.log('cookie= '+document.cookie);*/
 		},
 		error : function(err){
 			alert('가장 마지막 페이지입니다.');

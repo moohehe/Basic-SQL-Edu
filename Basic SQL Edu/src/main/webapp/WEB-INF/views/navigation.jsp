@@ -32,11 +32,11 @@
 			
 			<!-- 네이게이션 내부 text들 받아옴. -->
 			<div class="navicontext">
-				<div id="qstype"> ${questext.qstype }</div> <br><br>
+				<div id="qstype"> ${questext.qstype }</div> <br>
 				<p class="qs" id="qstext">${questext.qstext }</p><br>
-			    <div id="qsdetail"> ${questext.qsdetail }</div> <br><br>
-				<p> Examples </p>
-				<div id="qsExm">${questext.qsExm }</div>
+			    <div class="qsdetail" id="qsdetail"> ${questext.qsdetail }</div> <br><br>
+				<p class="qs-example"> Examples </p>
+				<div class="qsExm" id="qsExm">${questext.qsExm }</div>
 				<div style="background-color:red;">				
 					<a href="goCertify">임시 수료증 고고싱</a>
 					<button onclick="javascript:sql_success();"	>success</button>

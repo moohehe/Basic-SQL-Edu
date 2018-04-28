@@ -36,8 +36,6 @@
 .level-menu { 
 	height:100%;
 	width: 100%;
-	padding-left: 5px;
-	padding-right: 5px;
 	display: none;
 }
 
@@ -116,18 +114,23 @@
 }
 .qs {
 	font-size: 25px;
+	padding:3px;
 }
-.qs-han {
-	
+.qsdetail {
+	font-size:1.3rem;
 }
 .qs-eng {
-	
+	font-family: 'Nunito Sans', sans-serif;
+}
+.qs-han {
+	font-family: 'Nanum Gothic Coding', monospace;
 }
 .qs-jp {
-	
+	font-family: "Sawarabi Mincho";
 }
-.qstype {
-	font-family: 'Titan One', cursive;
+.navicontext #qstype {
+	font-family: 'Hammersmith One', sans-serif;
+	font-size:1.8rem;
 }
 /* rgb(95,95,95) */
 .lvstat {
@@ -607,6 +610,13 @@ a.btnsmall:active,a.btnsmall:hover {color:#4CAF50;background-color:#ffffff}
 .w3-info{background-color:#ddffdd;border-left:6px solid #4CAF50}
 hr[id^="ez-insert-after-placeholder"] {margin-top: 0;}
 
-.navicontext p {
-	font-family: 
+.wrap .navicontext .qs-example {
+	font-family: 'Hammersmith One', sans-serif;
+	font-size:1.5rem;
+	font-color:#616161;
+}
+.qsExm {
+	font-size:1.3rem;
+	font-family:Verdana,sans-serif;
+	text-transform: uppercase;
 }

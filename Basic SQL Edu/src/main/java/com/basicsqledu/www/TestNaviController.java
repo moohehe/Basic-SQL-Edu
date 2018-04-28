@@ -318,13 +318,13 @@ public class TestNaviController {
 		
 		
 		
-		naviContentMap.put("questext", qt); 
+		naviContentMap.put("questext", qt);
 			
 		
 		//맵 변환 후 보내기.
 		Gson gson = new Gson();
 		String json = gson.toJson(naviContentMap);
-		
+		System.out.println("return of json="+json);
 		return json;
 	}
 	
