@@ -122,7 +122,7 @@ $(function(){
       getDataByAJAX(stage, lang);
       return false;
    });
-   
+    
    //전체 스테이지 맵에서 원하는 스테이지 버튼 클릭시 해당 스테이지로 이동.
    $('.moveStagebtn').on('click', function(){
       var stage = $(this).attr('data-num');
