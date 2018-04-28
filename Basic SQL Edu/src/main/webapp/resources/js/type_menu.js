@@ -156,7 +156,7 @@ function sqlrun() {
 			if(stage==11){
 				console.log(e.result[1][1]);
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
-				if(e.result[1][0] == 'true'){
+				if(e.result[1][0] == 'true'){  
 					alterStep++;
 				}else if(e.result[1][1] == 'true'){
 					alterStep++;
