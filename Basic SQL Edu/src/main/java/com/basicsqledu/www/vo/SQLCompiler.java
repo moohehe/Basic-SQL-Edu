@@ -1499,10 +1499,10 @@ public class SQLCompiler
 			}else if(stage == 7){
 				//where 이하 문
 				//update person set hair_color = ‘red’ where hair_color=‘black’ and job=‘nurse’;
-				String temp[] = new String[texts.length - stage-2];
+				String temp[] = new String[texts.length - stage];
 				
 				for(int j = stage; j< texts.length;j++){
-					temp[stage-7] = texts[j];
+					temp[j-7] = texts[j];
 				}
 
 
@@ -1582,6 +1582,7 @@ public class SQLCompiler
 				}else{
 					col1 = false;
 				}
+				stage++;
 			}
 
 		}
