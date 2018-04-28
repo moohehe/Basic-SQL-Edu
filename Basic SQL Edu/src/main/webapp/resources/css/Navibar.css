@@ -107,7 +107,6 @@
 	font-size: 15px;
 	height:40px;
 }
-
 .navicontext {
 	width:390px;
 	height:100%;
@@ -117,6 +116,18 @@
 }
 .qs {
 	font-size: 25px;
+}
+.qs-han {
+	
+}
+.qs-eng {
+	
+}
+.qs-jp {
+	
+}
+.qstype {
+	font-family: 'Titan One', cursive;
 }
 /* rgb(95,95,95) */
 .lvstat {

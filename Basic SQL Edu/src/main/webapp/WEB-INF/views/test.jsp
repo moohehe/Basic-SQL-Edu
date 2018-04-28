@@ -13,6 +13,10 @@
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/type_menu.css"/>"/>
 
 
+<!-- web font -->
+<link href="https://fonts.googleapis.com/css?family=Titan+One" rel="stylesheet">
+
+
 
 	<!-- BootStrap -->
 	<link href="<c:url value='/resources/css/bootstrap.css' />" rel="stylesheet">
@@ -44,12 +48,15 @@
     
     
 <style type="text/css">
+
+
 	html, body { 
 	    height: 100%; 
 	    min-height: 100%;
 	    width: 100%;
 	    min-width:100%;
-	    position: relative;
+	    position: relative;+
+	    
 	    padding:0px;
 	    marin:0px;
 	    background:url('resources/image/bg.png');

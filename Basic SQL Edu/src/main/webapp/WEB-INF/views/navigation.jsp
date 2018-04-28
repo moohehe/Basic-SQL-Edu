@@ -32,8 +32,8 @@
 			
 			<!-- 네이게이션 내부 text들 받아옴. -->
 			<div class="navicontext">
-				<p class="qs" id="qstext">${questext.qstext }</p><br>
 				<div id="qstype"> ${questext.qstype }</div> <br><br>
+				<p class="qs" id="qstext">${questext.qstext }</p><br>
 			    <div id="qsdetail"> ${questext.qsdetail }</div> <br><br>
 				<p> Examples </p>
 				<div id="qsExm">${questext.qsExm }</div>
