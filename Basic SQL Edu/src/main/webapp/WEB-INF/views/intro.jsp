@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 <style type="text/css">
-#titles
+.titles
 {
 	position: absolute;
 	width: 18em;
@@ -22,7 +22,7 @@
 	transform-origin: 50% 100%;
 	transform: perspective(300px) rotateX(25deg);
 }
-#titles:after
+.titles:after
 {
 	position: absolute ;
 	content: ' ';
@@ -33,7 +33,7 @@
 	background-image: linear-gradient(top, rgba(0,0,0,1) 0%, transparent 100%);
 	pointer-events: none;
 }
-#titlecontent
+.titlecontent
 {
 	position: absolute;
 	top: 100%;
@@ -48,8 +48,8 @@
 </style>
 </head>
 <body>
-<div id="title">
-	<div id="titlecontent">
+<div class="title">
+	<div class="titlecontent">
 
 	<p> 길에서 누군가가 잃어버린 시계를 주운 당신, 갑자기 시계의 초침과 분침이 빠르게 돌아가며 알 수 없는 이공간으로 빨려 들어가게 되었다.<br>
 	 	느닷없이 타임워프 하게 된 당신…<br> 
@@ -57,7 +57,6 @@
     	“총 20가지의 관문을 통과하면 자네를 다시 집으로 보내주도록 하지.” <br>
     	20개의 SQL 문제를 모두 풀고, 무사히 본래 세계로 돌아가도록 하자.
 	</p>
-
 	</div>
 </div>
 </body>

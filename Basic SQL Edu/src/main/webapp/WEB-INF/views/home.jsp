@@ -8,6 +8,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Amatic+SC">
 <link href="resources/css/homeStyle.css" type="text/css"
@@ -42,10 +45,22 @@ body, h1, h2, h3, h4, h5, h6 {
 <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
 <script type="text/javascript">
 $(function(){
+
+	// last stage
+	var value = $('#certiBtn').val();
+	var url = $('#url').val();
+	if (value=='true') {
+		console.log('asdf');
+		setTimeout(function() {
+			location.href=url;
+		},5000);
+	}
 	
 	$('#goTest').on('click', function(){
 	 var language = $('#langop').val(); //사용자가 select Box에서 선택한 언어.	
-	 $(location).attr('href', "test?langop="+language);
+	 $('#selectedLang').val(language);
+	 /* $(location).attr('href', "test?langop="+language); */
+	 $('#enter').submit();
 		
 	});
 });
@@ -71,6 +86,7 @@ $(function(){
 					<li>기초 SQL구문을 익힐 수 있습니다.</li>					
 				</ul>
 			</div>
+			
 
 			<div class="w3-display-middle w3-center" style="margin-top: 20%;">
 				<div style="">
@@ -89,5 +105,11 @@ $(function(){
 			</div>
 		</div>
 	</div>
+	
+	<form action="test" method="post" id="enter">
+		<input type="hidden" id="selectedLang" value="${selectedLang}">
+	</form>
+	<input type="hidden" id="certiBtn" value="${certiBtn}">
+	<input type="hidden" id="url" value="${url}">
 </body>
 </html>

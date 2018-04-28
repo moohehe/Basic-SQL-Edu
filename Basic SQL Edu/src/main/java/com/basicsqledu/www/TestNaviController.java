@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class TestNaviController {
 	/**
 	 * 초기 페이지로 들어오는 경우.
 	 */
-	@RequestMapping(value = "test", method = RequestMethod.GET)
+	@RequestMapping(value = "test", method = RequestMethod.POST)
 	public String test(Model model, HttpServletResponse response, HttpServletRequest request, 
 			@RequestParam(defaultValue="1") String langop) {
 		
@@ -266,12 +267,13 @@ public class TestNaviController {
 	
 	@ResponseBody
 	@RequestMapping(value="cookieCtrl", method=RequestMethod.POST)
-	public String cookieCtrl(HttpServletRequest request,HttpServletResponse response, 
-			String lang, String stage, String cookieCon){
+	public String cookieCtrl(HttpServletRequest request,HttpServletResponse response,
+			HttpSession session,	String lang, String stage, String cookieCon){
 		//jsp로 보낼 데이터를 모두 담은 해쉬맵 생성. (전체내용포함된 VO, 완료한 스테이지 등)
 		HashMap<String, Object> naviContentMap = new HashMap<String, Object>();
 		//DB에서 온 데이터 담을 vo생성.
 		Questext qt = new Questext();
+		session.invalidate();
 		
 		if(cookieCon.equals("complete")){
 			
