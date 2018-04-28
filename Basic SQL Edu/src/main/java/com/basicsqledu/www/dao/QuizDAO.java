@@ -280,35 +280,76 @@ public class QuizDAO
 		case "animal_view":
 			ArrayList<Animal> aniList = mapper.getAnswerAnimal(questionNumber);
 
-			col = 6; 
-			row = aniList.size();
-			i = 1;
-			answerView = new String[row + 1][col];
-
-			answerView[0][0] = "th_code";
-			answerView[0][1] = "size";
-			answerView[0][2] = "species";
-			answerView[0][3] = "legs";
-			answerView[0][4] = "color";
-			answerView[0][5] = "habitat";
-
-			try{
-				for (Animal animal : aniList)
-				{
-					System.out.println(animal);
-					answerView[i][0] = animal.getTh_code();
-					answerView[i][1] = animal.getAnimal_size();
-					answerView[i][2] = animal.getAnimal_species();
-					answerView[i][3] = animal.getAnimal_legs();
-					answerView[i][4] = animal.getAnimal_color();
-					answerView[i][5] = animal.getAnimal_habitat();
-
-					i++;
+			// 3번 : th_code, species    //   4번 : th_code, habitat
+			if(questionNumber == 3 || questionNumber==4){
+				col = 2;
+				row = aniList.size();
+				i = 1;
+				answerView = new String[row + 1][col];
+				
+				if(questionNumber == 3){
+					// 3번 : th_code, species
+					answerView[0][0] = "th_code";
+					answerView[0][1] = "species";
+					try{
+						for (Animal animal : aniList)
+						{
+							System.out.println(animal);
+							answerView[i][0] = animal.getTh_code();
+							answerView[i][1] = animal.getAnimal_species();
+		
+							i++;
+						}
+					}catch(Exception e){
+						e.printStackTrace();
+					}
+				}else if(questionNumber == 4){
+					//   4번 : th_code, habitat
+					answerView[0][0] = "th_code";
+					answerView[0][1] = "habitat";
+					try{
+						for (Animal animal : aniList)
+						{
+							System.out.println(animal);
+							answerView[i][0] = animal.getTh_code();
+							answerView[i][1] = animal.getAnimal_habitat();
+		
+							i++;
+						}
+					}catch(Exception e){
+						e.printStackTrace();
+					}
 				}
-			}catch(Exception e){
-				e.printStackTrace();
+			}else{
+				col = 6; 
+				row = aniList.size();
+				i = 1;
+				answerView = new String[row + 1][col];
+	
+				answerView[0][0] = "th_code";
+				answerView[0][1] = "size";
+				answerView[0][2] = "species";
+				answerView[0][3] = "legs";
+				answerView[0][4] = "color";
+				answerView[0][5] = "habitat";
+	
+				try{
+					for (Animal animal : aniList)
+					{
+						System.out.println(animal);
+						answerView[i][0] = animal.getTh_code();
+						answerView[i][1] = animal.getAnimal_size();
+						answerView[i][2] = animal.getAnimal_species();
+						answerView[i][3] = animal.getAnimal_legs();
+						answerView[i][4] = animal.getAnimal_color();
+						answerView[i][5] = animal.getAnimal_habitat();
+	
+						i++;
+					}
+				}catch(Exception e){
+					e.printStackTrace();
+				}
 			}
-
 			break;
 		case "person_view":
 			ArrayList<Person> personList = mapper.getAnswerPerson(questionNumber);

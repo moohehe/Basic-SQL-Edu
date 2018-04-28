@@ -211,7 +211,8 @@ function createQuiz(qlist, anslist, stage){
 
 			tags += "</tbody></table>";
     		
-			$('#table_data').html("tags");
+			$('#table_data').html(tags);
+			//$('.table-window').html(tags);
          break;
       //동물 select
       case 2: case 3: case 5: case 6: case 7: case 8: case 10:
