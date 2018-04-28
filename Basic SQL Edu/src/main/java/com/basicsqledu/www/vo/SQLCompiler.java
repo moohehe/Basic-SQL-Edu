@@ -705,7 +705,7 @@ public class SQLCompiler
 	 * 
 	 * 
 	 * 지금 정답 2 : create table animal(
-	  						animal_num number  primary key
+	  						animal_num number  primary key  
 							,name	 varchar(40)	unique
 							,color	 varchar(40)	not null
 							,habitat  varchar(40)	foreign key
