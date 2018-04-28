@@ -700,7 +700,7 @@ public class SQLCompiler
 	       					r_color varchar(50)
 	       					,r_size varchar(50)
 	       					,r_type varchar(50)
-	       					,weapon varchar(50)
+	       					,weapon varchar(50)  
 	   				  );
 	 * 
 	 * 
