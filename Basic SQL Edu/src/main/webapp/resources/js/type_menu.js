@@ -5,7 +5,10 @@ var alterStep = 0;
 
 $(function() {
 	sql_text = $('textarea').val();
-})
+});
+
+
+
 function text_keypress() {
 	if ($('#sql').val().split('\n').length < 5) {
 		sql_text = "";
@@ -240,6 +243,11 @@ function sqlrun() {
 			for(var i=1; i<document.cookie.length; i++){
 				if(getCookie(cookieName+i) == "pass"){
 					confirmCookie++;
+					$('a.moveStageBtn[data-num='+i+']').addClass('completed');
+				}
+				else {
+
+					$('a.moveStageBtn[data-num='+i+']').removeClass('completed');
 				}
 			}
 			if(confirmCookie == 20){
@@ -273,7 +281,7 @@ function sql_success() {
 	// next 버튼을 누르면
 	// next 버튼+ success 메세지가 있는 div가 사라지고(fadeout)
 	// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
-	$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
+	
 	// nextBtn에 있는 function 실행
 	
 	//상관없는 이미지 사라짐 
