@@ -88,6 +88,7 @@ public class CompilerController
 				}else{
 					map.put("url", "/www");
 					session.setAttribute("certiBtn", true);
+					session.setAttribute("url", "goCertify");
 				}
 			}else{
 				map.put("end", false);
