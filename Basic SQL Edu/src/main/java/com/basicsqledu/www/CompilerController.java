@@ -43,6 +43,7 @@ public class CompilerController
 			, HttpServletRequest request, HttpSession session
 			, @RequestParam(defaultValue="animal_view") String table_name
 			, @RequestParam(defaultValue="2") int questionNumber) {
+		
 		sql = sql.toLowerCase();
 		if (sql.equals("abracatabra")) {
 			System.out.println("아브라카타브라!");
@@ -71,13 +72,11 @@ public class CompilerController
 					cook[temp-1] = 1;
 				}
 			}
-			
 			for(int i : cook){
 				if(i == 1){
 					k++;
 				}
 			}
-			
 			System.out.println("k="+k);
 			if(k >= 19){
 				//인증서 가자 gg
