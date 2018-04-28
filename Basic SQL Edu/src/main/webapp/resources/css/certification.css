@@ -6,6 +6,7 @@
 	border: 1px double black;
 	padding: 0px 10px 10px 10px;
 	line-height:1.2rem;
+	background-color:white;
 }
 .certi-form p {
 	text-align:left;
@@ -13,8 +14,9 @@
 }
 body {
 	text-align:center;
+	background-image:url('../image/bg.png');
 }
-body .boddy {
+.boddy {
 	width:100%;
 	height:100%;
 	vertical-align: middle;
@@ -72,9 +74,6 @@ div .certi-submit {
 	background-color: #0087cf;
 	font-size:20px;
 	height:50px;
-}
-.boddy .certi-form {
-	display:inline-block;
 }
 .boddy-form {
 	position:relative;

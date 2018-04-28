@@ -205,7 +205,9 @@ box-shadow:inset 0 -1px 0 rgba(0,0,0,.15);
     text-align: cente#efefef;
     text-decoration: none;
 }
-
+.completed{
+	background-color:#616161;
+}
 ul.horizontal {
     list-style-type: none;
     margin: 0;
