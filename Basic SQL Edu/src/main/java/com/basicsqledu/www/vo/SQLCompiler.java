@@ -1411,7 +1411,7 @@ public class SQLCompiler
 
 	// update person set hair_color = ‘red’ where hair_color=‘black’ and job=‘nurse’;
 	private String[][] getUpdate(){
-
+		System.out.println("======= 업데이트 문 시작 ========");
 		int i = 0;
 		int stage = 1;							//현재 단계별 진행상황
 
@@ -1425,8 +1425,7 @@ public class SQLCompiler
 				if (current.equals("person"))
 				{
 					stage++;
-				} else
-				{
+				}else{
 					// <table>이 아니고 다른게 나옴
 					setErrorMessage("Grammatic Error : You need to encase with parenthesis.");
 					return null;
@@ -1436,7 +1435,6 @@ public class SQLCompiler
 				if (current.equals("set"))
 				{
 					stage++;
-
 				}else{
 					// 안맞음
 					setErrorMessage("Grammatical Error: An accurate table_name must be typed after 'table'");
@@ -1445,21 +1443,68 @@ public class SQLCompiler
 			}else if(stage == 3){
 				if(current.equals("hair_color")){
 					stage++;
+				}else{
+					setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+					return null;
 				}
 			}else if(stage == 4){
 				if(current.equals("=")){
 					stage++;
+				}else{
+					setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+					return null;
 				}
 			}else if(stage == 5){
-				if(current.equals("'red'")){
+				//컬럼 데이터 검사
+				String [] strTemp = new String[3];
+				strTemp[0] = texts[stage];
+				strTemp[1] = texts[stage+1];
+				strTemp[2] = texts[stage+2];
+				// 'red ' // ' red' // ' red '
+				if(current.equals("\'red\'") ){
 					stage++;
+				}else if((strTemp[0]+strTemp[1]).equals("'red")
+					|| (strTemp[0]+strTemp[1]).equals("'red'")){
+					stage++;
+					i++;
+				}else if((strTemp[0]+strTemp[1]+strTemp[2]).equals("'red'")){
+					stage++;
+					i+=2;
+				}else{
+					setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+					return null;
 				}
+				
 			}else if(stage == 6){
 				if(current.equals("where")){
 					stage++;
+				}else{
+					setErrorMessage("Grammatic Error : Required a conditional sentence.");
+					return null;
 				}
 			}else if(stage == 7){
 				//where 이하 문
+				//update person set hair_color = ‘red’ where hair_color=‘black’ and job=‘nurse’;
+				String temp[] = new String[texts.length - stage-1];
+				for(int j = stage; j< texts.length;j++){
+					temp[stage-7] = texts[j];
+				}
+				
+				//임시 값 찍기
+				for(String str : temp){
+					System.out.println(str);
+				}
+				
+				if(temp[0].equals("hair_color")){
+					if(temp[1].equals("=")){
+						if(temp[2].equals("\'black\'") || (temp[2]+temp[3]).equals("\'black\'")){
+							
+						}
+					}
+				}else if(temp[0].equals("job")){
+					
+				}
+				
 				
 				
 			}
@@ -1468,12 +1513,6 @@ public class SQLCompiler
 
 		return null;
 	}
-
-
-
-
-
-
 
 
 
