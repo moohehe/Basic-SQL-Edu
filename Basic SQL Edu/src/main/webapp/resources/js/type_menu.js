@@ -244,7 +244,9 @@ function sqlrun() {
 			}else if (stage == 20 ) {
 
 				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
-
+				if(e.end == true){
+					goCertify();
+				}
 			}else{ //11번 alter문제를 제외하고는 모두 아래 로직을 따라간다.
 				console.log('dafd'+e);
 				if (e.password == 'pass' ) {

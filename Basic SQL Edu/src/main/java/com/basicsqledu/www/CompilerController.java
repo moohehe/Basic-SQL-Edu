@@ -149,6 +149,8 @@ public class CompilerController
 				System.out.println("20 stage 전부 클리어함");
 				map.put("end", true);
 				map.put("url", "goCertify");
+			}else{
+				map.put("end", false);
 			}
 		}
 		
