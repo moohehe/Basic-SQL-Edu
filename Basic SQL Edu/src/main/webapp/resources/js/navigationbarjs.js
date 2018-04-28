@@ -340,7 +340,6 @@ function createQuiz(qlist, anslist, stage){
     		
 			$('#table_data').html(tags);
 
-			$('div.css-view').css('height','658px');
          break;
          
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
