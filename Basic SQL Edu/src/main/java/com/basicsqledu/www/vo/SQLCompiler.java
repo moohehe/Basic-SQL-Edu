@@ -1083,62 +1083,61 @@ public class SQLCompiler
 
 
 	/**
-	 * 
-	 * DB 정답 테이블에서 정답을 꺼내와야함!!
-	 * 
-	 * 정답 예시 : drop table _____(테이블 이름)
-	 * 
-	 * */
-	private String[][] getDrop(){
-		System.out.println("==Drop문 들어옴==");
+	    * 
+	    * DB 정답 테이블에서 정답을 꺼내와야함!!
+	    * 
+	    * 정답 예시 : drop table _____(테이블 이름)
+	    * 
+	    * */
+	   private String[][] getDrop(){
+	      System.out.println("==Drop문 들어옴==");
 
-		int i = 0;
-		int stage = 1;							//현재 단계별 진행상황
+	      int i = 0;
+	      int stage = 1;                     //현재 단계별 진행상황
 
-		for (i = stage; i < texts.length; i++)
-		{
-			String current = texts[stage];
+	      for (i = stage; i < texts.length; i++)
+	      {
+	         String current = texts[stage];
 
-			if (stage == 1)
-			{// stage == 1
-				// 1. drop <table>이 나오면 바로 종료
-				if (current.equals("table") || current.equals("sequence") || current.equals("view"))
-				{
-					stage++;
-				} else
-				{
-					// <table>이 아니고 다른게 나옴
-					setErrorMessage("Grammatic Error : You need to encase with parenthesis.");
-					return null;
-				}
-			}else if(stage == 2){
-				//2. drop table <테이블 이름>이 나와야 함
-				result_name = current;			//사용자가 입력한 테이블 네임
-				if(table_name.contains("animal")){
-					table_name = "animal";
-				}else if(table_name.contains("person")){
-					table_name = "person";
-				}else if(table_name.contains("robot")){
-					table_name = "robot";
-				}
-					
-				if (!(result_name.equals(table_name)))
-				{
-					// 안맞음
-					setErrorMessage("Grammatical Error: An accurate table_name must be typed after 'table'");
-					return null;
+	         if (stage == 1)
+	         {// stage == 1
+	            // 1. drop <table>이 나오면 바로 종료
+	            if (current.equals("table") || current.equals("sequence") || current.equals("view"))
+	            {
+	               stage++;
+	            } else
+	            {
+	               // <table>이 아니고 다른게 나옴
+	               setErrorMessage("Grammatic Error : You need to encase with parenthesis.");
+	               return null;
+	            }
+	         }else if(stage == 2){
+	            //2. drop table <테이블 이름>이 나와야 함
+	            result_name = current;         //사용자가 입력한 테이블 네임
+	            if(table_name.contains("animal")){
+	               table_name = "animal";
+	            }else if(table_name.contains("person")){
+	               table_name = "person";
+	            }else if(table_name.contains("robot")){
+	               table_name = "robot";
+	            }
+	               
+	            if (!(result_name.equals(table_name)))
+	            {
+	               // 안맞음
+	               setErrorMessage("Grammatical Error: An accurate table_name must be typed after 'table'");
+	               return null;
 
-				} else{
-					return new String[0][0];
-				}
+	            } else{
+	               return new String[0][0];
+	            }
 
-			}
+	         }
 
-		}
+	      }
 
-		return null;
-	}
-
+	      return null;
+	   }
 
 	/**
 	 * Alter table animal drop legs;
