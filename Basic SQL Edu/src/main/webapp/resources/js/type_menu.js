@@ -5,6 +5,7 @@ var alterStep = 0;
 
 $(function() {
 	sql_text = $('textarea').val();
+	setStages('completeStage');
 });
 
 
@@ -152,7 +153,7 @@ function sqlrun() {
 				location.href = e.url;
 				return;
 			}
- 
+			
 			if(stage==11){
 				console.log(e.result[1][1]);
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
@@ -263,16 +264,7 @@ function sqlrun() {
 			//쿠키 확인
 			var confirmCookie = 0;
 			var cookieName = "completeStage";
-			for(var i=1; i<document.cookie.length; i++){
-				if(getCookie(cookieName+i) == "pass"){
-					confirmCookie++;
-					$('a.moveStageBtn[data-num='+i+']').addClass('completed');
-				}
-				else {
-
-					$('a.moveStageBtn[data-num='+i+']').removeClass('completed');
-				}
-			}
+			confirmCookie = setStages(cookieName);
 			if(confirmCookie == 20){
 				console.log("문제 모두 풀기 성공!");
 			}
@@ -281,6 +273,20 @@ function sqlrun() {
 			console.log('error:'+e);	
 		}
 	});
+}
+function setStages(cookieName) {
+	var confirmCookie = 0;
+	for(var i=1; i<document.cookie.length; i++){
+		if(getCookie(cookieName+i) == "pass"){
+			confirmCookie++;
+			$('a[data-num="'+i+'"]').addClass('completed');
+		}
+		else {
+
+			$('a[data-num="'+i+'"]').removeClass('completed');
+		}
+	}
+	return confirmCookie;
 }
 var editor_text;
 /* 입력한 sql 구문이 틀렸을 때 */

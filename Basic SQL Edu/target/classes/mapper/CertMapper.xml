@@ -21,17 +21,29 @@
 	
 	<select id="selectCert" parameterType="cert" resultType="cert">
 	select
-		cert_no
-		,cert_user
-		,cert_email
+		*
 	from
 		certification
 	where
-		cert_email = #{cert_email}
-	and
-		cert_user = #{cert_user}
+		<if test="cert_email != null">
+			cert_email = #{cert_email}
+		</if>
+		<if test="cert_email != null and cert_user != null">OR</if>
+		<if test="cert_user != null">
+			cert_user = #{cert_user}
+		</if>
 	</select>
 	
+	<select id="searchCert" parameterType="String" resultType="cert">
+	SELECT
+		*
+	FROM
+		certification
+	WHERE
+		cert_email = #{temp_word}
+	OR
+		cert_user = #{temp_word}
+	</select>
 	
 	
 </mapper>

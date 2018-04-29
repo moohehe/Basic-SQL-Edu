@@ -51,6 +51,11 @@
 					<div class="langbtn btn" data-num="2" > kor </div> 
 					<div class="langbtn btn" data-num="3" > jpn </div> 
 				</div>
+				<div class="certi-search navi_bottom">
+					<span class="search-title">Certification Search</span>
+						<input id="search-data" class="cert-search-input" type="text" name="text" placeholder="email OR CertiNumber" required="required"><br>
+						<button class="certification-search-btn">SEARCH»</button>
+				</div>
 				<div class="navi_bottom">
 					<div class="menubtn btn" id="contactus">CONTACT US</div>
 					<div class="menubtn btn" id="certification">CERTIFICATION</div>
