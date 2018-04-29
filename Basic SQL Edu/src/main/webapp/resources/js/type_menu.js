@@ -216,9 +216,22 @@ function sqlrun() {
 					// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
 					$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
 					//테이블 안 칼럼들 이미지 변경.
-					$('.tableColumes[columesimg="1"]').attr("src", "/www/resources/image/hedgehoggrey.png");
+					$('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/hedgehoggrey.png");
 					$('.tableColumes[columesimg="2"]').attr("src", "/www/resources/image/giraffeyellow.png");
-					$('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/craborange.png");
+					$('.tableColumes[columesimg="1"]').attr("src", "/www/resources/image/craborange.png");
+					
+					$('.success').fadeIn("slow");
+					return;
+				}else{
+					sql_fail(e.errorMessage);
+				}
+			}
+			else if(stage == 14){ //업데이트 person
+				if(e.success == '1') {
+					// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
+					$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
+					//테이블 안 칼럼들 이미지 변경.
+					$('.tableColumes[columesimg="1"]').attr("src", "/www/resources/image/udp14.png");
 					
 					$('.success').fadeIn("slow");
 					return;
@@ -238,7 +251,31 @@ function sqlrun() {
 					sql_fail(e.errorMessage);
 				}
 
-			}else if (stage == 20 ) {
+			} else if(stage == 17){ //insert person scientist
+				if(e.success == '1') {
+					// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
+					$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
+					//테이블 안 칼럼들 이미지 변경.
+					$('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/R2white.png");
+					$('.success').fadeIn("slow");
+					return;
+				}else{
+					sql_fail(e.errorMessage);
+				}
+
+			} else if(stage == 18){ //insert person scientist
+				if(e.success == '1') {
+					// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
+					$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
+					//테이블 안 칼럼들 이미지 변경.
+					$('.tableColumes[columesimg="2"]').hide();
+					$('.success').fadeIn("slow");
+					return;
+				}else{
+					sql_fail(e.errorMessage);
+				}
+
+			} else if (stage == 20 ) {
 				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
 				if(e.end != true){
 					sql_fail('Please complete all questions');

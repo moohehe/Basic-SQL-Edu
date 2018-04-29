@@ -424,7 +424,8 @@ function createQuiz(qlist, anslist, stage){
             		$(imgselector(i)).attr("src", "");
             	}
             }
-            
+          //테이블 이름 변경
+            $('#table_name').text("[table_name : ROBOT]");
          });
          //정답 리스트 돌기.
          $.each(anslist, function(index, value){
@@ -445,7 +446,8 @@ function createQuiz(qlist, anslist, stage){
         	for(var i=1; i<6; i++){
         		$(imgselector(i)).attr("src", "");
         	}
-        	
+        	//테이블 이름 변경
+            $('#table_name').text("[table_name : ROBOT]");
         	 //배경 변경.
             $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-color':'black','background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
     	  break;
