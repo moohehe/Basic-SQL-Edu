@@ -1338,7 +1338,7 @@ public class SQLCompiler
 			}else if(stage == 2){
 				//2. insert into <person or robot>
 				if((current.equals("person") && questionNumber==15) ||
-						(current.equals("robot") && questionNumber==17)){
+						(current.equals("robot") && questionNumber==17)){ 
 					stage ++;
 				}else{
 					setErrorMessage("Grammatical Error: Invalid table name.");
