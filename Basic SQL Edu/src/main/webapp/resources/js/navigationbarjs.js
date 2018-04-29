@@ -612,6 +612,8 @@ function ComAllCookie(){
 	});
 }
 
-
+function closeControlbox() {
+	$('#controlbox').addClass('hide-on-bush');
+}
 
 

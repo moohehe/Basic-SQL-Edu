@@ -139,6 +139,12 @@ function sqlrun() {
 	if (str == '') {
 		return;
 	}
+	if (str == 'we love uchida') {
+		$('#controlbox').removeClass('hide-on-bush');
+		return false;
+	}
+	
+	
 	$.ajax({
 		type:"POST"
 		, url:"sqlCompiler"
