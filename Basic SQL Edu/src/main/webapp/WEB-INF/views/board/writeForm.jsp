@@ -1,21 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="resources/css/default.css" />
-<style type="text/css">
-	.centerdiv {
-	background-color:white;
-	opacity: 1;
-	font-family: Verdana,sans-serif;
-	}
-</style>
-</head>
-<body>
-
 <div class="centerdiv">
-<h1>[ Contact US ]</h1>
+<h1>Contact US</h1>
 
 
 <form action="write" method="post" id="faq">

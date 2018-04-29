@@ -41,6 +41,8 @@ $(function(){
 	$('.menubtn').on('click',function() {
 		var menu = $(this).text();
 		if (menu == 'CONTACT US') {
+			$('.contactus').removeClass('hide-on-bush');
+			$('.contactus-bg').removeClass('hide-on-bush');
 			$('.contactus-bg').show();
 			$('.contactus').show();
 			$('.contactus-bg').on('click',function() {
@@ -50,7 +52,10 @@ $(function(){
 		} else if (menu == 'CERTIFICATION') {
 			$('.certi-search').show();
 			$('.certi-search').addClass('animated bounceInUp');
-		} 
+		} else if (menu == 'CLOSE') {
+			$('.contactus').hide();
+			$('.contactus-bg').hide();
+		}
 	});
 	
 	$('.btn').on('mouseover',function() {
