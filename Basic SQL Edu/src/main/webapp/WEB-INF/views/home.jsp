@@ -107,7 +107,7 @@ $(function(){
 	</div>
 	
 	<form action="test" method="post" id="enter">
-		<input type="hidden" id="selectedLang" value="${selectedLang}">
+		<input type="hidden" id="selectedLang" name="langop" value="${selectedLang}">
 	</form>
 	<input type="hidden" id="certiBtn" value="${certiBtn}">
 	<input type="hidden" id="url" value="${url}">
