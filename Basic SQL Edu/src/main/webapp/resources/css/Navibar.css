@@ -649,3 +649,8 @@ hr[id^="ez-insert-after-placeholder"] {margin-top: 0;}
 	font-family:Verdana,sans-serif;
 	text-transform: uppercase;
 }
+
+.controlbox {
+	border:1px solid black;
+	
+}
