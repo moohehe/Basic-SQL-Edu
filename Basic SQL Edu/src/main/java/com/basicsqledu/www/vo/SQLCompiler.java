@@ -1307,7 +1307,7 @@ public class SQLCompiler
 
 
 	/**
-	 * insert into person(gender,haircolor,job,height) values('male', 'white', 'scientist', 177);
+	 * insert into person(gender,hair_color,job,height) values('male', 'white', 'scientist', 177);
 	 * insert into robot(r_color,r_size,r_type,weapon) values('white','small','R2','beam');
 	 * 
 	 * */
@@ -1420,7 +1420,7 @@ public class SQLCompiler
 		//사람
 		if(current.equals("gender")){
 			//컬럼 : gender,height,haircolor,job
-			if(insertCol[0].equals("gender") && insertCol[1].equals(",") && insertCol[2].equals("haircolor")
+			if(insertCol[0].equals("gender") && insertCol[1].equals(",") && insertCol[2].equals("hair_color")
 					&& insertCol[3].equals(",")&& insertCol[4].equals("job")&& insertCol[5].equals(",")
 					&& insertCol[6].equals("height") && (insertCol[7]+insertCol[8] + insertCol[9]).equals(")values(")){
 				if(insertCol[10].equals("'male'") && insertCol[11].equals(",")
