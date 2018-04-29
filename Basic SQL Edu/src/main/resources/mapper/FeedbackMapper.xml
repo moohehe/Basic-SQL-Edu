@@ -6,14 +6,14 @@
 <!-- 게시판 처리 SQL -->
 <mapper namespace="com.basicsqledu.www.mapper.FeedbackMapper">
 	<insert id="insertBoard" parameterType="board">
-		insert into	board2(
+		insert into	Feedback_Board(
 				fb_no
 				,fb_user
 				,email
 				,title
 				,content
 			)values(
-				board2_seq.nextval
+				fb_board_seq.nextval
 				,#{fb_user}
 				,#{email}
 				,#{title}
@@ -25,7 +25,7 @@
 		select			
 			*		
 		from
-			board2
+			Feedback_Board
 		<if test="searchText != null">
 		where
 			title like '%' || #{searchText} || '%'
@@ -43,7 +43,7 @@
 			,content
 			,to_char(inputdate, 'yyyy-MM-dd') inputdate
 		from
-			board2
+			Feedback_Board
 		where
 			fb_no = #{fb_no}	
 	</select>
@@ -52,13 +52,13 @@
 		select
 			count(*)
 		from
-			board2
+			Feedback_Board
 	</select>
 
 	
 	<update id="updateMemo" parameterType="board">
 	update
-		board2
+		Feedback_Board
 	set
 		status = #{status}
 		,memo = #{memo}
@@ -68,7 +68,7 @@
 
 	<update id="updateStatus" parameterType="board">
 	update
-		board2
+		Feedback_Board
 	set
 		status = #{status}
 	where
