@@ -333,6 +333,7 @@ public class SQLCompiler
 		}
 	}
 
+
 	public String getTable()
 	{
 		// 무결성 체크
@@ -344,7 +345,7 @@ public class SQLCompiler
 		{
 			return null;
 		}
-
+	
 		String result = "";
 		for (int i = 0; i < table.length; i++)
 		{
@@ -355,10 +356,9 @@ public class SQLCompiler
 			}
 			result += "\n";
 		}
-
+	
 		return result;
 	}
-
 
 	/**
 	 * 구문 분석기
@@ -792,13 +792,21 @@ public class SQLCompiler
 						}
 					}
 
+					//동물 콤마 : 4개, 로봇 콤마 3개
 					//콤마 갯수 계산
-					if(comma != 4) {
-						faa = false;
-						setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
-						return null;
+					if(table_name.contains("animal")){
+						if(comma != 4) {
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
+						}
+					}else if(table_name.contains("robot")){
+						if(comma != 3) {
+							faa = false;
+							setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
+							return null;
+						}
 					}
-
 
 					/*System.out.println("[ 컬럼값들 ]");
 				for(String str : createResult){
@@ -1307,7 +1315,7 @@ public class SQLCompiler
 
 
 	/**
-	 * insert into person(gender,haircolor,job,height) values('male', 'white', 'scientist', 177);
+	 * insert into person(gender,hair_color,job,height) values('male', 'white', 'scientist', 177);
 	 * insert into robot(r_color,r_size,r_type,weapon) values('white','small','R2','beam');
 	 * 
 	 * */
@@ -1420,7 +1428,7 @@ public class SQLCompiler
 		//사람
 		if(current.equals("gender")){
 			//컬럼 : gender,height,haircolor,job
-			if(insertCol[0].equals("gender") && insertCol[1].equals(",") && insertCol[2].equals("haircolor")
+			if(insertCol[0].equals("gender") && insertCol[1].equals(",") && insertCol[2].equals("hair_color")
 					&& insertCol[3].equals(",")&& insertCol[4].equals("job")&& insertCol[5].equals(",")
 					&& insertCol[6].equals("height") && (insertCol[7]+insertCol[8] + insertCol[9]).equals(")values(")){
 				if(insertCol[10].equals("'male'") && insertCol[11].equals(",")
@@ -1454,7 +1462,7 @@ public class SQLCompiler
 	}
 
 	// update person set hair_color = 'red' where hair_color='black' and job='nurse';
-	private String[][] getUpdate(){
+	private String[][] getUpdate(){    
 		System.out.println("======= 업데이트 문 시작 ========");
 		int i = 0;
 		int stage = 1;							//현재 단계별 진행상황
