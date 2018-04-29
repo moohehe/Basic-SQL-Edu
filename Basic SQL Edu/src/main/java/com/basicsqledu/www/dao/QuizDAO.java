@@ -167,7 +167,7 @@ public class QuizDAO
 			break;
 		case "person":
 			try
-			{
+			{ 
 				logger.info("person");
 				QuizMapper mapper = session.getMapper(QuizMapper.class);
 				String table_name ="q"+questionNumber+"_person"+"_view";
