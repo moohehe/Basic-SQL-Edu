@@ -15,7 +15,9 @@ $(function(){
 	$('.contactus').hide();
 	$('.contactus-bg').hide();
 	
-	
+	$('.close-cert-search').on('click', function() {
+		$('.certi-search').hide();
+	});
 	
 	$('.certification-search-btn').on('click', function() {
 		var menu = $(this).text();
