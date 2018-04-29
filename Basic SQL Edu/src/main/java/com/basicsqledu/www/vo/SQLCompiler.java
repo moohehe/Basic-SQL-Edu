@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Stack;
+
+import javax.naming.spi.DirStateFactory.Result;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.slf4j.Logger;
@@ -114,7 +116,11 @@ public class SQLCompiler
 			// questionNumber가 12~16은 PERSON
 			// questionNumber가 17~20은 ROBOT
 			if(questionNumber >1 && questionNumber<=11){
-				answerTable = new String[answerSize][6];
+				if(questionNumber == 3 || questionNumber== 4){
+					answerTable = new String[answerSize][2];
+				}else{
+					answerTable = new String[answerSize][6];
+				}
 			}else{
 				answerTable = new String[answerSize][5];
 			}
@@ -216,6 +222,7 @@ public class SQLCompiler
 				}
 			}
 		}
+
 		texts = new String[temp.size()];
 		for (int k = 0; k < temp.size(); k++)
 		{
@@ -431,6 +438,18 @@ public class SQLCompiler
 			}
 		}
 
+		//문제 9번 desc 체크
+		if(questionNumber == 9){
+			for(String str : texts){
+				if(str.contains("desc")){
+					setErrorMessage("Please check out the Sort criteria");
+					map.put("success", -1);
+					map.put("complete", false);
+					return map;
+				}
+			}
+		}
+
 		System.out.println("2. 구문검사 시작");
 		try
 		{
@@ -502,9 +521,23 @@ public class SQLCompiler
 		}
 
 
-		boolean ansCorrect= false;	//푸시중
+		/**
+		 * 
+		 * 정답 뷰의 2차원 배열과 사용자가 입력한 2차원 배열과의 체크
+		 * 
+		 * */
+		boolean ansCorrect= false;
 		int corr = 0;
 
+		//3번 4번 유효성 검사 -->  사용자 2차원 배열의 크기
+		if(questionNumber == 3 || questionNumber == 4){
+			if(result[0].length > 2){
+				map.put("success", -1);
+				setErrorMessage	("Not correct Answer");
+				return map;
+			}
+		}
+		
 		try{
 			switch (questionNumber) {
 			/*case 13:
@@ -533,19 +566,19 @@ public class SQLCompiler
 
 					System.out.println("결과 값 2차원 행의 길이"+result.length + " 결과 값 2차원 열의 길이 : "+result[0].length);
 					System.out.println("정답 값 2차원 행의 길이"+answerTable.length + " 정답 값 2차원 열의 길이 : "+answerTable[0].length);
-
+				
 					for(int k =0;k<result[0].length;k++){
 						if(col.equals(result[0][k])){
 							//1. 컬럼이 맞다!
 							corr++;
 
 							//2. 2차원 배열 데이터들 한줄씩 비교!
-							for(int p = 1;p<=result[0].length-1;p++){
+							for(int p = 1;p<=result.length-1;p++){
 								if(answerTable[p][index[j-1]].equals(result[p][k])){
 									ansCorrect = true;
-									break;
 								}else{
 									ansCorrect = false;
+									break;
 								}
 							}
 						}
@@ -554,11 +587,16 @@ public class SQLCompiler
 			default:
 				break;
 			}
-
+			
+			System.out.println("정답인 컬럼의 개수 : " + corr);
+			System.out.println("정답 bool : " + ansCorrect);
 			switch (questionNumber) {
 			case 2: case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
 				// questionNumber가 1~ 11까지는 animal
 				if(corr == 5 && ansCorrect){
+					System.out.println("정답이다 !!");
+					map.put("success", 1);
+				}else if((questionNumber == 3 || questionNumber == 4) && corr == 1 && ansCorrect){
 					System.out.println("정답이다 !!");
 					map.put("success", 1);
 				}else{
@@ -662,12 +700,12 @@ public class SQLCompiler
 	       					r_color varchar(50)
 	       					,r_size varchar(50)
 	       					,r_type varchar(50)
-	       					,weapon varchar(50)
+	       					,weapon varchar(50)  
 	   				  );
 	 * 
 	 * 
 	 * 지금 정답 2 : create table animal(
-	  						animal_num number  primary key
+	  						animal_num number  primary key  
 							,name	 varchar(40)	unique
 							,color	 varchar(40)	not null
 							,habitat  varchar(40)	foreign key
@@ -1414,7 +1452,8 @@ public class SQLCompiler
 		System.out.println("======= 업데이트 문 시작 ========");
 		int i = 0;
 		int stage = 1;							//현재 단계별 진행상황
-
+		boolean col1 = false;
+		
 		for (i = stage; i < texts.length; i++)
 		{
 			String current = texts[stage];
@@ -1464,7 +1503,7 @@ public class SQLCompiler
 				if(current.equals("\'red\'") ){
 					stage++;
 				}else if((strTemp[0]+strTemp[1]).equals("'red")
-					|| (strTemp[0]+strTemp[1]).equals("'red'")){
+						|| (strTemp[0]+strTemp[1]).equals("'red'")){
 					stage++;
 					i++;
 				}else if((strTemp[0]+strTemp[1]+strTemp[2]).equals("'red'")){
@@ -1474,7 +1513,7 @@ public class SQLCompiler
 					setErrorMessage("Grammatic Error : The shape of culumn is incorrect.");
 					return null;
 				}
-				
+
 			}else if(stage == 6){
 				if(current.equals("where")){
 					stage++;
@@ -1485,32 +1524,97 @@ public class SQLCompiler
 			}else if(stage == 7){
 				//where 이하 문
 				//update person set hair_color = ‘red’ where hair_color=‘black’ and job=‘nurse’;
-				String temp[] = new String[texts.length - stage-1];
-				for(int j = stage; j< texts.length;j++){
-					temp[stage-7] = texts[j];
-				}
+				String temp[] = new String[texts.length - stage];
 				
+				for(int j = stage; j< texts.length;j++){
+					temp[j-7] = texts[j];
+				}
+
+
 				//임시 값 찍기
 				for(String str : temp){
 					System.out.println(str);
 				}
+
 				
 				if(temp[0].equals("hair_color")){
+					//머리색부터 시작하는 경우
 					if(temp[1].equals("=")){
-						if(temp[2].equals("\'black\'") || (temp[2]+temp[3]).equals("\'black\'")){
-							
+						if(temp[2].equals("\'black\'") && temp[3].equals("and")
+								&& temp[4].equals("job") && temp[5].equals("=")){
+							if(temp[6].equals("\'nurse\'") || (temp[6]+temp[7]).equals("\'nurse\'")
+									|| (temp[6]+temp[7]+temp[8]).equals("\'nurse\'")){
+								col1 = true;
+							}else{
+								col1 = false;
+							}
+						}else if((temp[2]+temp[3]).equals("\'black\'")&& temp[4].equals("and")
+								&& temp[5].equals("job") && temp[6].equals("=")){
+
+							if(temp[7].equals("\'nurse\'") || (temp[8]+temp[9]).equals("\'nurse\'")
+									|| (temp[7]+temp[8]+temp[9]).equals("\'nurse\'")){
+								col1 = true;
+							}else{
+								col1 = false;
+							}
+						}
+					}else if((temp[2]+temp[3]+temp[4]).equals("\'black\'") && temp[5].equals("and")
+							&& temp[6].equals("job") && temp[7].equals("=")){
+
+						if(temp[8].equals("\'nurse\'") || (temp[8]+temp[9]).equals("\'nurse\'")
+								|| (temp[8]+temp[9]+temp[10]).equals("\'nurse\'")){
+							col1 = true;
+						}else{
+							col1 = false;
 						}
 					}
 				}else if(temp[0].equals("job")){
-					
+					//job 부터 시작할경우
+					if(temp[1].equals("=")){
+						if(temp[2].equals("\'nurse\'") && temp[3].equals("and")		//nurse
+								&& temp[4].equals("hair_color") && temp[5].equals("=")){
+
+							if(temp[6].equals("\'black\'") || (temp[6]+temp[7]).equals("\'black\'")
+									|| (temp[6]+temp[7]+temp[8]).equals("\'black\'")){	//black
+								col1 = true;
+							}else{
+								col1 = false;
+							}
+						}else if((temp[2]+temp[3]).equals("\'nurse\'")&& temp[4].equals("and")	//nurse
+								&& temp[5].equals("hair_color") && temp[6].equals("=")){		//hair_color
+
+							if(temp[7].equals("\'black\'") || (temp[8]+temp[9]).equals("\'black\'")	//black
+									|| (temp[7]+temp[8]+temp[9]).equals("\'black\'")){
+								col1 = true;
+							}else{
+								col1 = false;
+							}
+						}
+					}else if((temp[2]+temp[3]+temp[4]).equals("\'nurese\'") && temp[5].equals("and")	//nurese
+							&& temp[6].equals("hair_color") && temp[7].equals("=")){			//hair_color
+
+						if(temp[8].equals("\'black\'") || (temp[8]+temp[9]).equals("\'black\'")		//black
+								|| (temp[8]+temp[9]+temp[10]).equals("\'black\'")){
+							col1 = true;
+						}else{
+							col1 = false;
+						}
+					}
 				}
 				
-				
-				
+				if(temp[temp.length-1].equals(";")){
+					col1 = true;
+				}else{
+					col1 = false;
+				}
+				stage++;
 			}
 
 		}
-
+		
+		if(col1){
+			return new String[0][0];
+		}
 		return null;
 	}
 
