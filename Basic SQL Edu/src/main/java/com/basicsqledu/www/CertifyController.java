@@ -1,6 +1,7 @@
 package com.basicsqledu.www;
 
 
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.servlet.http.Cookie;
@@ -13,10 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.CookieGenerator;
 
 import com.basicsqledu.www.dao.CertDAO;
 import com.basicsqledu.www.vo.Certification;
+import com.google.gson.Gson;
 
 @Controller
 public class CertifyController {
@@ -25,6 +28,9 @@ public class CertifyController {
 	@Autowired
 	CertDAO certDAO;
 
+	
+	
+	// certification information input form
 	@RequestMapping(value = "goCertify", method=RequestMethod.GET)
 	public String getTable(HttpServletRequest request, Model model) {
 		logger.info("start of Certfiform");
@@ -49,6 +55,10 @@ public class CertifyController {
 		return "certify/certifyForm";
 	}
 
+	
+	
+	
+	// certifyForm에서 받은 값을 insert 해줌
 	@RequestMapping(value = "certify", method=RequestMethod.POST)
 	public String certify(String cert_name, String cert_email) {
 		logger.info("cert_name:{}, cert_email:{}",cert_name, cert_email);
@@ -105,20 +115,61 @@ public class CertifyController {
 		return "redirect:gocertification?user="+cert_name + "&email="+cert_email + "&cert_no="+certify.getCert_user();
 	}
 
-
+	// read certification
 	@RequestMapping(value = "gocertification", method=RequestMethod.GET, produces = "application/text; charset=utf8")
-	public String gocertification(String cert_no, String user, String email, Model model) {
-		logger.info("String user:{}",user);
-		Certification cert = new Certification();
+	public String gocertification(Certification cert, Model model) {
+		logger.info("String user:{}",cert);
+		/*Certification cert = new Certification();*/
 
-		cert.setCert_user(cert_no);
-		cert.setCert_email(email);
 		cert = certDAO.selectCert(cert);
 
 		model.addAttribute("cert",cert);
-		model.addAttribute("user",user);
-		System.out.println("cert : " + cert + "/ user : " + user);
+		model.addAttribute("user",cert.getCert_user());
+		System.out.println("cert : " + cert + "/ user : " + cert.getCert_user());
 		return "certify/certification";
+	}
+	
+	
+	// read certification
+	@RequestMapping(value = "readCerti", method = RequestMethod.POST)
+	public String searchCertification(Model model, String email) {
+		logger.info("start of readCerti() email : {}",email);
+		
+		
+		Certification cert = new Certification();
+		cert = certDAO.searchCert(email);
+		
+		
+		model.addAttribute("cert",cert);
+		model.addAttribute("user",cert.getCert_user());
+		return "certify/certification";
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "certi-search", method =RequestMethod.POST)
+	public String searchCerti(String text) {
+		logger.info("start of certi-search, text: {}",text);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("is",false);
+		Certification cert = null;
+		try {
+			cert = certDAO.searchCert(text);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if( cert != null) {
+			map.put("is",true);
+			map.put("cert_email",cert.getCert_email());
+			map.put("cert_no",cert.getCert_no());
+			map.put("cert_user",cert.getCert_user());
+			map.put("url","gocertification?cert_email="
+			+cert.getCert_email()+"&cert_user="+cert.getCert_user()
+			+"&cert_no="+cert.getCert_no());
+		}
+		Gson gson = new Gson();
+		String json = gson.toJson(map);
+		System.out.println("json : " + json);
+		return json; 
 	}
 
 

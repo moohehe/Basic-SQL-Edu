@@ -15,6 +15,29 @@ $(function(){
 	$('.contactus').hide();
 	$('.contactus-bg').hide();
 	
+	
+	
+	$('.certification-search-btn').on('click', function() {
+		var menu = $(this).text();
+		var text = $('#search-data').val();
+		$.ajax({
+			url : 'certi-search'
+			, type : 'post'
+			, data : {
+				text:text
+			}
+			, dataType : 'json'
+			, success : function(d) {
+				if (d.is == true) {
+					location.href=d.url;
+				} 
+				return;
+			}
+			, error : function(e) {
+				console.log(e);
+			}
+		});
+	});
 	$('.menubtn').on('click',function() {
 		var menu = $(this).text();
 		if (menu == 'CONTACT US') {
@@ -24,26 +47,12 @@ $(function(){
 				$('.contactus').hide();
 				$('.contactus-bg').hide();
 			});
-		}
-		else if (menu == 'CERTIFICATION') {
-			console.log('certification run');
-		}
-		else if ($(this).hasClass('submitbtn')) {
-			console.log('submitbtn run');
-			// submit 실행
-			if ($('intput[name="fb_user"]').val().length == 0 ) {
-				return false;
-			}
-			if ($('input[name="'))
-			$('#faq').submit();
-		}
-		else// (menu == 'CLOSE') {
-		{	console.log('닫기');
-			$('.contactus-bg').hide();
-			$('.contactus').hide();
-		}
-		return false;
+		} else if (menu == 'CERTIFICATION') {
+			$('.certi-search').show();
+			$('.certi-search').addClass('animated bounceInUp');
+		} 
 	});
+	
 	$('.btn').on('mouseover',function() {
 		var btn_name = $(this).text();
 		console.log('btn_name'+btn_name);
@@ -84,12 +93,14 @@ $(function(){
    
    //stage(navigation-bar)버튼 눌렀을 때 숨겨놓은 div (전체 스테이지 맵) 보여주기/닫기
    $('.dropbtn').click(function(){
-      $('.level-menu').slideDown(450);
+      //$('.level-menu').slideDown(450);
+	  $('.level-menu').show();
       $('.wrap').hide();
    });
    
    $('.closing').click(function(){
       /*$('.level-menu').slideUp(450);*/
+	   $('.level-menu').hide();
       $('.wrap').show();
    });
     
@@ -122,14 +133,14 @@ $(function(){
       getDataByAJAX(stage, lang);
       return false;
    });
-   
+    
    //전체 스테이지 맵에서 원하는 스테이지 버튼 클릭시 해당 스테이지로 이동.
    $('.moveStagebtn').on('click', function(){
       var stage = $(this).attr('data-num');
       var lang = $('#currentLang').val();
       
       getDataByAJAX(stage, lang);
-      $('.level-menu').slideUp(4500);
+      //$('.level-menu').slideUp(4500);
       $('.wrap').show();
       return false;
    });
@@ -586,7 +597,7 @@ function ComAllCookie(){
 		  var lang = $('#currentLang').val();
 		  
 		  getDataByAJAX(stage, lang);
-		  $('.level-menu').slideUp(4500);
+		  //$('.level-menu').slideUp(4500);
 		  $('.wrap').show();
 		  return false;
 		},

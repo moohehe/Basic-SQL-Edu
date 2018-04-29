@@ -11,6 +11,32 @@
 	position: absolute;
 	bottom: 0px;
 }
+.certi-search {
+	display:none;
+	background-color:white;
+	z-index:100;
+	border:1px solid black;
+	right:5px;
+	padding : 0.5rem 1rem 0rem 1rem;
+}
+form .cert-search-input {
+	width:100%;
+	padding:5px;
+	font-size:20px;
+	color:#8c8c8c;
+}
+.certification-search-btn {
+	background-color:#0087cf;
+	font-size:20px;
+	height:50px;
+	margin-left:auto;
+	width:100%;
+	
+}
+.search-title {
+	font-family:'Hammersmith One', sans-serif;
+	font-size:1.5rem;
+}
 .menubtn {
 	width:45%;
 	margin:0px;
@@ -206,7 +232,8 @@ box-shadow:inset 0 -1px 0 rgba(0,0,0,.15);
     text-decoration: none;
 }
 .completed{
-	background-color:#616161;
+	color:white;
+	background-color:#999999;
 }
 ul.horizontal {
     list-style-type: none;
