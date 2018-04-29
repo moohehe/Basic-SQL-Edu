@@ -53,7 +53,7 @@
 					<div class="langbtn btn" data-num="3" > jpn </div> 
 				</div>
 				<div class="certi-search navi_bottom">
-					<span class="search-title">Certification Search</span>
+					<span class="search-title">Certification Search</span> <span class="close-cert-search">X</span>
 						<input id="search-data" class="cert-search-input" type="text" name="text" placeholder="email OR CertiNumber" required="required"><br>
 						<button class="certification-search-btn">SEARCH»</button>
 				</div>
