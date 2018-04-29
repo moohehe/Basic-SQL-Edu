@@ -307,7 +307,6 @@ function sqlrun() {
 				// 문제 틀림
 				sql_fail(e.errorMessage);
 			} 
-
 			//쿠키 확인
 			var confirmCookie = 0;
 			var cookieName = "completeStage";
