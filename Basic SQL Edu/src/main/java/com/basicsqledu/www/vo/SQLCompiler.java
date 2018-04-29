@@ -1454,7 +1454,7 @@ public class SQLCompiler
 	}
 
 	// update person set hair_color = 'red' where hair_color='black' and job='nurse';
-	private String[][] getUpdate(){
+	private String[][] getUpdate(){  
 		System.out.println("======= 업데이트 문 시작 ========");
 		int i = 0;
 		int stage = 1;							//현재 단계별 진행상황
