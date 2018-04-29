@@ -165,13 +165,13 @@ function sqlrun() {
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
 				if(e.result[1][0] == 'true'){  
 					alterStep++;
-				}else if(e.result[1][1] == 'true'){
+				}if(e.result[1][1] == 'true'){
 					alterStep++;
-				}else if(e.result[1][2] == 'true'){
+				}if(e.result[1][2] == 'true'){
 					alterStep++;
-				}else if(e.result[1][3] == 'true'){
+				}if(e.result[1][3] == 'true'){
 					alterStep++;
-				}else if(e.result[1][4] == 'true'){
+				}if(e.result[1][4] == 'true'){
 					alterStep++;
 				}
 				console.log("뭐냐" + alterStep);
@@ -182,28 +182,32 @@ function sqlrun() {
 					$('#sql').val(" ");
 					//배경 변경.
 					$('.questionTable').css({"background":"url(/www/resources/image/alter2.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-
-					break;
+					alterStep = 0;
+					return;
 				case 2:
 					//textarea 초기화
 					$('#sql').val(" ");
 					//배경 변경.
 					$('.questionTable').css({"background":"url(/www/resources/image/alter3.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-					break;
+					alterStep = 0;
+					return;
 				case 3:
 					//textarea 초기화
 					$('#sql').val(" ");
 					//배경 변경.
 					$('.questionTable').css({"background":"url(/www/resources/image/alter4.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-					break;
+					alterStep = 0;
+					return;
 				case 4:
 					//textarea 초기화
 					$('#sql').val(" ");
 					//배경 변경.
 					$('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-					break;
+					alterStep = 0;
+					return;
 				case 5:
 					if(e.alterComplete == true){
+						alterStep = 0;
 						sql_success();
 					}
 					break;
@@ -216,9 +220,22 @@ function sqlrun() {
 					// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
 					$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
 					//테이블 안 칼럼들 이미지 변경.
-					$('.tableColumes[columesimg="1"]').attr("src", "/www/resources/image/hedgehoggrey.png");
+					$('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/hedgehoggrey.png");
 					$('.tableColumes[columesimg="2"]').attr("src", "/www/resources/image/giraffeyellow.png");
-					$('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/craborange.png");
+					$('.tableColumes[columesimg="1"]').attr("src", "/www/resources/image/craborange.png");
+					
+					$('.success').fadeIn("slow");
+					return;
+				}else{
+					sql_fail(e.errorMessage);
+				}
+			}
+			else if(stage == 14){ //업데이트 person
+				if(e.success == '1') {
+					// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
+					$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
+					//테이블 안 칼럼들 이미지 변경.
+					$('.tableColumes[columesimg="1"]').attr("src", "/www/resources/image/udp14.png");
 					
 					$('.success').fadeIn("slow");
 					return;
@@ -238,7 +255,31 @@ function sqlrun() {
 					sql_fail(e.errorMessage);
 				}
 
-			}else if (stage == 20 ) {
+			} else if(stage == 17){ //insert person scientist
+				if(e.success == '1') {
+					// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
+					$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
+					//테이블 안 칼럼들 이미지 변경.
+					$('.tableColumes[columesimg="3"]').attr("src", "/www/resources/image/R2white.png");
+					$('.success').fadeIn("slow");
+					return;
+				}else{
+					sql_fail(e.errorMessage);
+				}
+
+			} else if(stage == 18){ //insert person scientist
+				if(e.success == '1') {
+					// 스테이지 버튼 눌렀을 때 나오는 레벨 색상 변경 후
+					$('.stagebtn'+$('#currentLv').val()).css('color', 'red'); //(정답 맞추었을 때만 해당 작업 처리.)
+					//테이블 안 칼럼들 이미지 변경.
+					$('.tableColumes[columesimg="2"]').hide();
+					$('.success').fadeIn("slow");
+					return;
+				}else{
+					sql_fail(e.errorMessage);
+				}
+
+			} else if (stage == 20 ) {
 				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
 				if(e.end != true){
 					sql_fail('Please complete all questions');
@@ -266,7 +307,6 @@ function sqlrun() {
 				// 문제 틀림
 				sql_fail(e.errorMessage);
 			} 
-
 			//쿠키 확인
 			var confirmCookie = 0;
 			var cookieName = "completeStage";
