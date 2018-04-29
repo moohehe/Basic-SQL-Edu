@@ -165,13 +165,13 @@ function sqlrun() {
 				//정답이 맞는 게 확인된 경우, 바꾸어 준다.흠
 				if(e.result[1][0] == 'true'){  
 					alterStep++;
-				}else if(e.result[1][1] == 'true'){
+				}if(e.result[1][1] == 'true'){
 					alterStep++;
-				}else if(e.result[1][2] == 'true'){
+				}if(e.result[1][2] == 'true'){
 					alterStep++;
-				}else if(e.result[1][3] == 'true'){
+				}if(e.result[1][3] == 'true'){
 					alterStep++;
-				}else if(e.result[1][4] == 'true'){
+				}if(e.result[1][4] == 'true'){
 					alterStep++;
 				}
 				console.log("뭐냐" + alterStep);
@@ -182,28 +182,32 @@ function sqlrun() {
 					$('#sql').val(" ");
 					//배경 변경.
 					$('.questionTable').css({"background":"url(/www/resources/image/alter2.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-
-					break;
+					alterStep = 0;
+					return;
 				case 2:
 					//textarea 초기화
 					$('#sql').val(" ");
 					//배경 변경.
 					$('.questionTable').css({"background":"url(/www/resources/image/alter3.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-					break;
+					alterStep = 0;
+					return;
 				case 3:
 					//textarea 초기화
 					$('#sql').val(" ");
 					//배경 변경.
 					$('.questionTable').css({"background":"url(/www/resources/image/alter4.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-					break;
+					alterStep = 0;
+					return;
 				case 4:
 					//textarea 초기화
 					$('#sql').val(" ");
 					//배경 변경.
 					$('.questionTable').css({"background":"url(/www/resources/image/alter5.png)", 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-					break;
+					alterStep = 0;
+					return;
 				case 5:
 					if(e.alterComplete == true){
+						alterStep = 0;
 						sql_success();
 					}
 					break;
