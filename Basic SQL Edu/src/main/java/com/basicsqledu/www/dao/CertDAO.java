@@ -32,6 +32,7 @@ public class CertDAO
 		return i;
 	}
 	public Certification selectCert(Certification cert){
+		logger.info("start in CertiDAO selectCert(cert):{}",cert);
 		Certification sel_cert = null;
 		CertMapper mapper = null;
 		try
@@ -42,7 +43,22 @@ public class CertDAO
 		{
 			e.printStackTrace();
 		}
+		logger.info("end of CertiDAO selectCert(cert):{}",cert);
 		return sel_cert;
+	}
+	public Certification searchCert(String text) {
+		Certification cert = null;
+		CertMapper mapper = null;
+		try
+		{
+			mapper = session.getMapper(CertMapper.class);
+			cert = mapper.searchCert(text);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+		return cert;
 	}
 
 }
