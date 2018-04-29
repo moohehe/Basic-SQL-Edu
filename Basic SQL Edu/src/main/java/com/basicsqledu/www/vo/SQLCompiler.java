@@ -441,7 +441,7 @@ public class SQLCompiler
 		//문제 9번 desc 체크
 		if(questionNumber == 9){
 			for(String str : texts){
-				if(str.contains("desc")){
+				if(str.contains("asc")){
 					setErrorMessage("Please check out the Sort criteria");
 					map.put("success", -1);
 					map.put("complete", false);
@@ -706,7 +706,7 @@ public class SQLCompiler
 	 * 
 	 * 지금 정답 2 : create table animal(
 	  						animal_num number  primary key  
-							,name	 varchar(40)	unique
+							,species	 varchar(40)	unique
 							,color	 varchar(40)	not null
 							,habitat  varchar(40)	foreign key
 							,legs	 	 number
@@ -875,7 +875,7 @@ public class SQLCompiler
 							return null;
 						}
 						//두번째 컬럼(name varchar(40) unique)
-						if(createResult[5].equals("name")){
+						if(createResult[5].equals("species")){
 							for(String dt : spDataType1){
 								if(dt.equals("varchar")) { 
 									dt += "(40)";
@@ -1106,8 +1106,14 @@ public class SQLCompiler
 			}else if(stage == 2){
 				//2. drop table <테이블 이름>이 나와야 함
 				result_name = current;			//사용자가 입력한 테이블 네임
-				table_name = "animal"; 			// 임시 테이블 네임(이후 DB결과에서 받아와야함)
-
+				if(table_name.contains("animal")){
+					table_name = "animal";
+				}else if(table_name.contains("person")){
+					table_name = "person";
+				}else if(table_name.contains("robot")){
+					table_name = "robot";
+				}
+					
 				if (!(result_name.equals(table_name)))
 				{
 					// 안맞음
@@ -1447,7 +1453,7 @@ public class SQLCompiler
 		return result;
 	}
 
-	// update person set hair_color = ‘red’ where hair_color=‘black’ and job=‘nurse’;
+	// update person set hair_color = 'red' where hair_color='black' and job='nurse';
 	private String[][] getUpdate(){
 		System.out.println("======= 업데이트 문 시작 ========");
 		int i = 0;
