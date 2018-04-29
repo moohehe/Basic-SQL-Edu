@@ -2424,24 +2424,24 @@ public class SQLCompiler
 								@Override
 								public int compare(String[] o1, String[] o2)
 								{
-									System.out.println("o1:");
+									System.out.print("o1:");
 									for (String s : o1)
 										System.out.print(s + " ");
 									System.out.println();
-									System.out.println("o2:");
+									System.out.print("o2:");
 									for (String s : o2)
 										System.out.print(s + " ");
-									System.out.println();
+									System.out.println();System.out.println();
 
 									if (by == 0)
 									{
-										if (o1[order].compareTo(o2[order]) < 0)
+										if (o1[order].compareTo(o2[order]) > 0)
 											return 1;
 										else
 											return -1;
 									} else
 									{
-										if (o1[order].compareTo(o2[order]) < 0)
+										if (o1[order].compareTo(o2[order]) > 0)
 											return -1;
 										else
 											return 1;
