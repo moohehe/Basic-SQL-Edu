@@ -317,12 +317,16 @@ function createQuiz(qlist, anslist, stage){
     	  for(var i=1; i<6; i++){
         	 $(imgselector(i)).attr("src", "");
          }
+    	//테이블 이름 변경
+          $('#table_name').text("[table_name : table_name]");
+          
     	  // 테이블 부분에 문제 출제가 필요하다.
     	//테이블 변경.
   		$('#table_data').html("");
 
-    	  	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
-    	  
+  		var table_data = $('#table_data');
+  		var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
+  		
     		tags += "<tr>";
 			tags += "<th scope='row' class='t_head'>QuizNo.</th>";
 			tags += "<th class='t_head'>KeyWord</th>";
@@ -357,12 +361,12 @@ function createQuiz(qlist, anslist, stage){
 
 			tags += "</tbody></table>";
     		
-			$('#table_data').html(tags);
+			table_data.html(tags);
 
          break;
          
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
-         if(stage == 12){
+    	  if(stage == 12){
         	 $(imgselector(5)).attr("src", "");
         	 
          }
