@@ -3,6 +3,10 @@ package com.basicsqledu.www;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,22 +65,24 @@ public class FeedbackController {
 	}
 	
 	@RequestMapping(value="write", method=RequestMethod.POST)
-	public String write(Feedback_Board board){
+	public String write(HttpSession session, Model model, HttpServletRequest request, Feedback_Board board){
 		int result = dao.insertBoard(board);
 		if(result == 0){
 			System.out.println("데이터 입력 실패");
 		}
-		
-		return "redirect:successView";
-	}
-	
-	@RequestMapping(value="successView", method=RequestMethod.GET)
-	public String successView(SessionStatus session){
-		
-		session.setComplete();
+		Cookie[] ck = request.getCookies();
+		for (Cookie c : ck) {
+			if (c.getName().equals("currentLang")){
+				model.addAttribute("selectedLang",c.getValue());
+				break;
+			}
+			
+		}
+		session.invalidate();
 		
 		return "board/successView";
 	}
+	
 	
 	//메모 등록 부분
 	@RequestMapping(value="updateMemo", method=RequestMethod.POST)

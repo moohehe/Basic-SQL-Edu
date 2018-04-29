@@ -51,7 +51,7 @@ public class TestNaviController {
 	/**
 	 * 초기 페이지로 들어오는 경우.
 	 */
-	@RequestMapping(value = "test", method = RequestMethod.POST)
+	@RequestMapping(value = "test", method = {RequestMethod.POST, RequestMethod.GET})
 	public String test(Model model, HttpServletResponse response, HttpServletRequest request, 
 			@RequestParam(defaultValue="1") String langop) {
 		
@@ -89,6 +89,7 @@ public class TestNaviController {
 					}
 					else{
 						lang = Integer.parseInt(c.getValue());
+						langop = c.getValue();
 						System.out.println("쿠키에서 초기에 읽은 lang"+lang);
 					}
 					qt.setTextLang(Integer.parseInt(langop));
