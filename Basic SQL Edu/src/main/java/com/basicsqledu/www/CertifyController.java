@@ -62,6 +62,8 @@ public class CertifyController {
 	@RequestMapping(value = "certify", method=RequestMethod.POST)
 	public String certify(String cert_name, String cert_email) {
 		logger.info("cert_name:{}, cert_email:{}",cert_name, cert_email);
+		
+		
 		//일련 번호 생성하고 넣자
 		String cert;
 		String numStr = "1";
@@ -112,7 +114,8 @@ public class CertifyController {
 			logger.info("erorr : DB에 업데이트가 안됨");
 			return "redirect:goCertify";
 		}
-		return "redirect:gocertification?user="+cert_name + "&email="+cert_email + "&cert_no="+certify.getCert_user();
+		logger.info("DB에 사용자 추가됨 : " + certify);
+		return "redirect:gocertification?cert_user="+cert_name + "&cert_email="+cert_email;
 	}
 
 	// read certification
