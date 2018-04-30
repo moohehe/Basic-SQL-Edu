@@ -88,6 +88,7 @@ public class TestNaviController {
 					cg.addCookie(response, "1");
 					cg.setCookieMaxAge(72*60*60); 
 				}*/
+				
 			}	
 			qt.setLvstatus(stage);
 			
