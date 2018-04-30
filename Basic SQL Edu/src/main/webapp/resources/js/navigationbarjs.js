@@ -310,6 +310,7 @@ function createQuiz(qlist, anslist, stage){
          break;
           
       case 11: //alter table 문제
+    	  console.log('11번 실행');
     	  //배경 변경.
     	  $('.questionTable').css({"background":imgpath("alter"+1+".png"), 'background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
           
@@ -317,12 +318,13 @@ function createQuiz(qlist, anslist, stage){
     	  for(var i=1; i<6; i++){
         	 $(imgselector(i)).attr("src", "");
          }
+    	//테이블 이름 변경
+          $('#table_name').text("[table_name : table_name]");
+          
     	  // 테이블 부분에 문제 출제가 필요하다.
     	//테이블 변경.
-  		$('#table_data').html("");
-
-    	  	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
-    	  
+  		var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
+  		
     		tags += "<tr>";
 			tags += "<th scope='row' class='t_head'>QuizNo.</th>";
 			tags += "<th class='t_head'>KeyWord</th>";
@@ -356,13 +358,12 @@ function createQuiz(qlist, anslist, stage){
 			tags += "</tr>";
 
 			tags += "</tbody></table>";
-    		
 			$('#table_data').html(tags);
 
          break;
          
       case 12: case 13: case 14: // 모두 person 문제테이블 활용.
-         if(stage == 12){
+    	  if(stage == 12){
         	 $(imgselector(5)).attr("src", "");
         	 
          }
@@ -451,8 +452,46 @@ function createQuiz(qlist, anslist, stage){
         	//테이블 이름 변경
             $('#table_name').text("[table_name : ROBOT]");
         	 //배경 변경.
-            $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-color':'black','background-size':'contain', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
-    	  break;
+            $('.questionTable').css({"background":imgpath("bg"+stage+".png"), 'background-color':'black','background-size':'cover', 'background-repeat' : 'no-repeat', 'background-position':'bottom'});
+            
+            var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
+      		
+            tags += "<tr>";
+			tags += "<th scope='row' class='t_head'>r_size</th>";
+			tags += "<th class='t_head'>r_color</th>";
+			tags += "<th class='t_head'>r_type</th>";
+			tags += "<th class='t_head'>weapon</th>";
+			tags += "</tr></thead>";
+			
+			tags += "<tbody><tr>";
+			tags += "<td class='t_body'>small</td>";
+			tags += "<td class='t_body'>white</td>";
+			tags += "<td class='t_body'>R2</td>";
+			tags += "<td class='t_body'>beam</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>medium</td>";
+			tags += "<td class='t_body'>white</td>";
+			tags += "<td class='t_body'>bighero</td>";
+			tags += "<td class='t_body'>none</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>big</td>";
+			tags += "<td class='t_body'>blue</td>";
+			tags += "<td class='t_body'>jaeger</td>";
+			tags += "<td class='t_body'>gun</td>";
+			tags += "</tr>";
+			tags += "<tr>";
+			tags += "<td class='t_body'>big</td>";
+			tags += "<td class='t_body'>red</td>";
+			tags += "<td class='t_body'>optimus</td>";
+			tags += "<td class='t_body'>sword</td>";
+			tags += "</tr>";
+			
+			tags += "</tbody></table>";
+			$('#table_data').html(tags);
+           
+           break;
     	  
       case 20:
     	//칼럼들 지워놓음.

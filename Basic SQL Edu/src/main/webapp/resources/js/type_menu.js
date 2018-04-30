@@ -58,7 +58,7 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 	console.log(table);
 	var table_data = $('#table_data');
 	var tags = "<table class='table table-hover'><!-- Table head --><thead class='blue lighten-4'>";
-	if (table == null) {
+	if (table == null && lv != 11 && lv != 1 && lv != 19) {
 		table_data.html("");
 		return;
 	}
@@ -91,7 +91,6 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 			else {
 				//robot일 경우.
 				tags += "<tr>";
-				//tags += "<th></th>";
 				tags += "<th scope='row' class='t_head'>r_size</th>";
 				tags += "<th class='t_head'>r_color</th>";
 				tags += "<th class='t_head'>r_type</th>";
@@ -118,7 +117,6 @@ function setTableView(table, lv) { // parameter는 2차원 배열이거나 array
 			tags += "</tr>";
 		} else {
 			tags += "<tbody><tr>";
-			//tags += "<td scope='row' th_code="+table[i].th_code+">"+table[i].rownum+"</td>";
 			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].r_size+"</td>";
 			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].r_color+"</td>";
 			tags += "<td class='t_body' th_code="+table[i].th_code+">"+table[i].r_type+"</td>";

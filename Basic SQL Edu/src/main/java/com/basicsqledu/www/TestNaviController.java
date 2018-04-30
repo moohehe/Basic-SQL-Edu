@@ -53,7 +53,7 @@ public class TestNaviController {
 	 */
 	@RequestMapping(value = "test", method = {RequestMethod.POST, RequestMethod.GET})
 	public String test(Model model, HttpServletResponse response, HttpServletRequest request, 
-			@RequestParam(defaultValue="1") String langop) {
+			String langop) {
 		
 		Questext qt = new Questext();
 		int lang=0; //언어
@@ -82,22 +82,33 @@ public class TestNaviController {
 					cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 					cg.addCookie(response, "1");
 				}
-				if(c.getName().equals("currentLang")){
-					if(c.getValue() == null || c.getValue().equals("") || c.getValue().equals(" ")){
-						cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
+				/*if(c.getName().equals("currentLang")){//현재 언어 정보가 쿠키에 있는 경우.
+					if(c.getValue() == null || c.getValue().equals("") || c.getValue().equals(" ")){ //쿠키 value가 소실된 경우.
+						cg.setCookieName("currentLang");
 						cg.addCookie(response, "2");
 					}
-					else{
+					else{ //쿠키의 값이 있는 경우.
 						lang = Integer.parseInt(c.getValue());
-						langop = c.getValue();
-						System.out.println("쿠키에서 초기에 읽은 lang"+lang);
 					}
-					qt.setTextLang(Integer.parseInt(langop));
-				}else{
+				}else{//currentLang정보가 없는 경우.
 					cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
-					cg.addCookie(response, langop);
+					cg.addCookie(response, "2");
+				}*/
+			}//스테이지 쿠키 읽는 for문 종료.
+			
+			//그냥 거치지 않고 들어올 경우, 쿠키에서 읽은 값을 적용.
+			if(langop == null || langop.length()<1){
+				for(Cookie c : cks){
+					if(c.getName().equals("currentLang")){
+						langop= c.getValue();
+					}
 				}
 			}
+			
+			qt.setTextLang(Integer.parseInt(langop));
+			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
+			cg.addCookie(response, langop);
+			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 			
 		}else{
 			//쿠키없으면 쿠키 생성

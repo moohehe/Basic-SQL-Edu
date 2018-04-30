@@ -41,21 +41,25 @@ public class HomeController {
 		//쿠키 읽어서 언어 설정 변경해주기.
 		
 		Cookie cks[] = request.getCookies();
-		if(cks != null && cks.length>1){
+		//쿠키가 있는 경우
+		if(cks != null && cks.length>1){ 
 			for(Cookie c : cks){
 				if(c.getName().equals("currentLang")){
 					model.addAttribute("selectedLang", c.getValue());
+					break;
 				}else{
 					
 					cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 					cg.addCookie(response, "2"); //홈에서 받아온 값을 넣어준다.(쿠키가 없으므로)
 					cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+					model.addAttribute("selectedLang", 2);
 				}
 			}
-		}else{
+		}else{ //쿠키가 없는 경우.
 			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 			cg.addCookie(response, "2"); //홈에서 받아온 값을 넣어준다.(쿠키가 없으므로)
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+			model.addAttribute("selectedLang", 2);
 		}
 		return "home2";
 		
