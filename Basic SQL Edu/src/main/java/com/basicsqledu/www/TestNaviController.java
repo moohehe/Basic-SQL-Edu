@@ -141,7 +141,7 @@ public class TestNaviController {
 	public String langcheck(HttpServletRequest request,HttpServletResponse response, 
 			String lang, String stage, @RequestParam(defaultValue="non-pass")String compl,
 			@RequestParam(defaultValue = "2") int questionNumber) {
-		// setup UTF-8
+		// setup UTF-8  
 		response.setContentType("text/html;charset=UTF-8"); 
 		
 		//jsp로 보낼 데이터를 모두 담은 해쉬맵 생성. (전체내용포함된 VO, 완료한 스테이지 등)

@@ -57,7 +57,7 @@ public class HomeController {
 			cg.addCookie(response, "2"); //홈에서 받아온 값을 넣어준다.(쿠키가 없으므로)
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 		}
-		return "home";
+		return "home2";
 		
 	}
 	@RequestMapping(value = "intro", method = RequestMethod.GET)
