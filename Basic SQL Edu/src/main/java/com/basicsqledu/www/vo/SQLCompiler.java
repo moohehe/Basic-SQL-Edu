@@ -52,6 +52,11 @@ public class SQLCompiler
 	private String errorMessage = "";
 	private boolean grammar_error = false; // 구문 오류
 
+	// subquery last index
+	private int subquery_last_index = 0;
+	
+	
+	
 	private String text;
 	private String texts[];
 	private String[] COMMAND = { "create", "drop", "alter", "select", "insert", "delete", "update", "grant", "revoke",
@@ -437,11 +442,11 @@ public class SQLCompiler
 				}
 			}
 		}
-		if (questionNumber == 12 || questionNumber == 13) {
+		/*if (questionNumber == 12 || questionNumber == 13) {
 			map.put("complete", true);
 			map.put("success", 1);
 			return map;
-		}
+		}*/
 
 		//문제 9번 desc 체크
 		if(questionNumber == 9){
@@ -1684,6 +1689,11 @@ public class SQLCompiler
 				} else if (c.equals(")"))
 				{
 					bracket_level--;
+					System.out.println(" ***** subquery_last_index ="+k);
+					subquery_last_index = k;
+					if (bracket_level == 0 ) {
+						texts[k] = ";";
+					}
 				} else if (c.equals(";"))
 				{
 					setErrorMessage("Grammatical Error : Incompleted subquery statement");
@@ -1715,6 +1725,8 @@ public class SQLCompiler
 		boolean isFrom = false; // from 이 나왔는지 체크
 		// column ArrayList<String>
 		ArrayList<String> columns = new ArrayList<String>();
+		// column name 별명(답안에 표기되는 내용)
+		ArrayList<String> real_columns = new ArrayList<String>();
 		// table_value / table_key
 		ArrayList<String[][]> table_datas = new ArrayList<String[][]>();
 		ArrayList<String> table_names = new ArrayList<String>();
@@ -1770,9 +1782,17 @@ public class SQLCompiler
 				// column + as + 별칭 혹은 column +별칭 확인하기
 				int start_select = i;
 				logger.info("i : {}", i);
+				
+				// stage_of_get_column_name : column_names 얻는 레벨
+				// 0 : ',' 이후 or columns를 받을 준비 / 초기화된 상태
+				// 1 : columns 명 획득
+				// 2 : columns 별칭 획득
+				int stage_of_get_column_name = 0;
+				System.out.println("start of get column names");
 				while (i < from_index)
 				{
 					current = texts[i];
+					System.out.println("current="+current+" IN get columns names ");
 					// 빈 데이터면 생략
 					if (current.equals(""))
 					{
@@ -1805,33 +1825,40 @@ public class SQLCompiler
 					// comma가 있는지 체크
 					if (current.equals(","))
 					{
+						stage_of_get_column_name =0;
 						// ,가 두번 연속 나오면 안된다.
-						if (comma)
+						if (stage_of_get_column_name == 0)
 						{
 							setErrorMessage("Grammatical Error : Wrong usuage of ','");
 							System.out.println("i=" + i);
 							return null;
 						}
-						comma = true;
 						i++;
 						continue;
 					}
 
 					// comma가 없으면 column 명 획득
-					if (comma)
+					if (stage_of_get_column_name == 0)
 					{
-						System.out.println(i + "지금 comma");
+						System.out.println(i + "지금 add columns, current="+current);
 						columns.add(current);
-						comma = false;
+						real_columns.add(current);
+						stage_of_get_column_name = 1;
 						as = false;
-					} else
+					} else if (stage_of_get_column_name == 1)
 					{
+						System.out.println(i + "지금 add real_columns, current="+current);
+						stage_of_get_column_name = 2;
 						// 띄어쓰기 이후에 뭔가 나온거면 별칭이 입력된거다
-						columns.add(current);
+						real_columns.remove(real_columns.size()-1);
+						real_columns.add(current);
 						as = true;
+					} else {
+						setErrorMessage("Syntax Error : the Word is not allowed 3 times continuously");
+						return null;
 					}
 					i++;
-				}
+				} // end of getColumns names
 
 				// 1-2. FROM이 나오면 이 단계는 종료
 				if (i == from_index)
@@ -1841,7 +1868,7 @@ public class SQLCompiler
 					System.out.println("입력받은 columns");
 					System.out.println(columns);
 					// stage1에서는 ','로 끝나면 안됨
-					if (comma && columns.size() != 1)
+					if (stage_of_get_column_name == 0 && columns.size() != 1)
 					{
 						setErrorMessage("Grammatical Error : ',' cannot be used at the end of column");
 						return null;
@@ -2000,11 +2027,24 @@ public class SQLCompiler
 							}
 							tables.add(ta);
 							conti = 1;
-							i -= 1;
+							//i -= 1;
+							i = subquery_last_index;
+							// current = text[i];
+							// table_name = texts[i-1];
+							table_name = texts[i++];
 							current = texts[i];
-							table_name = texts[i-1];
 							System.out.println("cur="+current+ " i ="+i);
-							if (!(current.equals(",") || current.equals("(") || current.equals(")")
+							if (current.equals("where") ) {
+								table_name = "person";
+								table_names.add(table_name);
+								stage++; // 여기 수정중
+								break out2;
+							}
+							if (current.equals(",")) {
+								// 여기 수정중
+								// now here
+							}
+							if ((!current.equals("(") || current.equals(")")
 									|| current.equals(";") || current.equals("select"))) {
 								// 다음 단어는 무조건 일반 단어여야 한다.
 								for (String s : COMMAND2) { // COMMAND LIST에 있는 단어는 안됨
@@ -2149,9 +2189,12 @@ public class SQLCompiler
 						{
 							// *이고, table이 1개임 ==> table1의 모든 table 획득해야됨
 							columns.remove("*");
+							real_columns.remove("*");
+							System.out.println("*가 columns에 있네.");
 							for (int l = 0; l< temp_result[0].length; l++)
 							{
 								columns.add(temp_result[0][l]);
+								real_columns.add(temp_result[0][l]);
 								System.out.print(temp_result[0][l] +" ");
 							}
 							break;
@@ -2171,7 +2214,8 @@ public class SQLCompiler
 								setErrorMessage("Grammatical Error : Check the usuage of '*'.");
 								return null;
 							}
-
+							columns.remove(col);
+							real_columns.remove(col);
 							// table_name으로 된 모든 column을 획득하기
 							for (String t_name : table_names)
 							{
@@ -2182,6 +2226,7 @@ public class SQLCompiler
 										if (cc.contains(t_name))
 										{
 											columns.add(cc);
+											real_columns.add(cc);
 										}
 									}
 								}
@@ -2197,7 +2242,8 @@ public class SQLCompiler
 				System.out.println();
 
 				// rows 를 얻어옴
-				System.out.println("rows를 얻어옴. current=" + current);
+				System.out.println("rows를 얻어옴. current=" + current+" i="+i);
+				if (current.equals("where")) current = texts[i++];
 				if (current.equals(";") || current.equals("order"))
 				{ // 끝나는 거니까
 					int[] row = new int[temp_result.length];
@@ -2250,11 +2296,12 @@ public class SQLCompiler
 						logger.info("temp_table : {} ",temp_table[0][k]);
 						if (temp_table[0][k].equals(col))
 						{
+							logger.info(" -- temp_table[][] == col, cols[{}]=1",k);
 							cols[k] = 1;
 						}
 					}
 				}
-
+				
 				// rows 구하기
 				int count = 0;
 				System.out.println("여기 rows=" + rows);
@@ -2340,6 +2387,7 @@ public class SQLCompiler
 									setErrorMessage("Grammatical Error : order by passage cannot be end with ','.");
 									return null;
 								}
+								subquery_last_index = i;
 								break;
 							case ",":
 								if (keyword_level == 0)
@@ -2470,6 +2518,17 @@ public class SQLCompiler
 				}
 			} // end of stage4
 			i++;
+		}
+		
+		// real_columns print
+		System.out.println("-- real_columns print");
+		System.out.println("real_columns="+real_columns);
+		System.out.println();
+		
+		// 마지막으로 column 명 갖다 붙이기
+		for (int k = 0; k < real_columns.size(); k++) {
+			selectResult[0][k] = real_columns.get(k);
+			System.out.println("뾰로롱뾰롱"+k);
 		}
 
 		// stage 2와 stage 3은 무조건 값이 있어야 함

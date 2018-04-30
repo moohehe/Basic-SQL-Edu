@@ -54,7 +54,7 @@ public class TestNaviController {
 	@RequestMapping(value = "test", method = {RequestMethod.POST, RequestMethod.GET})
 	public String test(Model model, HttpServletResponse response, HttpServletRequest request, 
 			String langop) {
-		
+		request.
 		Questext qt = new Questext();
 		int lang=0; //언어
 		int stage=0; //단계(레벨)
