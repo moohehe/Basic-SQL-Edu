@@ -75,6 +75,13 @@ $(function(){
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Select Language</a>
             </li>
+            <li class="nav-item mx-0 mx-lg-1">
+            <select id="langop" name="lang" style="font-size: 15px;" class = "form-control">
+						<option value="1" <c:if test="${selectedLang == 1}">selected</c:if>> 영어</option>
+						<option value="2" <c:if test="${selectedLang == 2}">selected</c:if>> 한국어</option>
+						<option value="3" <c:if test="${selectedLang == 3}">selected</c:if>> 일본어</option>
+			</select>
+			</li>
           </ul>
         </div>
       </div>
@@ -198,11 +205,7 @@ $(function(){
             <form name="sentMessage" id="contactForm" novalidate="novalidate">
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <select id="langop" name="lang" style="font-size: 20px;" style = "form-control">
-						<option value="1" <c:if test="${selectedLang == 1}">selected</c:if>> 영어</option>
-						<option value="2" <c:if test="${selectedLang == 2}">selected</c:if>> 한국어</option>
-						<option value="3" <c:if test="${selectedLang == 3}">selected</c:if>> 일본어</option>
-					</select>
+                  
                   <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name.">
                   <p class="help-block text-danger"></p>
                 </div>
