@@ -23,7 +23,8 @@
 
     <!-- Plugin CSS -->
     <link href="resources/vendor/magnific-popup/magnific-popup.css" rel="stylesheet" type="text/css">
-
+	<link href="resources/css/title.css" type="text/css" rel="stylesheet">
+	
     <!-- Custom styles for this template -->
     <link href="resources/css/freelancer.min.css" rel="stylesheet">
 
@@ -94,8 +95,9 @@ $(function(){
     <header class="masthead bg-primary text-white text-center">
       <div class="container">
         <img class="img-fluid mb-5 d-block mx-auto" src="resources/image/profile.png" alt="">
-        <h1 class="text-uppercase mb-0">Basic SQL Education</h1>
-        <hr class="star-light">
+		<h1 class="animate one"><span>B</span><span>a</span><span>s</span><span>i</span><span>c</span> <span>S</span><span>Q</span><span>L</span>
+											<span>E</span><span>d</span><span>u</span><span>c</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span></h1>
+		<hr class="star-light">
         <h2 class="font-weight-light mb-0">단순하고 직관적인 방식의 미니게임을 통해서<br> 누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.</h2>
       </div>
     </header>
@@ -152,7 +154,7 @@ $(function(){
           <div class="col-md-4">
             <h4 class="text-uppercase mb-4">About BSE</h4>
             <p class="lead mb-0">Basic SQL Education is a free to use, If you have any request, please send Email to
-              <a href="mailto:chansu369@naver.com">chansu369@naver.com</a>.</p>
+              <a href="mailto:chansu369@naver.com">chansu369@naver.com</a></p>
           </div>
         </div>
       </div>
