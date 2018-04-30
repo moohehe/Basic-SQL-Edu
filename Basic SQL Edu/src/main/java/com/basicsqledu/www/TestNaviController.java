@@ -54,14 +54,14 @@ public class TestNaviController {
 	@RequestMapping(value = "test", method = {RequestMethod.POST, RequestMethod.GET})
 	public String test(Model model, HttpServletResponse response, HttpServletRequest request, 
 			String langop) {
-		
+		System.out.println("홈에서 선택한 언어"+langop);
 		Questext qt = new Questext();
 		int lang=0; //언어
 		int stage=0; //단계(레벨)
 		
 		//사용자 배열 쿠키로 읽어오기.
 		Cookie cks[] = request.getCookies();
-		if(cks != null && cks.length>1){ //이미 사용자 아이디가 하나 들어가므로 length의 초기는 1이다.
+		if(cks != null && cks.length>2){ //이미 사용자 아이디가 하나 들어가므로 length의 초기는 1이다.
 			System.out.println("requestmapping= test에서 쿠키 읽어따!");
 			//쿠키 있으면 읽기
 			for(Cookie c : cks){
@@ -70,52 +70,62 @@ public class TestNaviController {
 				if(c.getName().equals("currentStage")){
 					if(c.getValue() == null || c.getValue().equals("")){
 						stage = 1;
+						System.out.println("쿠키 스테이지 값만 못불러온 경우.");
 						cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 						cg.addCookie(response, "1");
+						cg.setCookieMaxAge(72*60*60); 
+						break;
 					}
 					else{
+						System.out.println("스테이지 값 잘 불러옴.");
 						stage = Integer.parseInt(c.getValue());
 						System.out.println("쿠키에서 초기에 읽은 stage"+stage);
 					}
-					qt.setLvstatus(stage);
-				}else{
+					System.out.println("스테이지 설정 완료.");
+				}/*else{
+					System.out.println("스테이지 쿠키 없는 경우.");
 					cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 					cg.addCookie(response, "1");
-				}
-				/*if(c.getName().equals("currentLang")){//현재 언어 정보가 쿠키에 있는 경우.
+					cg.setCookieMaxAge(72*60*60); 
+				}*/
+			}	
+			qt.setLvstatus(stage);
+			
+			for(Cookie c : cks){
+				if(c.getName().equals("currentLang")){//현재 언어 정보가 쿠키에 있는 경우.
 					if(c.getValue() == null || c.getValue().equals("") || c.getValue().equals(" ")){ //쿠키 value가 소실된 경우.
 						cg.setCookieName("currentLang");
 						cg.addCookie(response, "2");
+						cg.setCookieMaxAge(72*60*60); 
+						lang = 2;
+						break;
 					}
 					else{ //쿠키의 값이 있는 경우.
-						lang = Integer.parseInt(c.getValue());
-					}
-				}else{//currentLang정보가 없는 경우.
-					cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
-					cg.addCookie(response, "2");
-				}*/
-			}//스테이지 쿠키 읽는 for문 종료.
-			
-			//그냥 거치지 않고 들어올 경우, 쿠키에서 읽은 값을 적용.
-			if(langop == null || langop.length()<1){
-				for(Cookie c : cks){
-					if(c.getName().equals("currentLang")){
-						langop= c.getValue();
+						if(langop == null || langop.length()<1){
+							lang = Integer.parseInt(c.getValue());
+							System.out.println("쿠키의 값이 있따고 합니다: 그래서 언어는? "+lang);
+						}else{
+							lang = Integer.parseInt(langop);
+						}
 					}
 				}
-			}
+				
+			}//스테이지 쿠키 읽는 for문 종료.
+			qt.setTextLang(lang);
+			System.out.println(lang+"이라는 언어로 언어 설정!");
 			
-			qt.setTextLang(Integer.parseInt(langop));
+			
 			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 			cg.addCookie(response, langop);
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 			
 		}else{
-			//쿠키없으면 쿠키 생성
-			System.out.println("requestmapping= test에서 쿠키 없단다!");
+			//쿠키가 아예 없으면 쿠키 생성
+			System.out.println("requestmapping= test에서 문제 스테이지 쿠키 없단다!");
 			
 			cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
 			cg.addCookie(response, "1"); //일단 1부터 시작이므로 1을 넣어줌.
+			cg.setCookieMaxAge(72*60*60); 
 			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 			cg.addCookie(response, langop); //홈에서 받아온 값을 넣어준다.(쿠키가 없으므로)
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
@@ -123,11 +133,11 @@ public class TestNaviController {
 			for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
 				cg.setCookieName("completeStage"+i);
 				cg.addCookie(response, "non-pass");
+				cg.setCookieMaxAge(72*60*60); 
 			}
 		
-			//아무 값이 없는 경우, 기본 영어와 레벨1을 넣는다.
+			//아무 값이 없는 경우, 기본 한국어와 레벨1을 넣는다.
 				stage = 1;
-				//lang= 2;
 				qt.setLvstatus(stage);
 				qt.setTextLang(Integer.parseInt(langop));
 		}
@@ -165,27 +175,6 @@ public class TestNaviController {
 			lang = "1";
 			stage = "1";
 		}
-		/*//사용자 배열 쿠키로 읽어오기.
-				Cookie cks[] = request.getCookies();
-				if(cks != null && cks.length>1){ //이미 사용자 아이디가 하나 들어가므로 length의 초기는 1이다.
-					//쿠키 있으면 읽기
-					for(Cookie c : cks){
-						//저장된 현재 스테이지 정보가 있으면 이를 vo에 넣음.
-						
-						if(c.getName().equals("currentStage")){
-							stage = c.getValue();
-							qt.setLvstatus(Integer.parseInt(stage));
-						}
-						if(c.getName().equals("currentLang")){
-							lang = c.getValue();
-							qt.setTextLang(Integer.parseInt(lang));
-						}
-						if(c.getValue().equals("pass")){ 
-							//문제를 완료한 스테이지 쿠키만 들어옴.
-							naviContentMap.put(c.getName(),c.getValue()); //완료한 스테이지들 맵에 저장.
-						}
-					}
-				}*/ 
 		//여기로 올 때마다 쿠키의 현재 스테이지 값을 변경해주어야 한다.
 		
 		cg.setCookieName("currentStage"); //현재 스테이지(어디까지 풀었나)
