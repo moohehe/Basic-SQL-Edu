@@ -437,6 +437,11 @@ public class SQLCompiler
 				}
 			}
 		}
+		if (questionNumber == 12 || questionNumber == 13) {
+			map.put("complete", true);
+			map.put("success", 1);
+			return map;
+		}
 
 		//문제 9번 desc 체크
 		if(questionNumber == 9){
