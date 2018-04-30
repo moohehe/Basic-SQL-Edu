@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>	
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,10 +27,35 @@
     <!-- Custom styles for this template -->
     <link href="resources/css/freelancer.min.css" rel="stylesheet">
 
+    <script type="text/javascript" src="<c:url value="/resources/js/jquery-3.2.1.js"/>"></script>
+
+<script type="text/javascript">
+$(function(){
+
+	// last stage
+	var value = $('#certiBtn').val();
+	var url = $('#url').val();
+	if (value=='true') {
+		console.log('asdf');
+		setTimeout(function() {
+			location.href=url;
+		},5000);
+	}
+	
+	$('#goTest').on('click', function(){
+	 var language = $('#langop').val(); //사용자가 select Box에서 선택한 언어.	
+	 $('#selectedLang').val(language);
+	 var checking = $('#selectedLang').val();
+	 alert(checking);
+	 /* $(location).attr('href', "test?langop="+language); */
+	 $('#enter').submit();
+		
+	});
+});
+</script>
   </head>
 
   <body id="page-top">
-
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
       <div class="container">
@@ -41,13 +67,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#portfolio">START</a>
+              <a class = "nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#start" id="goTest">START</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Language</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Select Language</a>
             </li>
           </ul>
         </div>
@@ -60,7 +86,7 @@
         <img class="img-fluid mb-5 d-block mx-auto" src="resources/image/profile.png" alt="">
         <h1 class="text-uppercase mb-0">Basic SQL Education</h1>
         <hr class="star-light">
-        <h2 class="font-weight-light mb-0"></h2>
+        <h2 class="font-weight-light mb-0">단순하고 직관적인 방식의 미니게임을 통해서 누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.</h2>
       </div>
     </header>
 
@@ -142,10 +168,10 @@
         <hr class="star-light mb-5">
         <div class="row">
           <div class="col-lg-4 ml-auto">
-            <p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional LESS stylesheets for easy customization.</p>
+            <p class="lead">여기다가 치셈</p>
           </div>
           <div class="col-lg-4 mr-auto">
-            <p class="lead">Whether you're a student looking to showcase your work, a professional looking to attract clients, or a graphic artist looking to share your projects, this template is the perfect starting point!</p>
+            <p class="lead">여기다가 또 치셈</p>
           </div>
         </div>
         <div class="text-center mt-4">
@@ -160,7 +186,7 @@
     <!-- Contact Section -->
     <section id="contact">
       <div class="container">
-        <h2 class="text-center text-uppercase text-secondary mb-0">Contact Me</h2>
+        <h2 class="text-center text-uppercase text-secondary mb-0">Select Language</h2>
         <hr class="star-dark mb-5">
         <div class="row">
           <div class="col-lg-8 mx-auto">
@@ -169,21 +195,25 @@
             <form name="sentMessage" id="contactForm" novalidate="novalidate">
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Name</label>
+                  <select id="langop" name="lang" style="font-size: 20px;" style = "form-control">
+						<option value="1" <c:if test="${selectedLang == 1}">selected</c:if>> 영어</option>
+						<option value="2" <c:if test="${selectedLang == 2}">selected</c:if>> 한국어</option>
+						<option value="3" <c:if test="${selectedLang == 3}">selected</c:if>> 일본어</option>
+					</select>
                   <input class="form-control" id="name" type="text" placeholder="Name" required="required" data-validation-required-message="Please enter your name.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Email Address</label>
+                  <label>한국어</label>
                   <input class="form-control" id="email" type="email" placeholder="Email Address" required="required" data-validation-required-message="Please enter your email address.">
                   <p class="help-block text-danger"></p>
                 </div>
               </div>
               <div class="control-group">
                 <div class="form-group floating-label-form-group controls mb-0 pb-2">
-                  <label>Phone Number</label>
+                  <label>日本語</label>
                   <input class="form-control" id="phone" type="tel" placeholder="Phone Number" required="required" data-validation-required-message="Please enter your phone number.">
                   <p class="help-block text-danger"></p>
                 </div>
@@ -204,7 +234,15 @@
           </div>
         </div>
       </div>
+					
     </section>
+    
+    <!-- 히든 폼 -->
+    <form action="test" method="post" id="enter">
+		<input type="hidden" id="selectedLang" name="langop" value="${selectedLang}">
+	</form>
+	<input type="hidden" id="certiBtn" value="${certiBtn}">
+	<input type="hidden" id="url" value="${url}">
 
     <!-- Footer -->
     <footer class="footer text-center">
@@ -256,7 +294,7 @@
 
     <div class="copyright py-4 text-center text-white">
       <div class="container">
-        <small>Copyright &copy; Your Website 2018</small>
+        <small>Copyright &copy; BSE 2018</small>
       </div>
     </div>
 
