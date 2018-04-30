@@ -139,11 +139,11 @@ $(function(){
         <div class="row">
           <div class="col-md-4 mb-5 mb-lg-0">
             <h4 class="text-uppercase mb-4">Creator</h4>
-            <p class="lead mb-0">J.H and C.S and Y.J and
-              <br>S.W and H.S</p>
+            <p class="lead mb-0">J.H / C.S / Y.J
+              <br>S.W / H.S</p>
           </div>
           <div class="col-md-4 mb-5 mb-lg-0">
-            <h4 class="text-uppercase mb-4">CERTIFY</h4>
+			<h4 class="text-uppercase mb-4">CERTIFIED<br>BY</h4>
             <ul class="list-inline mb-0">
               <li class="list-inline-item">
 				<img alt="" src="resources/image/main2.PNG" class = "main_logo">                
@@ -153,7 +153,8 @@ $(function(){
           </div>
           <div class="col-md-4">
             <h4 class="text-uppercase mb-4">About BSE</h4>
-            <p class="lead mb-0">Basic SQL Education is a free to use, If you have any request, please send Email to
+            <p class="lead mb-0">Basic SQL Education is<br> open to everyone. 
+            							<br>If you have any inquiries, <br>please feel free to contact us.<br>Email:
               <a href="mailto:chansu369@naver.com">chansu369@naver.com</a></p>
           </div>
         </div>

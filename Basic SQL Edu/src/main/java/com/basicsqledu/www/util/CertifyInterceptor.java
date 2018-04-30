@@ -34,6 +34,7 @@ public class CertifyInterceptor extends HandlerInterceptorAdapter{
 			return super.preHandle(request, response, handler);			// == return true;   (갈 길 가라)
 
 		}else{
+			response.sendRedirect("/www");
 			return false;
 		}
 	}
