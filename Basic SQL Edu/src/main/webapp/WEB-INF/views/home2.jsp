@@ -53,6 +53,11 @@ $(function(){
 	});
 });
 </script>
+<style type="text/css">
+	.main_logo{
+		
+	}
+</style>
   </head>
 
   <body id="page-top">
@@ -76,7 +81,7 @@ $(function(){
               <p class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" style="color: white; padding-left: 10%;">Select Language</p>
               </li>
               <li class="nav-item mx-0 mx-lg-1">
-              <select id="langop" name="lang" style="font-size: 20px;" class="form-control">
+              <select id="langop" name="lang" style="font-size: 15px;" class="form-control">
 						<option value="1" <c:if test="${selectedLang == 1}">selected</c:if>> 영어</option>
 						<option value="2" <c:if test="${selectedLang == 2}">selected</c:if>> 한국어</option>
 						<option value="3" <c:if test="${selectedLang == 3}">selected</c:if>> 일본어</option>
@@ -116,10 +121,7 @@ $(function(){
     	   </div>
         </div>
         <div class="text-center mt-4">
-          <a class="btn btn-xl btn-outline-light" href="#">
-            <i class="fa fa-download mr-2"></i>
-          </a>
-        </div>
+          </div>
       </div>
     </section>
 
@@ -136,44 +138,23 @@ $(function(){
       <div class="container">
         <div class="row">
           <div class="col-md-4 mb-5 mb-lg-0">
-            <h4 class="text-uppercase mb-4">Location</h4>
-            <p class="lead mb-0">2215 John Daniel Drive
-              <br>Clark, MO 65243</p>
+            <h4 class="text-uppercase mb-4">Creator</h4>
+            <p class="lead mb-0">J.H and C.S and Y.J and
+              <br>S.W and H.S</p>
           </div>
           <div class="col-md-4 mb-5 mb-lg-0">
-            <h4 class="text-uppercase mb-4">Around the Web</h4>
+            <h4 class="text-uppercase mb-4">CERTIFY</h4>
             <ul class="list-inline mb-0">
               <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-facebook"></i>
-                </a>
+				<img alt="" src="resources/image/main2.PNG" class = "main_logo">                
               </li>
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-google-plus"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-twitter"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-linkedin"></i>
-                </a>
-              </li>
-              <li class="list-inline-item">
-                <a class="btn btn-outline-light btn-social text-center rounded-circle" href="#">
-                  <i class="fa fa-fw fa-dribbble"></i>
-                </a>
-              </li>
+              
             </ul>
           </div>
           <div class="col-md-4">
-            <h4 class="text-uppercase mb-4">About Freelancer</h4>
-            <p class="lead mb-0">Freelance is a free to use, open source Bootstrap theme created by
-              <a href="http://startbootstrap.com">Start Bootstrap</a>.</p>
+            <h4 class="text-uppercase mb-4">About BSE</h4>
+            <p class="lead mb-0">Basic SQL Education is a free to use, If you have any request, please send Email to
+              <a href="mailto:chansu369@naver.com">chansu369@naver.com</a>.</p>
           </div>
         </div>
       </div>
