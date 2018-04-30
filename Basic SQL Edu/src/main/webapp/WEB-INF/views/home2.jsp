@@ -64,7 +64,7 @@ $(function(){
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg bg-secondary fixed-top text-uppercase" id="mainNav">
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="#page-top">Basic SQL Education</a>
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">◈Basic SQL Education</a>
         <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>
@@ -131,7 +131,7 @@ $(function(){
 		<input type="hidden" id="selectedLang" name="langop" value="${selectedLang}">
 	</form>
 	<input type="hidden" id="certiBtn" value="${certiBtn}">
-	<input type="hidden" id="url" value="${url}">
+	<input type="hidden" id="url" value="${url}"> 
 
     <!-- Footer -->
     <footer class="footer text-center">
