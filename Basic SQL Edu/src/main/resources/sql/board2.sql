@@ -1,6 +1,6 @@
 -- 피드백 게시판 테이블 --
 
-create table board2
+create table Feedback_Board
 	(
 	  fb_no  	number 	      primary key	-- 글번호
 	  ,fb_user	varchar2(100) not null		-- 작성자
@@ -13,7 +13,7 @@ create table board2
 	);
 
 -- 일련번호 시퀀스 --
-create sequence board2_seq start with 1 increment by 1;
+create sequence fb_board_seq start with 1 increment by 1;
 
 -- 글 저장 예 -- 
-insert into board2 (fb_no, fb_user, email, title, content, status, memo) values (board2_seq.nextval, 'test2', 'test2', 'test2', 'test2', '1', 'test2');
+insert into Feedback_Board (fb_no, fb_user, email, title, content, status, memo) values (fb_board_seq.nextval, 'test2', 'test2', 'test2', 'test2', '1', 'test2');
