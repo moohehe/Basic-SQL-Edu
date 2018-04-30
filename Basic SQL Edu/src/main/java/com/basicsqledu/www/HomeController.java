@@ -63,7 +63,7 @@ public class HomeController {
 			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.*/
 			model.addAttribute("selectedLang", 2);
 		}
-		return "home";
+		return "home2";
 		
 	}
 	@RequestMapping(value = "intro", method = RequestMethod.GET)
