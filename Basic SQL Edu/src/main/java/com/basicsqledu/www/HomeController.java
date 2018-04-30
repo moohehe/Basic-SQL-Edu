@@ -45,23 +45,25 @@ public class HomeController {
 		if(cks != null && cks.length>1){ 
 			for(Cookie c : cks){
 				if(c.getName().equals("currentLang")){
+					System.out.println("Home컨트롤러에서 언어 쿠키 읽은 값 :"+c.getValue());
 					model.addAttribute("selectedLang", c.getValue());
 					break;
 				}else{
-					
+					System.out.println("Home컨트롤러 현재 언어가 없답니다.");
 					cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 					cg.addCookie(response, "2"); //홈에서 받아온 값을 넣어준다.(쿠키가 없으므로)
 					cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
 					model.addAttribute("selectedLang", 2);
 				}
 			}
-		}else{ //쿠키가 없는 경우.
-			cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
+		}else{ //쿠키가 아예 없는 경우.
+			
+			/*cg.setCookieName("currentLang");//현재 언어(무슨 언어인지)
 			cg.addCookie(response, "2"); //홈에서 받아온 값을 넣어준다.(쿠키가 없으므로)
-			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.
+			cg.setCookieMaxAge(72*60*60); //유효시간 3일 설정.*/
 			model.addAttribute("selectedLang", 2);
 		}
-		return "home";
+		return "home2";
 		
 	}
 	@RequestMapping(value = "intro", method = RequestMethod.GET)

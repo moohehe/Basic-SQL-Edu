@@ -59,8 +59,6 @@ $(function(){
 	$('#goTest').on('click', function(){
 	 var language = $('#langop').val(); //사용자가 select Box에서 선택한 언어.	
 	 $('#selectedLang').val(language);
-	 var checking = $('#selectedLang').val();
-	 alert(checking);
 	 /* $(location).attr('href', "test?langop="+language); */
 	 $('#enter').submit();
 		
