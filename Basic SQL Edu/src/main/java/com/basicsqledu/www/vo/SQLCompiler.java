@@ -567,6 +567,30 @@ public class SQLCompiler
 						System.out.println();
 					}
 				}
+				
+				//12번 서브쿼리 문제 정답 체크 (별도 로직 필요)
+				if(questionNumber == 12){
+					//정답 : h.job  = police
+					int k = 0;
+					for(int i = 1; i<answerTable[0].length;i++){
+						if(answerTable[1][i] != null){
+							k = i;
+						}
+					}
+					if(answerTable[1][k].equals(result[1][0])){
+						String col = answerTable[0][k];
+						col = "h."+ col;
+						if(col.equals(result[0][0])){
+							System.out.println("12번 정답이요");
+							map.put("success", 1);
+							return map;
+						}
+					}else{
+						map.put("success", -1);
+						setErrorMessage	("Not correct Answer");
+						return map;
+					}
+				}
 
 
 				int [] index = new int[answerTable[0].length-1];
