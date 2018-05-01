@@ -34,12 +34,12 @@
 	 
 	<!-- 인터셉터 설정 -->
 	
-	<mvc:interceptors>
+	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/goCertify"/>
 			<beans:ref bean="CertifyInterceptor"/>
 		</mvc:interceptor>
 	
-	</mvc:interceptors>	
+	</mvc:interceptors>
 	
 </beans:beans>
