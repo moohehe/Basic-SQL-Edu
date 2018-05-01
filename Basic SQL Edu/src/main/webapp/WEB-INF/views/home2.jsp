@@ -70,7 +70,7 @@ $(function(){
               <a class = "nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#start" id="goTest">START</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
-              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">About</a>
+              <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">Story Line</a>
             </li>
             <li class="nav-item mx-0 mx-lg-1">
               <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">Select Language</a>
@@ -161,23 +161,26 @@ $(function(){
       </div>
     </section> -->
 
-    <!-- About Section -->
+    <!-- Story Line Section -->
     <section class="bg-primary text-white mb-0" id="about">
       <div class="container">
-        <h2 class="text-center text-uppercase text-white">About</h2>
+        <h2 class="text-center text-uppercase text-white"> Story Line</h2>
         <hr class="star-light mb-5">
         <div class="row">
           <div class="col-lg-4 ml-auto">
-            <p class="lead">여기다가 치셈</p>
+            <p class="lead">길에서 누군가가 잃어버린 시계를 주운 당신, 
+            갑자기 시계의 초침과 분침이 빠르게 돌아가며 알 수 없는 이공간으로 빨려 들어가게 되었다.
+            느닷없이 타임워프 하게 된 당신… 머리 속으로 갑자기 어떤 목소리가 들려오는데…
           </div>
           <div class="col-lg-4 mr-auto">
-            <p class="lead">여기다가 또 치셈</p>
-          </div>
+            <p class="lead">
+    	“총 20가지의 관문을 통과하면 자네를 다시 집으로 보내주도록 하지.” 
+    	20개의 SQL 문제를 모두 풀고, 무사히 본래 세계로 돌아가도록 하자.
+    	   </div>
         </div>
         <div class="text-center mt-4">
           <a class="btn btn-xl btn-outline-light" href="#">
             <i class="fa fa-download mr-2"></i>
-            Download Now!
           </a>
         </div>
       </div>
