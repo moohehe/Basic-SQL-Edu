@@ -117,6 +117,36 @@ public class CompilerController
 			return "";
 		}
 		
+		// cheat key setting
+		if (sql.split(".key.")[0].equals("pass")) {
+			String[] cheats = {
+					""
+					,"create table animal(Animal_num number primary key,species varchar(40) unique,color varchar(40) not null,habitat  varchar(40) foreign key,legs number not null);" // stage1
+					,"select * from animal;" // stage2
+					,"select species from animal;" // stage3
+					,"select habitat from animal;" // stage4
+					,"select * from animal where color = red;" // stage5
+					,"select * from animal where legs=2 and color = blue;" // stage6
+					,"select * from animal where legs=4 or habitat= sky;" // stage7
+					,"select * from animal where legs = 2 or legs = 4; " // stage8
+					,"select * from animal order by legs desc;" // stage9
+					,"select * from animal where color=blue and habitat=sky or habitat=land and color=red;" // stage10
+					,"Alter table animal rename person;" // stage11
+					,"Select h.job job from (select * from person where gender = 'female') h where h.hair_color= 'black';" // stage12
+					,"Select * from (select * from person h2 where job=nurse) h1 Where h1.haircolor='pink' and h1.gender='female';" // stage13
+					,"update person set hair_color = 'red' where hair_color=black and job=nurse;" // stage14
+					,"insert into person(gender,hair_color,job,height) values('male', 'white', 'scientist', 177);" // stage15
+					,"create table robot(r_color varchar(50),r_size varchar(50),r_type varchar(50),weapon varchar(50));" // stage16
+					,"insert into robot (r_color, r_size, r_type, weapon) values('white','small','R2','beam');" // stage17
+					,"delete from robot where r_color = grey and r_type = humanoid;" // stage18
+					,"drop table robot;" // stage19
+					,"commit;" // stage20
+			};
+			sql = cheats[questionNumber];
+		}
+		
+		
+		
 		// 1. sql 구문 입력 / 해석 
 		// 입력받은 sql 구문을 compiler 객체에 삽입
 		compiler.setText(sql);
