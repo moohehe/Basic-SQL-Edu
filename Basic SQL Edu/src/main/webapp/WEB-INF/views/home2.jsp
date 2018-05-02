@@ -146,7 +146,7 @@ $(function(){
 		<hr class="star-light">
         <h2 class="font-weight-light mb-0" id="header_text">단순하고 직관적인 방식의 미니게임을 통해서<br> 누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.</h2>
       </div>
-    </header>
+    </header> 
    
 
     <!-- Story Line Section -->
