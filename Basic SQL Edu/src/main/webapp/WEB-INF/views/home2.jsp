@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <title>BSE - Basic SQL Education</title>
 
     <!-- Bootstrap core CSS -->
@@ -81,9 +81,9 @@ $(function(){
 	//메인 화면  언어 교환
 	$("select#langop").change(function(){
 		if($('#langop option:selected').val()==1){
-			$('#header_text').html('With a simple and intuitive mini-game<br>everyone can easily learn the basic SQL syntax.');
-			$('#story1').html('When someone picked up the lost watch on the street,<br>you suddenly moved into this mysterious place. Suddenly, it becomes to time travel. <br>I hear a voice coming into my head ...');
-			$('#story2').html('\"If you pass through a total 20 of quiz, <br> I will send you home.\" <br>Let\'s solve all 20 SQL questions and return safely to the original world.');
+			$('#header_text').html('Anyone can easily learn the basics of SQL <br> by playing through a simple and intuitive mini-game.');
+			$('#story1').html('You have picked up a watch that someone had lost. All the sudden, the clock began to acclerate and you got sucked into a mysterious space. And a voice came direct into your head saying ');
+			$('#story2').html('\"You must clear 20 trials if you wish to go back to the world where you belong<br>\"Let\'s beat 20 sql questions to get back home safe!');
 		}else if($('#langop option:selected').val()==2){
 			$('#header_text').html('단순하고 직관적인 방식의 미니게임을 통해서<br> 누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.');
 			$('#story1').html('길에서 누군가가 잃어버린 시계를 주운 당신, 갑자기 시계의 초침과 분침이 빠르게 돌아가며 알 수 없는 이공간으로 빨려 들어가게 되었다. 느닷없이 타임워프 하게 된 당신… 머리 속으로 갑자기 어떤 목소리가 들려오는데…');
