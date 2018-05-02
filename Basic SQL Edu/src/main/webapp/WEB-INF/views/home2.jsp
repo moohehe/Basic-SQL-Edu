@@ -50,6 +50,52 @@ $(function(){
 	 $('#enter').submit();
 		
 	});
+	
+	
+	
+	
+	/* 영어
+	header_text : With a simple and intuitive mini-game<br>everyone can easily learn the basic SQL syntax.
+	story1 : When someone picked up the lost watch on the street, 
+	you suddenly moved into this mysterious place. Suddenly, it becomes to time travel. 
+	I hear a voice coming into my head ...
+    story2 : "If you pass through a total 20 of quiz, I will send you home." 
+	Let's solve all 20 SQL questions and return safely to the original world.
+	*/
+	
+	/* 한국어
+	header_text : 단순하고 직관적인 방식의 미니게임을 통해서<br> 누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.
+	story1 : 길에서 누군가가 잃어버린 시계를 주운 당신, 
+    갑자기 시계의 초침과 분침이 빠르게 돌아가며 알 수 없는 이공간으로 빨려 들어가게 되었다.
+    느닷없이 타임워프 하게 된 당신… 머리 속으로 갑자기 어떤 목소리가 들려오는데…
+    story2 : “총 20가지의 관문을 통과하면 자네를 다시 집으로 보내주도록 하지.” 
+	20개의 SQL 문제를 모두 풀고, 무사히 본래 세계로 돌아가도록 하자.
+	*/
+	
+	/* 일본어
+	header_text : 単純で直観的な方式のミニゲームを<br>通じて誰でも簡単に基礎SQL構文を身につけることができます。
+	story1 : 道で誰かがなくした時計を拾ったあなた、急に時計の秒針と長針が早く回りながら、分からないこの空間に吸い込まれて入るようになってきた。 突然タイム・ワープすることになったあなた…頭の中で突然ある声が聞こえて来るのに…
+    story2 : \"全部20つの問題を通過すれば、君をまた家に送ってあげてもいいわ\" 20個のSQL問題を全て解いて、無事に本来世界に戻るようにしよう。
+	*/
+	
+	//메인 화면  언어 교환
+	$("select#langop").change(function(){
+		if($('#langop option:selected').val()==1){
+			$('#header_text').html('With a simple and intuitive mini-game<br>everyone can easily learn the basic SQL syntax.');
+			$('#story1').html('When someone picked up the lost watch on the street,<br>you suddenly moved into this mysterious place. Suddenly, it becomes to time travel. <br>I hear a voice coming into my head ...');
+			$('#story2').html('\"If you pass through a total 20 of quiz, <br> I will send you home.\" <br>Let\'s solve all 20 SQL questions and return safely to the original world.');
+		}else if($('#langop option:selected').val()==2){
+			$('#header_text').html('단순하고 직관적인 방식의 미니게임을 통해서<br> 누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.');
+			$('#story1').html('길에서 누군가가 잃어버린 시계를 주운 당신, 갑자기 시계의 초침과 분침이 빠르게 돌아가며 알 수 없는 이공간으로 빨려 들어가게 되었다. 느닷없이 타임워프 하게 된 당신… 머리 속으로 갑자기 어떤 목소리가 들려오는데…');
+			$('#story2').html('\“총 20가지의 관문을 통과하면 자네를 다시 집으로 보내주도록 하지.\” 20개의 SQL 문제를 모두 풀고, 무사히 본래 세계로 돌아가도록 하자.');
+		}else if($('#langop option:selected').val()==3){
+			$('#header_text').html('単純で直観的な方式のミニゲームを<br>通じて誰でも簡単に基礎SQL構文を身につけることができます。');
+			$('#story1').html('道で誰かがなくした時計を拾ったあなた、急に時計の秒針と長針が早く回りながら、分からないこの空間に吸い込まれて入るようになってきた。 突然タイム・ワープすることになったあなた…頭の中で突然ある声が聞こえて来るのに…');
+			$('#story2').html('\"全部20つの問題を通過すれば、君をまた家に送ってあげてもいいわ\" <br>20個のSQL問題を全て解いて、無事に本来世界に戻るようにしよう。');
+		}
+	});
+	
+	
 });
 </script>
 <style type="text/css">
@@ -81,9 +127,9 @@ $(function(){
               </li>
               <li class="nav-item mx-0 mx-lg-1">
               <select id="langop" name="lang" style="font-size: 15px;" class="form-control">
-						<option value="1" <c:if test="${selectedLang == 1}">selected</c:if>> 영어</option>
-						<option value="2" <c:if test="${selectedLang == 2}">selected</c:if>> 한국어</option>
-						<option value="3" <c:if test="${selectedLang == 3}">selected</c:if>> 일본어</option>
+						<option value="1" <c:if test="${selectedLang == 1}">selected</c:if>> English</option>
+						<option value="2" <c:if test="${selectedLang == 2}">selected</c:if>> Korean</option>
+						<option value="3" <c:if test="${selectedLang == 3}">selected</c:if>> Japanese</option>
 					</select>
             </li>
           </ul>
@@ -98,24 +144,24 @@ $(function(){
 		<h1 class="animate one"><span>B</span><span>a</span><span>s</span><span>i</span><span>c</span> <span>S</span><span>Q</span><span>L</span>
 											<span>E</span><span>d</span><span>u</span><span>c</span><span>a</span><span>t</span><span>i</span><span>o</span><span>n</span></h1>
 		<hr class="star-light">
-        <h2 class="font-weight-light mb-0">단순하고 직관적인 방식의 미니게임을 통해서<br> 누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.</h2>
+        <h2 class="font-weight-light mb-0" id="header_text">단순하고 직관적인 방식의 미니게임을 통해서<br> 누구나 쉽게 기초 SQL구문을 익힐 수 있습니다.</h2>
       </div>
-    </header>
+    </header> 
    
 
     <!-- Story Line Section -->
     <section class="bg-primary text-white mb-0" id="about">
       <div class="container">
-        <h2 class="text-center text-uppercase text-white"> Story</h2>
+        <h2 class="text-center text-uppercase text-white">Story</h2>
         <hr class="star-light mb-5">
         <div class="row">
           <div class="col-lg-4 ml-auto">
-            <p class="lead">길에서 누군가가 잃어버린 시계를 주운 당신, 
+            <p class="lead" id="story1">길에서 누군가가 잃어버린 시계를 주운 당신, 
             갑자기 시계의 초침과 분침이 빠르게 돌아가며 알 수 없는 이공간으로 빨려 들어가게 되었다.
             느닷없이 타임워프 하게 된 당신… 머리 속으로 갑자기 어떤 목소리가 들려오는데…
           </div>
           <div class="col-lg-4 mr-auto">
-            <p class="lead">
+            <p class="lead" id="story2">
     	“총 20가지의 관문을 통과하면 자네를 다시 집으로 보내주도록 하지.” 
     	20개의 SQL 문제를 모두 풀고, 무사히 본래 세계로 돌아가도록 하자.
     	   </div>
