@@ -19,7 +19,7 @@ public class CertifyInterceptor extends HandlerInterceptorAdapter{
       for(Cookie c : cok){
          if(c.getValue().equals("pass")){
             int temp = Integer.valueOf(c.getName().replace("completeStage",""));
-            cook[temp-1] = 1;
+            cook[temp-1] = 1; 
          }
       }
       for(int i : cook){
