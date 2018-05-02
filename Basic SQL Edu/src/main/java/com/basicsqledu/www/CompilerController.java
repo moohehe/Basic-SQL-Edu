@@ -117,11 +117,11 @@ public class CompilerController
 			return "";
 		}
 		
-		// cheat 키 세팅
+		// cheat key setting
 		if (sql.split(".key.")[0].equals("pass")) {
 			String[] cheats = {
 					""
-					,"create table animal(Animal_num number primary key,name varchar(40) unique,color varchar(40) not null,habitat  varchar(40)foreign key,legs number not null);" // stage1
+					,"create table animal(Animal_num number primary key,species varchar(40) unique,color varchar(40) not null,habitat  varchar(40) foreign key,legs number not null);" // stage1
 					,"select * from animal;" // stage2
 					,"select species from animal;" // stage3
 					,"select habitat from animal;" // stage4
