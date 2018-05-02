@@ -61,7 +61,6 @@ $(function(){
 	 $('#selectedLang').val(language);
 	 /* $(location).attr('href', "test?langop="+language); */
 	 $('#enter').submit();
-		
 	});
 });
 </script>

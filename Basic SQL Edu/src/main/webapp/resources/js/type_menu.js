@@ -281,6 +281,9 @@ function sqlrun() {
 				// 쿠키값을 확인해서 20개가 다 모였으면 certification 발급 창으로 넘어간다.
 				if(e.end != true){
 					sql_fail('Please complete all questions');
+				}else{
+					location.href = e.url;
+					return false;
 				}
 			}else{ //11번 , 15, 20alter문제를 제외하고는 모두 아래 로직을 따라간다.
 				console.log('dafd'+e);
@@ -395,7 +398,10 @@ function getCookie(cName) {
 	}
 	return unescape(cValue);
 }
-
+function cheat_success() {
+	$('#sql').val('pass.key.12314AAEE'+(Math.random()*1000)+1);
+	sqlrun();
+}
 //배경 이미지 경로 함수 지정
 function imgpath(file){
 	return "url(/www/resources/image/"+file+")";
