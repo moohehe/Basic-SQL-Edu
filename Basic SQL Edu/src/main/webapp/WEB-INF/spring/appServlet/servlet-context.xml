@@ -37,6 +37,8 @@
 	 <mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/goCertify"/>
+			<mvc:mapping path="/certify"/>
+			<mvc:mapping path="/gocertification"/>
 			<beans:ref bean="CertifyInterceptor"/>
 		</mvc:interceptor>
 	

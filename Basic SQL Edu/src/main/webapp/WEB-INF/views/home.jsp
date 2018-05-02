@@ -61,7 +61,11 @@ $(function(){
 	 $('#selectedLang').val(language);
 	 /* $(location).attr('href', "test?langop="+language); */
 	 $('#enter').submit();
-		
+	});
+	$('#langop').change(function() {
+		var k = $(this).val();
+		console.log(k);
+		console.log('뿅');
 	});
 });
 </script>
