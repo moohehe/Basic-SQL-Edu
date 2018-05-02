@@ -153,7 +153,7 @@ function sqlrun() {
 		}
 		, dataType: 'json'
 		, success: function(e) {
-			if(e.password == 'pass') { // 전부 끝나고 인증서 발급화면으로 진행함.
+			if(e.end) { // 전부 끝나고 인증서 발급화면으로 진행함.
 				location.href = e.url;
 				return;
 			}
