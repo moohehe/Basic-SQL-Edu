@@ -121,7 +121,7 @@ public class CertifyController {
 
 	// read certification
 	@RequestMapping(value = "gocertification", method=RequestMethod.GET, produces = "application/text; charset=utf8")
-	public String gocertification(Certification cert, Model model) {
+	public String gocertification(Certification cert, Model model,HttpServletResponse response) {
 		logger.info("String user:{}",cert);
 		/*Certification cert = new Certification();*/
 
@@ -129,6 +129,12 @@ public class CertifyController {
 
 		model.addAttribute("cert",cert);
 		model.addAttribute("user",cert.getCert_user());
+		
+		//쿠키 비움
+		for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
+			cg.setCookieName("completeStage"+i);
+			cg.addCookie(response, "non-pass");
+		}
 		System.out.println("cert : " + cert + "/ user : " + cert.getCert_user());
 		return "certify/certification";
 	}
