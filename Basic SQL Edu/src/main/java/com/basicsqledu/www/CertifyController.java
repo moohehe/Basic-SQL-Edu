@@ -6,6 +6,7 @@ import java.util.Random;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +29,8 @@ public class CertifyController {
 	@Autowired
 	CertDAO certDAO;
 
-	
-	
+	CookieGenerator cg = new CookieGenerator();
+
 	// certification information input form
 	@RequestMapping(value = "goCertify", method=RequestMethod.GET)
 	public String getTable(HttpServletRequest request, Model model) {
@@ -135,14 +136,17 @@ public class CertifyController {
 	
 	// read certification
 	@RequestMapping(value = "readCerti", method = RequestMethod.POST)
-	public String searchCertification(Model model, String email) {
+	public String searchCertification(Model model, String email,HttpServletResponse response) {
 		logger.info("start of readCerti() email : {}",email);
 		
 		
 		Certification cert = new Certification();
 		cert = certDAO.searchCert(email);
 		
-		
+		for(int i=1; i<21; i++ ){ //일단 전체 스테이지 이름의 쿠키를 만들어 놓는다. 단, 값은 "non-pass"로.
+			cg.setCookieName("completeStage"+i);
+			cg.addCookie(response, "non-pass");
+		}
 		model.addAttribute("cert",cert);
 		model.addAttribute("user",cert.getCert_user());
 		return "certify/certification";
