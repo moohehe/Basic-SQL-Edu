@@ -37,14 +37,6 @@
 			    <div class="qsdetail" id="qsdetail"> ${questext.qsdetail }</div> <br><br>
 				<p class="qs-example"> Examples </p>
 				<div class="qsExm" id="qsExm">${questext.qsExm }</div>
-				<div class="controlbox hide-on-bush" id="controlbox">				
-					<a href="goCertify">임시 수료증 고고싱</a>
-					<button onclick="javascript:cheat_success();"	>success</button>
-					<button onclick="javascript:sql_fail();"	>fail</button>
-					<button onclick="javascript:delAllCookie();">쿠키삭제</button>
-					<button onclick="javascript:ComAllCookie();">쿠키완료</button>
-					<button onclick="javascript:closeControlbox();">Close</button>
-				</div>
 				<!-- 언어 선택 (영어, 한국어, 일본어) -->		
 				<div class="langcheck" >
 					<input  id="currentLv" type="hidden" value="${questext.lvstatus }"></input>
