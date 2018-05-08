@@ -398,10 +398,6 @@ function getCookie(cName) {
 	}
 	return unescape(cValue);
 }
-function cheat_success() {
-	$('#sql').val('pass.key.12314AAEE'+(Math.random()*1000)+1);
-	sqlrun();
-}
 //배경 이미지 경로 함수 지정
 function imgpath(file){
 	return "url(/www/resources/image/"+file+")";
